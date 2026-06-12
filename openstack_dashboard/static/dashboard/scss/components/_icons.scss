@@ -4,6 +4,22 @@
   vertical-align: top;
 }
 
+// Keep Horizon's existing fa-spin markup animated after the Font Awesome 6
+// migration.
+.fa-spin {
+  animation: fa-spin 2s infinite linear;
+}
+
+@keyframes fa-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(359deg);
+  }
+}
+
 .wizard-nav .hz-icon-required,
 .form-group:not(.has-error):not(.has-warning):not(.has-success) .hz-icon-required {
   color: $brand-primary;
