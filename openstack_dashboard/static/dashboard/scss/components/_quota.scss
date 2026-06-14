@@ -13,15 +13,28 @@
 }
 
 .az-limit-summary {
-  background: transparent;
+  background: $table-bg;
+  clear: both;
+
+  &::after {
+    clear: both;
+    content: "";
+    display: table;
+  }
 
   .az-quota-section {
-    background: transparent;
+    background: $table-bg;
     clear: both;
     margin-bottom: $padding-large-horizontal;
 
+    &::after {
+      clear: both;
+      content: "";
+      display: table;
+    }
+
     .row {
-      background: transparent;
+      background: $table-bg;
     }
   }
 }
