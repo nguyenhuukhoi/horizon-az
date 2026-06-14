@@ -12,6 +12,20 @@
   padding-bottom: $padding-large-horizontal;
 }
 
+.az-limit-summary {
+  background: transparent;
+
+  .az-quota-section {
+    background: transparent;
+    clear: both;
+    margin-bottom: $padding-large-horizontal;
+
+    .row {
+      background: transparent;
+    }
+  }
+}
+
 .quota_title {
   font-size: $font-size-h6;
   margin-bottom: 0;
