@@ -13,7 +13,7 @@
 }
 
 .az-limit-summary {
-  background: $table-bg;
+  background: $body-bg;
   clear: both;
 
   &::after {
@@ -23,7 +23,7 @@
   }
 
   .az-quota-section {
-    background: $table-bg;
+    background: $body-bg;
     clear: both;
     margin-bottom: $padding-large-horizontal;
 
@@ -34,7 +34,7 @@
     }
 
     .row {
-      background: $table-bg;
+      background: $body-bg;
     }
   }
 }
