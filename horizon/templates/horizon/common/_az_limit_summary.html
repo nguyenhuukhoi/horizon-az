@@ -1,9 +1,10 @@
 {% load i18n horizon %}
 
 {% spaceless %}
-  {% if az_charts %}
+  {% if az_usage_enabled %}
     <div class="quota-dynamic az-limit-summary">
       <h3 class="quota-heading">{% trans "Usage by Availability Zone" %}</h3>
+      {% if az_charts %}
       {% for az in az_charts %}
         <h4 class="az-name" title="{{ az.zone }}">{% blocktrans trimmed with zone=az.zone %}Availability Zone: {{ zone }}{% endblocktrans %}</h4>
         {% for section in az.charts %}
@@ -35,6 +36,9 @@
           {% endfor %}
         {% endfor %}
       {% endfor %}
+      {% else %}
+        <p class="alert alert-info">{% trans "No availability zone usage data found for this project." %}</p>
+      {% endif %}
     </div>
   {% endif %}
 {% endspaceless %}

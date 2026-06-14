@@ -377,6 +377,7 @@ class UsageViewTests(test.TestCase):
         res = self.client.get(INDEX_URL)
         self.assertTemplateUsed(res, 'horizon/common/_az_limit_summary.html')
 
+        self.assertTrue(res.context['az_usage_enabled'])
         az_charts = res.context['az_charts']
         self.assertEqual(['az-1', 'az-2'], [a['zone'] for a in az_charts])
 
@@ -412,6 +413,7 @@ class UsageViewTests(test.TestCase):
         self._stub_api_calls()
 
         res = self.client.get(INDEX_URL)
+        self.assertFalse(res.context['az_usage_enabled'])
         self.assertNotIn('az_charts', res.context)
         self.mock_server_list.assert_not_called()
         self.mock_volume_list.assert_not_called()

@@ -71,7 +71,10 @@ class ProjectOverview(usage.ProjectUsageView):
         # Per-AZ breakdown is enabled by default. Operators can disable it to
         # avoid the additional Nova/Cinder API calls on this frequently-loaded
         # page.
-        if getattr(settings, 'OVERVIEW_SHOW_AZ_USAGE', True):
+        context['az_usage_enabled'] = getattr(settings,
+                                              'OVERVIEW_SHOW_AZ_USAGE',
+                                              True)
+        if context['az_usage_enabled']:
             try:
                 context['az_charts'] = az_usage.build_az_charts(
                     self.request, self.usage.limits)
