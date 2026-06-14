@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block title %}{% trans "Containers" %}{% endblock %}
+
+{% block breadcrumb_nav %}
+  <ol class="breadcrumb">
+    <li>{% trans "Project" %}</li>
+    <li>{% trans "Object Store" %}</li>
+    <li class="active">{% trans "Containers" %}</li>
+  </ol>
+{% endblock %}
+
+{% block ng_route_base %}
+  {% csrf_token %}
+  <base href="{{ WEBROOT }}">
+{% endblock %}
+
+{% block page_header %}
+  {% include "horizon/common/_page_header.html" with title=_("Containers") %}
+{% endblock page_header %}
+
+{% block main %}
+  <ng-include src="'{{ STATIC_URL }}dashboard/project/containers/containers.html'"></ng-include>
+
+  {% if SWIFT_PANEL_FULL_LISTING is False %}
+  <div>{% blocktrans %}Listing only {{ API_RESULT_LIMIT }} containers/objects because full listing is disabled in settings.{% endblocktrans %}</div>
+  {% endif %}
+{% endblock %}

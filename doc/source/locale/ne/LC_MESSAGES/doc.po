@@ -1,0 +1,64 @@
+# Surit Aryal <aryalsurit@gmail.com>, 2019. #zanata
+msgid ""
+msgstr ""
+"Project-Id-Version: horizon 25.4.1.dev86\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-08-11 19:58+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2019-07-30 06:02+0000\n"
+"Last-Translator: Surit Aryal <aryalsurit@gmail.com>\n"
+"Language-Team: Nepali\n"
+"Language: ne\n"
+"X-Generator: Zanata 4.3.3\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+msgid ":ref:`genindex`"
+msgstr ":ref:`genindex`"
+
+msgid ":ref:`modindex`"
+msgstr ":ref:`modindex`"
+
+msgid "Contributor Docs"
+msgstr "योगदानकर्ता कागजात"
+
+msgid ""
+"For a more in-depth look at Horizon and its architecture, see the :ref:"
+"`contributor-intro`."
+msgstr ""
+"Horizon र यसको वास्तुकलामा अधिक गहन दृश्यको लागि, हेर्नुहोस्  :ref:`contributor-"
+"intro`।"
+
+msgid ""
+"For those wishing to develop Horizon itself, or go in-depth with building "
+"your own :class:`~horizon.Dashboard` or :class:`~horizon.Panel` classes, the "
+"following documentation is provided."
+msgstr ""
+"आफ्नो Horizon विकास गर्न चाहनेहरूका लागि, वा तपाईंको आफ्नै निर्माणको साथ गहिराइमा "
+"जान :class:`~horizon.Dashboard` वा :class:`~horizon.Panel` classes, निम्न "
+"कागजातहरू प्रदान गरिएको छ।"
+
+msgid "Horizon: The OpenStack Dashboard Project"
+msgstr "Horizon:  OpenStack ड्यासबोर्ड परियोजना"
+
+msgid "How to use Horizon in your own projects."
+msgstr "तपाईंको आफ्नै परियोजनाहरूमा Horizon कसरी प्रयोग गर्ने।"
+
+msgid "Information"
+msgstr "जानकारी"
+
+msgid "Introduction"
+msgstr "परिचय"
+
+msgid "Release Notes"
+msgstr "रिलिज टिप्पणीहरू"
+
+msgid "See https://docs.openstack.org/releasenotes/horizon/."
+msgstr "Https://docs.openstack.org/releasenotes/horizon/ हेर्नुहोस्।"
+
+msgid "To learn what you need to know to get going, see the :ref:`quickstart`."
+msgstr " तपाईंलाई के जान्नु आवश्यक छ जान्नको लागि, हेर्नुहोस् :ref:`quickstart।"
+
+msgid "Using Horizon"
+msgstr "Horizon प्रयोग गर्दै"

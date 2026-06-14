@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block title %}{% trans "Overview" %}{% endblock %}
+
+{% block main %}
+  {% include "horizon/common/_limit_summary.html" %}
+  {% include "horizon/common/_az_limit_summary.html" %}
+
+  {% if simple_tenant_usage_enabled %}
+    {% include "horizon/common/_usage_summary.html" %}
+    {{ table.render }}
+  {% endif %}
+{% endblock %}

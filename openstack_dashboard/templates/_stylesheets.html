@@ -1,0 +1,21 @@
+{% load compress %}
+{% load themes %}
+
+{% compress css %}
+<link href="{{ STATIC_URL }}horizon/lib/bootstrap_datepicker/datepicker3.css" type="text/css" media="screen" rel="stylesheet" />
+<link href="{{ STATIC_URL }}horizon/lib/rickshaw/rickshaw.css" type="text/css" media="screen" rel="stylesheet" />
+{% endcompress %}
+
+{% compress css %}
+<link type="text/scss" href="{{ STATIC_URL }}dashboard/scss/themes.scss" rel="stylesheet" />
+{% endcompress %}
+
+{% compress css %}
+{% for file in HORIZON_CONFIG.scss_files %}
+<link type="text/scss" href="{{ STATIC_URL }}{{ file }}" rel="stylesheet" />
+{% endfor %}
+{% endcompress %}
+
+<link rel="shortcut icon" href="{% themable_asset 'img/favicon.ico' %}"/>
+<link rel="apple-touch-icon" sizes="180x180" href="{% themable_asset 'img/apple-touch-icon.png' %}" />
+<link rel="mask-icon" href="{% themable_asset 'img/safari-pinned-tab.svg' %}" color="#5bbad5" />

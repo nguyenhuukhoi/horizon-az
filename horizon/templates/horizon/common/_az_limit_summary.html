@@ -1,0 +1,40 @@
+{% load i18n horizon %}
+
+{% spaceless %}
+  {% if az_charts %}
+    <div class="quota-dynamic az-limit-summary">
+      <h3 class="quota-heading">{% trans "Usage by Availability Zone" %}</h3>
+      {% for az in az_charts %}
+        <h4 class="az-name" title="{{ az.zone }}">{% blocktrans trimmed with zone=az.zone %}Availability Zone: {{ zone }}{% endblocktrans %}</h4>
+        {% for section in az.charts %}
+          <h5>{{ section.title }}</h5>
+          {% for chart in section.charts %}
+            {% if forloop.first or forloop.counter0|divisibleby:6 %}
+              <div class="row">
+            {% endif %}
+                <div class="d3_quota_bar col-lg-2 col-md-4 col-sm-4 col-xs-6">
+                  <div class="pie-chart-usage" data-used="{% quotapercent chart.used chart.quota %}"></div>
+                  <div class="quota_title" title="{{ chart.name }}" data-toggle="tooltip"> {{ chart.name }}</div>
+                  <div class="quota_subtitle">
+                    {% if chart.quota|quotainf != '-1' %}
+                      {% blocktrans trimmed with usedphrase=chart.text used=chart.used_display available=chart.quota_display %}
+                        {{ usedphrase }} {{ used }} of {{ available }}
+                      {% endblocktrans %}
+                    {% else %}
+                      {% blocktrans trimmed with usedphrase=chart.text used=chart.used_display %}
+                        {{ usedphrase }} {{ used }} (No Limit)
+                      {% endblocktrans %}
+                    {% endif %}
+                  </div>
+                </div>
+            {% if forloop.last or forloop.counter|divisibleby:6 %}
+              {% if not forloop.first %}
+              </div>
+              {% endif %}
+            {% endif %}
+          {% endfor %}
+        {% endfor %}
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endspaceless %}
