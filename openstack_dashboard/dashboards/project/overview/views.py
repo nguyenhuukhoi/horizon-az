@@ -68,10 +68,10 @@ class ProjectOverview(usage.ProjectUsageView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # Per-AZ breakdown is opt-in: it adds extra Nova/Cinder API calls to
-        # this frequently-loaded page, so it defaults to off and operators
-        # enable it deliberately via OVERVIEW_SHOW_AZ_USAGE = True.
-        if getattr(settings, 'OVERVIEW_SHOW_AZ_USAGE', False):
+        # Per-AZ breakdown is enabled by default. Operators can disable it to
+        # avoid the additional Nova/Cinder API calls on this frequently-loaded
+        # page.
+        if getattr(settings, 'OVERVIEW_SHOW_AZ_USAGE', True):
             try:
                 context['az_charts'] = az_usage.build_az_charts(
                     self.request, self.usage.limits)

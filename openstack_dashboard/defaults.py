@@ -268,6 +268,11 @@ OPENSTACK_CLOUDS_YAML_CUSTOM_TEMPLATE = ('project/api_access/'
 # of data fetched by default when rendering the Overview panel.
 OVERVIEW_DAYS_RANGE = 1
 
+# Show per-availability-zone resource usage in the Project Overview panel.
+# Operators can set this to False to avoid the additional Nova/Cinder API calls
+# on this frequently-loaded page.
+OVERVIEW_SHOW_AZ_USAGE = True
+
 # Projects and users can have extra attributes as defined by keystone v3.
 # Horizon has the ability to display these extra attributes via this setting.
 # If you'd like to display extra data in the project or user tables, set the

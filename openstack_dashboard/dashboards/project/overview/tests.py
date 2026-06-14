@@ -363,7 +363,6 @@ class UsageViewTests(test.TestCase):
     def _chart(section, chart_type):
         return [c for c in section['charts'] if c['type'] == chart_type][0]
 
-    @override_settings(OVERVIEW_SHOW_AZ_USAGE=True)
     def test_az_usage(self):
         flavor = self.flavors.first()
         servers = [self._fake_server('az-1', flavor.id),
@@ -406,8 +405,10 @@ class UsageViewTests(test.TestCase):
 
         self._check_api_calls()
 
-    def test_az_usage_disabled_by_default(self):
-        # OVERVIEW_SHOW_AZ_USAGE defaults to False: no per-AZ API calls.
+    @override_settings(OVERVIEW_SHOW_AZ_USAGE=False)
+    def test_az_usage_can_be_disabled(self):
+        # Operators can disable OVERVIEW_SHOW_AZ_USAGE to avoid per-AZ API
+        # calls.
         self._stub_api_calls()
 
         res = self.client.get(INDEX_URL)
