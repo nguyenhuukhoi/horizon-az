@@ -1,0 +1,59 @@
+//
+// MyCloud theme — variable overrides
+// Style: "Clean Corporate + Dark Sidebar", emerald accent.
+//
+// IMPORTANT: these assignments run BEFORE `themes/default/variables`
+// (which declares every Bootstrap variable with `!default`). Because we set
+// our primitives first, all DERIVED Bootstrap variables (links, buttons,
+// pagination, progress bars, labels...) are computed from OUR palette.
+// Keep this ordering: overrides first, default import last.
+//
+
+// ===================== Brand / palette =====================
+$brand-primary:   #059669;   // emerald-600  (accent chính)
+$brand-success:   #16a34a;   // active / healthy
+$brand-info:      #2563eb;   // building / info
+$brand-warning:   #d97706;   // busy / rebooting
+$brand-danger:    #dc2626;   // error / full
+
+// ===================== Typography =====================
+// System stack: hiện đại, sắc nét, KHÔNG phụ thuộc internet (an toàn cho
+// môi trường air-gapped/Kolla). Đổi sang Inter/Roboto nếu muốn (xem _styles).
+$font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI",
+                         Roboto, "Helvetica Neue", Arial, sans-serif;
+$font-size-base:       14px;
+$headings-font-weight: 600;
+
+// ===================== Scaffolding =====================
+$body-bg:          #f1f5f9;   // nền trang xám-xanh nhạt
+$text-color:       #0f172a;   // chữ chính
+$link-color:       $brand-primary;
+$link-hover-color: darken($brand-primary, 8%);
+
+// ===================== Shape (bo góc) =====================
+$border-radius-base:  8px;
+$border-radius-large: 10px;
+$border-radius-small: 6px;
+
+// ===================== Navbar / topbar (sáng) =====================
+$navbar-height:                    56px;
+$navbar-default-bg:                #ffffff;
+$navbar-default-border:            #e2e8f0;
+$navbar-default-color:             #334155;
+$navbar-default-link-color:        #334155;
+$navbar-default-link-hover-bg:     #f1f5f9;
+$navbar-default-link-hover-color:  $brand-primary;
+$navbar-default-link-active-bg:    #f1f5f9;
+$navbar-default-link-active-color: $brand-primary;
+
+// ===================== Panels / tables / forms =====================
+$panel-border-radius:  10px;
+$panel-default-border: #e2e8f0;
+$panel-inner-border:   #e2e8f0;
+$table-border-color:   #e2e8f0;
+$table-bg-hover:       #f8fafc;
+$input-border-radius:  $border-radius-base;
+$input-border-focus:   $brand-primary;
+
+// ===================== Inherit the rest of Bootstrap defaults =====================
+@import "themes/default/variables";

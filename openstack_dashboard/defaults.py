@@ -95,6 +95,10 @@ NG_TEMPLATE_CACHE_AGE = 2592000
 # 'key', 'label', 'path'
 AVAILABLE_THEMES = [
     (
+        'mycloud',
+        pgettext_lazy('Modern dark-sidebar theme', 'MyCloud'),
+        'themes/mycloud'
+    ), (
         'default',
         pgettext_lazy('Default style theme', 'Default'),
         'themes/default'
@@ -104,6 +108,9 @@ AVAILABLE_THEMES = [
         'themes/material'
     ),
 ]
+
+# Use the modern MyCloud theme as the default look & feel.
+DEFAULT_THEME = 'mycloud'
 
 # None means to Use AVAILABLE_THEMES as the default value.
 SELECTABLE_THEMES = None
