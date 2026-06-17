@@ -1,0 +1,46 @@
+{% comment %}
+  MyCloud theme override of horizon/common/_limit_summary.html
+  Renders project quota usage as modern stat cards with a horizontal
+  progress bar instead of the default d3 pie charts. Theme-scoped: only
+  active when the "mycloud" theme is selected. Uses the same `charts`
+  context data, so no view/logic changes are required.
+{% endcomment %}
+{% load i18n horizon %}
+
+{% spaceless %}
+  <div class="quota-dynamic limit-summary mc-usage">
+    <h3 class="quota-heading mc-section-title">{% trans "Limit Summary" %}</h3>
+    {% for section in charts %}
+      <h4 class="mc-group-title">{{ section.title }}</h4>
+      <div class="mc-card-grid">
+        {% for chart in section.charts %}
+          {% quotapercent chart.used chart.quota as pct %}
+          <div class="mc-card">
+            <div class="mc-card-title" title="{{ chart.name }}" data-toggle="tooltip">{{ chart.name }}</div>
+            <div class="mc-card-value">{{ chart.used_display }}</div>
+            <div class="mc-card-sub">
+              {% if chart.quota|quotainf != '-1' %}
+                {% blocktrans trimmed with usedphrase=chart.text used=chart.used_display available=chart.quota_display %}
+                  {{ usedphrase }} {{ used }} of {{ available }}
+                {% endblocktrans %}
+              {% else %}
+                {% blocktrans trimmed with usedphrase=chart.text used=chart.used_display %}
+                  {{ usedphrase }} {{ used }} (No Limit)
+                {% endblocktrans %}
+              {% endif %}
+            </div>
+            {% if chart.quota|quotainf != '-1' %}
+              <div class="mc-meter">
+                <i class="{% if pct >= 90 %}is-danger{% elif pct >= 75 %}is-warn{% else %}is-ok{% endif %}"
+                   style="width: {{ pct }}%"></i>
+              </div>
+              <div class="mc-card-pct">{{ pct }}%</div>
+            {% else %}
+              <div class="mc-card-pct mc-card-pct--nolimit">{% trans "No limit" %}</div>
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
+    {% endfor %}
+  </div>
+{% endspaceless %}
