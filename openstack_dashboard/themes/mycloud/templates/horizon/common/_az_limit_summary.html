@@ -1,56 +1,66 @@
 {% comment %}
   MyCloud theme override of horizon/common/_az_limit_summary.html
-  Same custom AZ-usage data (az_usage_enabled / az_charts), rendered as
-  modern stat cards with progress bars. Theme-scoped only; the feature
-  flag and "no data" behaviour are preserved unchanged.
+  Renders the custom AZ-usage data as a panel of per-AZ cards with
+  labelled meter rows, matching horizon_redesign_mockup.html. The
+  az_usage_enabled flag, az_charts data and "no data" branch are
+  preserved unchanged (theme-scoped, no view/logic changes).
 {% endcomment %}
 {% load i18n horizon %}
 
 {% spaceless %}
   {% if az_usage_enabled %}
     <div class="quota-dynamic az-limit-summary mc-usage">
-      <h3 class="quota-heading mc-section-title">{% trans "Usage by Availability Zone" %}</h3>
-      {% if az_charts %}
-        {% for az in az_charts %}
-          <h4 class="az-name mc-az-name" title="{{ az.zone }}">{% blocktrans trimmed with zone=az.zone %}Availability Zone: {{ zone }}{% endblocktrans %}</h4>
-          {% for section in az.charts %}
-            <div class="az-quota-section">
-              <h5 class="mc-group-title">{{ section.title }}</h5>
-              <div class="mc-card-grid">
-                {% for chart in section.charts %}
-                  {% quotapercent chart.used chart.quota as pct %}
-                  <div class="mc-card">
-                    <div class="mc-card-title" title="{{ chart.name }}" data-toggle="tooltip">{{ chart.name }}</div>
-                    <div class="mc-card-value">{{ chart.used_display }}</div>
-                    <div class="mc-card-sub">
-                      {% if chart.quota|quotainf != '-1' %}
-                        {% blocktrans trimmed with usedphrase=chart.text used=chart.used_display available=chart.quota_display %}
-                          {{ usedphrase }} {{ used }} of {{ available }}
-                        {% endblocktrans %}
-                      {% else %}
-                        {% blocktrans trimmed with usedphrase=chart.text used=chart.used_display %}
-                          {{ usedphrase }} {{ used }} (No Limit)
-                        {% endblocktrans %}
-                      {% endif %}
+      <div class="mc-panel">
+        <div class="mc-panel-head">
+          <div>
+            <h2 class="mc-panel-title">{% trans "Usage by Availability Zone" %}</h2>
+            <div class="mc-panel-sub">{% trans "Resource usage broken down per availability zone" %}</div>
+          </div>
+        </div>
+        <div class="mc-panel-body">
+          {% if az_charts %}
+            <div class="mc-az-grid">
+              {% for az in az_charts %}
+                <div class="mc-az-card">
+                  <div class="mc-az-h">
+                    <div class="mc-az-name-inline">
+                      <span class="mc-az-dot"></span>{{ az.zone }}
                     </div>
-                    {% if chart.quota|quotainf != '-1' %}
-                      <div class="mc-meter">
-                        <i class="{% if pct >= 90 %}is-danger{% elif pct >= 75 %}is-warn{% else %}is-ok{% endif %}"
-                           style="width: {{ pct }}%"></i>
-                      </div>
-                      <div class="mc-card-pct">{{ pct }}%</div>
-                    {% else %}
-                      <div class="mc-card-pct mc-card-pct--nolimit">{% trans "No limit" %}</div>
-                    {% endif %}
                   </div>
-                {% endfor %}
-              </div>
+                  {% for section in az.charts %}
+                    <div class="mc-az-group">{{ section.title }}</div>
+                    {% for chart in section.charts %}
+                      {% quotapercent chart.used chart.quota as pct %}
+                      <div class="mc-meter-row">
+                        <div class="ml">
+                          <span class="mc-meter-name" title="{{ chart.name }}">{{ chart.name }}</span>
+                          <span class="mc-meter-val">
+                            {% if chart.quota|quotainf != '-1' %}
+                              {{ chart.used_display }} / {{ chart.quota_display }}
+                            {% else %}
+                              {{ chart.used_display }} · {% trans "No limit" %}
+                            {% endif %}
+                          </span>
+                        </div>
+                        {% if chart.quota|quotainf != '-1' %}
+                          <div class="mc-meter">
+                            <i class="{% if pct >= 90 %}is-danger{% elif pct >= 75 %}is-warn{% else %}is-ok{% endif %}"
+                               style="width: {{ pct }}%"></i>
+                          </div>
+                        {% else %}
+                          <div class="mc-meter mc-meter--nolimit"><i class="is-ok" style="width: 6%"></i></div>
+                        {% endif %}
+                      </div>
+                    {% endfor %}
+                  {% endfor %}
+                </div>
+              {% endfor %}
             </div>
-          {% endfor %}
-        {% endfor %}
-      {% else %}
-        <p class="alert alert-info">{% trans "No availability zone usage data found for this project." %}</p>
-      {% endif %}
+          {% else %}
+            <p class="alert alert-info mc-az-empty">{% trans "No availability zone usage data found for this project." %}</p>
+          {% endif %}
+        </div>
+      </div>
     </div>
   {% endif %}
 {% endspaceless %}

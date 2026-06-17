@@ -1,24 +1,42 @@
 {% comment %}
   MyCloud theme override of horizon/common/_limit_summary.html
-  Renders project quota usage as modern stat cards with a horizontal
-  progress bar instead of the default d3 pie charts. Theme-scoped: only
-  active when the "mycloud" theme is selected. Uses the same `charts`
-  context data, so no view/logic changes are required.
+  Renders project quota usage as modern "stat cards" (icon box + quota %
+  badge + big value), matching horizon_redesign_mockup.html. Theme-scoped
+  and view-logic-free: uses the existing `charts` context only.
 {% endcomment %}
 {% load i18n horizon %}
 
 {% spaceless %}
   <div class="quota-dynamic limit-summary mc-usage">
-    <h3 class="quota-heading mc-section-title">{% trans "Limit Summary" %}</h3>
+    <h3 class="mc-section-title">{% trans "Limit Summary" %}</h3>
     {% for section in charts %}
+      {% with si=forloop.counter %}
       <h4 class="mc-group-title">{{ section.title }}</h4>
-      <div class="mc-card-grid">
+      <div class="mc-stat-grid">
         {% for chart in section.charts %}
           {% quotapercent chart.used chart.quota as pct %}
-          <div class="mc-card">
-            <div class="mc-card-title" title="{{ chart.name }}" data-toggle="tooltip">{{ chart.name }}</div>
-            <div class="mc-card-value">{{ chart.used_display }}</div>
-            <div class="mc-card-sub">
+          <div class="mc-stat">
+            <div class="mc-stat-top">
+              <span class="mc-stat-ic mc-ic-{{ si }}">
+                {% if si == 1 %}
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v2M15 2v2M9 20v2M15 20v2M2 9h2M2 15h2M20 9h2M20 15h2"/></svg>
+                {% elif si == 2 %}
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 11v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg>
+                {% elif si == 3 %}
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="6" rx="1"/><rect x="2" y="16" width="6" height="6" rx="1"/><rect x="16" y="16" width="6" height="6" rx="1"/><path d="M12 8v4M5 16v-2h14v2"/></svg>
+                {% else %}
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 3 7v10l9 5 9-5V7z"/><path d="M3 7l9 5 9-5M12 12v10"/></svg>
+                {% endif %}
+              </span>
+              {% if chart.quota|quotainf != '-1' %}
+                <span class="mc-trend {% if pct >= 90 %}is-danger{% elif pct >= 75 %}is-warn{% else %}is-ok{% endif %}">{{ pct }}%</span>
+              {% else %}
+                <span class="mc-trend mc-trend--nolimit">{% trans "No limit" %}</span>
+              {% endif %}
+            </div>
+            <div class="mc-stat-num">{{ chart.used_display }}</div>
+            <div class="mc-stat-label" title="{{ chart.name }}">{{ chart.name }}</div>
+            <div class="mc-stat-sub">
               {% if chart.quota|quotainf != '-1' %}
                 {% blocktrans trimmed with usedphrase=chart.text used=chart.used_display available=chart.quota_display %}
                   {{ usedphrase }} {{ used }} of {{ available }}
@@ -29,18 +47,10 @@
                 {% endblocktrans %}
               {% endif %}
             </div>
-            {% if chart.quota|quotainf != '-1' %}
-              <div class="mc-meter">
-                <i class="{% if pct >= 90 %}is-danger{% elif pct >= 75 %}is-warn{% else %}is-ok{% endif %}"
-                   style="width: {{ pct }}%"></i>
-              </div>
-              <div class="mc-card-pct">{{ pct }}%</div>
-            {% else %}
-              <div class="mc-card-pct mc-card-pct--nolimit">{% trans "No limit" %}</div>
-            {% endif %}
           </div>
         {% endfor %}
       </div>
+      {% endwith %}
     {% endfor %}
   </div>
 {% endspaceless %}

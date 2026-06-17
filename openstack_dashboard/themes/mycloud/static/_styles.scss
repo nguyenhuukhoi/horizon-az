@@ -285,18 +285,18 @@ dl.dl-horizontal dt {
 }
 
 // =====================================================================
-//  Overview — usage stat cards (replaces d3 pie charts in this theme)
-//  Markup comes from the theme template overrides of
-//  _limit_summary.html / _az_limit_summary.html
+//  Overview — stat cards + AZ panel (replaces d3 pie charts in this theme)
+//  Markup from theme template overrides _limit_summary / _az_limit_summary
+//  Matches horizon_redesign_mockup.html
 // =====================================================================
 .mc-usage {
   margin-bottom: 28px;
 
   .mc-section-title {
-    font-size: 20px;
+    font-size: 21px;
     font-weight: 700;
     color: $text-color;
-    margin: 8px 0 18px;
+    margin: 6px 0 16px;
   }
 
   // "Compute" / "Volume" / "Network" group labels
@@ -308,25 +308,16 @@ dl.dl-horizontal dt {
     color: #64748b;
     margin: 22px 0 12px;
   }
-
-  // "Availability Zone: xxx"
-  .mc-az-name {
-    font-size: 15px;
-    font-weight: 700;
-    color: $text-color;
-    margin: 24px 0 6px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid $mc-border;
-  }
 }
 
-.mc-card-grid {
+// ---- Stat cards (Limit Summary) ----
+.mc-stat-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 16px;
 }
 
-.mc-card {
+.mc-stat {
   background: $mc-surface;
   border: 1px solid $mc-border;
   border-radius: 12px;
@@ -339,60 +330,184 @@ dl.dl-horizontal dt {
     transform: translateY(-1px);
   }
 
-  .mc-card-title {
-    font-size: 13px;
-    font-weight: 600;
+  .mc-stat-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .mc-stat-ic {
+    width: 42px;
+    height: 42px;
+    border-radius: 11px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    svg { width: 22px; height: 22px; }
+
+    // colour variants cycle per section
+    &.mc-ic-1 { background: #dbeafe; color: #2563eb; }
+    &.mc-ic-2 { background: #ccfbf1; color: #0d9488; }
+    &.mc-ic-3 { background: #ede9fe; color: #7c3aed; }
+    &.mc-ic-4,
+    &.mc-ic-5,
+    &.mc-ic-6 { background: #fef3c7; color: #d97706; }
+  }
+
+  .mc-trend {
+    font-size: 12px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+    background: #f1f5f9;
     color: #64748b;
+
+    &.is-ok     { background: #dcfce7; color: #16a34a; }
+    &.is-warn   { background: #fef3c7; color: #d97706; }
+    &.is-danger { background: #fee2e2; color: #dc2626; }
+    &.mc-trend--nolimit { background: #f1f5f9; color: #94a3b8; font-weight: 600; }
+  }
+
+  .mc-stat-num {
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -.6px;
+    color: $text-color;
+    margin-top: 14px;
+  }
+
+  .mc-stat-label {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #334155;
+    margin-top: 4px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
 
-  .mc-card-value {
-    font-size: 26px;
-    font-weight: 700;
-    line-height: 1.15;
-    letter-spacing: -.5px;
-    color: $text-color;
-    margin-top: 6px;
-  }
-
-  .mc-card-sub {
+  .mc-stat-sub {
     font-size: 12px;
     color: #94a3b8;
     margin-top: 2px;
-    min-height: 16px;
+  }
+}
+
+// ---- AZ panel ----
+.mc-panel {
+  background: $mc-surface;
+  border: 1px solid $mc-border;
+  border-radius: 12px;
+  box-shadow: $mc-shadow;
+  overflow: hidden;
+
+  .mc-panel-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    border-bottom: 1px solid $mc-border;
   }
 
-  .mc-meter {
-    height: 7px;
-    background: #eef2f6;
-    border-radius: 20px;
+  .mc-panel-title {
+    font-size: 15px;
+    font-weight: 700;
+    margin: 0;
+    color: $text-color;
+  }
+
+  .mc-panel-sub {
+    font-size: 12.5px;
+    color: #94a3b8;
+    margin-top: 2px;
+  }
+
+  .mc-panel-body { padding: 20px; }
+}
+
+.mc-az-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.mc-az-card {
+  border: 1px solid $mc-border;
+  border-radius: 10px;
+  padding: 16px;
+
+  .mc-az-h {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+
+  .mc-az-name-inline {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+    font-size: 14px;
+    color: $text-color;
+  }
+
+  .mc-az-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: $brand-primary;
+  }
+
+  .mc-az-group {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    color: #94a3b8;
+    margin: 12px 0 8px;
+  }
+}
+
+.mc-meter-row {
+  margin: 9px 0;
+
+  .ml {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12.5px;
+    margin-bottom: 5px;
+    gap: 8px;
+  }
+
+  .mc-meter-name {
+    color: #334155;
+    font-weight: 500;
+    white-space: nowrap;
     overflow: hidden;
-    margin-top: 12px;
-
-    > i {
-      display: block;
-      height: 100%;
-      border-radius: 20px;
-      transition: width .4s ease;
-
-      &.is-ok    { background: $brand-primary; }
-      &.is-warn  { background: $brand-warning; }
-      &.is-danger{ background: $brand-danger; }
-    }
+    text-overflow: ellipsis;
   }
 
-  .mc-card-pct {
-    font-size: 11.5px;
-    font-weight: 600;
-    color: #64748b;
-    margin-top: 6px;
-    text-align: right;
+  .mc-meter-val { color: #94a3b8; white-space: nowrap; }
+}
 
-    &.mc-card-pct--nolimit {
-      color: #94a3b8;
-      font-weight: 500;
-    }
+// shared meter bar (AZ rows)
+.mc-meter {
+  height: 7px;
+  background: #eef2f6;
+  border-radius: 20px;
+  overflow: hidden;
+
+  > i {
+    display: block;
+    height: 100%;
+    border-radius: 20px;
+    transition: width .4s ease;
+
+    &.is-ok     { background: $brand-primary; }
+    &.is-warn   { background: $brand-warning; }
+    &.is-danger { background: $brand-danger; }
   }
 }
