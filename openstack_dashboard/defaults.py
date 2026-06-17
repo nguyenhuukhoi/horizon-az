@@ -109,8 +109,8 @@ AVAILABLE_THEMES = [
     ),
 ]
 
-# Use the modern MyCloud theme as the default look & feel.
-DEFAULT_THEME = 'mycloud'
+# Keep the upstream 'default' theme as the default look & feel.
+# 'mycloud' is only offered as a selectable option in the theme picker.
 
 # None means to Use AVAILABLE_THEMES as the default value.
 SELECTABLE_THEMES = None

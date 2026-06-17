@@ -6,10 +6,10 @@
 //
 
 // ----- Local palette helpers -----
-$mc-side-bg:     #0f172a;   // slate-900 (sidebar)
-$mc-side-bg-2:   #1e293b;   // hover
-$mc-side-fg:     #cbd5e1;   // sidebar text
-$mc-side-fg-mut: #64748b;   // sidebar muted / group headers
+$mc-side-bg:     #06352b;   // deep emerald/forest green (sidebar)
+$mc-side-bg-2:   #0d4a3b;   // hover
+$mc-side-fg:     #cde7df;   // sidebar text (greenish off-white)
+$mc-side-fg-mut: #6f9a8d;   // sidebar muted / group headers
 $mc-side-active: $brand-primary;
 $mc-border:      #e2e8f0;
 $mc-surface:     #ffffff;
@@ -73,15 +73,16 @@ body {
   }
 
   // every link surface in the sidebar
+  // ('!important' beats core `#sidebar .panel .list-group-item{border-radius:0}`)
   .panel > a,
-  .list-group-item,
-  a.list-group-item {
+  .list-group .list-group-item,
+  .list-group > a.list-group-item {
     background: transparent;
     color: $mc-side-fg;
-    border: 0;
-    border-radius: 8px;
-    margin: 2px 8px;
-    padding: 9px 14px;
+    border: 0 !important;
+    border-radius: 8px !important;
+    margin: 2px 8px !important;
+    padding: 9px 14px !important;
     font-weight: 500;
     transition: background .12s ease, color .12s ease;
   }
@@ -89,8 +90,8 @@ body {
   // hover
   .panel > a:hover,
   .panel > a:focus,
-  .list-group-item:hover,
-  a.list-group-item:hover {
+  .list-group .list-group-item:hover,
+  .list-group > a.list-group-item:hover {
     background: $mc-side-bg-2;
     color: #fff;
   }
@@ -119,17 +120,17 @@ body {
   }
 
   // active panel link
+  .list-group > a.list-group-item.active,
   a.list-group-item.openstack-panel.active,
-  .list-group-item.active,
   .openstack-panel.active > a {
-    background: $mc-side-active;
-    color: #fff;
+    background: $mc-side-active !important;
+    color: #fff !important;
     box-shadow: 0 2px 8px rgba(5, 150, 105, .35);
 
     &:hover,
     &:focus {
-      background: darken($mc-side-active, 4%);
-      color: #fff;
+      background: darken($mc-side-active, 4%) !important;
+      color: #fff !important;
     }
   }
 
