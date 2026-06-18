@@ -6,10 +6,10 @@
 //
 
 // ----- Local palette helpers -----
-$mc-side-bg:     #06352b;   // deep emerald/forest green (sidebar)
-$mc-side-bg-2:   #0d4a3b;   // hover
-$mc-side-fg:     #cde7df;   // sidebar text (greenish off-white)
-$mc-side-fg-mut: #6f9a8d;   // sidebar muted / group headers
+$mc-side-bg:     #0f172a;   // slate-900 navy (sidebar)
+$mc-side-bg-2:   #1e293b;   // hover
+$mc-side-fg:     #cbd5e1;   // sidebar text
+$mc-side-fg-mut: #64748b;   // sidebar muted / group headers
 $mc-side-active: $brand-primary;
 $mc-border:      #e2e8f0;
 $mc-surface:     #ffffff;
@@ -125,7 +125,7 @@ body {
   .openstack-panel.active > a {
     background: $mc-side-active !important;
     color: #fff !important;
-    box-shadow: 0 2px 8px rgba(5, 150, 105, .35);
+    box-shadow: 0 2px 8px rgba(37, 99, 235, .40);
 
     &:hover,
     &:focus {
@@ -210,7 +210,7 @@ dl.dl-horizontal dt {
 }
 
 .btn-primary {
-  box-shadow: 0 1px 2px rgba(5, 150, 105, .25);
+  box-shadow: 0 1px 2px rgba(37, 99, 235, .25);
 }
 
 .btn-default {
@@ -235,7 +235,7 @@ dl.dl-horizontal dt {
 
   &:focus {
     border-color: $brand-primary;
-    box-shadow: 0 0 0 3px rgba(5, 150, 105, .15);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, .15);
   }
 }
 
@@ -509,5 +509,127 @@ dl.dl-horizontal dt {
     &.is-ok     { background: $brand-primary; }
     &.is-warn   { background: $brand-warning; }
     &.is-danger { background: $brand-danger; }
+  }
+}
+
+// =====================================================================
+//  Sidebar — left align + per-panel icons (Font Awesome 6, bundled)
+// =====================================================================
+#sidebar {
+  .openstack-panel,
+  .openstack-panel-group,
+  .openstack-dashboard > a { text-align: left; }
+
+  // base icon slot before every panel link
+  a.openstack-panel::before {
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    display: inline-block;
+    width: 1.2em;
+    margin-right: 9px;
+    text-align: center;
+    font-size: 13px;
+    opacity: .9;
+  }
+  // generic fallback glyph (overridden per panel below)
+  a.openstack-panel::before { content: "\f111"; font-size: 7px; vertical-align: 2px; }
+}
+
+// map panel URL → glyph (matches both /project/ and /admin/ where slug repeats)
+#sidebar {
+  a[href$="/project/"]::before,
+  a[href$="/admin/"]::before,
+  a[href$="/overview/"]::before        { content: "\f009"; font-size: 13px; vertical-align: 0; } // th-large
+  a[href$="/instances/"]::before,
+  a[href$="/hypervisors/"]::before     { content: "\f233"; font-size: 13px; vertical-align: 0; } // server
+  a[href$="/images/"]::before          { content: "\f03e"; font-size: 13px; vertical-align: 0; } // image
+  a[href$="/key_pairs/"]::before       { content: "\f084"; font-size: 13px; vertical-align: 0; } // key
+  a[href$="/server_groups/"]::before,
+  a[href$="/aggregates/"]::before,
+  a[href$="/volume_groups/"]::before,
+  a[href$="/group_types/"]::before     { content: "\f5fd"; font-size: 13px; vertical-align: 0; } // layer-group
+  a[href$="/api_access/"]::before      { content: "\f121"; font-size: 13px; vertical-align: 0; } // code
+  a[href$="/volumes/"]::before         { content: "\f1c0"; font-size: 13px; vertical-align: 0; } // database
+  a[href$="/snapshots/"]::before       { content: "\f030"; font-size: 13px; vertical-align: 0; } // camera
+  a[href$="/backups/"]::before         { content: "\f0c7"; font-size: 13px; vertical-align: 0; } // floppy
+  a[href$="/vg_snapshots/"]::before    { content: "\f030"; font-size: 13px; vertical-align: 0; }
+  a[href$="/network_topology/"]::before{ content: "\f1e0"; font-size: 13px; vertical-align: 0; } // share-nodes
+  a[href$="/networks/"]::before        { content: "\f0e8"; font-size: 13px; vertical-align: 0; } // sitemap
+  a[href$="/routers/"]::before         { content: "\f4d7"; font-size: 13px; vertical-align: 0; } // route
+  a[href$="/security_groups/"]::before,
+  a[href$="/rbac_policies/"]::before,
+  a[href$="/identity_providers/"]::before { content: "\f3ed"; font-size: 13px; vertical-align: 0; } // shield
+  a[href$="/floating_ips/"]::before,
+  a[href$="/domains/"]::before         { content: "\f0ac"; font-size: 13px; vertical-align: 0; } // globe
+  a[href$="/trunks/"]::before          { content: "\f0c1"; font-size: 13px; vertical-align: 0; } // link
+  a[href$="/network_qos/"]::before     { content: "\f624"; font-size: 13px; vertical-align: 0; } // gauge
+  a[href$="/floating_ip_portforwardings/"]::before,
+  a[href$="/mappings/"]::before        { content: "\f362"; font-size: 13px; vertical-align: 0; } // exchange
+  a[href$="/containers/"]::before      { content: "\f466"; font-size: 13px; vertical-align: 0; } // box
+  a[href$="/flavors/"]::before         { content: "\f2db"; font-size: 13px; vertical-align: 0; } // microchip
+  a[href$="/volume_types/"]::before    { content: "\f1c0"; font-size: 13px; vertical-align: 0; }
+  a[href$="/defaults/"]::before        { content: "\f1de"; font-size: 13px; vertical-align: 0; } // sliders
+  a[href$="/metadata_defs/"]::before   { content: "\f02b"; font-size: 13px; vertical-align: 0; } // tag
+  a[href$="/info/"]::before            { content: "\f05a"; font-size: 13px; vertical-align: 0; } // info
+  a[href$="/identity/"]::before,
+  a[href$="/projects/"]::before        { content: "\f07b"; font-size: 13px; vertical-align: 0; } // folder
+  a[href$="/users/"]::before           { content: "\f007"; font-size: 13px; vertical-align: 0; } // user
+  a[href$="/groups/"]::before          { content: "\f0c0"; font-size: 13px; vertical-align: 0; } // users
+  a[href$="/roles/"]::before           { content: "\f2c1"; font-size: 13px; vertical-align: 0; } // id-badge
+  a[href$="/application_credentials/"]::before,
+  a[href$="/credentials/"]::before     { content: "\f2c2"; font-size: 13px; vertical-align: 0; } // id-card
+}
+
+// =====================================================================
+//  Topbar context selectors → pill look
+// =====================================================================
+.topbar .navbar-nav.navbar-right > li > a,
+.navbar-default .navbar-nav > li > .dropdown-toggle {
+  border-radius: 8px;
+}
+#context_selection > li > a,
+.context-selection > li > a {
+  margin: 8px 4px;
+  border: 1px solid $mc-border;
+  border-radius: 8px;
+  background: $body-bg;
+}
+
+// =====================================================================
+//  Modals & Launch Instance wizard (Angular ng-wizard)
+// =====================================================================
+.modal-content {
+  border-radius: 12px;
+  box-shadow: 0 24px 60px rgba(15, 23, 42, .25);
+}
+.modal-header { border-bottom: 1px solid $mc-border; }
+.modal-footer {
+  border-top: 1px solid $mc-border;
+  background: #f8fafc;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+
+.ng-wizard {
+  .wizard-navigation { background: #f8fafc; }
+
+  // step list
+  .nav-pills > li > a {
+    border-radius: 8px;
+    color: #64748b;
+    font-weight: 600;
+  }
+  .nav-pills > li.active > a,
+  .nav-pills > li.active > a:hover,
+  .nav-pills > li.active > a:focus {
+    background: $brand-primary;
+    color: #fff;
+  }
+
+  // transfer table (available / allocated)
+  .transfer-available .panel-heading,
+  .transfer-allocated .panel-heading {
+    font-weight: 700;
+    background: #f8fafc;
   }
 }
