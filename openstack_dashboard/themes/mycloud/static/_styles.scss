@@ -112,10 +112,10 @@ body {
     }
   }
 
-  // sub-group headers
+  // sub-group headers (Compute / Volumes / Network …)
   .openstack-panel-group > a {
-    color: $mc-side-fg-mut;
-    font-size: 12px;
+    color: $mc-side-fg;
+    font-size: 13px;
     font-weight: 600;
   }
 
@@ -135,7 +135,7 @@ body {
   }
 
   .openstack-toggle.fa {
-    color: $mc-side-fg-mut;
+    color: $mc-side-fg;
   }
 }
 
