@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block title %}{% trans "Overview" %}{% endblock %}
+
+{% block page_header %}
+<div class="mc-page-head">
+  <div>
+    <h1 class="mc-page-title">{% trans "Overview" %}</h1>
+    <p class="mc-page-sub">{{ request.user.project_name }} &middot; RegionOne</p>
+  </div>
+  <div class="mc-page-actions">
+    <a href="{% url 'horizon:project:instances:index' %}" class="btn btn-default btn-sm mc-btn-ghost">
+      {% trans "Instances" %}
+    </a>
+    <a href="{% url 'horizon:project:instances:index' %}" class="btn btn-primary btn-sm">
+      + {% trans "Launch Instance" %}
+    </a>
+  </div>
+</div>
+{% endblock %}
+
+{% block main %}
+  {% include "horizon/common/_limit_summary.html" %}
+  {% include "horizon/common/_az_limit_summary.html" %}
+
+  {% if simple_tenant_usage_enabled %}
+  <div class="mc-recent-panel">
+    <div class="mc-recent-head">
+      <h3 class="mc-recent-title">{% trans "Recent Activity" %}</h3>
+      <form action="?" method="get" id="date_form" class="mc-date-form form-inline">
+        {{ form.start }} &ndash; {{ form.end }}
+        <button class="btn btn-default btn-sm" type="submit">{% trans "Apply" %}</button>
+      </form>
+    </div>
+    <dl class="mc-activity-dl">
+      <div class="mc-activity-row">
+        <dt>{% trans "Active Instances" %}</dt>
+        <dd>{{ usage.summary.instances|default:'0' }}</dd>
+      </div>
+      <div class="mc-activity-row">
+        <dt>{% trans "Active RAM" %}</dt>
+        <dd>{{ usage.summary.memory_mb|default:'0' }} MB</dd>
+      </div>
+      <div class="mc-activity-row">
+        <dt>{% trans "vCPU-Hours" %}</dt>
+        <dd>{{ usage.summary.vcpu_hours|floatformat:2|default:'0.00' }}</dd>
+      </div>
+      <div class="mc-activity-row">
+        <dt>{% trans "RAM-Hours" %}</dt>
+        <dd>{{ usage.summary.memory_mb_hours|floatformat:2|default:'0.00' }}</dd>
+      </div>
+    </dl>
+  </div>
+  <div class="mc-usage-table">
+    <div class="mc-usage-table-head">
+      <span class="mc-usage-table-title">{% trans "Recent Instances" %}</span>
+    </div>
+    {{ table.render }}
+  </div>
+  {% endif %}
+{% endblock %}

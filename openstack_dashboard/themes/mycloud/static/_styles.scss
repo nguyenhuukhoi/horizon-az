@@ -633,3 +633,350 @@ dl.dl-horizontal dt {
     background: #f8fafc;
   }
 }
+
+// =====================================================================
+//  Layout — sidebar full-height, navbar confined to right column
+// =====================================================================
+
+// Sidebar: pin to top-left corner, span full viewport height
+#sidebar {
+  top: 0 !important;
+  left: 0 !important;
+  bottom: 0;
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  z-index: 1035; // above Bootstrap navbar (z-index 1030)
+
+  &::-webkit-scrollbar { width: 6px; }
+  &::-webkit-scrollbar-thumb { background: #334155; border-radius: 6px; }
+}
+
+// Brand block at top of sidebar
+.mc-sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 18px 20px;
+  font-weight: 700;
+  font-size: 16px;
+  color: #fff;
+  position: sticky;
+  top: 0;
+  background: $mc-side-bg;
+  z-index: 2;
+  border-bottom: 1px solid rgba(255, 255, 255, .05);
+  text-decoration: none;
+
+  &:hover { text-decoration: none; color: #fff; }
+}
+
+.mc-brand-logo {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, $brand-primary, lighten($brand-primary, 10%));
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  flex-shrink: 0;
+}
+
+// Navbar: push left edge to sidebar width, hide bootstrap brand (shown in sidebar)
+.navbar.navbar-default.navbar-fixed-top {
+  left: $sidebar-width;
+  right: 0;
+  width: auto;
+
+  .navbar-brand { display: none; }
+
+  // Make the sidebar-toggle button invisible (sidebar is always visible)
+  #sidebar-toggle { display: none; }
+}
+
+// #content_body already has padding-left: $sidebar-width via _layout.scss
+// Do NOT add it to #main_content — that pushes the fixed sidebar off-screen
+
+// User avatar: circle with initials
+.mc-user-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, $brand-primary, lighten($brand-primary, 12%));
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 13px;
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+
+// User menu link — replace fa-user icon with avatar
+.user-menu > a {
+  display: flex !important;
+  align-items: center;
+  gap: 8px;
+}
+
+// Context selectors (project / region) — pill style
+.navbar-nav > li.context-selection > a,
+#context_selection > li > a,
+.context-selection > li > a {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 6px;
+  background: $body-bg !important;
+  border: 1px solid $mc-border !important;
+  border-radius: 8px !important;
+  padding: 6px 12px !important;
+  margin: 11px 4px !important;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+// Topbar icon buttons (search, notifications)
+.topbar-icon-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 9px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #64748b;
+  cursor: pointer;
+
+  &:hover { background: $body-bg; }
+}
+
+// =====================================================================
+//  Overview page — header, activity panel, usage table
+// =====================================================================
+
+// Page head: title + subtitle on left, action buttons on right
+.mc-page-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 22px;
+  padding: 6px 0 14px;
+  border-bottom: 1px solid $mc-border;
+}
+
+.mc-page-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0 0 4px;
+  color: $text-color;
+}
+
+.mc-page-sub {
+  color: #64748b;
+  font-size: 13.5px;
+  margin: 0;
+}
+
+.mc-page-actions {
+  display: flex;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.mc-btn-ghost {
+  background: $mc-surface;
+  border-color: $mc-border;
+  color: $text-color;
+  &:hover { background: $body-bg; }
+}
+
+// Recent activity summary panel (replaces raw _usage_summary)
+.mc-recent-panel {
+  background: $mc-surface;
+  border: 1px solid $mc-border;
+  border-radius: 12px;
+  box-shadow: $mc-shadow;
+  overflow: hidden;
+  margin-bottom: 18px;
+}
+
+.mc-recent-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 14px 20px;
+  border-bottom: 1px solid $mc-border;
+}
+
+.mc-recent-title {
+  font-size: 15px;
+  font-weight: 700;
+  margin: 0;
+  color: $text-color;
+}
+
+// Compact date range form in panel header
+.mc-date-form {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+
+  input[type="text"] {
+    height: 32px;
+    padding: 4px 8px;
+    font-size: 13px;
+    border: 1px solid $mc-border;
+    border-radius: 7px;
+    width: 100px;
+  }
+
+  .btn { height: 32px; padding: 4px 12px; font-size: 13px; }
+}
+
+.mc-activity-dl {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0;
+  margin: 0;
+}
+
+.mc-activity-row {
+  padding: 12px 20px;
+  border-right: 1px solid $mc-border;
+  &:last-child { border-right: none; }
+
+  dt {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    color: #94a3b8;
+    margin-bottom: 4px;
+  }
+
+  dd {
+    font-size: 20px;
+    font-weight: 700;
+    color: $text-color;
+    margin: 0;
+  }
+}
+
+// Usage (instances) table wrapper
+.mc-usage-table {
+  background: $mc-surface;
+  border: 1px solid $mc-border;
+  border-radius: 12px;
+  box-shadow: $mc-shadow;
+  overflow: hidden;
+  margin-bottom: 18px;
+
+  .mc-usage-table-head {
+    display: flex;
+    align-items: center;
+    padding: 14px 18px;
+    border-bottom: 1px solid $mc-border;
+  }
+
+  .mc-usage-table-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: $text-color;
+  }
+
+  // Flatten the inner horizon table wrapper
+  .table_wrapper, .table-responsive { border-radius: 0; box-shadow: none; border: none; }
+  .table_actions, .table-striped thead { border-radius: 0; }
+
+  // Download CSV button
+  .table-actions-btn-group { margin-left: auto; }
+
+  // DataTable renders its own "Usage" caption — hide it since we have mc-usage-table-title
+  .quota-heading { display: none; }
+  caption { display: none; }
+}
+
+// =====================================================================
+//  4-stat key metrics row (Overview top — matches demo)
+// =====================================================================
+.mc-key-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 16px;
+  margin-bottom: 22px;
+
+  .mc-stat--key {
+    background: $mc-surface;
+    border: 1px solid $mc-border;
+    border-radius: 12px;
+    box-shadow: $mc-shadow;
+    padding: 16px 18px;
+    transition: box-shadow .15s ease, transform .15s ease;
+
+    &:hover {
+      box-shadow: 0 4px 16px rgba(15, 23, 42, .10);
+      transform: translateY(-1px);
+    }
+
+    .mc-stat-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .mc-stat-ic {
+      width: 42px;
+      height: 42px;
+      border-radius: 11px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+
+      &.mc-ic-1 { background: #dbeafe; color: #2563eb; }
+      &.mc-ic-2 { background: #ccfbf1; color: #0d9488; }
+      &.mc-ic-3 { background: #ede9fe; color: #7c3aed; }
+      &.mc-ic-4 { background: #fef3c7; color: #d97706; }
+    }
+
+    .mc-trend {
+      font-size: 12px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 20px;
+      background: #f1f5f9;
+      color: #64748b;
+
+      &.is-ok     { background: #dcfce7; color: #16a34a; }
+      &.is-warn   { background: #fef3c7; color: #d97706; }
+      &.is-danger { background: #fee2e2; color: #dc2626; }
+      &.mc-trend--nolimit { background: #f1f5f9; color: #94a3b8; }
+    }
+
+    .mc-stat-num {
+      font-size: 28px;
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -.6px;
+      color: $text-color;
+      margin-top: 14px;
+    }
+
+    .mc-stat-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: #64748b;
+      margin-top: 4px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+}

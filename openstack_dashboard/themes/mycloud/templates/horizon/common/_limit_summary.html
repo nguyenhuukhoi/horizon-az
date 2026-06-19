@@ -1,56 +1,63 @@
 {% comment %}
-  MyCloud theme override of horizon/common/_limit_summary.html
-  Renders project quota usage as modern "stat cards" (icon box + quota %
-  badge + big value), matching horizon_redesign_mockup.html. Theme-scoped
-  and view-logic-free: uses the existing `charts` context only.
+  MyCloud — Overview stat cards. Shows 4 key metrics in a single row,
+  matching horizon_redesign_mockup.html: Instances · vCPUs · RAM · Volumes
+  Accesses charts by position: compute = charts[0], volume = charts[1].
 {% endcomment %}
 {% load i18n horizon %}
 
 {% spaceless %}
-  <div class="quota-dynamic limit-summary mc-usage">
-    <h3 class="mc-section-title">{% trans "Limit Summary" %}</h3>
-    {% for section in charts %}
-      {% with si=forloop.counter %}
-      <h4 class="mc-group-title">{{ section.title }}</h4>
-      <div class="mc-stat-grid">
-        {% for chart in section.charts %}
+<div class="quota-dynamic limit-summary mc-key-stats">
+  {% for section in charts %}
+    {% if forloop.first %}
+      {# Compute: Instances (0), vCPUs (1), RAM (2) #}
+      {% for chart in section.charts %}
+        {% if forloop.counter <= 3 %}
           {% quotapercent chart.used chart.quota as pct %}
-          <div class="mc-stat">
+          <div class="mc-stat mc-stat--key">
             <div class="mc-stat-top">
-              <span class="mc-stat-ic mc-ic-{{ si }}">
-                {% if si == 1 %}
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v2M15 2v2M9 20v2M15 20v2M2 9h2M2 15h2M20 9h2M20 15h2"/></svg>
-                {% elif si == 2 %}
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 11v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg>
-                {% elif si == 3 %}
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="6" rx="1"/><rect x="2" y="16" width="6" height="6" rx="1"/><rect x="16" y="16" width="6" height="6" rx="1"/><path d="M12 8v4M5 16v-2h14v2"/></svg>
+              <span class="mc-stat-ic mc-ic-{{ forloop.counter }}">
+                {% if forloop.counter == 1 %}
+                  🖥
+                {% elif forloop.counter == 2 %}
+                  ⚙
                 {% else %}
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 3 7v10l9 5 9-5V7z"/><path d="M3 7l9 5 9-5M12 12v10"/></svg>
+                  ▥
                 {% endif %}
               </span>
               {% if chart.quota|quotainf != '-1' %}
-                <span class="mc-trend {% if pct >= 90 %}is-danger{% elif pct >= 75 %}is-warn{% else %}is-ok{% endif %}">{{ pct }}%</span>
+                <span class="mc-trend {% if pct >= 90 %}is-danger{% elif pct >= 75 %}is-warn{% else %}is-ok{% endif %}">{{ pct }}% {% trans "quota" %}</span>
               {% else %}
                 <span class="mc-trend mc-trend--nolimit">{% trans "No limit" %}</span>
               {% endif %}
             </div>
             <div class="mc-stat-num">{{ chart.used_display }}</div>
-            <div class="mc-stat-label" title="{{ chart.name }}">{{ chart.name }}</div>
-            <div class="mc-stat-sub">
-              {% if chart.quota|quotainf != '-1' %}
-                {% blocktrans trimmed with usedphrase=chart.text used=chart.used_display available=chart.quota_display %}
-                  {{ usedphrase }} {{ used }} of {{ available }}
-                {% endblocktrans %}
-              {% else %}
-                {% blocktrans trimmed with usedphrase=chart.text used=chart.used_display %}
-                  {{ usedphrase }} {{ used }} (No Limit)
-                {% endblocktrans %}
-              {% endif %}
+            <div class="mc-stat-label">
+              {{ chart.name }}{% if chart.quota|quotainf != '-1' %} / {{ chart.quota_display }}{% endif %}
             </div>
           </div>
-        {% endfor %}
-      </div>
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+    {% if forloop.counter == 2 %}
+      {# Volume: Volumes (0) #}
+      {% with chart=section.charts.0 %}
+        {% quotapercent chart.used chart.quota as pct %}
+        <div class="mc-stat mc-stat--key">
+          <div class="mc-stat-top">
+            <span class="mc-stat-ic mc-ic-4">⬡</span>
+            {% if chart.quota|quotainf != '-1' %}
+              <span class="mc-trend {% if pct >= 90 %}is-danger{% elif pct >= 75 %}is-warn{% else %}is-ok{% endif %}">{{ pct }}% {% trans "quota" %}</span>
+            {% else %}
+              <span class="mc-trend mc-trend--nolimit">{% trans "No limit" %}</span>
+            {% endif %}
+          </div>
+          <div class="mc-stat-num">{{ chart.used_display }}</div>
+          <div class="mc-stat-label">
+            {{ chart.name }}{% if chart.quota|quotainf != '-1' %} / {{ chart.quota_display }}{% endif %}
+          </div>
+        </div>
       {% endwith %}
-    {% endfor %}
-  </div>
+    {% endif %}
+  {% endfor %}
+</div>
 {% endspaceless %}
