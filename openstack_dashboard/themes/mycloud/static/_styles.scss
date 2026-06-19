@@ -54,6 +54,76 @@ body {
 }
 
 // =====================================================================
+//  Topbar — project + region pill selectors (matching demo)
+// =====================================================================
+.mc-topbar-pills {
+  display: flex !important;
+  align-items: center;
+  gap: 6px;
+  padding: 0 8px;
+
+  // Project context pill (wraps _context_selection.html dropdown)
+  .mc-ctx-pill {
+    > a.dropdown-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      height: 34px;
+      padding: 0 12px !important;
+      margin: 0 !important;
+      border: 1px solid $mc-border;
+      border-radius: 20px;
+      background: #fff;
+      color: $text-color;
+      font-size: 13px;
+      font-weight: 600;
+      line-height: 34px;
+      white-space: nowrap;
+      transition: border-color .12s, box-shadow .12s;
+
+      .fa { color: $brand-primary; font-size: 12px; }
+
+      &:hover {
+        border-color: $brand-primary;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, .10);
+        color: $text-color;
+        background: #fff;
+      }
+    }
+
+    // dropdown menu below
+    .dropdown-menu { margin-top: 4px; border-radius: 10px; }
+  }
+
+  // Static region pill (no dropdown, single region)
+  .mc-region-pill {
+    .mc-pill-static {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      height: 34px;
+      padding: 0 12px;
+      border: 1px solid $mc-border;
+      border-radius: 20px;
+      background: #fff;
+      color: $text-color;
+      font-size: 13px;
+      font-weight: 600;
+      white-space: nowrap;
+      cursor: default;
+
+      .mc-pill-icon { color: $brand-primary; font-size: 14px; }
+    }
+  }
+}
+
+// Right side of topbar
+.mc-topbar-right {
+  display: flex !important;
+  align-items: center;
+}
+
+// =====================================================================
 //  Sidebar — dark
 // =====================================================================
 #sidebar {

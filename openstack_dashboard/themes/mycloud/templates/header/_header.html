@@ -1,0 +1,49 @@
+{% load i18n %}
+
+{% spaceless %}
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      {% include "header/_brand.html" %}
+      <button id="sidebar-toggle" type="button" class="navbar-toggle pull-left">
+        <span class="sr-only">{% trans "Toggle navigation" %}</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+        <span class="sr-only">{% trans "Toggle navigation" %}</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+
+    <div class="collapse navbar-collapse" id="navbar-collapse">
+
+      {# Left: project context pill + region pill #}
+      <ul class="nav navbar-nav mc-topbar-pills">
+        {% include "header/_context_selection.html" %}
+        <li class="mc-region-pill">
+          <span class="mc-pill-static">
+            <span class="mc-pill-icon">◎</span>
+            RegionOne
+          </span>
+        </li>
+      </ul>
+
+      {# Right: user menu #}
+      <ul class="nav navbar-nav navbar-right mc-topbar-right">
+        <li id="extensible-header" class="extensible-header"></li>
+        {% if profiler_enabled %}
+          {% include "developer/profiler/_mode_picker.html" %}
+        {% endif %}
+        {% include "header/_keystone_provider_selection.html" %}
+        {% include "header/_user_menu.html" %}
+        {% include "header/_region_selection.html" %}
+      </ul>
+
+    </div>
+  </div>
+</nav>
+{% endspaceless %}
