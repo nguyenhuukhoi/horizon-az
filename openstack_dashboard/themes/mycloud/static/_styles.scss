@@ -81,7 +81,7 @@ body {
     white-space: nowrap;
     transition: border-color .12s, background .12s;
 
-    .fa, .mc-pill-icon { color: #94a3b8; font-size: 13px; }
+    .fa, .mc-pill-icon { color: #94a3b8 !important; font-size: 13px; }
 
     &:hover {
       border-color: darken($mc-border, 10%);
@@ -104,6 +104,22 @@ body {
     @extend %mc-pill;
     cursor: default;
     &:hover { border-color: $mc-border; background: $body-bg; }
+  }
+
+  // Replace heavy FA icon with lightweight ◎ character matching demo
+  .mc-ctx-pill > a .fa-list-alt {
+    font-family: inherit !important;
+    font-size: 15px;
+    color: #64748b !important;
+    &::before { content: "◎"; }
+  }
+
+  // Force muted color on carets and region icons
+  .mc-ctx-pill > a .fa-caret-down,
+  .mc-region-pill .fa,
+  .mc-region-pill .mc-pill-icon {
+    color: #64748b !important;
+    font-size: 13px;
   }
 }
 
