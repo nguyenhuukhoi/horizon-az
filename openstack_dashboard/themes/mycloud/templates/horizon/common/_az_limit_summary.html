@@ -1,59 +1,61 @@
 {% comment %}
-  MyCloud theme override of horizon/common/_az_limit_summary.html
-  Renders the custom AZ-usage data as a panel of per-AZ cards with
-  labelled meter rows, matching horizon_redesign_mockup.html. The
-  az_usage_enabled flag, az_charts data and "no data" branch are
-  preserved unchanged (theme-scoped, no view/logic changes).
+  MyCloud override — AZ panel matching horizon_redesign_interactive.html demo:
+  • Status badge (Healthy/Busy/Full) per AZ card based on max compute utilisation
+  • Only COMPUTE metrics shown (vCPU, RAM, Instances) — no Volume clutter
+  • Bar color follows per-metric %, dot/badge color follows worst metric
 {% endcomment %}
 {% load i18n horizon %}
 
 {% spaceless %}
   {% if az_usage_enabled %}
-    <div class="quota-dynamic az-limit-summary mc-usage">
-      <div class="mc-panel">
+    <div class="quota-dynamic az-limit-summary">
+      <div class="mc-panel" style="margin-bottom: 22px;">
         <div class="mc-panel-head">
           <div>
-            <h2 class="mc-panel-title">{% trans "Usage by Availability Zone" %}</h2>
-            <div class="mc-panel-sub">{% trans "Resource usage broken down per availability zone" %}</div>
+            <h2 class="mc-panel-title">{% trans "Availability Zone" %} — {% trans "Usage" %}</h2>
+            <div class="mc-panel-sub">{% trans "vCPU / RAM / Instances breakdown per AZ" %}</div>
           </div>
+          <a href="{% url 'horizon:project:instances:index' %}" class="btn btn-default btn-sm mc-btn-ghost">{% trans "Details" %}</a>
         </div>
         <div class="mc-panel-body">
           {% if az_charts %}
             <div class="mc-az-grid">
               {% for az in az_charts %}
-                <div class="mc-az-card">
-                  <div class="mc-az-h">
-                    <div class="mc-az-name-inline">
-                      <span class="mc-az-dot"></span>{{ az.zone }}
+                {% with cs=az.charts.0 %}
+                  {# Percentages for the 3 key compute metrics #}
+                  {% quotapercent cs.charts.0.used cs.charts.0.quota as p0 %}
+                  {% quotapercent cs.charts.1.used cs.charts.1.quota as p1 %}
+                  {% quotapercent cs.charts.2.used cs.charts.2.quota as p2 %}
+
+                  <div class="mc-az-card">
+                    <div class="mc-az-h">
+                      <div class="mc-az-name-inline">
+                        <span class="mc-az-dot {% if p0 >= 90 or p1 >= 90 or p2 >= 90 %}is-danger{% elif p0 >= 75 or p1 >= 75 or p2 >= 75 %}is-warn{% else %}is-ok{% endif %}"></span>
+                        {{ az.zone }}
+                      </div>
+                      <span class="mc-az-badge {% if p0 >= 90 or p1 >= 90 or p2 >= 90 %}mc-az-badge--danger{% elif p0 >= 75 or p1 >= 75 or p2 >= 75 %}mc-az-badge--warn{% else %}mc-az-badge--ok{% endif %}">
+                        {% if p0 >= 90 or p1 >= 90 or p2 >= 90 %}{% trans "Full" %}{% elif p0 >= 75 or p1 >= 75 or p2 >= 75 %}{% trans "Busy" %}{% else %}{% trans "Healthy" %}{% endif %}
+                      </span>
                     </div>
-                  </div>
-                  {% for section in az.charts %}
-                    <div class="mc-az-group">{{ section.title }}</div>
-                    {% for chart in section.charts %}
+
+                    {# Only render the COMPUTE section charts #}
+                    {% for chart in cs.charts %}
                       {% quotapercent chart.used chart.quota as pct %}
                       <div class="mc-meter-row">
                         <div class="ml">
-                          <span class="mc-meter-name" title="{{ chart.name }}">{{ chart.name }}</span>
+                          <span class="mc-meter-name">{{ chart.name }}</span>
                           <span class="mc-meter-val">
-                            {% if chart.quota|quotainf != '-1' %}
-                              {{ chart.used_display }} / {{ chart.quota_display }}
-                            {% else %}
-                              {{ chart.used_display }} · {% trans "No limit" %}
-                            {% endif %}
+                            {% if chart.quota|quotainf != '-1' %}{{ chart.used_display }} / {{ chart.quota_display }}{% else %}{{ chart.used_display }}{% endif %}
                           </span>
                         </div>
-                        {% if chart.quota|quotainf != '-1' %}
-                          <div class="mc-meter">
-                            <i class="{% if pct >= 90 %}is-danger{% elif pct >= 75 %}is-warn{% else %}is-ok{% endif %}"
-                               style="width: {{ pct }}%"></i>
-                          </div>
-                        {% else %}
-                          <div class="mc-meter mc-meter--nolimit"><i class="is-ok" style="width: 6%"></i></div>
-                        {% endif %}
+                        <div class="mc-meter">
+                          <i class="{% if pct >= 90 %}is-danger{% elif pct >= 75 %}is-warn{% else %}is-ok{% endif %}"
+                             style="width: {{ pct }}%"></i>
+                        </div>
                       </div>
                     {% endfor %}
-                  {% endfor %}
-                </div>
+                  </div>
+                {% endwith %}
               {% endfor %}
             </div>
           {% else %}
