@@ -6,11 +6,11 @@
 <div class="mc-page-head">
   <div>
     <h1 class="mc-page-title">{% trans "Overview" %}</h1>
-    <p class="mc-page-sub">{% trans "Project" %} {{ request.user.project_name }} &middot; RegionOne</p>
+    <p class="mc-page-sub">{{ request.user.project_name }} &middot; RegionOne</p>
   </div>
   <div class="mc-page-actions">
-    <a href="?format=csv" class="btn btn-default btn-sm mc-btn-ghost">
-      {% trans "Export" %}
+    <a href="{% url 'horizon:project:instances:index' %}" class="btn btn-default btn-sm mc-btn-ghost">
+      {% trans "Instances" %}
     </a>
     <a href="{% url 'horizon:project:instances:index' %}" class="btn btn-primary btn-sm">
       + {% trans "Launch Instance" %}
@@ -54,9 +54,6 @@
   <div class="mc-usage-table">
     <div class="mc-usage-table-head">
       <span class="mc-usage-table-title">{% trans "Recent Instances" %}</span>
-      <a href="{% url 'horizon:project:instances:index' %}" class="btn btn-default btn-xs mc-btn-ghost" style="margin-left:auto">
-        {% trans "View All" %}
-      </a>
     </div>
     {{ table.render }}
   </div>
