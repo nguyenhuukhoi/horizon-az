@@ -760,16 +760,66 @@ dl.dl-horizontal dt {
   flex-shrink: 0;
 }
 
-// Navbar: push left edge to sidebar width, hide bootstrap brand (shown in sidebar)
+// Navbar: push left edge to sidebar width, proper flex alignment matching demo
 .navbar.navbar-default.navbar-fixed-top {
   left: $sidebar-width;
   right: 0;
   width: auto;
+  min-height: $navbar-height;
 
   .navbar-brand { display: none; }
-
-  // Make the sidebar-toggle button invisible (sidebar is always visible)
   #sidebar-toggle { display: none; }
+
+  // Turn container into a true flex row — pills left, user right, vertically centered
+  .container-fluid {
+    display: flex;
+    align-items: center;
+    height: $navbar-height;
+    padding: 0 20px;
+  }
+
+  // Collapse wrapper: flex row, stretch full width
+  .navbar-collapse {
+    display: flex !important;
+    align-items: center;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    box-shadow: none;
+  }
+
+  // Left pill group
+  .mc-topbar-pills.navbar-nav {
+    display: flex !important;
+    align-items: center;
+    float: none;
+    margin: 0;
+    padding: 0;
+    gap: 8px;
+    flex-shrink: 0;
+
+    > li {
+      display: flex !important;
+      align-items: center;
+      float: none;
+    }
+  }
+
+  // Right user group — push to far right
+  .mc-topbar-right.navbar-nav {
+    display: flex !important;
+    align-items: center;
+    float: none;
+    margin-left: auto;
+    padding: 0;
+    gap: 4px;
+
+    > li {
+      display: flex !important;
+      align-items: center;
+      float: none;
+    }
+  }
 }
 
 // #content_body already has padding-left: $sidebar-width via _layout.scss
