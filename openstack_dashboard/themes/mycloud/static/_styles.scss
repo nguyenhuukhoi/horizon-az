@@ -646,7 +646,7 @@ dl.dl-horizontal dt {
 
 .mc-quota-row {
   display: grid;
-  grid-template-columns: minmax(112px, 1.5fr) minmax(48px, .9fr) auto 38px;
+  grid-template-columns: minmax(112px, 1.5fr) minmax(48px, .9fr) auto;
   align-items: center;
   gap: 10px;
   padding: 9px 0;
@@ -673,20 +673,6 @@ dl.dl-horizontal dt {
 }
 
 .mc-quota-den {
-  color: #94a3b8;
-}
-
-.mc-quota-pct {
-  color: #64748b;
-  font-size: 12.5px;
-  font-weight: 700;
-  text-align: right;
-  white-space: nowrap;
-
-  &.is-hi { color: $brand-danger; }
-}
-
-.mc-quota-pct--nolimit {
   color: #94a3b8;
 }
 

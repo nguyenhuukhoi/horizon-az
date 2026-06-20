@@ -1,7 +1,7 @@
 {% comment %}
   MyCloud v2 - Limit Summary panel.
-  Render Horizon quota sections as 4-column usage rows:
-  name | meter | used/limit | percent.
+  Render Horizon quota sections as 3-column usage rows:
+  name | meter | used/limit.
 {% endcomment %}
 {% load i18n horizon %}
 
@@ -40,11 +40,6 @@
                   <span class="mc-quota-val">
                     {{ chart.used_display }}{% if chart.quota|quotainf != '-1' %} <span class="mc-quota-den">/ {{ chart.quota_display }}</span>{% endif %}
                   </span>
-                  {% if chart.quota|quotainf != '-1' %}
-                    <span class="mc-quota-pct {% if pct >= 90 %}is-hi{% endif %}">{{ pct }}%</span>
-                  {% else %}
-                    <span class="mc-quota-pct mc-quota-pct--nolimit">&infin;</span>
-                  {% endif %}
                 </div>
               {% endfor %}
             </div>
