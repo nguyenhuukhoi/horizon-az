@@ -162,8 +162,8 @@ body {
     color: $mc-side-fg;
     border: 0 !important;
     border-radius: 8px !important;
-    margin: 2px 8px !important;
-    padding: 9px 14px !important;
+    margin: 2px 4px !important;
+    padding: 8px 12px !important;
     font-weight: 500;
     transition: background .12s ease, color .12s ease;
   }
@@ -224,6 +224,39 @@ body {
   .openstack-toggle.fa {
     color: #94a3b8;
     opacity: .7;
+
+    // Chevron icon: down when expanded, right when collapsed
+    &::before {
+      content: '\f078';
+      font-family: 'Font Awesome 6 Free';
+      font-weight: 900;
+      font-size: 11px;
+    }
+  }
+
+  // Collapsed state: chevron points right
+  a.collapsed .openstack-toggle.fa::before {
+    content: '\f054';
+  }
+
+  // Group body indent — matches design .grp-body
+  .openstack-panel-group .list-group {
+    border-left: 1px solid rgba(255, 255, 255, .06);
+    overflow: hidden;
+    margin-left: 12px;
+    padding-left: 4px;
+  }
+
+  // Count badge on panel items
+  .list-group-item .badge {
+    margin-left: auto;
+    float: right;
+    background: rgba(255, 255, 255, .14);
+    color: #fff;
+    font-size: 11px;
+    padding: 1px 7px;
+    border-radius: 20px;
+    font-weight: 700;
   }
 }
 
@@ -494,6 +527,7 @@ dl.dl-horizontal dt {
 
 // ---- AZ panel ----
 .mc-panel {
+  margin-bottom: 22px;
   background: $mc-surface;
   border: 1px solid $mc-border;
   border-radius: 12px;
@@ -504,7 +538,7 @@ dl.dl-horizontal dt {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 16px 20px;
+    padding: 14px 18px;
     border-bottom: 1px solid $mc-border;
   }
 
@@ -521,7 +555,7 @@ dl.dl-horizontal dt {
     margin-top: 2px;
   }
 
-  .mc-panel-body { padding: 20px; }
+  .mc-panel-body { padding: 18px; }
 }
 
 .mc-az-grid {
@@ -545,7 +579,7 @@ dl.dl-horizontal dt {
 .mc-az-card {
   border: 1px solid $mc-border;
   border-radius: 10px;
-  padding: 16px;
+  padding: 16px 16px 18px;
 
   .mc-az-h {
     display: flex;
@@ -602,7 +636,7 @@ dl.dl-horizontal dt {
   .ml {
     display: flex;
     justify-content: space-between;
-    font-size: 12.5px;
+    font-size: 13.5px;
     margin-bottom: 5px;
     gap: 8px;
   }
@@ -620,7 +654,7 @@ dl.dl-horizontal dt {
 
 // shared meter bar (AZ rows)
 .mc-meter {
-  height: 8px;
+  height: 7px;
   background: #eef2f6;
   border-radius: 20px;
   overflow: hidden;
@@ -939,6 +973,19 @@ dl.dl-horizontal dt {
 
 // #content_body already has padding-left: $sidebar-width via _layout.scss
 // Do NOT add it to #main_content — that pushes the fixed sidebar off-screen
+
+// Content area padding to match design .content{padding:22px 26px 50px}
+#content_body > .container-fluid > .row > .col-xs-12 {
+  padding-top: 22px;
+  padding-left: 26px;
+  padding-right: 26px;
+  padding-bottom: 50px;
+}
+
+// Empty breadcrumb wrapper should not take up space
+.page-breadcrumb:empty {
+  display: none;
+}
 
 // User avatar: circle with initials
 .mc-user-avatar {
