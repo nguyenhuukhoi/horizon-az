@@ -2,4 +2,12 @@
   <li class="mc-region-pill dropdown">
     {% include "horizon/common/_region_selector.html" %}
   </li>
+{% else %}
+  <li class="mc-region-pill mc-region-pill-static">
+    <span class="mc-pill-static">
+      <span class="fa fa-clock-o"></span>
+      {{ request.user.services_region|default:"RegionOne" }}
+      <span class="fa fa-caret-down"></span>
+    </span>
+  </li>
 {% endif %}

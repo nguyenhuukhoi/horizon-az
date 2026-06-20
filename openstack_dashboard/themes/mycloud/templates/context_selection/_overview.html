@@ -1,0 +1,19 @@
+{% load i18n %}
+
+<span class="fa fa-cube"></span>
+<span class="context-overview">
+  {% if domain_supported %}
+    <span class="context-domain">{{ domain_name }}</span>
+    <span class="context-delimiter">&middot;</span>
+  {% endif %}
+  {% if project_name %}
+    <span class="context-project">{{ project_name }}</span>
+  {% endif %}
+  {% if multi_region %}
+    <span class="context-delimiter">&middot;</span>
+    <span class="context-region">{{ region_name }}</span>
+  {% endif %}
+  {% if system_scoped %}
+    <span class="context-system">{% trans "system scope" %}</span>
+  {% endif %}
+</span>
