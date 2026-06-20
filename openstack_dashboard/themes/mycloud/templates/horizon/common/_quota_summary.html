@@ -27,7 +27,7 @@
                     {% if chart.type == "ram" %}
                       {% trans "RAM (GB)" %}
                     {% elif chart.type == "gigabytes" %}
-                      {% trans "Storage (TB)" %}
+                      {% trans "Storage (GB)" %}
                     {% elif chart.type == "security_group_rule" %}
                       {% trans "SG Rules" %}
                     {% else %}
@@ -38,7 +38,11 @@
                     <i class="{% if pct >= 90 %}is-danger{% elif pct >= 75 %}is-warn{% else %}is-ok{% endif %}" style="width: {{ pct }}%"></i>
                   </div>
                   <span class="mc-quota-val">
-                    {{ chart.used_display }}{% if chart.quota|quotainf != '-1' %} <span class="mc-quota-den">/ {{ chart.quota_display }}</span>{% endif %}
+                    {% if chart.type == "gigabytes" %}
+                      {{ chart.used|floatformat:0 }}{% if chart.quota|quotainf != '-1' %} <span class="mc-quota-den">/ {{ chart.quota|floatformat:0 }} GB</span>{% else %} GB{% endif %}
+                    {% else %}
+                      {{ chart.used_display }}{% if chart.quota|quotainf != '-1' %} <span class="mc-quota-den">/ {{ chart.quota_display }}</span>{% endif %}
+                    {% endif %}
                   </span>
                 </div>
               {% endfor %}

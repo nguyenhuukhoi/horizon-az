@@ -43,7 +43,11 @@
                                 {% if chart.type == 'cores' %}{% trans "vCPU" %}{% elif chart.type == 'ram' %}{% trans "RAM" %}{% elif chart.type == 'gigabytes' %}{% trans "Storage" %}{% else %}{{ chart.name }}{% endif %}
                               </span>
                               <span class="mc-meter-val">
-                                {% if chart.quota|quotainf != '-1' %}{{ chart.used_display }} / {{ chart.quota_display }}{% else %}{{ chart.used_display }}{% endif %}
+                                {% if chart.type == 'gigabytes' %}
+                                  {% if chart.quota|quotainf != '-1' %}{{ chart.used|floatformat:0 }} / {{ chart.quota|floatformat:0 }} GB{% else %}{{ chart.used|floatformat:0 }} GB{% endif %}
+                                {% else %}
+                                  {% if chart.quota|quotainf != '-1' %}{{ chart.used_display }} / {{ chart.quota_display }}{% else %}{{ chart.used_display }}{% endif %}
+                                {% endif %}
                               </span>
                             </div>
                             <div class="mc-meter">

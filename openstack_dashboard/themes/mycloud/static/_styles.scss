@@ -1195,11 +1195,15 @@ dl.dl-horizontal dt {
       font-size: 18px;
       flex-shrink: 0;
 
+      svg { width: 22px; height: 22px; }
+
       &.mc-ic-1 { background: #dbeafe; color: #2563eb; }
       &.mc-ic-2 { background: #ccfbf1; color: #0d9488; }
       &.mc-ic-3 { background: #ede9fe; color: #7c3aed; }
       &.mc-ic-4 { background: #fef3c7; color: #d97706; }
     }
+
+    .mc-stat-num small { font-size: 14px; font-weight: 600; color: #94a3b8; }
 
     .mc-trend {
       display: inline-flex;
