@@ -1,8 +1,11 @@
 {% comment %}
-  MyCloud override — AZ panel matching horizon_redesign_interactive.html demo:
-  • Status badge (Healthy/Busy/Full) per AZ card based on max compute utilisation
-  • Only COMPUTE metrics shown (vCPU, RAM, Instances) — no Volume clutter
-  • Bar color follows per-metric %, dot/badge color follows worst metric
+  MyCloud override — "Usage by Availability Zone" panel matching
+  horizon_redesign_interactive_v2.html demo:
+  • Status badge (Healthy/Busy/Full) per AZ based on worst of vCPU/RAM utilisation
+  • Metrics shown per AZ: vCPU, RAM, Storage  (Instances row removed)
+  • Bar colour follows per-metric %, dot/badge colour follows worst metric
+  Charts carry a `type` (quota_key) so we select cores/ram/gigabytes directly,
+  independent of section ordering (see openstack_dashboard/usage/az.py).
 {% endcomment %}
 {% load i18n horizon %}
 
@@ -12,8 +15,7 @@
       <div class="mc-panel" style="margin-bottom: 22px;">
         <div class="mc-panel-head">
           <div>
-            <h2 class="mc-panel-title">{% trans "Availability Zone" %} — {% trans "Usage" %}</h2>
-            <div class="mc-panel-sub">{% trans "vCPU / RAM / Instances breakdown per AZ" %}</div>
+            <h2 class="mc-panel-title">{% trans "Usage by Availability Zone" %}</h2>
           </div>
           <a href="{% url 'horizon:project:instances:index' %}" class="btn btn-default btn-sm mc-btn-ghost">{% trans "Details" %}</a>
         </div>
@@ -21,38 +23,41 @@
           {% if az_charts %}
             <div class="mc-az-grid">
               {% for az in az_charts %}
-                {% with cs=az.charts.0 %}
-                  {# Percentages for the 3 key compute metrics #}
-                  {% quotapercent cs.charts.0.used cs.charts.0.quota as p0 %}
-                  {% quotapercent cs.charts.1.used cs.charts.1.quota as p1 %}
-                  {% quotapercent cs.charts.2.used cs.charts.2.quota as p2 %}
+                {% with comp=az.charts.0 %}
+                  {# Status badge from the two always-present compute metrics #}
+                  {% quotapercent comp.charts.1.used comp.charts.1.quota as pv %}
+                  {% quotapercent comp.charts.2.used comp.charts.2.quota as pr %}
 
                   <div class="mc-az-card">
                     <div class="mc-az-h">
                       <div class="mc-az-name-inline">
-                        <span class="mc-az-dot {% if p0 >= 90 or p1 >= 90 or p2 >= 90 %}is-danger{% elif p0 >= 75 or p1 >= 75 or p2 >= 75 %}is-warn{% else %}is-ok{% endif %}"></span>
+                        <span class="mc-az-dot {% if pv >= 90 or pr >= 90 %}is-danger{% elif pv >= 75 or pr >= 75 %}is-warn{% else %}is-ok{% endif %}"></span>
                         {{ az.zone }}
                       </div>
-                      <span class="mc-az-badge {% if p0 >= 90 or p1 >= 90 or p2 >= 90 %}mc-az-badge--danger{% elif p0 >= 75 or p1 >= 75 or p2 >= 75 %}mc-az-badge--warn{% else %}mc-az-badge--ok{% endif %}">
-                        {% if p0 >= 90 or p1 >= 90 or p2 >= 90 %}{% trans "Full" %}{% elif p0 >= 75 or p1 >= 75 or p2 >= 75 %}{% trans "Busy" %}{% else %}{% trans "Healthy" %}{% endif %}
+                      <span class="mc-az-badge {% if pv >= 90 or pr >= 90 %}mc-az-badge--danger{% elif pv >= 75 or pr >= 75 %}mc-az-badge--warn{% else %}mc-az-badge--ok{% endif %}">
+                        {% if pv >= 90 or pr >= 90 %}{% trans "Full" %}{% elif pv >= 75 or pr >= 75 %}{% trans "Busy" %}{% else %}{% trans "Healthy" %}{% endif %}
                       </span>
                     </div>
 
-                    {# Only render the COMPUTE section charts #}
-                    {% for chart in cs.charts %}
-                      {% quotapercent chart.used chart.quota as pct %}
-                      <div class="mc-meter-row">
-                        <div class="ml">
-                          <span class="mc-meter-name">{{ chart.name }}</span>
-                          <span class="mc-meter-val">
-                            {% if chart.quota|quotainf != '-1' %}{{ chart.used_display }} / {{ chart.quota_display }}{% else %}{{ chart.used_display }}{% endif %}
-                          </span>
-                        </div>
-                        <div class="mc-meter">
-                          <i class="{% if pct >= 90 %}is-danger{% elif pct >= 75 %}is-warn{% else %}is-ok{% endif %}"
-                             style="width: {{ pct }}%"></i>
-                        </div>
-                      </div>
+                    {# vCPU, RAM, Storage — selected by chart.type across sections #}
+                    {% for section in az.charts %}
+                      {% for chart in section.charts %}
+                        {% if chart.type == 'cores' or chart.type == 'ram' or chart.type == 'gigabytes' %}
+                          {% quotapercent chart.used chart.quota as pct %}
+                          <div class="mc-meter-row">
+                            <div class="ml">
+                              <span class="mc-meter-name">{% if chart.type == 'gigabytes' %}{% trans "Storage" %}{% else %}{{ chart.name }}{% endif %}</span>
+                              <span class="mc-meter-val">
+                                {% if chart.quota|quotainf != '-1' %}{{ chart.used_display }} / {{ chart.quota_display }}{% else %}{{ chart.used_display }}{% endif %}
+                              </span>
+                            </div>
+                            <div class="mc-meter">
+                              <i class="{% if pct >= 90 %}is-danger{% elif pct >= 75 %}is-warn{% else %}is-ok{% endif %}"
+                                 style="width: {{ pct }}%"></i>
+                            </div>
+                          </div>
+                        {% endif %}
+                      {% endfor %}
                     {% endfor %}
                   </div>
                 {% endwith %}

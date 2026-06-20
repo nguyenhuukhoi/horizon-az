@@ -1,7 +1,9 @@
 {% comment %}
-  MyCloud — Overview stat cards. Shows 4 key metrics in a single row,
-  matching horizon_redesign_mockup.html: Instances · vCPUs · RAM · Volumes
-  Accesses charts by position: compute = charts[0], volume = charts[1].
+  MyCloud — Overview KPI stat cards (single row), matching
+  horizon_redesign_interactive_v2.html: Instances · vCPUs · RAM · Storage.
+  Compute = charts[0] (Instances, vCPUs, RAM); Volume = charts[1]
+  (4th card uses the gigabytes/"Storage" chart, not the volume count).
+  Icons are inline stroke SVG (no emoji) — coloured via .mc-ic-N.
 {% endcomment %}
 {% load i18n horizon %}
 
@@ -17,11 +19,11 @@
             <div class="mc-stat-top">
               <span class="mc-stat-ic mc-ic-{{ forloop.counter }}">
                 {% if forloop.counter == 1 %}
-                  🖥
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/></svg>
                 {% elif forloop.counter == 2 %}
-                  ⚙
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v2M15 2v2M9 20v2M15 20v2M2 9h2M2 15h2M20 9h2M20 15h2"/></svg>
                 {% else %}
-                  ▥
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="9" rx="1.5"/><path d="M7 16v2M12 16v2M17 16v2M7 11v1M12 11v1M17 11v1"/></svg>
                 {% endif %}
               </span>
               {% if chart.quota|quotainf != '-1' %}
@@ -39,12 +41,14 @@
       {% endfor %}
     {% endif %}
     {% if forloop.counter == 2 %}
-      {# Volume: Volumes (0) #}
-      {% with chart=section.charts.0 %}
+      {# Volume: 4th card = Storage (gigabytes), charts.2 #}
+      {% with chart=section.charts.2 %}
         {% quotapercent chart.used chart.quota as pct %}
         <div class="mc-stat mc-stat--key">
           <div class="mc-stat-top">
-            <span class="mc-stat-ic mc-ic-4">⬡</span>
+            <span class="mc-stat-ic mc-ic-4">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.6 3.6 3 8 3s8-1.4 8-3V5"/><path d="M4 12c0 1.6 3.6 3 8 3s8-1.4 8-3"/></svg>
+            </span>
             {% if chart.quota|quotainf != '-1' %}
               <span class="mc-trend {% if pct >= 90 %}is-danger{% elif pct >= 75 %}is-warn{% else %}is-ok{% endif %}">{{ pct }}% {% trans "quota" %}</span>
             {% else %}
@@ -53,7 +57,7 @@
           </div>
           <div class="mc-stat-num">{{ chart.used_display }}</div>
           <div class="mc-stat-label">
-            {{ chart.name }}{% if chart.quota|quotainf != '-1' %} / {{ chart.quota_display }}{% endif %}
+            {% trans "Storage" %}{% if chart.quota|quotainf != '-1' %} / {{ chart.quota_display }}{% endif %}
           </div>
         </div>
       {% endwith %}
