@@ -46,6 +46,25 @@
       overflow: hidden !important;
     }
 
+    /* Uniform sidebar colour: force every container transparent over the
+       single navy base so an open dashboard panel doesn't look lighter
+       (guards against a stale compiled bg on .panel/.panel-collapse). */
+    #sidebar { background: #0f172a !important; }
+    #sidebar .panel,
+    #sidebar .panel-default,
+    #sidebar .panel-group,
+    #sidebar .panel-collapse,
+    #sidebar .panel-body,
+    #sidebar .list-group,
+    #sidebar #sidebar-accordion,
+    #sidebar .openstack-dashboard,
+    #sidebar .openstack-panel-group,
+    #sidebar .well {
+      background: transparent !important;
+      background-color: transparent !important;
+      box-shadow: none !important;
+    }
+
     /* Global page header + breadcrumb — match the Overview/mockup style on
        every page. Kept here (served fresh) so it works even when the
        compiled theme CSS is stale. */
