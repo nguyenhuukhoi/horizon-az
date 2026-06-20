@@ -902,6 +902,15 @@ dl.dl-horizontal dt {
   overflow-x: hidden;
 }
 
+// Pin the search bar at the top while the rows scroll under it.
+.modal .transfer-available .hz-dynamic-table-preamble {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  background: #fff;
+  padding-bottom: 4px;
+}
+
 // =====================================================================
 //  Layout — sidebar full-height, navbar confined to right column
 // =====================================================================
