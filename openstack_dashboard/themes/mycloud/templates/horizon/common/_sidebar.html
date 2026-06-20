@@ -1,6 +1,15 @@
 {% load branding horizon i18n %}
 
 <nav id="sidebar">
+  <style>
+    #sidebar .openstack-dashboard > .panel-collapse > .list-group,
+    #sidebar .openstack-panel-group .list-group {
+      border-left: 1px solid rgba(255, 255, 255, .06) !important;
+      margin-left: 12px !important;
+      padding-left: 4px !important;
+      overflow: hidden !important;
+    }
+  </style>
   <a class="mc-sidebar-brand" href="{% site_branding_link %}" target="_self">
     <span class="mc-brand-logo"><span class="fa fa-cloud"></span></span>
     MyCloud

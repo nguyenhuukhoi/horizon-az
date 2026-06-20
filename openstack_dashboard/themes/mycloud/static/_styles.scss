@@ -259,11 +259,12 @@ body {
   }
 
   // Group body indent — matches design .grp-body
+  .openstack-dashboard > .panel-collapse > .list-group,
   .openstack-panel-group .list-group {
     border-left: 1px solid rgba(255, 255, 255, .06);
     overflow: hidden;
-    margin-left: 12px;
-    padding-left: 4px;
+    margin-left: 12px !important;
+    padding-left: 4px !important;
   }
 
   // Count badge on panel items
