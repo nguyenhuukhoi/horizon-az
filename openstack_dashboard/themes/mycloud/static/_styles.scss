@@ -893,6 +893,15 @@ dl.dl-horizontal dt {
   overflow-x: hidden;
 }
 
+// Long "Available"/"Allocated" lists scroll inside their own box so the
+// rest of the step (description, Allocated heading) stays fixed.
+.modal .transfer-available,
+.modal .transfer-allocated {
+  max-height: 36vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
 // =====================================================================
 //  Layout — sidebar full-height, navbar confined to right column
 // =====================================================================
