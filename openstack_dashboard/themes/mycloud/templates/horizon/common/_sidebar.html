@@ -140,12 +140,15 @@
       overflow-y: auto;
       overflow-x: hidden;
     }
-    /* Pin the search bar at the top while the rows scroll under it. */
-    .modal .transfer-available .hz-dynamic-table-preamble {
+    /* Pin the search bar at the top while the rows scroll under it.
+       The .row (not the preamble) must be sticky: its containing block
+       spans the whole list, so it can stay pinned over the table. */
+    .modal .transfer-available .hz-magic-search-context > .row {
       position: sticky;
       top: 0;
       z-index: 3;
       background: #fff;
+      margin: 0;
       padding-bottom: 4px;
     }
   </style>
