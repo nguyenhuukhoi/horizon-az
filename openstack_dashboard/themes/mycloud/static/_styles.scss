@@ -251,6 +251,7 @@ body {
     margin-left: auto;
     color: #94a3b8;
     opacity: .7;
+    transform: none !important;
 
     // Chevron icon: down when expanded, right when collapsed
     &::before {
@@ -262,6 +263,11 @@ body {
   }
 
   // Collapsed state: chevron points right
+  .collapsed > .openstack-toggle.fa,
+  a.collapsed .openstack-toggle.fa {
+    transform: none !important;
+  }
+
   a.collapsed .openstack-toggle.fa::before {
     content: '\f054';
   }

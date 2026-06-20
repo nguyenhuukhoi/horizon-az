@@ -16,6 +16,16 @@
     #sidebar .openstack-toggle.fa {
       float: none !important;
       margin-left: auto !important;
+      transform: none !important;
+    }
+
+    #sidebar .collapsed > .openstack-toggle.fa,
+    #sidebar a.collapsed .openstack-toggle.fa {
+      transform: none !important;
+    }
+
+    #sidebar a.collapsed .openstack-toggle.fa::before {
+      content: '\f054' !important;
     }
 
     #sidebar .openstack-dashboard > .panel-collapse > .list-group,
