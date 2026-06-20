@@ -46,6 +46,15 @@
       overflow: hidden !important;
     }
 
+    /* Promote the fixed sidebar to its own GPU layer so heavy content
+       repaints (e.g. the Angular Launch Instance wizard) don't repaint the
+       sidebar + its SVG icons — fixes the lag while moving between steps. */
+    #sidebar {
+      transform: translateZ(0);
+      backface-visibility: hidden;
+      will-change: transform;
+    }
+
     /* Uniform sidebar colour: force every container transparent over the
        single navy base so an open dashboard panel doesn't look lighter
        (guards against a stale compiled bg on .panel/.panel-collapse). */
@@ -63,6 +72,25 @@
       background: transparent !important;
       background-color: transparent !important;
       box-shadow: none !important;
+    }
+
+    /* Dashboard headers (PROJECT/ADMIN/IDENTITY) consistent with group
+       headers (Compute/Volumes/Network): same muted colour and NO
+       click/hover highlight (they are collapsible section labels, not
+       selectable items). */
+    #sidebar .openstack-dashboard > a,
+    #sidebar .openstack-panel-group > a {
+      color: #94a3b8 !important;
+    }
+    #sidebar .openstack-dashboard > a:hover,
+    #sidebar .openstack-dashboard > a:focus,
+    #sidebar .openstack-dashboard > a:active,
+    #sidebar .openstack-panel-group > a:hover,
+    #sidebar .openstack-panel-group > a:focus,
+    #sidebar .openstack-panel-group > a:active {
+      background: transparent !important;
+      box-shadow: none !important;
+      color: #cbd5e1 !important;
     }
 
     /* Global page header + breadcrumb — match the Overview/mockup style on
