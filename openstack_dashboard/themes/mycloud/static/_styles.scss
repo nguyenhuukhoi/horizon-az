@@ -881,6 +881,16 @@ dl.dl-horizontal dt {
 // .modal-body — the Angular Launch Instance wizard measures element heights
 // (magic-search / transfer tables), and overriding them triggers a reflow
 // loop that lags or freezes the UI. Leave the wizard layout to Angular.
+//
+// Safe alternative: cap only the leaf transfer-table lists so a long list
+// (e.g. the Flavor "Available" table) scrolls internally instead of pushing
+// the modal off-screen. This does not touch the wizard/modal flex chain.
+.modal .transfer-available,
+.modal .transfer-allocated {
+  max-height: 40vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
 
 // =====================================================================
 //  Layout — sidebar full-height, navbar confined to right column
