@@ -499,7 +499,7 @@ dl.dl-horizontal dt {
   .mc-stat-ic {
     width: 42px;
     height: 42px;
-    border-radius: 11px;
+    border-radius: 12px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -1293,7 +1293,7 @@ dl.dl-horizontal dt {
     .mc-stat-ic {
       width: 42px;
       height: 42px;
-      border-radius: 11px;
+      border-radius: 12px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -1308,7 +1308,7 @@ dl.dl-horizontal dt {
       &.mc-ic-4 { background: #fef3c7; color: #d97706; }
     }
 
-    .mc-stat-num small { font-size: 14px; font-weight: 600; color: #94a3b8; }
+    .mc-stat-num small { font-size: 14px; font-weight: 600; color: #64748b; }
 
     .mc-trend {
       display: inline-flex;
