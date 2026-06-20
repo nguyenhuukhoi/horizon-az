@@ -877,21 +877,10 @@ dl.dl-horizontal dt {
   }
 }
 
-// Launch Instance & other ng-wizard modals: cap the height to the viewport
-// and scroll the body internally so the footer/buttons stay on screen even
-// when a step (e.g. Flavor) has a long table.
-.modal-content > .ng-wizard {
-  display: flex;
-  flex-direction: column;
-  max-height: calc(100vh - 56px);
-}
-.ng-wizard > .modal-header,
-.ng-wizard > .modal-footer { flex: 0 0 auto; }
-.ng-wizard > .modal-body {
-  flex: 1 1 auto;
-  min-height: 0;
-  overflow-y: auto;
-}
+// NOTE: do NOT force flex/max-height/overflow on .ng-wizard or its
+// .modal-body — the Angular Launch Instance wizard measures element heights
+// (magic-search / transfer tables), and overriding them triggers a reflow
+// loop that lags or freezes the UI. Leave the wizard layout to Angular.
 
 // =====================================================================
 //  Layout — sidebar full-height, navbar confined to right column
