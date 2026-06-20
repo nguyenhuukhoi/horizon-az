@@ -62,7 +62,7 @@ body {
   display: flex !important;
   align-items: center;
   gap: 8px;
-  padding: 0 8px;
+  padding: 0;
 
   // Shared pill style
   %mc-pill {
@@ -196,6 +196,9 @@ body {
 
   // dashboard group headers (Project / Admin / Identity)
   .openstack-dashboard > a {
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between;
     color: $mc-side-fg-mut;
     text-transform: uppercase;
     font-size: 11px;
@@ -213,6 +216,9 @@ body {
 
   // sub-group headers (Compute / Volumes / Network)
   .openstack-panel-group > a {
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between;
     color: #94a3b8 !important;
     font-size: 13.5px;
     font-weight: 600;
@@ -241,6 +247,8 @@ body {
   }
 
   .openstack-toggle.fa {
+    float: none !important;
+    margin-left: auto;
     color: #94a3b8;
     opacity: .7;
 
