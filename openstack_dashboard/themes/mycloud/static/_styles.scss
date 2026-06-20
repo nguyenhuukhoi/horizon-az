@@ -181,6 +181,8 @@ body {
     border-radius: 8px !important;
     margin: 2px 0 !important;
     padding: 8px 12px !important;
+    font-size: 13.5px;
+    line-height: 1.4;
     font-weight: 500;
     transition: background .12s ease, color .12s ease;
   }
@@ -202,8 +204,8 @@ body {
     color: $mc-side-fg-mut;
     text-transform: uppercase;
     font-size: 11px;
-    font-weight: 600;
-    letter-spacing: .6px;
+    font-weight: 700;
+    letter-spacing: .7px;
     margin: 0 !important;
     padding: 16px 12px 6px !important;
 
