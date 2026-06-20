@@ -24,6 +24,12 @@
       transform: none !important;
     }
 
+    /* Panel icons: suppress the (possibly cached) Font Awesome ::before
+       glyph so only the injected SVG shows — prevents duplicate icons. */
+    #sidebar a.openstack-panel::before { content: none !important; }
+    #sidebar a.openstack-panel { display: flex !important; align-items: center; }
+    #sidebar a.openstack-panel .mc-nav-ic { margin-right: 9px; flex: 0 0 auto; }
+
     /* SVG chevron (injected below) replaces the Font Awesome glyph */
     #sidebar .openstack-toggle.fa::before { content: none !important; }
     #sidebar .openstack-toggle .mc-cv {
