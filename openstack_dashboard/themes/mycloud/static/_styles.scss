@@ -701,7 +701,7 @@ dl.dl-horizontal dt {
   background: $mc-surface;
   border: 1px solid $mc-border;
   border-radius: 12px;
-  padding: 2px 16px 8px;
+  padding: 2px 18px 10px;
 }
 
 .mc-quota-head {
@@ -717,10 +717,10 @@ dl.dl-horizontal dt {
 
 .mc-quota-row {
   display: grid;
-  grid-template-columns: minmax(112px, 1.5fr) minmax(48px, .9fr) auto;
+  grid-template-columns: minmax(128px, 160px) minmax(170px, 1fr) max-content;
   align-items: center;
-  gap: 10px;
-  padding: 9px 0;
+  gap: 14px;
+  padding: 10px 0;
   border-bottom: 1px solid #f8fafc;
 
   &:last-child { border-bottom: 0; }
@@ -744,6 +744,8 @@ dl.dl-horizontal dt {
   color: #64748b;
   font-size: 12.5px;
   font-weight: 600;
+  min-width: 64px;
+  text-align: right;
   white-space: nowrap;
 }
 
@@ -904,7 +906,7 @@ dl.dl-horizontal dt {
   top: 0;
   background: $mc-side-bg;
   z-index: 2;
-  border-bottom: 1px solid rgba(255, 255, 255, .05);
+  border-bottom: 0;
   text-decoration: none;
 
   &:hover { text-decoration: none; color: #fff; }

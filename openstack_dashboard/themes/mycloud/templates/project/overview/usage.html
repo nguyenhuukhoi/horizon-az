@@ -52,7 +52,7 @@
 
   .mc-key-stats,
   .mc-panel {
-    margin-bottom: 22px !important;
+    margin-bottom: 16px !important;
   }
 
   .mc-az-grid {
@@ -60,7 +60,18 @@
   }
 
   .mc-quota-row {
-    grid-template-columns: minmax(120px, 1fr) minmax(150px, .75fr) max-content !important;
+    grid-template-columns: minmax(128px, 160px) minmax(170px, 1fr) max-content !important;
+    gap: 14px !important;
+    padding: 10px 0 !important;
+  }
+
+  .mc-quota-group {
+    padding: 2px 18px 10px !important;
+  }
+
+  .mc-quota-val {
+    min-width: 64px !important;
+    text-align: right !important;
   }
 
   @media (max-width: 1200px) {
