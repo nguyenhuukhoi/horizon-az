@@ -5,16 +5,16 @@
 {% block breadcrumb_nav %}{% endblock %}
 
 {% block page_header %}
+<div class="mc-page-crumb"><strong>{% trans "Project" %}</strong> / {% trans "Overview" %}</div>
 <div class="mc-page-head">
   <div>
-    <div class="mc-page-crumb"><strong>{% trans "Project" %}</strong> / {% trans "Overview" %}</div>
     <h1 class="mc-page-title">{% trans "Overview" %}</h1>
   </div>
   <div class="mc-page-actions">
     <a href="javascript:void(0);"
        ng-controller="LaunchInstanceModalController as modal"
        ng-click="modal.openLaunchInstanceWizard({successUrl: '{% url 'horizon:project:instances:index' %}'})"
-       class="btn btn-primary btn-sm btn-launch">
+       class="btn btn-primary mc-launch-btn btn-launch">
       <span class="fa fa-plus"></span> {% trans "Launch Instance" %}
     </a>
   </div>
