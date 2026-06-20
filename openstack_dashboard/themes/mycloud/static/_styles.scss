@@ -935,12 +935,13 @@ dl.dl-horizontal dt {
 // (magic-search / transfer tables), and overriding them triggers a reflow
 // loop that lags or freezes the UI. Leave the wizard layout to Angular.
 //
-// Safe alternative: cap only the leaf transfer-table lists so a long list
-// (e.g. the Flavor "Available" table) scrolls internally instead of pushing
-// the modal off-screen. This does not touch the wizard/modal flex chain.
-.modal .transfer-available,
-.modal .transfer-allocated {
-  max-height: 40vh;
+// Stable wizard size: fix the body height so the modal does not resize as
+// the user moves between steps (Details is short, Source/Flavor are tall);
+// taller steps scroll internally. The wizard/transfer-table/magic-search
+// widgets don't read element heights in JS, so this pure-CSS height is
+// one-pass and cannot reintroduce the reflow lag.
+.ng-wizard .modal-body {
+  height: 58vh;
   overflow-y: auto;
   overflow-x: hidden;
 }

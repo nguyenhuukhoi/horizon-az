@@ -119,14 +119,13 @@
     .breadcrumb a:hover { color: #2563eb; }
     .breadcrumb > .active { color: #94a3b8; }
 
-    /* Wizard transfer tables (e.g. Launch Instance > Flavor): cap the
-       Available list so a long list scrolls internally instead of pushing
-       the modal off-screen. Only the leaf .transfer-* containers get a
-       scroll — the wizard/modal flex layout is left to Angular (avoids the
-       reflow loop that caused the freeze). */
-    .modal .transfer-available,
-    .modal .transfer-allocated {
-      max-height: 40vh;
+    /* Stable wizard size: fix the body height so the modal does NOT resize
+       as you move between steps (Details is short, Source/Flavor are tall);
+       taller steps scroll internally. Pure CSS, one-pass — the wizard /
+       transfer-table / magic-search widgets don't read heights in JS, so
+       this cannot cause the earlier reflow lag. */
+    .ng-wizard .modal-body {
+      height: 58vh;
       overflow-y: auto;
       overflow-x: hidden;
     }
