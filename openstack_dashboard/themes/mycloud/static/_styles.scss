@@ -254,7 +254,8 @@ body {
     }
   }
 
-  // Group chevron (Font Awesome): down when expanded, right when collapsed
+  // Group chevron — Font Awesome glyph suppressed; an inline SVG (.mc-cv)
+  // is injected by the _sidebar.html script and rotated via .collapsed.
   .openstack-toggle.fa {
     float: none !important;
     margin-left: auto;
@@ -262,21 +263,12 @@ body {
     opacity: .7;
     transform: none !important;
 
-    &::before {
-      content: '\f078';
-      font-family: 'Font Awesome 6 Free';
-      font-weight: 900;
-      font-size: 11px;
-    }
+    &::before { content: none !important; }
   }
 
   .collapsed > .openstack-toggle.fa,
   a.collapsed .openstack-toggle.fa {
     transform: none !important;
-  }
-
-  a.collapsed .openstack-toggle.fa::before {
-    content: '\f054';
   }
 
   // Group body indent — matches design .grp-body
@@ -809,71 +801,26 @@ dl.dl-horizontal dt {
 }
 
 // =====================================================================
-//  Sidebar — left align + per-panel icons (Font Awesome 6, bundled)
+//  Sidebar — left align + per-panel icons (inline SVG, injected by JS)
 // =====================================================================
 #sidebar {
   .openstack-panel,
   .openstack-panel-group,
   .openstack-dashboard > a { text-align: left; }
 
-  // base icon slot before every panel link
-  a.openstack-panel::before {
-    font-family: "Font Awesome 6 Free";
-    font-weight: 900;
-    display: inline-block;
-    width: 1.2em;
+  // inline SVG panel icon (injected by the _sidebar.html script)
+  a.openstack-panel {
+    display: flex;
+    align-items: center;
+  }
+  .mc-nav-ic {
+    width: 17px;
+    height: 17px;
+    flex-shrink: 0;
     margin-right: 9px;
-    text-align: center;
-    font-size: 13px;
     opacity: .9;
   }
-  // generic fallback glyph (overridden per panel below)
-  a.openstack-panel::before { content: "\f111"; font-size: 7px; vertical-align: 2px; }
-}
-
-// map panel URL → glyph (matches both /project/ and /admin/ where slug repeats)
-#sidebar {
-  a[href$="/project/"]::before,
-  a[href$="/admin/"]::before,
-  a[href$="/overview/"]::before        { content: "\f009"; font-size: 13px; vertical-align: 0; } // th-large
-  a[href$="/instances/"]::before,
-  a[href$="/hypervisors/"]::before     { content: "\f233"; font-size: 13px; vertical-align: 0; } // server
-  a[href$="/images/"]::before          { content: "\f03e"; font-size: 13px; vertical-align: 0; } // image
-  a[href$="/key_pairs/"]::before       { content: "\f084"; font-size: 13px; vertical-align: 0; } // key
-  a[href$="/server_groups/"]::before,
-  a[href$="/aggregates/"]::before,
-  a[href$="/volume_groups/"]::before,
-  a[href$="/group_types/"]::before     { content: "\f5fd"; font-size: 13px; vertical-align: 0; } // layer-group
-  a[href$="/api_access/"]::before      { content: "\f121"; font-size: 13px; vertical-align: 0; } // code
-  a[href$="/volumes/"]::before         { content: "\f1c0"; font-size: 13px; vertical-align: 0; } // database
-  a[href$="/snapshots/"]::before       { content: "\f030"; font-size: 13px; vertical-align: 0; } // camera
-  a[href$="/backups/"]::before         { content: "\f0c7"; font-size: 13px; vertical-align: 0; } // floppy
-  a[href$="/vg_snapshots/"]::before    { content: "\f030"; font-size: 13px; vertical-align: 0; }
-  a[href$="/network_topology/"]::before{ content: "\f1e0"; font-size: 13px; vertical-align: 0; } // share-nodes
-  a[href$="/networks/"]::before        { content: "\f0e8"; font-size: 13px; vertical-align: 0; } // sitemap
-  a[href$="/routers/"]::before         { content: "\f4d7"; font-size: 13px; vertical-align: 0; } // route
-  a[href$="/security_groups/"]::before,
-  a[href$="/rbac_policies/"]::before,
-  a[href$="/identity_providers/"]::before { content: "\f3ed"; font-size: 13px; vertical-align: 0; } // shield
-  a[href$="/floating_ips/"]::before,
-  a[href$="/domains/"]::before         { content: "\f0ac"; font-size: 13px; vertical-align: 0; } // globe
-  a[href$="/trunks/"]::before          { content: "\f0c1"; font-size: 13px; vertical-align: 0; } // link
-  a[href$="/network_qos/"]::before     { content: "\f624"; font-size: 13px; vertical-align: 0; } // gauge
-  a[href$="/floating_ip_portforwardings/"]::before,
-  a[href$="/mappings/"]::before        { content: "\f362"; font-size: 13px; vertical-align: 0; } // exchange
-  a[href$="/containers/"]::before      { content: "\f466"; font-size: 13px; vertical-align: 0; } // box
-  a[href$="/flavors/"]::before         { content: "\f2db"; font-size: 13px; vertical-align: 0; } // microchip
-  a[href$="/volume_types/"]::before    { content: "\f1c0"; font-size: 13px; vertical-align: 0; }
-  a[href$="/defaults/"]::before        { content: "\f1de"; font-size: 13px; vertical-align: 0; } // sliders
-  a[href$="/metadata_defs/"]::before   { content: "\f02b"; font-size: 13px; vertical-align: 0; } // tag
-  a[href$="/info/"]::before            { content: "\f05a"; font-size: 13px; vertical-align: 0; } // info
-  a[href$="/identity/"]::before,
-  a[href$="/projects/"]::before        { content: "\f07b"; font-size: 13px; vertical-align: 0; } // folder
-  a[href$="/users/"]::before           { content: "\f007"; font-size: 13px; vertical-align: 0; } // user
-  a[href$="/groups/"]::before          { content: "\f0c0"; font-size: 13px; vertical-align: 0; } // users
-  a[href$="/roles/"]::before           { content: "\f2c1"; font-size: 13px; vertical-align: 0; } // id-badge
-  a[href$="/application_credentials/"]::before,
-  a[href$="/credentials/"]::before     { content: "\f2c2"; font-size: 13px; vertical-align: 0; } // id-card
+  a.openstack-panel.active .mc-nav-ic { opacity: 1; }
 }
 
 // =====================================================================
