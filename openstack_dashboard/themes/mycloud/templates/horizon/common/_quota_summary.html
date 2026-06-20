@@ -1,22 +1,18 @@
 {% comment %}
-  MyCloud — "Limit Summary" panel matching horizon_redesign_interactive_v2.html.
-  Renders the project quota usage grouped by section (Compute / Volume / Network)
-  as horizontal bar rows: name | bar | used/limit | %.
-
-  Data: uses the standard `charts` context built by ProjectUsageView
-  (openstack_dashboard/usage/views.py CHART_DEFS) — no view changes needed.
-  Single usage language: reuse `.mc-meter` bar with is-ok/is-warn/is-danger.
+  MyCloud v2 - Limit Summary panel.
+  Render Horizon quota sections as 4-column usage rows:
+  name | meter | used/limit | percent.
 {% endcomment %}
 {% load i18n horizon %}
 
 {% spaceless %}
 <div class="quota-dynamic mc-quota-summary-wrap">
-  <div class="mc-panel" style="margin-bottom: 22px;">
+  <div class="mc-panel">
     <div class="mc-panel-head">
       <div>
         <h2 class="mc-panel-title">{% trans "Limit Summary" %}</h2>
       </div>
-      <a class="btn btn-default btn-sm mc-btn-ghost">{% trans "Manage Quotas" %}</a>
+      <a href="{% url 'horizon:admin:defaults:index' %}" class="btn btn-default btn-sm mc-btn-ghost">{% trans "Manage Quotas" %}</a>
     </div>
     <div class="mc-panel-body">
       <div class="mc-quota-summary">
@@ -27,10 +23,19 @@
               {% for chart in section.charts %}
                 {% quotapercent chart.used chart.quota as pct %}
                 <div class="mc-quota-row">
-                  <span class="mc-quota-name" title="{{ chart.name }}">{{ chart.name }}</span>
+                  <span class="mc-quota-name" title="{{ chart.name }}">
+                    {% if chart.type == "ram" %}
+                      {% trans "RAM (GB)" %}
+                    {% elif chart.type == "gigabytes" %}
+                      {% trans "Storage (TB)" %}
+                    {% elif chart.type == "security_group_rule" %}
+                      {% trans "SG Rules" %}
+                    {% else %}
+                      {{ chart.name }}
+                    {% endif %}
+                  </span>
                   <div class="mc-meter">
-                    <i class="{% if pct >= 90 %}is-danger{% elif pct >= 75 %}is-warn{% else %}is-ok{% endif %}"
-                       style="width: {{ pct }}%"></i>
+                    <i class="{% if pct >= 90 %}is-danger{% elif pct >= 75 %}is-warn{% else %}is-ok{% endif %}" style="width: {{ pct }}%"></i>
                   </div>
                   <span class="mc-quota-val">
                     {{ chart.used_display }}{% if chart.quota|quotainf != '-1' %} <span class="mc-quota-den">/ {{ chart.quota_display }}</span>{% endif %}

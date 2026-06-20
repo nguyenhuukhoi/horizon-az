@@ -100,17 +100,25 @@ body {
   }
 
   // Static region pill
-  .mc-region-pill .mc-pill-static {
+  .mc-region-pill .mc-pill-static,
+  .mc-region-pill > a.dropdown-toggle {
     @extend %mc-pill;
-    cursor: default;
-    &:hover { border-color: $mc-border; background: $body-bg; }
   }
 
   // Muted color on all pill icons (FA icons + region icon)
   .mc-ctx-pill > a .fa,
+  .mc-region-pill > a .fa,
   .mc-region-pill .fa,
   .mc-region-pill .mc-pill-icon {
     color: #64748b !important;
+    font-size: 13px;
+  }
+
+  .mc-region-pill > a.dropdown-toggle::before {
+    content: "\f0ac";
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    color: #64748b;
     font-size: 13px;
   }
 }
@@ -392,6 +400,9 @@ dl.dl-horizontal dt {
   border-radius: 12px;
   box-shadow: $mc-shadow;
   padding: 16px 18px;
+  min-height: 148px;
+  display: flex;
+  flex-direction: column;
   transition: box-shadow .15s ease, transform .15s ease;
 
   &:hover {
@@ -425,6 +436,11 @@ dl.dl-horizontal dt {
   }
 
   .mc-trend {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 24px;
+    white-space: nowrap;
     font-size: 12px;
     font-weight: 700;
     padding: 3px 10px;
@@ -441,17 +457,18 @@ dl.dl-horizontal dt {
   .mc-stat-num {
     font-size: 28px;
     font-weight: 700;
-    line-height: 1.1;
+    line-height: 1;
     letter-spacing: -.6px;
     color: $text-color;
-    margin-top: 14px;
+    margin-top: 20px;
   }
 
   .mc-stat-label {
     font-size: 13.5px;
     font-weight: 600;
-    color: #334155;
-    margin-top: 4px;
+    color: #64748b;
+    margin-top: 8px;
+    line-height: 1.35;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -597,7 +614,11 @@ dl.dl-horizontal dt {
   }
 }
 
-// ---- Limit Summary panel (quota usage grouped by section) ----
+// ---- Limit Summary panel (quota bar rows) ----
+.mc-quota-summary-wrap {
+  margin-bottom: 22px;
+}
+
 .mc-quota-summary {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -606,18 +627,18 @@ dl.dl-horizontal dt {
 }
 
 .mc-quota-group {
+  background: $mc-surface;
   border: 1px solid $mc-border;
   border-radius: 12px;
   padding: 2px 16px 8px;
-  background: #fff;
 }
 
 .mc-quota-head {
+  color: #64748b;
   font-size: 11.5px;
   font-weight: 700;
   letter-spacing: .05em;
   text-transform: uppercase;
-  color: #64748b;
   padding: 13px 0 9px;
   border-bottom: 1px solid $mc-border;
   margin-bottom: 2px;
@@ -632,42 +653,41 @@ dl.dl-horizontal dt {
   border-bottom: 1px solid #f8fafc;
 
   &:last-child { border-bottom: 0; }
-
-  .mc-meter { height: 6px; }
-
-  .mc-quota-name {
-    font-size: 13.5px;
-    font-weight: 600;
-    color: #334155;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .mc-quota-val {
-    font-size: 13px;
-    text-align: right;
-    white-space: nowrap;
-    color: #334155;
-    font-variant-numeric: tabular-nums;
-
-    .mc-quota-den { color: #94a3b8; }
-  }
-
-  .mc-quota-pct {
-    font-size: 12.5px;
-    font-weight: 600;
-    text-align: right;
-    color: #64748b;
-    font-variant-numeric: tabular-nums;
-
-    &.is-hi { color: #dc2626; }
-    &.mc-quota-pct--nolimit { color: #94a3b8; }
-  }
 }
 
-@media (max-width: 768px) {
-  .mc-quota-summary { grid-template-columns: 1fr; }
+.mc-quota-name {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: $text-color;
+  font-size: 13.5px;
+  font-weight: 600;
+}
+
+.mc-quota-val {
+  color: #64748b;
+  font-size: 12.5px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.mc-quota-den {
+  color: #94a3b8;
+}
+
+.mc-quota-pct {
+  color: #64748b;
+  font-size: 12.5px;
+  font-weight: 700;
+  text-align: right;
+  white-space: nowrap;
+
+  &.is-hi { color: $brand-danger; }
+}
+
+.mc-quota-pct--nolimit {
+  color: #94a3b8;
 }
 
 // =====================================================================
@@ -839,6 +859,11 @@ dl.dl-horizontal dt {
   justify-content: center;
   font-size: 15px;
   flex-shrink: 0;
+
+  .fa {
+    color: #fff;
+    font-size: 14px;
+  }
 }
 
 // Navbar: push left edge to sidebar width, proper flex alignment matching demo
@@ -949,12 +974,16 @@ dl.dl-horizontal dt {
 .topbar-icon-btn {
   width: 38px;
   height: 38px;
+  border: 0;
   border-radius: 9px;
+  background: transparent;
+  padding: 0;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   color: #64748b;
   cursor: pointer;
+  line-height: 1;
 
   &:hover { background: $body-bg; }
 }
@@ -980,6 +1009,15 @@ dl.dl-horizontal dt {
   font-weight: 700;
   margin: 0 0 4px;
   color: $text-color;
+}
+
+.mc-page-crumb {
+  color: #64748b;
+  font-size: 13px;
+  line-height: 1.4;
+  margin-bottom: 4px;
+
+  strong { color: $text-color; }
 }
 
 .mc-page-sub {
@@ -1088,6 +1126,8 @@ dl.dl-horizontal dt {
   .mc-usage-table-head {
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    gap: 12px;
     padding: 14px 18px;
     border-bottom: 1px solid $mc-border;
   }
@@ -1102,7 +1142,7 @@ dl.dl-horizontal dt {
   .table_wrapper, .table-responsive { border-radius: 0; box-shadow: none; border: none; }
   .table_actions, .table-striped thead { border-radius: 0; }
 
-  // Download CSV button
+  // Keep table-level action buttons aligned to the right.
   .table-actions-btn-group { margin-left: auto; }
 
   // DataTable renders its own "Usage" caption — hide it since we have mc-usage-table-title
@@ -1124,7 +1164,10 @@ dl.dl-horizontal dt {
     border: 1px solid $mc-border;
     border-radius: 12px;
     box-shadow: $mc-shadow;
+    min-height: 148px;
     padding: 16px 18px;
+    display: flex;
+    flex-direction: column;
     transition: box-shadow .15s ease, transform .15s ease;
 
     &:hover {
@@ -1155,12 +1198,16 @@ dl.dl-horizontal dt {
     }
 
     .mc-trend {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
       font-size: 12px;
       font-weight: 700;
       padding: 3px 10px;
       border-radius: 20px;
       background: #f1f5f9;
       color: #64748b;
+      white-space: nowrap;
 
       &.is-ok     { background: #dcfce7; color: #16a34a; }
       &.is-warn   { background: #fef3c7; color: #d97706; }
@@ -1171,17 +1218,17 @@ dl.dl-horizontal dt {
     .mc-stat-num {
       font-size: 28px;
       font-weight: 700;
-      line-height: 1.1;
-      letter-spacing: -.6px;
+      line-height: 1;
       color: $text-color;
-      margin-top: 14px;
+      margin-top: 20px;
     }
 
     .mc-stat-label {
-      font-size: 13px;
+      font-size: 13.5px;
       font-weight: 600;
+      line-height: 1.35;
       color: #64748b;
-      margin-top: 4px;
+      margin-top: 8px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;

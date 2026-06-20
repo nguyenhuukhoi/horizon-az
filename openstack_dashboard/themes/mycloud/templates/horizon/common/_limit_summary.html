@@ -34,7 +34,7 @@
             </div>
             <div class="mc-stat-num">{{ chart.used_display }}</div>
             <div class="mc-stat-label">
-              {{ chart.name }}{% if chart.quota|quotainf != '-1' %} / {{ chart.quota_display }}{% endif %}
+              {% if chart.type == "ram" %}{% trans "RAM" %}{% else %}{{ chart.name }}{% endif %}{% if chart.quota|quotainf != '-1' %} / {{ chart.quota_display }}{% endif %}
             </div>
           </div>
         {% endif %}

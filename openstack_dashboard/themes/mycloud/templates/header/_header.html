@@ -24,24 +24,27 @@
       {# Left: project context pill + region pill #}
       <ul class="nav navbar-nav mc-topbar-pills">
         {% include "header/_context_selection.html" %}
-        <li class="mc-region-pill">
-          <span class="mc-pill-static">
-            <span class="fa fa-globe"></span>
-            RegionOne
-            <span class="fa fa-caret-down"></span>
-          </span>
-        </li>
+        {% include "header/_region_selection.html" %}
       </ul>
 
-      {# Right: user menu #}
+      {# Right: utility icons + user menu #}
       <ul class="nav navbar-nav navbar-right mc-topbar-right">
         <li id="extensible-header" class="extensible-header"></li>
         {% if profiler_enabled %}
           {% include "developer/profiler/_mode_picker.html" %}
         {% endif %}
         {% include "header/_keystone_provider_selection.html" %}
+        <li>
+          <button type="button" class="topbar-icon-btn" title="{% trans "Search" %}">
+            <span class="fa fa-search"></span>
+          </button>
+        </li>
+        <li>
+          <button type="button" class="topbar-icon-btn" title="{% trans "Notifications" %}">
+            <span class="fa fa-bell"></span>
+          </button>
+        </li>
         {% include "header/_user_menu.html" %}
-        {% include "header/_region_selection.html" %}
       </ul>
 
     </div>

@@ -1,18 +1,13 @@
 {% comment %}
-  MyCloud override — "Usage by Availability Zone" panel matching
-  horizon_redesign_interactive_v2.html demo:
-  • Status badge (Healthy/Busy/Full) per AZ based on worst of vCPU/RAM utilisation
-  • Metrics shown per AZ: vCPU, RAM, Storage  (Instances row removed)
-  • Bar colour follows per-metric %, dot/badge colour follows worst metric
-  Charts carry a `type` (quota_key) so we select cores/ram/gigabytes directly,
-  independent of section ordering (see openstack_dashboard/usage/az.py).
+  MyCloud v2 - Usage by Availability Zone panel.
+  Metrics shown per AZ match the demo: vCPU, RAM and Storage.
 {% endcomment %}
 {% load i18n horizon %}
 
 {% spaceless %}
   {% if az_usage_enabled %}
     <div class="quota-dynamic az-limit-summary">
-      <div class="mc-panel" style="margin-bottom: 22px;">
+      <div class="mc-panel">
         <div class="mc-panel-head">
           <div>
             <h2 class="mc-panel-title">{% trans "Usage by Availability Zone" %}</h2>
@@ -24,7 +19,6 @@
             <div class="mc-az-grid">
               {% for az in az_charts %}
                 {% with comp=az.charts.0 %}
-                  {# Status badge from the two always-present compute metrics #}
                   {% quotapercent comp.charts.1.used comp.charts.1.quota as pv %}
                   {% quotapercent comp.charts.2.used comp.charts.2.quota as pr %}
 
@@ -39,14 +33,15 @@
                       </span>
                     </div>
 
-                    {# vCPU, RAM, Storage — selected by chart.type across sections #}
                     {% for section in az.charts %}
                       {% for chart in section.charts %}
                         {% if chart.type == 'cores' or chart.type == 'ram' or chart.type == 'gigabytes' %}
                           {% quotapercent chart.used chart.quota as pct %}
                           <div class="mc-meter-row">
                             <div class="ml">
-                              <span class="mc-meter-name">{% if chart.type == 'gigabytes' %}{% trans "Storage" %}{% else %}{{ chart.name }}{% endif %}</span>
+                              <span class="mc-meter-name">
+                                {% if chart.type == 'cores' %}{% trans "vCPU" %}{% elif chart.type == 'ram' %}{% trans "RAM" %}{% elif chart.type == 'gigabytes' %}{% trans "Storage" %}{% else %}{{ chart.name }}{% endif %}
+                              </span>
                               <span class="mc-meter-val">
                                 {% if chart.quota|quotainf != '-1' %}{{ chart.used_display }} / {{ chart.quota_display }}{% else %}{{ chart.used_display }}{% endif %}
                               </span>
