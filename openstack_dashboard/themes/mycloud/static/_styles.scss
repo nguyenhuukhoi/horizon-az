@@ -153,6 +153,10 @@ body {
     box-shadow: none;
   }
 
+  #sidebar-accordion {
+    padding: 4px 10px 24px;
+  }
+
   // every link surface in the sidebar
   // ('!important' beats core `#sidebar .panel .list-group-item{border-radius:0}`)
   .panel > a,
@@ -162,7 +166,7 @@ body {
     color: $mc-side-fg;
     border: 0 !important;
     border-radius: 8px !important;
-    margin: 2px 4px !important;
+    margin: 2px 0 !important;
     padding: 8px 12px !important;
     font-weight: 500;
     transition: background .12s ease, color .12s ease;
@@ -184,7 +188,8 @@ body {
     font-size: 11px;
     font-weight: 600;
     letter-spacing: .6px;
-    margin-top: 10px;
+    margin: 0 !important;
+    padding: 16px 12px 6px !important;
 
     &:hover,
     &:focus {
@@ -198,6 +203,7 @@ body {
     color: #94a3b8 !important;
     font-size: 13.5px;
     font-weight: 600;
+    margin-top: 4px !important;
   }
 
   .openstack-panel-group > a.collapsed,
@@ -560,14 +566,8 @@ dl.dl-horizontal dt {
 
 .mc-az-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 16px;
-}
-
-@media (max-width: 1500px) {
-  .mc-az-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
 }
 
 @media (max-width: 900px) {
@@ -578,7 +578,7 @@ dl.dl-horizontal dt {
 
 .mc-az-card {
   border: 1px solid $mc-border;
-  border-radius: 10px;
+  border-radius: 12px;
   padding: 16px 16px 18px;
 
   .mc-az-h {
@@ -673,7 +673,7 @@ dl.dl-horizontal dt {
 
 // ---- Limit Summary panel (quota bar rows) ----
 .mc-quota-summary-wrap {
-  margin-bottom: 22px;
+  margin-bottom: 0;
 }
 
 .mc-quota-summary {
@@ -710,6 +710,10 @@ dl.dl-horizontal dt {
   border-bottom: 1px solid #f8fafc;
 
   &:last-child { border-bottom: 0; }
+
+  .mc-meter {
+    height: 6px;
+  }
 }
 
 .mc-quota-name {
@@ -924,7 +928,7 @@ dl.dl-horizontal dt {
     display: flex;
     align-items: center;
     height: $navbar-height;
-    padding: 0 20px;
+    padding: 0 24px;
   }
 
   // Collapse wrapper: flex row, stretch full width
@@ -975,11 +979,33 @@ dl.dl-horizontal dt {
 // Do NOT add it to #main_content — that pushes the fixed sidebar off-screen
 
 // Content area padding to match design .content{padding:22px 26px 50px}
+#content_body > .container-fluid {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+#content_body > .container-fluid > .row {
+  margin-left: 0;
+  margin-right: 0;
+}
+
 #content_body > .container-fluid > .row > .col-xs-12 {
   padding-top: 22px;
   padding-left: 26px;
   padding-right: 26px;
   padding-bottom: 50px;
+}
+
+@media (max-width: 800px) {
+  #content_body > .container-fluid > .row > .col-xs-12 {
+    padding: 18px 18px 42px;
+  }
+}
+
+@media (max-width: 520px) {
+  #content_body > .container-fluid > .row > .col-xs-12 {
+    padding: 14px 12px 34px;
+  }
 }
 
 // Empty breadcrumb wrapper should not take up space
