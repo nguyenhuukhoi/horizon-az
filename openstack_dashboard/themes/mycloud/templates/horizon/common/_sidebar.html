@@ -46,15 +46,6 @@
       overflow: hidden !important;
     }
 
-    /* Promote the fixed sidebar to its own GPU layer so heavy content
-       repaints (e.g. the Angular Launch Instance wizard) don't repaint the
-       sidebar + its SVG icons — fixes the lag while moving between steps. */
-    #sidebar {
-      transform: translateZ(0);
-      backface-visibility: hidden;
-      will-change: transform;
-    }
-
     /* Uniform sidebar colour: force every container transparent over the
        single navy base so an open dashboard panel doesn't look lighter
        (guards against a stale compiled bg on .panel/.panel-collapse). */

@@ -915,10 +915,6 @@ dl.dl-horizontal dt {
   overflow-y: auto;
   overflow-x: hidden;
   z-index: 1035; // above Bootstrap navbar (z-index 1030)
-  // Own GPU layer so heavy content repaints don't repaint the sidebar/SVGs
-  transform: translateZ(0);
-  backface-visibility: hidden;
-  will-change: transform;
 
   &::-webkit-scrollbar { width: 6px; }
   &::-webkit-scrollbar-thumb { background: #334155; border-radius: 6px; }
