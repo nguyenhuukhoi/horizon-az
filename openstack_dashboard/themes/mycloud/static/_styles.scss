@@ -943,6 +943,13 @@ dl.dl-horizontal dt {
     color: #fff;
     font-size: 14px;
   }
+
+  svg {
+    width: 18px;
+    height: 18px;
+    display: block;
+    fill: #fff;
+  }
 }
 
 // Navbar: push left edge to sidebar width, proper flex alignment matching demo
