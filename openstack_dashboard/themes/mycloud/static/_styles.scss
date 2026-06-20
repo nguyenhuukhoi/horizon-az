@@ -888,7 +888,7 @@ dl.dl-horizontal dt {
 // widgets don't read element heights in JS, so this pure-CSS height is
 // one-pass and cannot reintroduce the reflow lag.
 .ng-wizard .modal-body {
-  height: calc(100vh - 13rem);
+  height: calc(100vh - 17rem);
   overflow-y: auto;
   overflow-x: hidden;
 }
