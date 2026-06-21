@@ -360,10 +360,82 @@ dl.dl-horizontal dt {
   border-radius: 10px;
 }
 
-// table top toolbar (search + actions)
+// =====================================================================
+//  Data-table toolbar (caption) — match the mockup Instances layout:
+//  clean right-aligned actions row; the page title comes from .page-header
+//  so the redundant table caption title is hidden.
+// =====================================================================
+table.datatable > caption,
+.table_wrapper table > caption {
+  caption-side: top;
+  padding: 0 0 14px;
+  text-align: left;
+  color: $text-color;
+
+  .table-title { display: none; }
+}
+
 .table_actions {
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
+  display: flex !important;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: flex-end;
+  float: none;
+  border-radius: 0;
+
+  &::before,
+  &::after { content: none; display: none; }
+
+  // segmented "Instance ID = | input | Filter" facet
+  .table_search,
+  .table_filter {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    float: none;
+    margin: 0;
+  }
+  .table_search .form-group { margin: 0; }
+  .table_search .form-control {
+    height: 38px;
+    border-radius: 8px;
+    border: 1px solid $mc-border;
+    min-width: 200px;
+    box-shadow: none;
+  }
+
+  // every button in the row → consistent height/shape
+  .btn,
+  .table_search .btn,
+  .table_actions_menu > .btn {
+    height: 38px;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    white-space: nowrap;
+  }
+  .table_actions_menu { float: none; }
+}
+
+// Launch Instance → brand blue + server (instance) icon, matching the
+// active "Instances" item in the sidebar.
+.btn-launch,
+a.btn-launch {
+  background: $brand-primary !important;
+  border-color: $brand-primary !important;
+  color: #fff !important;
+  box-shadow: $mc-shadow-sm;
+
+  &:hover,
+  &:focus,
+  &:active {
+    background: darken($brand-primary, 6%) !important;
+    color: #fff !important;
+  }
+
+  .fa::before { content: "\f233" !important; } // fa-server
 }
 
 // =====================================================================
