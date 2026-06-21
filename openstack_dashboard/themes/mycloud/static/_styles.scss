@@ -510,6 +510,15 @@ button.mc-create-btn {
   }
 }
 
+// Pre-colour the create button on first paint (fa-plus = Horizon's native
+// create glyph) so it doesn't flash white before JS adds .mc-create-btn.
+#content_body .hz-dynamic-table-actions .btn:has(.fa-plus),
+#content_body .table_actions .btn:has(.fa-plus) {
+  background: $brand-primary;
+  border-color: $brand-primary;
+  color: #fff;
+}
+
 // Semantic SVG icon injected into Create / toolbar buttons (by JS in _sidebar)
 .mc-act-ic { width: 15px; height: 15px; flex: 0 0 auto; }
 

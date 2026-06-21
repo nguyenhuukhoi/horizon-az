@@ -286,6 +286,12 @@
     .mc-create-btn:hover, .mc-create-btn:focus, a.mc-create-btn:hover, a.mc-create-btn:focus {
       background: #1d4ed8 !important; border-color: #1d4ed8 !important; color: #fff !important;
     }
+    /* Pre-colour the create button on first paint (fa-plus = Horizon's native
+       create glyph) so it doesn't flash white before JS adds .mc-create-btn. */
+    #content_body .hz-dynamic-table-actions .btn:has(.fa-plus),
+    #content_body .table_actions .btn:has(.fa-plus) {
+      background: #2563eb; border-color: #2563eb; color: #fff;
+    }
     /* Semantic SVG icon injected into Create/toolbar buttons (by JS) */
     .mc-act-ic { width: 15px; height: 15px; flex: 0 0 auto; }
     /* Angular dynamic-table toolbar (magic-search pages e.g. Images): keep the
