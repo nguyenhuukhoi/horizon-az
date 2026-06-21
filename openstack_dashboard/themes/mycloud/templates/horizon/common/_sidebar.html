@@ -91,9 +91,17 @@
       display: block !important;
       height: auto !important;
     }
+    /* Indent panel groups (Compute/Volumes/Network/System) as children of the
+       dashboard: shift the whole group pill in with margin-left so it aligns
+       with the direct panels (Overview/API Access); the grouped panels' own
+       list-group margin then stacks to put them one level deeper. */
+    #sidebar .mc-dashboard-project .openstack-panel-group,
+    #sidebar .mc-dashboard-admin .openstack-panel-group {
+      margin-left: 12px !important;
+    }
     #sidebar .mc-dashboard-project .openstack-panel-group > a,
     #sidebar .mc-dashboard-admin .openstack-panel-group > a {
-      padding-left: 38px !important;
+      padding-left: 16px !important;
     }
     #sidebar .openstack-dashboard > a:hover,
     #sidebar .openstack-dashboard > a:focus,
@@ -362,7 +370,14 @@
       gap: 10px;
       width: 100%;
       min-width: 0;
+      padding-left: 0;  /* col-xs-12 padding offset the zeroed .row margin and
+                           pushed the toolbar 15px right of the table; align it */
+      padding-right: 0;
     }
+    /* Same fix for transfer tables inside non-wizard modals (Manage Members,
+       Modify Quotas, …): their .row margin is zeroed but the col padding
+       remained, so the search toolbar sat 15px right of the list. */
+    .modal .hz-dynamic-table-preamble { padding-left: 0; padding-right: 0; }
     #content_body .hz-magic-search-bar { padding-right: 0 !important; }
     #content_body .hz-magic-search-bar { flex: 1 1 auto; min-width: 0; }
     #content_body .hz-dynamic-table-actions { display: inline-flex; align-items: center; gap: 10px; flex: 0 0 auto; }
