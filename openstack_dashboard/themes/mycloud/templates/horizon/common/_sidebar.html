@@ -449,9 +449,12 @@
     .table_wrapper table.datatable { border: 0; }
     .table.datatable > thead > tr > th { padding: 11px 18px; }
     .table.datatable > tbody > tr > td { padding: 12px 18px; }
-    /* Uniform row colour (Bootstrap stripes the <tr>, so target it, not <td>) */
-    .table.datatable.table-striped > tbody > tr { background-color: #fff; }
-    .table.datatable.table-striped > tbody > tr:hover { background-color: #f8fafc; }
+    /* Uniform rows: Horizon stripes via tr.odd/tr.even > td (not :nth-of-type),
+       so override those td backgrounds to one colour. */
+    .table.datatable.table-striped > tbody > tr.odd > td,
+    .table.datatable.table-striped > tbody > tr.even > td { background-color: #fff; }
+    .table.datatable.table-striped > tbody > tr.odd:hover > td,
+    .table.datatable.table-striped > tbody > tr.even:hover > td { background-color: #f8fafc; }
     /* Uniform checkbox size: the "select all" th uses a smaller font so its 1em
        FontAwesome glyph rendered smaller than the row checkboxes. */
     .table.datatable .multi_select_column { font-size: 15px; }
@@ -995,12 +998,48 @@
       }
     }
   }
+  function hvStatusBadge(t) { return /disabl/i.test(t) ? 'muted' : 'info'; } // Enabled->blue, Disabled->grey
+  function hvStateBadge(t) { return /down/i.test(t) ? 'err' : 'ok'; }        // Up->green, Down->red
+  function updateHvCardBadge(up, down) {
+    var labels = document.querySelectorAll('#content_body .mc-hv-stats .mc-stat-label');
+    for (var i = 0; i < labels.length; i++) {
+      if (text(labels[i]) === 'Hypervisors') {
+        var card = labels[i].closest('.mc-stat');
+        var trend = card && card.querySelector('.mc-trend');
+        if (trend) trend.textContent = up + ' up · ' + down + ' down';
+        return;
+      }
+    }
+  }
   function decorateComputeHosts(table) {
     if (!table || table.classList.contains('mc-hv-compute-enhanced')) return;
     var hs = headers(table);
     if (findHeader(hs, 'Host') < 0 || findHeader(hs, 'Availability Zone') < 0) return;
     table.classList.add('mc-hv-compute-enhanced');
     insertPanelHead(table.closest('.table_wrapper'), 'Compute Hosts', '', true, table);
+
+    // Colour the Status (Enabled/Disabled) and State (Up/Down) cells as pills,
+    // and roll the State up/down counts into the Hypervisors stat card badge.
+    var statusIdx = findHeader(hs, 'Status');
+    var stateIdx = findHeader(hs, 'State');
+    var up = 0, down = 0;
+    var rows = tableRows(table);
+    for (var r = 0; r < rows.length; r++) {
+      var cells = rows[r].children;
+      if (/no items to display/i.test(text(rows[r]))) continue;
+      if (statusIdx >= 0 && cells[statusIdx] && !cells[statusIdx].querySelector('.mc-stat-badge')) {
+        var st = text(cells[statusIdx]);
+        if (st) cells[statusIdx].innerHTML = '<span class="mc-stat-badge ' + hvStatusBadge(st) + '">' + esc(st) + '</span>';
+      }
+      if (stateIdx >= 0 && cells[stateIdx] && !cells[stateIdx].querySelector('.mc-stat-badge')) {
+        var sv = text(cells[stateIdx]);
+        if (sv) {
+          cells[stateIdx].innerHTML = '<span class="mc-stat-badge ' + hvStateBadge(sv) + '">' + esc(sv) + '</span>';
+          if (/down/i.test(sv)) down++; else up++;
+        }
+      }
+    }
+    if (up || down) updateHvCardBadge(up, down);
   }
   function run() {
     var tables = document.querySelectorAll('#content_body .mc-hv-tabs-shell table.datatable');

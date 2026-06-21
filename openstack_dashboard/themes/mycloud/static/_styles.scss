@@ -360,9 +360,11 @@ dl.dl-horizontal dt {
     background: #f8fafc;
   }
 
-  // clean white rows (no zebra) — Bootstrap stripes the <tr>, so target it
-  &.table-striped > tbody > tr { background-color: #fff; }
-  &.table-striped > tbody > tr:hover { background-color: #f8fafc; }
+  // clean white rows — Horizon stripes via tr.odd/tr.even > td, override those
+  &.table-striped > tbody > tr.odd > td,
+  &.table-striped > tbody > tr.even > td { background-color: #fff; }
+  &.table-striped > tbody > tr.odd:hover > td,
+  &.table-striped > tbody > tr.even:hover > td { background-color: #f8fafc; }
 
   // instance name (and other linked first column) a touch bolder
   > tbody > tr > td a { font-weight: 600; }
