@@ -293,6 +293,12 @@
     #content_body .hz-dynamic-table-preamble { align-items: center; }
     #content_body .hz-dynamic-table-actions { display: inline-flex; align-items: center; gap: 10px; }
     #content_body .hz-dynamic-table-actions .btn { height: 38px; border-radius: 8px; display: inline-flex; align-items: center; gap: 7px; white-space: nowrap; }
+    /* Clamp the magic-search bar to the same 38px row as the buttons */
+    #content_body .hz-magic-search-bar .input-group { height: 38px; }
+    #content_body .hz-magic-search-bar .input-group-addon { height: 38px; border-radius: 8px 0 0 8px; }
+    #content_body .hz-magic-search-bar .form-control { height: 38px; border-radius: 0 8px 8px 0; }
+    #content_body .hz-magic-search-bar .search-bar,
+    #content_body .hz-magic-search-bar .search-bar .search-main-area { height: 38px; }
 
     /* Data table -> rounded card like the mockup (overflow visible so
        dropdowns are not clipped); roomier cells; no zebra; subtle count. */
