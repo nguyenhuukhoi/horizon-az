@@ -297,11 +297,14 @@
        Use min-height too in case the theme's $input-height-base is taller. */
     #content_body .hz-magic-search-bar .input-group,
     #content_body .hz-magic-search-bar .input-group-addon,
+    #content_body .hz-magic-search-bar .input-group-btn,
+    #content_body .hz-magic-search-bar .input-group-btn > button,
     #content_body .hz-magic-search-bar .form-control,
     #content_body .hz-magic-search-bar .magic-search,
     #content_body .hz-magic-search-bar .search-bar { height: 38px; min-height: 38px; }
-    #content_body .hz-magic-search-bar .input-group-addon { border-radius: 8px 0 0 8px; }
-    #content_body .hz-magic-search-bar .form-control { border-radius: 0 8px 8px 0; }
+    /* round the outer ends only (handles both with/without the settings cog) */
+    #content_body .hz-magic-search-bar .input-group > :first-child { border-radius: 8px 0 0 8px; }
+    #content_body .hz-magic-search-bar .input-group > :last-child { border-radius: 0 8px 8px 0; }
     #content_body .hz-magic-search-bar .magic-search,
     #content_body .hz-magic-search-bar .search-bar { display: flex; align-items: center; }
     #content_body .hz-magic-search-bar .search-input { height: 34px; line-height: 34px; }
