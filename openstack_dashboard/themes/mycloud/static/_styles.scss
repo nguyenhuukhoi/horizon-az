@@ -533,6 +533,16 @@ dl.dl-horizontal dt {
   display: flex;
   flex-direction: column;
   transition: none;
+  animation: none;
+  transform: none;
+
+  &:hover,
+  &:focus,
+  &:active {
+    border-color: $mc-border;
+    box-shadow: $mc-shadow;
+    transform: none;
+  }
 
   .mc-stat-top {
     display: flex;
@@ -1379,6 +1389,16 @@ body.modal-open {
     display: flex;
     flex-direction: column;
     transition: none;
+    animation: none;
+    transform: none;
+
+    &:hover,
+    &:focus,
+    &:active {
+      border-color: $mc-border;
+      box-shadow: $mc-shadow;
+      transform: none;
+    }
 
     .mc-stat-top {
       display: flex;
