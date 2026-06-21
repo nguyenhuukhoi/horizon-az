@@ -75,6 +75,20 @@
     }
     #sidebar .openstack-dashboard > a {
       text-transform: none !important;
+      font-size: 13.5px !important;
+      font-weight: 600 !important;
+      letter-spacing: 0 !important;
+    }
+    #sidebar .openstack-dashboard.mc-dashboard-static > a {
+      cursor: default !important;
+      pointer-events: none !important;
+    }
+    #sidebar .openstack-dashboard.mc-dashboard-static > a .openstack-toggle {
+      display: none !important;
+    }
+    #sidebar .openstack-dashboard.mc-dashboard-static > .panel-collapse {
+      display: block !important;
+      height: auto !important;
     }
     #sidebar .openstack-dashboard > a:hover,
     #sidebar .openstack-dashboard > a:focus,
@@ -223,6 +237,24 @@
     return 'dot';
   }
   function run() {
+    var dashboards = document.querySelectorAll('#sidebar .openstack-dashboard');
+    for (var d = 0; d < dashboards.length; d++) {
+      var label = dashboards[d].querySelector(':scope > a');
+      if (!label) continue;
+      var title = (label.textContent || '').replace(/\s+/g, ' ').trim().toLowerCase();
+      if (title.indexOf('project') === -1) continue;
+      dashboards[d].classList.add('mc-dashboard-static');
+      label.removeAttribute('data-toggle');
+      label.removeAttribute('data-target');
+      label.removeAttribute('href');
+      label.setAttribute('aria-expanded', 'true');
+      var body = dashboards[d].querySelector(':scope > .panel-collapse');
+      if (body) {
+        body.classList.add('in');
+        body.style.height = 'auto';
+      }
+    }
+
     var links = document.querySelectorAll('#sidebar a.openstack-panel');
     for (var i = 0; i < links.length; i++) {
       var a = links[i];
