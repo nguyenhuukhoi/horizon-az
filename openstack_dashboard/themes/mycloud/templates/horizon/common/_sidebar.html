@@ -537,6 +537,138 @@
 
 {% verbatim %}
 <script>
+// MyCloud: keep Horizon ModalForm workflows intact, but recover the form body
+// if angular-schema-form renders an empty form under the theme.
+(function () {
+  function modalTitle(modal) {
+    var node = modal.querySelector('.modal-title, .h4.modal-title');
+    return node ? (node.textContent || '').replace(/\s+/g, ' ').trim() : '';
+  }
+
+  function isSupportedModal(title) {
+    return title === 'Create Key Pair' ||
+           title === 'Import Public Key' ||
+           title === 'Create Server Group';
+  }
+
+  function isEmptySchemaForm(form) {
+    return !form.querySelector('input, select, textarea, .form-group, load-edit');
+  }
+
+  function keyPairTypeField() {
+    return '' +
+      '<div class="form-group hz-select mc-kp-field">' +
+        '<label class="control-label" for="mc-keypair-type">' +
+          '<span>Key Type</span> <span class="hz-icon-required fa fa-asterisk"></span>' +
+        '</label>' +
+        '<select class="form-control" id="mc-keypair-type" name="key_type"' +
+                ' ng-model="ctrl.model.key_type" ng-init="ctrl.model.key_type = ctrl.model.key_type || &quot;ssh&quot;"' +
+                ' ng-required="true">' +
+          '<option value="ssh">SSH Key</option>' +
+          '<option value="x509">X509 Certificate</option>' +
+        '</select>' +
+      '</div>';
+  }
+
+  function keyPairFields(title) {
+    var html = '' +
+      '<div class="form-group hz-input mc-kp-field">' +
+        '<label class="control-label" for="mc-keypair-name">' +
+          '<span>Key Pair Name</span> <span class="hz-icon-required fa fa-asterisk"></span>' +
+        '</label>' +
+        '<input class="form-control" id="mc-keypair-name" name="name" type="text"' +
+               ' ng-model="ctrl.model.name" ng-required="true" ng-pattern="/^[A-Za-z0-9 _-]+$/">' +
+      '</div>' +
+      keyPairTypeField();
+
+    if (title === 'Import Public Key') {
+      html += '' +
+        '<load-edit title="Public Key"' +
+                   ' model="ctrl.model.public_key"' +
+                   ' max-bytes="16384"' +
+                   ' key="public-key"' +
+                   ' rows="8"' +
+                   ' required="true">' +
+        '</load-edit>';
+    }
+
+    return html;
+  }
+
+  function serverGroupFields() {
+    return '' +
+      '<div class="form-group hz-input mc-modal-field">' +
+        '<label class="control-label" for="mc-server-group-name">' +
+          '<span>Name</span> <span class="hz-icon-required fa fa-asterisk"></span>' +
+        '</label>' +
+        '<input class="form-control" id="mc-server-group-name" name="name" type="text"' +
+               ' ng-model="ctrl.model.name" ng-required="true">' +
+      '</div>' +
+      '<div class="form-group hz-select mc-modal-field">' +
+        '<label class="control-label" for="mc-server-group-policy">' +
+          '<span>Policy</span> <span class="hz-icon-required fa fa-asterisk"></span>' +
+        '</label>' +
+        '<select class="form-control" id="mc-server-group-policy" name="policy"' +
+                ' ng-model="ctrl.model.policy"' +
+                ' ng-options="item.value as item.name for item in ctrl.form[1].titleMap"' +
+                ' ng-required="true">' +
+        '</select>' +
+      '</div>';
+  }
+
+  function fieldsFor(title) {
+    if (title === 'Create Server Group') return serverGroupFields();
+    return keyPairFields(title);
+  }
+
+  function patch(modal) {
+    var title = modalTitle(modal);
+    if (!isSupportedModal(title)) return;
+
+    var form = modal.querySelector('.modal-body form[name="schemaForm"]');
+    if (!form || form.getAttribute('data-mc-modal-form') === 'fixed') return;
+    if (!isEmptySchemaForm(form)) return;
+    if (!window.angular) return;
+
+    var scope = angular.element(form).scope();
+    var injector = angular.element(document.body).injector();
+    if (!scope || !injector) return;
+
+    form.setAttribute('data-mc-modal-form', 'fixed');
+    form.setAttribute('novalidate', 'novalidate');
+    form.innerHTML = fieldsFor(title);
+
+    injector.invoke(['$compile', function ($compile) {
+      $compile(angular.element(form).contents())(scope);
+      if (scope.$applyAsync) scope.$applyAsync();
+    }]);
+  }
+
+  function run() {
+    var modals = document.querySelectorAll('.modal-content');
+    for (var i = 0; i < modals.length; i++) patch(modals[i]);
+  }
+
+  function init() {
+    run();
+    if (!window.MutationObserver) return;
+    var pending = false;
+    var obs = new MutationObserver(function () {
+      if (pending) return;
+      pending = true;
+      setTimeout(function () { pending = false; run(); }, 50);
+    });
+    obs.observe(document.body, { childList: true, subtree: true });
+  }
+
+  if (document.readyState !== 'loading') init();
+  else document.addEventListener('DOMContentLoaded', init);
+})();
+</script>
+{% endverbatim %}
+
+{% verbatim %}
+<script>
 // MyCloud: give each Create/Allocate/Import toolbar button a semantic SVG icon
 // (same icon set as the design mockup). Matched by action verb + label so it
 // never touches Delete/Edit/Launch. Idempotent + re-runs on AJAX refresh.
