@@ -360,11 +360,10 @@ dl.dl-horizontal dt {
     background: #f8fafc;
   }
 
-  // clean white rows — Horizon stripes via tr.odd/tr.even > td, override those
-  &.table-striped > tbody > tr.odd > td,
-  &.table-striped > tbody > tr.even > td { background-color: #fff; }
-  &.table-striped > tbody > tr.odd:hover > td,
-  &.table-striped > tbody > tr.even:hover > td { background-color: #f8fafc; }
+  // flatten striped rows — Django stripes via tr.odd/even classes, Angular via
+  // Bootstrap :nth-of-type; this covers both, keeping selection/warning + hover
+  &.table-striped > tbody > tr:not(.st-selected):not(.warning) > td { background-color: #fff; }
+  &.table-striped > tbody > tr:hover > td { background-color: #f8fafc; }
 
   // instance name (and other linked first column) a touch bolder
   > tbody > tr > td a { font-weight: 600; }

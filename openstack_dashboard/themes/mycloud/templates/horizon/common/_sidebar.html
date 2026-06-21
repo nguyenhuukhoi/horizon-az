@@ -452,12 +452,11 @@
     .table_wrapper table.datatable { border: 0; }
     .table.datatable > thead > tr > th { padding: 11px 18px; }
     .table.datatable > tbody > tr > td { padding: 12px 18px; }
-    /* Uniform rows: Horizon stripes via tr.odd/tr.even > td (not :nth-of-type),
-       so override those td backgrounds to one colour. */
-    .table.datatable.table-striped > tbody > tr.odd > td,
-    .table.datatable.table-striped > tbody > tr.even > td { background-color: #fff; }
-    .table.datatable.table-striped > tbody > tr.odd:hover > td,
-    .table.datatable.table-striped > tbody > tr.even:hover > td { background-color: #f8fafc; }
+    /* Uniform rows for ALL tables: Django stripes via tr.odd/even classes,
+       Angular (Volumes/Images/Networks…) via Bootstrap :nth-of-type. Flatten
+       every striped row to one colour, keeping selection/warning + hover. */
+    #content_body table.table-striped > tbody > tr:not(.st-selected):not(.warning) > td { background-color: #fff; }
+    #content_body table.table-striped > tbody > tr:hover > td { background-color: #f8fafc; }
     /* Uniform checkbox size: the "select all" th uses a smaller font so its 1em
        FontAwesome glyph rendered smaller than the row checkboxes. */
     .table.datatable .multi_select_column { font-size: 15px; }
@@ -677,7 +676,8 @@
       if (title === 'project') dashboards[d].classList.add('mc-dashboard-project');
       if (title === 'admin') dashboards[d].classList.add('mc-dashboard-admin');
       hideAdminOverview(dashboards[d]);
-      if (title.indexOf('project') === -1) continue;
+      // Project AND Admin stay always-open (static); only Identity collapses.
+      if (title.indexOf('project') === -1 && title.indexOf('admin') === -1) continue;
       dashboards[d].classList.add('mc-dashboard-static');
       label.removeAttribute('data-toggle');
       label.removeAttribute('data-target');
