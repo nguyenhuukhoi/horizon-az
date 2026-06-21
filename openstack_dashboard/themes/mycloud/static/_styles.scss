@@ -234,6 +234,11 @@ body {
     height: auto !important;
   }
 
+  .mc-dashboard-project > .panel-collapse > .list-group > .openstack-panel-group > a,
+  .mc-dashboard-admin > .panel-collapse > .list-group > .openstack-panel-group > a {
+    padding-left: 24px !important;
+  }
+
   // sub-group headers (Compute / Volumes / Network)
   .openstack-panel-group > a {
     display: flex !important;
@@ -1188,6 +1193,10 @@ button.mc-create-btn {
     font-size: 12px;
     font-weight: 700;
     letter-spacing: .4px;
+  }
+
+  .table.datatable > thead > tr:not(.table_column_header) {
+    display: none !important;
   }
 
   .table.datatable > tbody > tr,

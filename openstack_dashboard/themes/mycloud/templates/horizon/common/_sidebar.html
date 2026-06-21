@@ -91,6 +91,10 @@
       display: block !important;
       height: auto !important;
     }
+    #sidebar .mc-dashboard-project > .panel-collapse > .list-group > .openstack-panel-group > a,
+    #sidebar .mc-dashboard-admin > .panel-collapse > .list-group > .openstack-panel-group > a {
+      padding-left: 24px !important;
+    }
     #sidebar .openstack-dashboard > a:hover,
     #sidebar .openstack-dashboard > a:focus,
     #sidebar .openstack-dashboard > a:active,
@@ -484,6 +488,7 @@
       border: 0; border-radius: 0; overflow: visible;
     }
     .mc-hv-tabs-shell .table.datatable > thead > tr > th { font-size: 12px; font-weight: 700; letter-spacing: .4px; }
+    .mc-hv-tabs-shell .table.datatable > thead > tr:not(.table_column_header) { display: none !important; }
     .mc-hv-tabs-shell .table.datatable > tbody > tr,
     .mc-hv-tabs-shell .table.datatable > tbody > tr > td,
     .mc-hv-tabs-shell .table.datatable.table-striped > tbody > tr:nth-of-type(odd) > td,
@@ -642,6 +647,8 @@
       var label = dashboards[d].querySelector(':scope > a');
       if (!label) continue;
       var title = labelText(label);
+      if (title === 'project') dashboards[d].classList.add('mc-dashboard-project');
+      if (title === 'admin') dashboards[d].classList.add('mc-dashboard-admin');
       hideAdminOverview(dashboards[d]);
       if (title.indexOf('project') === -1) continue;
       dashboards[d].classList.add('mc-dashboard-static');
@@ -845,9 +852,7 @@
     var uid = 'mc-hv-filter-' + Math.random().toString(36).slice(2);
     return '<div class="mc-hv-table-actions">' +
       '<label class="mc-hv-filter" for="' + uid + '"><input id="' + uid + '" type="search" placeholder="Filter..." data-mc-hv-filter></label>' +
-      '<a class="mc-hv-icon-btn" href="' + esc(location.href) + '" aria-label="Refresh">' +
-        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-2.6-6.4M21 3v5h-5"/></svg>' +
-      '</a></div>';
+      '</div>';
   }
   function bindPanelHead(wrapper, table) {
     var input = wrapper && wrapper.querySelector('[data-mc-hv-filter]');
