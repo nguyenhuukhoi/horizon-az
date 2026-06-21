@@ -278,7 +278,12 @@
     }
     .btn-launch .fa::before { content: "\f233" !important; }
     /* Semantic SVG icon injected into Create/toolbar buttons (by JS) */
-    .table_actions .btn .mc-act-ic { width: 15px; height: 15px; flex: 0 0 auto; }
+    .mc-act-ic { width: 15px; height: 15px; flex: 0 0 auto; }
+    /* Angular dynamic-table toolbar (magic-search pages e.g. Images): keep the
+       magic-search bar, just align the action buttons to the 38px row. */
+    #content_body .hz-dynamic-table-preamble { align-items: center; }
+    #content_body .hz-dynamic-table-actions { display: inline-flex; align-items: center; gap: 10px; }
+    #content_body .hz-dynamic-table-actions .btn { height: 38px; border-radius: 8px; display: inline-flex; align-items: center; gap: 7px; white-space: nowrap; }
 
     /* Data table -> rounded card like the mockup (overflow visible so
        dropdowns are not clipped); roomier cells; no zebra; subtle count. */
@@ -556,19 +561,20 @@
     return '<svg class="mc-act-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">' + IC[key] + '</svg>';
   }
   function decorate(btn) {
-    if (btn.getAttribute('data-mc-ic')) return;
+    if (btn.querySelector('.mc-act-ic')) return; // already has our icon (self-healing)
     var label = (btn.textContent || '').replace(/\s+/g, ' ').trim();
     if (!/^(create|allocate|import|register|add)\b/i.test(label)) return;
     if (/btn-launch/.test(btn.className)) return;
     var key = pick(label);
     if (!key) return;
-    btn.setAttribute('data-mc-ic', '1');
     var fa = btn.querySelector('.fa, .glyphicon, i[class*="fa-"]');
     if (fa) fa.outerHTML = svg(key);
     else btn.insertAdjacentHTML('afterbegin', svg(key));
   }
   function run() {
-    var btns = document.querySelectorAll('#content_body .table_actions a.btn, #content_body .table_actions button.btn');
+    var btns = document.querySelectorAll(
+      '#content_body .table_actions a.btn, #content_body .table_actions button.btn,' +
+      '#content_body .hz-dynamic-table-actions a.btn, #content_body .hz-dynamic-table-actions button.btn');
     for (var i = 0; i < btns.length; i++) decorate(btns[i]);
   }
   function init() {

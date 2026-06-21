@@ -493,7 +493,13 @@ a.btn-launch {
 }
 
 // Semantic SVG icon injected into Create / toolbar buttons (by JS in _sidebar)
-.table_actions .btn .mc-act-ic { width: 15px; height: 15px; flex: 0 0 auto; }
+.mc-act-ic { width: 15px; height: 15px; flex: 0 0 auto; }
+
+// Angular dynamic-table toolbar (magic-search pages e.g. Images): keep the
+// magic-search bar, just align the action buttons to the 38px row.
+#content_body .hz-dynamic-table-preamble { align-items: center; }
+#content_body .hz-dynamic-table-actions { display: inline-flex; align-items: center; gap: 10px; }
+#content_body .hz-dynamic-table-actions .btn { height: 38px; border-radius: 8px; display: inline-flex; align-items: center; gap: 7px; white-space: nowrap; }
 
 // =====================================================================
 //  Buttons
