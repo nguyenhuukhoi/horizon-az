@@ -1103,6 +1103,10 @@ button.mc-create-btn {
 
 .mc-hv-stats {
   margin-bottom: 22px;
+
+  .mc-stat-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
 }
 
 .mc-hv-tabs-shell {
@@ -1127,6 +1131,8 @@ button.mc-create-btn {
     font-weight: 600;
     padding: 10px 16px;
     margin: 0;
+    outline: 0 !important;
+    box-shadow: none !important;
 
     &:hover,
     &:focus {
@@ -1149,8 +1155,20 @@ button.mc-create-btn {
     margin-bottom: 22px;
   }
 
+  .table_wrapper > .table_count,
+  .table_wrapper .table_count,
+  .table.datatable > caption,
+  .table.datatable > tfoot {
+    display: none !important;
+  }
+
   .table_wrapper table.datatable {
+    width: calc(100% - 36px);
     min-width: 980px;
+    margin: 18px;
+    border: 1px solid $mc-border;
+    border-radius: 12px;
+    overflow: hidden;
   }
 
   .table.datatable > thead > tr > th {
@@ -1168,6 +1186,68 @@ button.mc-create-btn {
   padding: 14px 18px;
   border-bottom: 1px solid $mc-border;
   background: $mc-surface;
+}
+
+.mc-hv-table-actions {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-left: auto;
+}
+
+.mc-hv-filter {
+  position: relative;
+  min-width: 260px;
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 13px;
+    top: 50%;
+    width: 15px;
+    height: 15px;
+    transform: translateY(-50%);
+    background: #94a3b8;
+    -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='11' cy='11' r='7'/><path d='m21 21-4.3-4.3'/></svg>") center/contain no-repeat;
+    mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='11' cy='11' r='7'/><path d='m21 21-4.3-4.3'/></svg>") center/contain no-repeat;
+  }
+}
+
+.mc-hv-filter input {
+  width: 100%;
+  height: 38px;
+  border: 1px solid $mc-border;
+  border-radius: 8px;
+  background: #f8fafc;
+  color: $text-color;
+  font-size: 13.5px;
+  padding: 0 12px 0 36px;
+  outline: 0;
+  box-shadow: none;
+
+  &::placeholder { color: #94a3b8; }
+  &:focus {
+    border-color: #bfdbfe;
+    background: #fff;
+  }
+}
+
+.mc-hv-icon-btn {
+  width: 38px;
+  height: 38px;
+  border: 1px solid $mc-border;
+  border-radius: 8px;
+  background: #fff;
+  color: #334155;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
 }
 
 .mc-hv-table-title {
@@ -1262,6 +1342,10 @@ button.mc-create-btn {
 }
 
 @media (max-width: 900px) {
+  .mc-hv-stats .mc-stat-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .mc-hv-tabs-shell {
     .nav-tabs {
       overflow-x: auto;
@@ -1271,6 +1355,22 @@ button.mc-create-btn {
     .tab-content {
       min-height: 0;
     }
+  }
+}
+
+@media (max-width: 640px) {
+  .mc-hv-stats .mc-stat-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .mc-hv-table-head {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .mc-hv-table-actions,
+  .mc-hv-filter {
+    width: 100%;
   }
 }
 

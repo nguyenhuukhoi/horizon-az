@@ -450,6 +450,7 @@
       height: 38px; border-radius: 8px; display: inline-flex; align-items: center; gap: 7px; font-weight: 600;
     }
     .mc-hv-stats { margin-bottom: 22px; }
+    .mc-hv-stats .mc-stat-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
     .mc-hv-tabs-shell .nav-tabs {
       display: flex; gap: 2px; border-bottom: 1px solid #e2e8f0; margin: 0 0 16px;
     }
@@ -457,7 +458,7 @@
     .mc-hv-tabs-shell .nav-tabs > li > a {
       border: 0 !important; border-bottom: 2px solid transparent !important; border-radius: 0;
       background: transparent !important; color: #64748b; font-size: 13.5px; font-weight: 600;
-      padding: 10px 16px; margin: 0;
+      padding: 10px 16px; margin: 0; outline: 0 !important; box-shadow: none !important;
     }
     .mc-hv-tabs-shell .nav-tabs > li > a:hover,
     .mc-hv-tabs-shell .nav-tabs > li > a:focus { color: #2563eb; }
@@ -468,12 +469,38 @@
     }
     .mc-hv-tabs-shell .tab-content { min-height: 430px; }
     .mc-hv-tabs-shell .table_wrapper { margin-bottom: 22px; }
-    .mc-hv-tabs-shell .table_wrapper table.datatable { min-width: 980px; }
+    .mc-hv-tabs-shell .table_wrapper > .table_count,
+    .mc-hv-tabs-shell .table_wrapper .table_count,
+    .mc-hv-tabs-shell .table.datatable > caption,
+    .mc-hv-tabs-shell .table.datatable > tfoot { display: none !important; }
+    .mc-hv-tabs-shell .table_wrapper table.datatable {
+      width: calc(100% - 36px); min-width: 980px; margin: 18px;
+      border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden;
+    }
     .mc-hv-tabs-shell .table.datatable > thead > tr > th { font-size: 12px; font-weight: 700; letter-spacing: .4px; }
     .mc-hv-table-head {
       display: flex; align-items: center; justify-content: space-between; gap: 12px;
       padding: 14px 18px; border-bottom: 1px solid #e2e8f0; background: #fff;
     }
+    .mc-hv-table-actions { display: inline-flex; align-items: center; justify-content: flex-end; gap: 10px; margin-left: auto; }
+    .mc-hv-filter { position: relative; min-width: 260px; }
+    .mc-hv-filter::before {
+      content: ""; position: absolute; left: 13px; top: 50%; width: 15px; height: 15px; transform: translateY(-50%);
+      background: #94a3b8;
+      -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='11' cy='11' r='7'/><path d='m21 21-4.3-4.3'/></svg>") center/contain no-repeat;
+      mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='11' cy='11' r='7'/><path d='m21 21-4.3-4.3'/></svg>") center/contain no-repeat;
+    }
+    .mc-hv-filter input {
+      width: 100%; height: 38px; border: 1px solid #e2e8f0; border-radius: 8px; background: #f8fafc;
+      color: #0f172a; font-size: 13.5px; padding: 0 12px 0 36px; outline: 0; box-shadow: none;
+    }
+    .mc-hv-filter input::placeholder { color: #94a3b8; }
+    .mc-hv-filter input:focus { border-color: #bfdbfe; background: #fff; }
+    .mc-hv-icon-btn {
+      width: 38px; height: 38px; border: 1px solid #e2e8f0; border-radius: 8px; background: #fff; color: #334155;
+      display: inline-flex; align-items: center; justify-content: center;
+    }
+    .mc-hv-icon-btn svg { width: 16px; height: 16px; }
     .mc-hv-table-title { color: #0f172a; font-size: 15px; font-weight: 700; line-height: 1.3; }
     .mc-hv-count {
       display: inline-flex; align-items: center; gap: 6px; min-height: 24px; border-radius: 20px;
@@ -494,8 +521,14 @@
     .mc-hv-provider-meter .mc-hv-meter-line { font-size: 12.5px; }
     .mc-hv-provider-meta { color: #94a3b8; font-size: 11.5px; font-weight: 600; margin-top: 4px; white-space: nowrap; }
     @media (max-width: 900px) {
+      .mc-hv-stats .mc-stat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .mc-hv-tabs-shell .nav-tabs { overflow-x: auto; white-space: nowrap; }
       .mc-hv-tabs-shell .tab-content { min-height: 0; }
+    }
+    @media (max-width: 640px) {
+      .mc-hv-stats .mc-stat-grid { grid-template-columns: 1fr; }
+      .mc-hv-table-head { align-items: flex-start; flex-direction: column; }
+      .mc-hv-table-actions, .mc-hv-filter { width: 100%; }
     }
   </style>
   <a class="mc-sidebar-brand" href="{% site_branding_link %}" target="_self">
@@ -788,11 +821,35 @@
     var hs = headers(table);
     if (hs[idx]) hs[idx].textContent = label;
   }
-  function insertPanelHead(wrapper, title, countText) {
+  function applyClientFilter(table, query) {
+    query = (query || '').toLowerCase();
+    var rows = tableRows(table);
+    for (var i = 0; i < rows.length; i++) {
+      if (/no items to display/i.test(text(rows[i]))) continue;
+      rows[i].style.display = !query || text(rows[i]).toLowerCase().indexOf(query) !== -1 ? '' : 'none';
+    }
+  }
+  function headerActions(table) {
+    var uid = 'mc-hv-filter-' + Math.random().toString(36).slice(2);
+    return '<div class="mc-hv-table-actions">' +
+      '<label class="mc-hv-filter" for="' + uid + '"><input id="' + uid + '" type="search" placeholder="Filter..." data-mc-hv-filter></label>' +
+      '<a class="mc-hv-icon-btn" href="' + esc(location.href) + '" aria-label="Refresh">' +
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-2.6-6.4M21 3v5h-5"/></svg>' +
+      '</a></div>';
+  }
+  function bindPanelHead(wrapper, table) {
+    var input = wrapper && wrapper.querySelector('[data-mc-hv-filter]');
+    if (!input || input.getAttribute('data-mc-bound') === 'true') return;
+    input.setAttribute('data-mc-bound', 'true');
+    input.addEventListener('input', function () { applyClientFilter(table, input.value); });
+  }
+  function insertPanelHead(wrapper, title, countText, withActions, table) {
     if (!wrapper || wrapper.querySelector(':scope > .mc-hv-table-head')) return;
     wrapper.insertAdjacentHTML('afterbegin',
       '<div class="mc-hv-table-head"><div class="mc-hv-table-title">' + esc(title) + '</div>' +
-      '<span class="mc-hv-count">' + esc(countText || '') + '</span></div>');
+      (countText ? '<span class="mc-hv-count">' + esc(countText) + '</span>' : '') +
+      (withActions ? headerActions(table) : '') + '</div>');
+    if (withActions) bindPanelHead(wrapper, table);
   }
   function rowCount(table) {
     var rows = tableRows(table);
@@ -819,7 +876,7 @@
     setHeader(table, diskUsed, 'Local Storage');
     hideColumn(table, memTotal);
     hideColumn(table, diskTotal);
-    insertPanelHead(table.closest('.table_wrapper'), 'Hosts', rowCount(table) + ' hosts');
+    insertPanelHead(table.closest('.table_wrapper'), 'Hosts', rowCount(table) + ' hosts', false, table);
 
     var rows = tableRows(table);
     for (var r = 0; r < rows.length; r++) {
@@ -863,7 +920,7 @@
     if (indexes.some(function (x) { return x.used < 0 || x.total < 0; })) return;
 
     table.classList.add('mc-hv-provider-enhanced');
-    insertPanelHead(table.closest('.table_wrapper'), 'Resource Providers', rowCount(table) + ' providers');
+    insertPanelHead(table.closest('.table_wrapper'), 'Resource Providers', '', true, table);
 
     for (var i = 0; i < indexes.length; i++) {
       setHeader(table, indexes[i].used, indexes[i].label);
@@ -895,7 +952,7 @@
     var hs = headers(table);
     if (findHeader(hs, 'Host') < 0 || findHeader(hs, 'Availability Zone') < 0) return;
     table.classList.add('mc-hv-compute-enhanced');
-    insertPanelHead(table.closest('.table_wrapper'), 'Compute Hosts', rowCount(table) + ' services');
+    insertPanelHead(table.closest('.table_wrapper'), 'Compute Hosts', '', true, table);
   }
   function run() {
     var tables = document.querySelectorAll('#content_body .mc-hv-tabs-shell table.datatable');
