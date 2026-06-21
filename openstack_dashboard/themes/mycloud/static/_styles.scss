@@ -360,12 +360,18 @@ dl.dl-horizontal dt {
     background: #f8fafc;
   }
 
-  // clean white rows (no zebra striping) to match the mockup
-  &.table-striped > tbody > tr:nth-of-type(odd) > td { background: transparent; }
-  &.table-striped > tbody > tr:hover > td { background: #f8fafc; }
+  // clean white rows (no zebra) — Bootstrap stripes the <tr>, so target it
+  &.table-striped > tbody > tr { background-color: #fff; }
+  &.table-striped > tbody > tr:hover { background-color: #f8fafc; }
 
   // instance name (and other linked first column) a touch bolder
   > tbody > tr > td a { font-weight: 600; }
+
+  // uniform checkbox size (the "select all" th font is smaller, so its 1em
+  // FontAwesome glyph rendered smaller than the row checkboxes)
+  .multi_select_column { font-size: 15px; }
+  .themable-checkbox label::before { font-size: 15px; line-height: 1; }
+  .multi_select_column input[type="checkbox"] { width: 15px; height: 15px; margin: 0; vertical-align: middle; }
 }
 
 // Horizon data table wrapper -> rounded card (like the mockup .tbl-wrap).
