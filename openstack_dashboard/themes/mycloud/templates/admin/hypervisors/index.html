@@ -32,16 +32,16 @@
           <span class="mc-stat-ic mc-ic-2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v2M15 2v2M9 20v2M15 20v2M2 9h2M2 15h2M20 9h2M20 15h2"/></svg></span>
           <span class="mc-trend is-ok">{{ vcpu_pct|default:0 }}%</span>
         </div>
-        <div class="mc-stat-num">{{ stats.vcpus_used|default:0|intcomma }}<small> / {{ stats.vcpus|default:0|intcomma }} vCPU</small></div>
-        <div class="mc-stat-label">{% trans "vCPUs allocated" %}</div>
+        <div class="mc-stat-num">{{ stats.vcpus_used|default:0|intcomma }}</div>
+        <div class="mc-stat-label">{% trans "vCPUs" %} / {{ stats.vcpus|default:0|intcomma }}</div>
       </div>
       <div class="mc-stat mc-stat--key">
         <div class="mc-stat-top">
           <span class="mc-stat-ic mc-ic-3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="9" rx="1.5"/><path d="M7 16v2M12 16v2M17 16v2M7 11v1M12 11v1M17 11v1"/></svg></span>
           <span class="mc-trend is-ok">{{ ram_pct|default:0 }}%</span>
         </div>
-        <div class="mc-stat-num">{{ stats.memory_mb_used|default:0|mb_float_format }}<small> / {{ stats.memory_mb|default:0|mb_float_format }}</small></div>
-        <div class="mc-stat-label">{% trans "RAM allocated" %}</div>
+        <div class="mc-stat-num">{{ stats.memory_mb_used|default:0|mb_float_format }}</div>
+        <div class="mc-stat-label">{% trans "RAM" %} / {{ stats.memory_mb|default:0|mb_float_format }}</div>
       </div>
       <div class="mc-stat mc-stat--key">
         <div class="mc-stat-top">
