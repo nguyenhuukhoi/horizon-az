@@ -524,12 +524,38 @@ button.mc-create-btn {
 
 // Angular dynamic-table toolbar (magic-search pages e.g. Images): keep the
 // magic-search bar, just align the action buttons to the 38px row.
-#content_body .hz-dynamic-table-preamble { align-items: center; gap: 10px; }
+#content_body hz-resource-table,
+#content_body hz-dynamic-table,
+#content_body hz-magic-search-context,
+#content_body .hz-magic-search-context {
+  display: block;
+  width: 100%;
+  min-width: 0;
+}
+
+#content_body .hz-magic-search-context > .row {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+#content_body .hz-dynamic-table-preamble {
+  display: flex !important;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  min-width: 0;
+}
 #content_body .hz-magic-search-bar { padding-right: 0 !important; }
-#content_body .hz-dynamic-table-actions { display: inline-flex; align-items: center; gap: 10px; }
+#content_body .hz-magic-search-bar { flex: 1 1 auto; min-width: 0; }
+#content_body .hz-dynamic-table-actions { display: inline-flex; align-items: center; gap: 10px; flex: 0 0 auto; }
 // neutralise Horizon's per-action padding so every gap is exactly 10px
 #content_body .hz-dynamic-table-actions action-list { padding-left: 0 !important; }
 #content_body .hz-dynamic-table-actions .btn { height: 38px; border-radius: 8px; display: inline-flex; align-items: center; gap: 7px; white-space: nowrap; }
+#content_body .hz-magic-search-context > table,
+#content_body .hz-magic-search-context table.table {
+  width: 100%;
+  min-width: 100%;
+}
 
 // Clamp the magic-search bar to the same 38px row as the buttons.
 // Use min-height too in case the theme's $input-height-base is taller.
