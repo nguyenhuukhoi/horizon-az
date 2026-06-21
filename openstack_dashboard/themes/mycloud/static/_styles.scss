@@ -499,6 +499,12 @@ dl.dl-horizontal dt {
 }
 
 // ---- Stat cards (Limit Summary) ----
+.quota-dynamic.mc-key-stats,
+.quota-dynamic.az-limit-summary,
+.quota-dynamic.mc-quota-summary-wrap {
+  padding-bottom: 0;
+}
+
 .mc-stat-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
