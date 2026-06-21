@@ -520,12 +520,7 @@ dl.dl-horizontal dt {
   min-height: 148px;
   display: flex;
   flex-direction: column;
-  transition: box-shadow .15s ease, transform .15s ease;
-
-  &:hover {
-    box-shadow: 0 4px 16px rgba(15, 23, 42, .10);
-    transform: translateY(-1px);
-  }
+  transition: none;
 
   .mc-stat-top {
     display: flex;
@@ -1316,12 +1311,7 @@ dl.dl-horizontal dt {
     padding: 16px 18px;
     display: flex;
     flex-direction: column;
-    transition: box-shadow .15s ease, transform .15s ease;
-
-    &:hover {
-      box-shadow: 0 4px 16px rgba(15, 23, 42, .10);
-      transform: translateY(-1px);
-    }
+    transition: none;
 
     .mc-stat-top {
       display: flex;
