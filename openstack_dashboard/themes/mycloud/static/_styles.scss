@@ -384,6 +384,11 @@ dl.dl-horizontal dt {
 .table_count { color: #94a3b8; font-size: 13px; font-weight: 500; }
 .table > thead .breadcrumb_td .table_count { display: none; }
 
+// Toolbar lifted onto the page header (by JS in _sidebar.html): hide the
+// now-empty table caption and vertically centre the actions with the title.
+table.datatable.mc-lifted > caption { display: none; }
+.page-header.mc-has-actions { align-items: center; }
+
 // =====================================================================
 //  Data-table toolbar (caption) — match the mockup Instances layout:
 //  clean right-aligned actions row; the page title comes from .page-header
