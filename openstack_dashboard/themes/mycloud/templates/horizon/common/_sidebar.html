@@ -29,6 +29,7 @@
     #sidebar a.openstack-panel::before { content: none !important; }
     #sidebar a.openstack-panel { display: flex !important; align-items: center; }
     #sidebar a.openstack-panel .mc-nav-ic { margin-right: 9px; flex: 0 0 auto; }
+    #sidebar .mc-nav-hidden { display: none !important; }
 
     /* SVG chevron (injected below) replaces the Font Awesome glyph */
     #sidebar .openstack-toggle.fa::before { content: none !important; }
@@ -564,12 +565,39 @@
     }
     return 'dot';
   }
+  function labelText(node) {
+    return (node && node.textContent || '').replace(/\s+/g, ' ').trim().toLowerCase();
+  }
+  function isDashboard(dashboard, name) {
+    return labelText(dashboard.querySelector(':scope > a')) === name;
+  }
+  function hideAdminOverview(dashboard) {
+    if (!isDashboard(dashboard, 'admin')) return;
+    var links = dashboard.querySelectorAll('a.openstack-panel');
+    for (var i = 0; i < links.length; i++) {
+      var href = links[i].getAttribute('href') || '';
+      if (labelText(links[i]) === 'overview' && /\/admin\/?$/.test(href)) {
+        links[i].classList.add('mc-nav-hidden');
+        links[i].classList.remove('active');
+        links[i].setAttribute('aria-hidden', 'true');
+      }
+    }
+    var groups = dashboard.querySelectorAll(':scope > .panel-collapse > .list-group, :scope > .panel-collapse .list-group');
+    for (var g = 0; g < groups.length; g++) {
+      var visibleLinks = groups[g].querySelectorAll('a.openstack-panel:not(.mc-nav-hidden)');
+      var childPanelGroups = groups[g].querySelectorAll('.openstack-panel-group');
+      if (!visibleLinks.length && !childPanelGroups.length) {
+        groups[g].classList.add('mc-nav-hidden');
+      }
+    }
+  }
   function run() {
     var dashboards = document.querySelectorAll('#sidebar .openstack-dashboard');
     for (var d = 0; d < dashboards.length; d++) {
       var label = dashboards[d].querySelector(':scope > a');
       if (!label) continue;
-      var title = (label.textContent || '').replace(/\s+/g, ' ').trim().toLowerCase();
+      var title = labelText(label);
+      hideAdminOverview(dashboards[d]);
       if (title.indexOf('project') === -1) continue;
       dashboards[d].classList.add('mc-dashboard-static');
       label.removeAttribute('data-toggle');

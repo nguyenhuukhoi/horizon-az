@@ -1287,6 +1287,11 @@ button.mc-create-btn {
     display: flex;
     align-items: center;
   }
+
+  .mc-nav-hidden {
+    display: none !important;
+  }
+
   .mc-nav-ic {
     width: 17px;
     height: 17px;
