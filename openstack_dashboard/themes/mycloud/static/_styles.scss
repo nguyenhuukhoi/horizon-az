@@ -1176,6 +1176,15 @@ button.mc-create-btn {
     font-weight: 700;
     letter-spacing: .4px;
   }
+
+  .table.datatable > tbody > tr,
+  .table.datatable > tbody > tr > td,
+  .table.datatable.table-striped > tbody > tr:nth-of-type(odd) > td,
+  .table.datatable.table-striped > tbody > tr:nth-of-type(even) > td,
+  .table.datatable > tbody > tr:hover > td,
+  .table.datatable.table-striped > tbody > tr:hover > td {
+    background: #fff !important;
+  }
 }
 
 .mc-hv-table-head {
