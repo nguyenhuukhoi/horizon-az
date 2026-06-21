@@ -624,8 +624,13 @@
       tg[j].innerHTML = svg('<path d="M6 9l6 6 6-6"/>', 'mc-cv', 14);
     }
   }
-  if (document.readyState !== 'loading') run();
-  else document.addEventListener('DOMContentLoaded', run);
+  // This script is rendered immediately after the sidebar markup. Run now so
+  // SVG nav icons are in place before the browser paints the next page; waiting
+  // for DOMContentLoaded makes the whole sidebar icon set visibly blink.
+  run();
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', run, { once: true });
+  }
 })();
 </script>
 {% endverbatim %}
