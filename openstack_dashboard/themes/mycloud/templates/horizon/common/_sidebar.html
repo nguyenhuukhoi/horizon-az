@@ -296,25 +296,6 @@
     .table.datatable > tbody > tr > td a { font-weight: 600; }
     .table_count { color: #94a3b8; font-size: 13px; font-weight: 500; }
     .table.datatable > thead .breadcrumb_td .table_count { display: none; }
-    /* Title + toolbar on one header row inside the card (JS adds the
-       classes); hide the redundant page title above it. */
-    .page-header.mc-hide { display: none; }
-    table.datatable > caption.mc-cap-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      flex-wrap: wrap;
-      padding: 0 0 16px;
-    }
-    table.datatable > caption.mc-cap-header .table-title {
-      display: inline-block !important;
-      font-size: 22px;
-      font-weight: 700;
-      color: #0f172a;
-      margin: 0;
-      line-height: 1.2;
-    }
   </style>
   <a class="mc-sidebar-brand" href="{% site_branding_link %}" target="_self">
     <span class="mc-brand-logo"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 19A4.5 4.5 0 0 1 5.9 10 6 6 0 0 1 17.6 8.4 4.2 4.2 0 0 1 17 19z"/></svg></span>
@@ -441,30 +422,6 @@
   }
   if (document.readyState !== 'loading') init();
   else document.addEventListener('DOMContentLoaded', init);
-})();
-</script>
-{% endverbatim %}
-
-{% verbatim %}
-<script>
-// MyCloud: put the table title + toolbar on ONE header row, matching the
-// mockup, WITHOUT moving the actions out of the table/form (Horizon's
-// delete-confirm needs the action inside the table + form). Instead we
-// promote the table <caption> (which already holds the title + actions)
-// to a header row and hide the now-redundant page title above it.
-(function () {
-  function mergeHeader() {
-    var wraps = document.querySelectorAll('#content_body .table_wrapper');
-    if (wraps.length !== 1) return;                 // single-table pages only
-    var cap = wraps[0].querySelector('table.datatable > caption');
-    var title = cap && cap.querySelector('.table-title');
-    if (!cap || !title || !title.textContent.trim()) return;
-    cap.classList.add('mc-cap-header');
-    var ph = document.querySelector('#content_body .page-header');
-    if (ph) ph.classList.add('mc-hide');            // redundant page title
-  }
-  if (document.readyState !== 'loading') mergeHeader();
-  else document.addEventListener('DOMContentLoaded', mergeHeader);
 })();
 </script>
 {% endverbatim %}
