@@ -1086,6 +1086,195 @@ button.mc-create-btn {
 }
 
 // =====================================================================
+//  Admin / Hypervisors — match horizon_redesign_interactive.html
+// =====================================================================
+.mc-hv-page-head {
+  margin-bottom: 18px;
+}
+
+.mc-hv-refresh {
+  height: 38px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-weight: 600;
+}
+
+.mc-hv-stats {
+  margin-bottom: 22px;
+}
+
+.mc-hv-tabs-shell {
+  .nav-tabs {
+    display: flex;
+    gap: 2px;
+    border-bottom: 1px solid $mc-border;
+    margin: 0 0 16px;
+  }
+
+  .nav-tabs > li {
+    margin-bottom: -1px;
+  }
+
+  .nav-tabs > li > a {
+    border: 0 !important;
+    border-bottom: 2px solid transparent !important;
+    border-radius: 0;
+    background: transparent !important;
+    color: #64748b;
+    font-size: 13.5px;
+    font-weight: 600;
+    padding: 10px 16px;
+    margin: 0;
+
+    &:hover,
+    &:focus {
+      color: $brand-primary;
+    }
+  }
+
+  .nav-tabs > li.active > a,
+  .nav-tabs > li.active > a:hover,
+  .nav-tabs > li.active > a:focus {
+    color: $brand-primary;
+    border-bottom-color: $brand-primary !important;
+  }
+
+  .tab-content {
+    min-height: 430px;
+  }
+
+  .table_wrapper {
+    margin-bottom: 22px;
+  }
+
+  .table_wrapper table.datatable {
+    min-width: 980px;
+  }
+
+  .table.datatable > thead > tr > th {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .4px;
+  }
+}
+
+.mc-hv-table-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 18px;
+  border-bottom: 1px solid $mc-border;
+  background: $mc-surface;
+}
+
+.mc-hv-table-title {
+  color: $text-color;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.mc-hv-count {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 24px;
+  border-radius: 20px;
+  padding: 3px 10px;
+  background: #f1f5f9;
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.mc-hv-host {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+}
+
+.mc-hv-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #16a34a;
+  flex: 0 0 auto;
+}
+
+.mc-hv-tag {
+  display: inline-block;
+  border-radius: 6px;
+  background: #f1f5f9;
+  color: #64748b;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 9px;
+}
+
+.mc-hv-meter {
+  min-width: 190px;
+}
+
+.mc-hv-meter-line {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  color: #64748b;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 5px;
+  white-space: nowrap;
+}
+
+.mc-hv-meter-line .mc-hv-pct {
+  color: #94a3b8;
+}
+
+.mc-hv-instances {
+  color: $text-color;
+  font-weight: 700;
+}
+
+.mc-hv-col-hide {
+  display: none !important;
+}
+
+.mc-hv-provider-meter {
+  min-width: 230px;
+
+  .mc-hv-meter-line {
+    font-size: 12.5px;
+  }
+}
+
+.mc-hv-provider-meta {
+  color: #94a3b8;
+  font-size: 11.5px;
+  font-weight: 600;
+  margin-top: 4px;
+  white-space: nowrap;
+}
+
+@media (max-width: 900px) {
+  .mc-hv-tabs-shell {
+    .nav-tabs {
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+
+    .tab-content {
+      min-height: 0;
+    }
+  }
+}
+
+// =====================================================================
 //  Sidebar — left align + per-panel icons (inline SVG, injected by JS)
 // =====================================================================
 #sidebar {

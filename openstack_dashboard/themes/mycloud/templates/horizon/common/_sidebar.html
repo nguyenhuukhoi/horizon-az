@@ -442,6 +442,60 @@
     .mc-stat-badge.err   { background: #fee2e2; color: #dc2626; }
     .mc-stat-badge.muted { background: #f1f5f9; color: #64748b; }
     .table.datatable > thead .breadcrumb_td .table_count { display: none; }
+
+    /* Admin / Hypervisors — real mockup tabs + meter tables */
+    .mc-hv-page-head { margin-bottom: 18px; }
+    .mc-hv-refresh {
+      height: 38px; border-radius: 8px; display: inline-flex; align-items: center; gap: 7px; font-weight: 600;
+    }
+    .mc-hv-stats { margin-bottom: 22px; }
+    .mc-hv-tabs-shell .nav-tabs {
+      display: flex; gap: 2px; border-bottom: 1px solid #e2e8f0; margin: 0 0 16px;
+    }
+    .mc-hv-tabs-shell .nav-tabs > li { margin-bottom: -1px; }
+    .mc-hv-tabs-shell .nav-tabs > li > a {
+      border: 0 !important; border-bottom: 2px solid transparent !important; border-radius: 0;
+      background: transparent !important; color: #64748b; font-size: 13.5px; font-weight: 600;
+      padding: 10px 16px; margin: 0;
+    }
+    .mc-hv-tabs-shell .nav-tabs > li > a:hover,
+    .mc-hv-tabs-shell .nav-tabs > li > a:focus { color: #2563eb; }
+    .mc-hv-tabs-shell .nav-tabs > li.active > a,
+    .mc-hv-tabs-shell .nav-tabs > li.active > a:hover,
+    .mc-hv-tabs-shell .nav-tabs > li.active > a:focus {
+      color: #2563eb; border-bottom-color: #2563eb !important;
+    }
+    .mc-hv-tabs-shell .tab-content { min-height: 430px; }
+    .mc-hv-tabs-shell .table_wrapper { margin-bottom: 22px; }
+    .mc-hv-tabs-shell .table_wrapper table.datatable { min-width: 980px; }
+    .mc-hv-tabs-shell .table.datatable > thead > tr > th { font-size: 12px; font-weight: 700; letter-spacing: .4px; }
+    .mc-hv-table-head {
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      padding: 14px 18px; border-bottom: 1px solid #e2e8f0; background: #fff;
+    }
+    .mc-hv-table-title { color: #0f172a; font-size: 15px; font-weight: 700; line-height: 1.3; }
+    .mc-hv-count {
+      display: inline-flex; align-items: center; gap: 6px; min-height: 24px; border-radius: 20px;
+      padding: 3px 10px; background: #f1f5f9; color: #64748b; font-size: 12px; font-weight: 700; white-space: nowrap;
+    }
+    .mc-hv-host { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; }
+    .mc-hv-dot { width: 9px; height: 9px; border-radius: 50%; background: #16a34a; flex: 0 0 auto; }
+    .mc-hv-tag { display: inline-block; border-radius: 6px; background: #f1f5f9; color: #64748b; font-size: 11px; font-weight: 700; padding: 2px 9px; }
+    .mc-hv-meter { min-width: 190px; }
+    .mc-hv-meter-line {
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      color: #64748b; font-size: 13px; font-weight: 600; margin-bottom: 5px; white-space: nowrap;
+    }
+    .mc-hv-meter-line .mc-hv-pct { color: #94a3b8; }
+    .mc-hv-instances { color: #0f172a; font-weight: 700; }
+    .mc-hv-col-hide { display: none !important; }
+    .mc-hv-provider-meter { min-width: 230px; }
+    .mc-hv-provider-meter .mc-hv-meter-line { font-size: 12.5px; }
+    .mc-hv-provider-meta { color: #94a3b8; font-size: 11.5px; font-weight: 600; margin-top: 4px; white-space: nowrap; }
+    @media (max-width: 900px) {
+      .mc-hv-tabs-shell .nav-tabs { overflow-x: auto; white-space: nowrap; }
+      .mc-hv-tabs-shell .tab-content { min-height: 0; }
+    }
   </style>
   <a class="mc-sidebar-brand" href="{% site_branding_link %}" target="_self">
     <span class="mc-brand-logo"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 19A4.5 4.5 0 0 1 5.9 10 6 6 0 0 1 17.6 8.4 4.2 4.2 0 0 1 17 19z"/></svg></span>
@@ -624,6 +678,211 @@
     });
     var bodies = document.querySelectorAll('#content_body .table_wrapper table.datatable > tbody');
     for (var i = 0; i < bodies.length; i++) obs.observe(bodies[i], { childList: true, subtree: true });
+  }
+  if (document.readyState !== 'loading') init();
+  else document.addEventListener('DOMContentLoaded', init);
+})();
+</script>
+{% endverbatim %}
+
+{% verbatim %}
+<script>
+// MyCloud: Admin Hypervisors page layout. Keep Horizon's real tables/actions,
+// but combine capacity columns into the compact meter cells used by the mockup.
+(function () {
+  if (location.pathname.indexOf('/admin/hypervisors') === -1) return;
+
+  function text(el) {
+    return (el && el.textContent || '').replace(/\s+/g, ' ').trim();
+  }
+  function esc(s) {
+    return String(s || '').replace(/[&<>"']/g, function (c) {
+      return ({'&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'})[c];
+    });
+  }
+  function headers(table) {
+    return Array.prototype.slice.call(table.querySelectorAll('thead tr.table_column_header th, thead tr:last-child th'));
+  }
+  function findHeader(hs, exact) {
+    exact = exact.toLowerCase();
+    for (var i = 0; i < hs.length; i++) {
+      if (text(hs[i]).toLowerCase() === exact) return i;
+    }
+    return -1;
+  }
+  function parseCap(raw) {
+    var s = String(raw || '').replace(/,/g, '').trim().toLowerCase();
+    var m = s.match(/-?\d+(?:\.\d+)?/);
+    if (!m) return 0;
+    var v = parseFloat(m[0]);
+    if (/tib|tb/.test(s)) return v * 1024 * 1024;
+    if (/gib|gb/.test(s)) return v * 1024;
+    if (/kib|kb/.test(s)) return v / 1024;
+    return v;
+  }
+  function pct(used, total) {
+    var u = parseCap(used), t = parseCap(total);
+    if (!t || t <= 0) return 0;
+    return Math.max(0, Math.min(100, Math.round((u / t) * 100)));
+  }
+  function meterClass(value) {
+    if (value >= 90) return 'is-danger';
+    if (value >= 75) return 'is-warn';
+    return 'is-ok';
+  }
+  function meterHtml(used, total, extraClass) {
+    var value = pct(used, total);
+    return '<div class="mc-hv-meter ' + (extraClass || '') + '">' +
+      '<div class="mc-hv-meter-line"><span>' + esc(used) + ' / ' + esc(total) + '</span><span class="mc-hv-pct">' + value + '%</span></div>' +
+      '<div class="mc-meter"><i class="' + meterClass(value) + '" style="width:' + value + '%"></i></div>' +
+      '</div>';
+  }
+  function tableRows(table) {
+    return Array.prototype.slice.call(table.querySelectorAll('tbody > tr')).filter(function (tr) {
+      return tr.children && tr.children.length;
+    });
+  }
+  function hideColumn(table, idx) {
+    if (idx < 0) return;
+    var hs = headers(table);
+    if (hs[idx]) hs[idx].classList.add('mc-hv-col-hide');
+    var rows = tableRows(table);
+    for (var r = 0; r < rows.length; r++) {
+      if (rows[r].children[idx]) rows[r].children[idx].classList.add('mc-hv-col-hide');
+    }
+  }
+  function setHeader(table, idx, label) {
+    var hs = headers(table);
+    if (hs[idx]) hs[idx].textContent = label;
+  }
+  function insertPanelHead(wrapper, title, countText) {
+    if (!wrapper || wrapper.querySelector(':scope > .mc-hv-table-head')) return;
+    wrapper.insertAdjacentHTML('afterbegin',
+      '<div class="mc-hv-table-head"><div class="mc-hv-table-title">' + esc(title) + '</div>' +
+      '<span class="mc-hv-count">' + esc(countText || '') + '</span></div>');
+  }
+  function rowCount(table) {
+    var rows = tableRows(table);
+    var n = 0;
+    for (var i = 0; i < rows.length; i++) {
+      if (!/no items to display/i.test(text(rows[i]))) n++;
+    }
+    return n;
+  }
+  function decorateHypervisors(table) {
+    if (!table || table.classList.contains('mc-hv-enhanced')) return;
+    var hs = headers(table);
+    var hostname = findHeader(hs, 'Hostname');
+    var type = findHeader(hs, 'Type');
+    var memUsed = findHeader(hs, 'RAM (used)');
+    var memTotal = findHeader(hs, 'RAM (total)');
+    var diskUsed = findHeader(hs, 'Local Storage (used)');
+    var diskTotal = findHeader(hs, 'Local Storage (total)');
+    var instances = findHeader(hs, 'Instances');
+    if (hostname < 0 || memUsed < 0 || memTotal < 0 || diskUsed < 0 || diskTotal < 0) return;
+
+    table.classList.add('mc-hv-enhanced');
+    setHeader(table, memUsed, 'RAM');
+    setHeader(table, diskUsed, 'Local Storage');
+    hideColumn(table, memTotal);
+    hideColumn(table, diskTotal);
+    insertPanelHead(table.closest('.table_wrapper'), 'Hosts', rowCount(table) + ' hosts');
+
+    var rows = tableRows(table);
+    for (var r = 0; r < rows.length; r++) {
+      var cells = rows[r].children;
+      if (!cells[hostname] || /no items to display/i.test(text(rows[r]))) continue;
+      if (!cells[hostname].querySelector('.mc-hv-host')) {
+        cells[hostname].innerHTML = '<span class="mc-hv-host"><span class="mc-hv-dot"></span><span>' + cells[hostname].innerHTML + '</span></span>';
+      }
+      if (cells[type] && !cells[type].querySelector('.mc-hv-tag')) {
+        cells[type].innerHTML = '<span class="mc-hv-tag">' + esc(text(cells[type])) + '</span>';
+      }
+      if (cells[memUsed] && cells[memTotal]) {
+        cells[memUsed].innerHTML = meterHtml(text(cells[memUsed]), text(cells[memTotal]), '');
+      }
+      if (cells[diskUsed] && cells[diskTotal]) {
+        cells[diskUsed].innerHTML = meterHtml(text(cells[diskUsed]), text(cells[diskTotal]), '');
+      }
+      if (cells[instances]) cells[instances].classList.add('mc-hv-instances');
+    }
+  }
+  function decorateProviders(table) {
+    if (!table || table.classList.contains('mc-hv-provider-enhanced')) return;
+    var hs = headers(table);
+    if (findHeader(hs, 'Resource Provider Name') < 0) return;
+    var groups = [
+      ['vCPUs', 'VCPUs (used / total \u00b7 reserved \u00b7 ratio)', 'vcpus used', 'vcpus reserved', 'vcpus total', 'vcpus allocation ratio'],
+      ['pCPUs', 'PCPUs (used / total \u00b7 reserved \u00b7 ratio)', 'pcpus used', 'pcpus reserved', 'pcpus total', 'pcpus allocation ratio'],
+      ['RAM', 'RAM (used / total \u00b7 reserved \u00b7 ratio)', 'ram used', 'ram reserved', 'ram total', 'ram allocation ratio'],
+      ['Storage', 'Storage (used / total \u00b7 reserved \u00b7 ratio)', 'storage used', 'storage reserved', 'storage total', 'storage allocation ratio']
+    ];
+    var indexes = [];
+    for (var g = 0; g < groups.length; g++) {
+      indexes.push({
+        label: groups[g][1],
+        used: findHeader(hs, groups[g][2]),
+        reserved: findHeader(hs, groups[g][3]),
+        total: findHeader(hs, groups[g][4]),
+        ratio: findHeader(hs, groups[g][5])
+      });
+    }
+    if (indexes.some(function (x) { return x.used < 0 || x.total < 0; })) return;
+
+    table.classList.add('mc-hv-provider-enhanced');
+    insertPanelHead(table.closest('.table_wrapper'), 'Resource Providers', rowCount(table) + ' providers');
+
+    for (var i = 0; i < indexes.length; i++) {
+      setHeader(table, indexes[i].used, indexes[i].label);
+      hideColumn(table, indexes[i].reserved);
+      hideColumn(table, indexes[i].total);
+      hideColumn(table, indexes[i].ratio);
+    }
+
+    var rows = tableRows(table);
+    for (var r = 0; r < rows.length; r++) {
+      var cells = rows[r].children;
+      if (/no items to display/i.test(text(rows[r]))) continue;
+      for (var j = 0; j < indexes.length; j++) {
+        var x = indexes[j];
+        if (!cells[x.used] || !cells[x.total]) continue;
+        var meta = 'reserved ' + text(cells[x.reserved]) + ' \u00b7 ratio ' + text(cells[x.ratio]);
+        var value = pct(text(cells[x.used]), text(cells[x.total]));
+        cells[x.used].innerHTML =
+          '<div class="mc-hv-provider-meter">' +
+            '<div class="mc-hv-meter-line"><span>' + esc(text(cells[x.used])) + ' / ' + esc(text(cells[x.total])) + '</span><span class="mc-hv-pct">' + value + '%</span></div>' +
+            '<div class="mc-meter"><i class="' + meterClass(value) + '" style="width:' + value + '%"></i></div>' +
+            '<div class="mc-hv-provider-meta">' + esc(meta) + '</div>' +
+          '</div>';
+      }
+    }
+  }
+  function decorateComputeHosts(table) {
+    if (!table || table.classList.contains('mc-hv-compute-enhanced')) return;
+    var hs = headers(table);
+    if (findHeader(hs, 'Host') < 0 || findHeader(hs, 'Availability Zone') < 0) return;
+    table.classList.add('mc-hv-compute-enhanced');
+    insertPanelHead(table.closest('.table_wrapper'), 'Compute Hosts', rowCount(table) + ' services');
+  }
+  function run() {
+    var tables = document.querySelectorAll('#content_body .mc-hv-tabs-shell table.datatable');
+    for (var i = 0; i < tables.length; i++) {
+      decorateHypervisors(tables[i]);
+      decorateProviders(tables[i]);
+      decorateComputeHosts(tables[i]);
+    }
+  }
+  function init() {
+    run();
+    if (!window.MutationObserver) return;
+    var pending = false;
+    var obs = new MutationObserver(function () {
+      if (pending) return;
+      pending = true;
+      setTimeout(function () { pending = false; run(); }, 150);
+    });
+    var host = document.querySelector('#content_body .mc-hv-tabs-shell');
+    if (host) obs.observe(host, { childList: true, subtree: true });
   }
   if (document.readyState !== 'loading') init();
   else document.addEventListener('DOMContentLoaded', init);
