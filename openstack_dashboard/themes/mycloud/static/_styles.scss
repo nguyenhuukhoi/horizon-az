@@ -341,24 +341,48 @@ dl.dl-horizontal dt {
     letter-spacing: .4px;
     border-bottom: 1px solid $mc-border;
     font-weight: 600;
+    padding: 11px 18px;
   }
 
   > tbody > tr > td,
   > tbody > tr > th {
     border-top: 1px solid $mc-border;
     vertical-align: middle;
+    padding: 12px 18px;
   }
 
   > tbody > tr:hover > td {
     background: #f8fafc;
   }
+
+  // clean white rows (no zebra striping) to match the mockup
+  &.table-striped > tbody > tr:nth-of-type(odd) > td { background: transparent; }
+  &.table-striped > tbody > tr:hover > td { background: #f8fafc; }
+
+  // instance name (and other linked first column) a touch bolder
+  > tbody > tr > td a { font-weight: 600; }
 }
 
-// Horizon data table wrapper
-.table_wrapper,
-.table-responsive {
-  border-radius: 10px;
+// Horizon data table wrapper -> rounded card (like the mockup .tbl-wrap).
+// overflow stays VISIBLE so row / More Actions dropdowns are not clipped.
+.table_wrapper {
+  background: $mc-surface;
+  border: 1px solid $mc-border;
+  border-radius: 12px;
+  box-shadow: $mc-shadow;
+  margin-bottom: 18px;
+
+  > form,
+  > table,
+  table.datatable { margin-bottom: 0; }
+  table.datatable { border: 0; }
 }
+.table-responsive { border-radius: 12px; }
+
+// "Displaying N items" count -> subtle; hide the redundant one above the
+// column headers (keep the footer one).
+.table_count { color: #94a3b8; font-size: 13px; font-weight: 500; }
+.table > thead .breadcrumb_td .table_count { display: none; }
 
 // =====================================================================
 //  Data-table toolbar (caption) — match the mockup Instances layout:
