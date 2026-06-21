@@ -138,13 +138,22 @@
     .breadcrumb a:hover { color: #2563eb; }
     .breadcrumb > .active { color: #94a3b8; }
 
+    body.modal-open {
+      overflow: hidden !important;
+    }
+    .modal-dialog-wizard .modal-dialog,
+    .modal-dialog.modal-dialog-wizard {
+      margin-top: 36px !important;
+      margin-bottom: 36px !important;
+    }
+
     /* Stable wizard size: fix the body height so the modal does NOT resize
        as you move between steps (Details is short, Source/Flavor are tall);
        taller steps scroll internally. Pure CSS, one-pass — the wizard /
        transfer-table / magic-search widgets don't read heights in JS, so
        this cannot cause the earlier reflow lag. */
     .ng-wizard .modal-body {
-      height: calc(100vh - 17rem);
+      height: calc(100vh - 19rem);
       overflow-y: auto;
       overflow-x: hidden;
     }
