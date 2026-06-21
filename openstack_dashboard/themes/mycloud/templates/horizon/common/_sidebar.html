@@ -712,15 +712,23 @@
   function init() {
     var $ = window.jQuery;
     if (!$) return;
-    $('#sidebar').on('show.bs.collapse', '.openstack-panel-group > .collapse', function () {
-      var $opening = $(this);
-      // Only ONE panel group open at a time across the WHOLE sidebar (not just
-      // within the same dashboard): opening one collapses every other open one.
-      $('#sidebar')
-        .find('.openstack-panel-group > .collapse.in')
-        .not($opening)
-        .collapse('hide');
-    });
+    $('#sidebar').on('show.bs.collapse',
+      '.openstack-panel-group > .collapse, .openstack-dashboard > .panel-collapse',
+      function (e) {
+        // Only ONE section open at a time across the whole sidebar — both panel
+        // groups (Compute/Volumes/…) AND collapsible dashboards (Admin/Identity).
+        // Opening one collapses every other open one, except an ancestor of the
+        // one being opened (so opening a group inside Admin doesn't collapse
+        // Admin) and the always-open Project dashboard (mc-dashboard-static).
+        var opening = e.target;
+        var open = '#sidebar .openstack-panel-group > .collapse.in,' +
+                   '#sidebar .openstack-dashboard:not(.mc-dashboard-static) > .panel-collapse.in';
+        $(open).each(function () {
+          if (this !== opening && !$.contains(this, opening)) {
+            $(this).collapse('hide');
+          }
+        });
+      });
   }
   if (document.readyState !== 'loading') init();
   else document.addEventListener('DOMContentLoaded', init);
