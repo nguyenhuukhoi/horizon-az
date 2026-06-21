@@ -1214,6 +1214,7 @@ button.mc-create-btn {
   align-items: center;
   justify-content: space-between;
   gap: 12px;
+  flex-wrap: wrap;
   padding: 14px 18px;
   border-bottom: 1px solid $mc-border;
   background: $mc-surface;
@@ -1225,11 +1226,15 @@ button.mc-create-btn {
   justify-content: flex-end;
   gap: 10px;
   margin-left: auto;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .mc-hv-filter {
   position: relative;
-  min-width: 260px;
+  min-width: 0;
+  width: 260px;
+  max-width: 100%;
 
   &::before {
     content: "";
@@ -1256,6 +1261,7 @@ button.mc-create-btn {
   padding: 0 12px 0 36px;
   outline: 0;
   box-shadow: none;
+  box-sizing: border-box;
 
   &::placeholder { color: #94a3b8; }
   &:focus {
