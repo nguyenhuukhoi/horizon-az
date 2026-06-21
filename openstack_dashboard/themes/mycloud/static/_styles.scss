@@ -608,9 +608,16 @@ button.mc-create-btn {
   // round the outer ends only (handles both with/without the settings cog)
   .input-group > :first-child { border-radius: 8px 0 0 8px; }
   .input-group > :last-child { border-radius: 0 8px 8px 0; }
+  .form-control,
   .magic-search,
   .search-bar { display: flex; align-items: center; }
-  .search-input { height: 34px; line-height: 34px; }
+  // let the input grow to full width so the placeholder isn't clipped
+  .form-control,
+  .magic-search,
+  .search-bar,
+  .search-main-area,
+  .search-entry { flex: 1 1 auto; min-width: 0; }
+  .search-input { height: 34px; line-height: 34px; width: 100%; min-width: 0; }
 }
 
 // =====================================================================

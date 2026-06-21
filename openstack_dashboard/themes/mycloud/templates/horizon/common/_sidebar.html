@@ -396,9 +396,16 @@
     /* round the outer ends only (handles both with/without the settings cog) */
     #content_body .hz-magic-search-bar .input-group > :first-child { border-radius: 8px 0 0 8px; }
     #content_body .hz-magic-search-bar .input-group > :last-child { border-radius: 0 8px 8px 0; }
+    #content_body .hz-magic-search-bar .form-control,
     #content_body .hz-magic-search-bar .magic-search,
     #content_body .hz-magic-search-bar .search-bar { display: flex; align-items: center; }
-    #content_body .hz-magic-search-bar .search-input { height: 34px; line-height: 34px; }
+    /* let the input grow to full width so the placeholder isn't clipped */
+    #content_body .hz-magic-search-bar .form-control,
+    #content_body .hz-magic-search-bar .magic-search,
+    #content_body .hz-magic-search-bar .search-bar,
+    #content_body .hz-magic-search-bar .search-main-area,
+    #content_body .hz-magic-search-bar .search-entry { flex: 1 1 auto; min-width: 0; }
+    #content_body .hz-magic-search-bar .search-input { height: 34px; line-height: 34px; width: 100%; min-width: 0; }
 
     /* Data table -> rounded card like the mockup (overflow visible so
        dropdowns are not clipped); roomier cells; no zebra; subtle count. */
