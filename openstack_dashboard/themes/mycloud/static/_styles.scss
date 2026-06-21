@@ -382,7 +382,6 @@ dl.dl-horizontal dt {
 // "Displaying N items" count -> subtle; hide the redundant one above the
 // column headers (keep the footer one).
 .table_count { color: #94a3b8; font-size: 13px; font-weight: 500; }
-.table > thead .breadcrumb_td .table_count { display: none; }
 
 
 // =====================================================================
@@ -393,11 +392,22 @@ dl.dl-horizontal dt {
 table.datatable > caption,
 .table_wrapper table > caption {
   caption-side: top;
-  padding: 0 0 14px;
+  padding: 16px 18px 14px;   // top breathing room for the toolbar
   text-align: left;
   color: $text-color;
 
   .table-title { display: none; }
+
+  // when the count is moved in (JS), put it on the left, toolbar on the right
+  &.mc-cap-count {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+
+    .table_count { order: -1; margin: 0; }
+  }
 }
 
 .table_actions {
