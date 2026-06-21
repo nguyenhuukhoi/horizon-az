@@ -492,6 +492,9 @@ a.btn-launch {
   .fa::before { content: "\f233" !important; } // fa-server
 }
 
+// Semantic SVG icon injected into Create / toolbar buttons (by JS in _sidebar)
+.table_actions .btn .mc-act-ic { width: 15px; height: 15px; flex: 0 0 auto; }
+
 // =====================================================================
 //  Buttons
 // =====================================================================

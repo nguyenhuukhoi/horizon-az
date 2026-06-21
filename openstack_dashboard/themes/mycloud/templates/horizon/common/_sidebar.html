@@ -277,6 +277,8 @@
       background: #1d4ed8 !important; color: #fff !important;
     }
     .btn-launch .fa::before { content: "\f233" !important; }
+    /* Semantic SVG icon injected into Create/toolbar buttons (by JS) */
+    .table_actions .btn .mc-act-ic { width: 15px; height: 15px; flex: 0 0 auto; }
 
     /* Data table -> rounded card like the mockup (overflow visible so
        dropdowns are not clipped); roomier cells; no zebra; subtle count. */
@@ -486,6 +488,100 @@
     });
     var bodies = document.querySelectorAll('#content_body .table_wrapper table.datatable > tbody');
     for (var i = 0; i < bodies.length; i++) obs.observe(bodies[i], { childList: true, subtree: true });
+  }
+  if (document.readyState !== 'loading') init();
+  else document.addEventListener('DOMContentLoaded', init);
+})();
+</script>
+{% endverbatim %}
+
+{% verbatim %}
+<script>
+// MyCloud: give each Create/Allocate/Import toolbar button a semantic SVG icon
+// (same icon set as the design mockup). Matched by action verb + label so it
+// never touches Delete/Edit/Launch. Idempotent + re-runs on AJAX refresh.
+(function () {
+  var IC = {
+    image:'<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-4.5-4.5L5 21"/>',
+    key:'<circle cx="7.5" cy="15.5" r="4.5"/><path d="M10.7 12.3 21 2.6M17.4 6l2.5 2.5M14.6 8.8 17 11.2"/>',
+    serverGroup:'<rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/>',
+    volume:'<ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v12c0 1.66 3.13 3 7 3s7-1.34 7-3V6"/><path d="M5 12c0 1.66 3.13 3 7 3s7-1.34 7-3"/>',
+    group:'<rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/>',
+    network:'<circle cx="5" cy="6" r="2"/><circle cx="19" cy="6" r="2"/><circle cx="12" cy="18" r="2"/><path d="M7 6h10M6.8 7.4 10.6 16M17.2 7.4 13.4 16"/>',
+    router:'<rect x="3" y="14" width="18" height="6" rx="2"/><path d="M7 17h.01M11 17h.01M12 14V8m0 0L9 5m3 3 3-3"/>',
+    shield:'<path d="M12 3 5 6v5c0 4.5 3 7.5 7 9 4-1.5 7-4.5 7-9V6z"/>',
+    shieldCheck:'<path d="M12 3 5 6v5c0 4.5 3 7.5 7 9 4-1.5 7-4.5 7-9V6z"/><path d="m9 11 2 2 4-4"/>',
+    ip:'<path d="M12 21s7-6.5 7-11a7 7 0 1 0-14 0c0 4.5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/>',
+    trunk:'<path d="M6 3v18M6 9h7a3 3 0 0 1 3 3M6 15h10"/><circle cx="18" cy="12" r="2"/>',
+    qos:'<path d="M4 17a8 8 0 1 1 16 0"/><path d="m12 17 4-3.5"/><circle cx="12" cy="17" r="1"/>',
+    forward:'<path d="M4 12h13M12 6l6 6-6 6"/>',
+    layers:'<path d="M12 3 3 7.5 12 12l9-4.5L12 3z"/><path d="m3 12 9 4.5L21 12M3 16.5 12 21l9-4.5"/>',
+    flavor:'<rect x="5" y="5" width="14" height="14" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 2v2M15 2v2M9 20v2M15 20v2M2 9h2M2 15h2M20 9h2M20 15h2"/>',
+    tag:'<path d="M20.6 13.4 12 22l-9-9V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"/><circle cx="7.5" cy="7.5" r="1.5"/>',
+    fileDown:'<path d="M14 3v5h5"/><path d="M19 8v11a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h8z"/><path d="M12 11v6m0 0-2.5-2.5M12 17l2.5-2.5"/>',
+    globe:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18 14 14 0 0 1 0-18z"/>',
+    folder:'<path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>',
+    user:'<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6.5 8-6.5S20 17 20 21"/>',
+    users:'<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.5 3-5.5 6.5-5.5s6.5 2 6.5 5.5"/><path d="M16 5.7a3.5 3.5 0 0 1 0 6.6M17.5 14.7c2.3.6 4 2.3 4 5"/>',
+    role:'<circle cx="12" cy="9" r="5"/><path d="M8.5 13 7 22l5-3 5 3-1.5-9"/>',
+    idCard:'<rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2.3"/><path d="M5.5 16.5c.6-1.8 2.3-2.8 3.5-2.8s2.9 1 3.5 2.8M15 10h4M15 14h3"/>',
+    shuffle:'<path d="M4 7h3.5l9 10H20"/><path d="M4 17h3.5l2.5-2.8M14.5 8.8 16.5 7H20"/><path d="m17.5 4.5 2.5 2.5-2.5 2.5M17.5 14.5l2.5 2.5-2.5 2.5"/>',
+    card:'<rect x="2.5" y="5" width="19" height="14" rx="2"/><path d="M2.5 9.5h19M6 15h5"/>'
+  };
+  // First regex (on lowercased label) that matches wins. 'group' resolved by path.
+  var RULES = [
+    [/key pair/, 'key'], [/server group/, 'serverGroup'], [/security group/, 'shield'],
+    [/group type/, 'tag'], [/volume type/, 'tag'], [/host aggregate/, 'layers'],
+    [/flavor/, 'flavor'], [/rbac/, 'shieldCheck'], [/namespace/, 'fileDown'],
+    [/qos/, 'qos'], [/trunk/, 'trunk'], [/router/, 'router'],
+    [/rule|forwarding/, 'forward'], [/floating ip|allocate ip|\bip\b/, 'ip'],
+    [/domain/, 'globe'], [/project/, 'folder'], [/identity provider/, 'idCard'],
+    [/credential/, 'card'], [/mapping/, 'shuffle'], [/role/, 'role'],
+    [/image/, 'image'], [/network/, 'network'], [/container/, 'folder'],
+    [/volume/, 'volume'], [/\buser\b/, 'user'], [/group/, null]
+  ];
+  function pick(label) {
+    var l = label.toLowerCase();
+    for (var i = 0; i < RULES.length; i++) {
+      if (RULES[i][0].test(l)) {
+        if (RULES[i][1] === null) {
+          return /identity|\/groups/.test(location.pathname) ? 'users' : 'group';
+        }
+        return RULES[i][1];
+      }
+    }
+    return null;
+  }
+  function svg(key) {
+    return '<svg class="mc-act-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">' + IC[key] + '</svg>';
+  }
+  function decorate(btn) {
+    if (btn.getAttribute('data-mc-ic')) return;
+    var label = (btn.textContent || '').replace(/\s+/g, ' ').trim();
+    if (!/^(create|allocate|import|register|add)\b/i.test(label)) return;
+    if (/btn-launch/.test(btn.className)) return;
+    var key = pick(label);
+    if (!key) return;
+    btn.setAttribute('data-mc-ic', '1');
+    var fa = btn.querySelector('.fa, .glyphicon, i[class*="fa-"]');
+    if (fa) fa.outerHTML = svg(key);
+    else btn.insertAdjacentHTML('afterbegin', svg(key));
+  }
+  function run() {
+    var btns = document.querySelectorAll('#content_body .table_actions a.btn, #content_body .table_actions button.btn');
+    for (var i = 0; i < btns.length; i++) decorate(btns[i]);
+  }
+  function init() {
+    run();
+    if (!window.MutationObserver) return;
+    var pending = false;
+    var obs = new MutationObserver(function () {
+      if (pending) return;
+      pending = true;
+      setTimeout(function () { pending = false; run(); }, 200);
+    });
+    var host = document.getElementById('content_body');
+    if (host) obs.observe(host, { childList: true, subtree: true });
   }
   if (document.readyState !== 'loading') init();
   else document.addEventListener('DOMContentLoaded', init);
