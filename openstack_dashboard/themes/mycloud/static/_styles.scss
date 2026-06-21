@@ -1155,6 +1155,12 @@ button.mc-create-btn {
     margin-bottom: 22px;
   }
 
+  .table_wrapper > form,
+  .table_wrapper .table-responsive {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
   .table_wrapper > .table_count,
   .table_wrapper .table_count,
   .table.datatable > caption,
@@ -1171,8 +1177,8 @@ button.mc-create-btn {
   }
 
   .table_wrapper table.datatable.mc-hv-enhanced {
-    width: calc(100% - 36px);
-    margin: 18px;
+    width: 100%;
+    margin: 0;
     border: 0;
     border-radius: 0;
     overflow: visible;
