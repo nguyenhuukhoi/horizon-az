@@ -212,6 +212,41 @@
       margin-right: 0;
       padding-bottom: 0;
     }
+
+    /* Wizard "?" help toggle: clean circular ghost button (not the heavy
+       default), nudged in from the corner. */
+    .ng-wizard .help-toggle {
+      top: 4px;
+      right: 6px;
+      width: 30px;
+      height: 30px;
+      padding: 0;
+      line-height: 1;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      color: #64748b;
+      box-shadow: 0 1px 2px rgba(15, 23, 42, .08);
+    }
+    .ng-wizard .help-toggle:hover,
+    .ng-wizard .help-toggle:focus,
+    .ng-wizard .help-toggle:active {
+      background: #f1f5f9;
+      color: #0f172a;
+    }
+
+    /* Transfer-table helper text ("Select one"): muted, off the edge. */
+    .modal .transfer-heading .help-text {
+      margin-top: 6px;
+      margin-right: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #94a3b8;
+    }
   </style>
   <a class="mc-sidebar-brand" href="{% site_branding_link %}" target="_self">
     <span class="mc-brand-logo"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 19A4.5 4.5 0 0 1 5.9 10 6 6 0 0 1 17.6 8.4 4.2 4.2 0 0 1 17 19z"/></svg></span>
