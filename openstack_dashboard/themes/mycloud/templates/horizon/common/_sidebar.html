@@ -65,13 +65,16 @@
       box-shadow: none !important;
     }
 
-    /* Dashboard headers (PROJECT/ADMIN/IDENTITY) consistent with group
+    /* Dashboard headers (Project/Admin/Identity) consistent with group
        headers (Compute/Volumes/Network): same muted colour and NO
        click/hover highlight (they are collapsible section labels, not
        selectable items). */
     #sidebar .openstack-dashboard > a,
     #sidebar .openstack-panel-group > a {
       color: #94a3b8 !important;
+    }
+    #sidebar .openstack-dashboard > a {
+      text-transform: none !important;
     }
     #sidebar .openstack-dashboard > a:hover,
     #sidebar .openstack-dashboard > a:focus,
