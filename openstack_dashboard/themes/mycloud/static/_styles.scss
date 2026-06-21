@@ -603,6 +603,9 @@ button.mc-create-btn {
   width: 100%;
   min-width: 100%;
 }
+// Reserve the row-actions column so the late-rendering Launch/row buttons don't
+// make the data columns expand-then-shrink on cold load ("teo nhỏ").
+#content_body .hz-magic-search-context td.actions_column { min-width: 120px; }
 
 @media (min-width: 900px) {
   #content_body .hz-magic-search-context table.table-rsp {
