@@ -166,16 +166,51 @@
       overflow-y: auto;
       overflow-x: hidden;
     }
-    /* Pin the search bar at the top while the rows scroll under it.
-       The .row (not the preamble) must be sticky: its containing block
-       spans the whole list, so it can stay pinned over the table. */
+    .ng-wizard .transfer-table .transfer-section {
+      margin-top: 12px;
+    }
+    .ng-wizard .transfer-table .transfer-heading {
+      display: block;
+      margin: 0 0 8px;
+      font-size: 20px;
+      line-height: 1.3;
+      font-weight: 600;
+    }
+    .ng-wizard .transfer-table .transfer-heading .fa {
+      margin-right: 6px;
+    }
+    .ng-wizard .transfer-table .transfer-heading .badge {
+      vertical-align: 2px;
+    }
+    .ng-wizard .transfer-table .transfer-heading .help-text {
+      margin-top: 3px;
+      font-size: 14px;
+      line-height: 1.4;
+      font-weight: 600;
+      color: #0f172a;
+    }
+    .ng-wizard .transfer-table .magic-search-bar,
+    .ng-wizard .transfer-table .basic-search-bar {
+      margin: 6px 0 8px;
+    }
+    .ng-wizard .transfer-table .hz-dynamic-table-preamble {
+      padding-left: 0;
+      padding-right: 0;
+    }
+    .ng-wizard .transfer-table .hz-magic-search-bar {
+      padding-right: 0;
+    }
+    .ng-wizard .transfer-table .table {
+      margin-bottom: 8px;
+    }
+    /* Keep the transfer search/filter row in the normal table flow.
+       Sticky here makes the helper text and search field look detached on
+       short lists. */
     .modal .transfer-available .hz-magic-search-context > .row {
-      position: sticky;
-      top: 0;
-      z-index: 3;
-      background: #fff;
-      margin: 0;
-      padding-bottom: 4px;
+      position: static;
+      margin-left: 0;
+      margin-right: 0;
+      padding-bottom: 0;
     }
   </style>
   <a class="mc-sidebar-brand" href="{% site_branding_link %}" target="_self">
