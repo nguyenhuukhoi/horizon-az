@@ -474,8 +474,12 @@
     .mc-hv-tabs-shell .table.datatable > caption,
     .mc-hv-tabs-shell .table.datatable > tfoot { display: none !important; }
     .mc-hv-tabs-shell .table_wrapper table.datatable {
-      width: calc(100% - 36px); min-width: 980px; margin: 18px;
-      border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden;
+      width: 100%; min-width: 980px; margin: 0;
+      border: 0; border-radius: 0;
+    }
+    .mc-hv-tabs-shell .table_wrapper table.datatable.mc-hv-enhanced {
+      width: calc(100% - 36px); margin: 18px;
+      border: 0; border-radius: 0; overflow: visible;
     }
     .mc-hv-tabs-shell .table.datatable > thead > tr > th { font-size: 12px; font-weight: 700; letter-spacing: .4px; }
     .mc-hv-tabs-shell .table.datatable > tbody > tr,
