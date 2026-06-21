@@ -393,7 +393,7 @@ dl.dl-horizontal dt {
 table.datatable > caption,
 .table_wrapper table > caption {
   caption-side: top;
-  padding: 0 0 14px;
+  padding: 16px 18px 14px;   // breathing room around the toolbar cluster
   text-align: left;
   color: $text-color;
 
