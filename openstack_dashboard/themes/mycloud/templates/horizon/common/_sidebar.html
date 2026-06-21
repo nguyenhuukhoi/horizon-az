@@ -344,7 +344,8 @@
     #content_body .hz-magic-search-context {
       display: block;
       width: 100%;
-      min-width: 0;
+      max-width: 100%;
+      flex-shrink: 0; /* never let the table column shrink during Angular cold-load */
     }
     #content_body .hz-magic-search-context > .row {
       margin-left: 0;
