@@ -489,7 +489,21 @@ a.btn-launch {
     color: #fff !important;
   }
 
-  .fa::before { content: "\f233" !important; } // fa-server
+  // Launch button icon: SVG via CSS mask (no Font Awesome glyph)
+  .fa {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    &::before {
+      content: "";
+      display: block;
+      width: 100%;
+      height: 100%;
+      background-color: currentColor;
+      -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='4' width='18' height='7' rx='2'/><rect x='3' y='13' width='18' height='7' rx='2'/><path d='M7 7.5h.01M7 16.5h.01'/></svg>") center/contain no-repeat;
+      mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='4' width='18' height='7' rx='2'/><rect x='3' y='13' width='18' height='7' rx='2'/><path d='M7 7.5h.01M7 16.5h.01'/></svg>") center/contain no-repeat;
+    }
+  }
 }
 
 // Primary Create/Allocate/Import buttons -> brand blue (class added by JS),
@@ -521,6 +535,10 @@ button.mc-create-btn {
 
 // Semantic SVG icon injected into Create / toolbar buttons (by JS in _sidebar)
 .mc-act-ic { width: 15px; height: 15px; flex: 0 0 auto; }
+
+// user-menu dropdown icons + required-field marker (SVG, no Font Awesome)
+.mc-menu-ic { width: 15px; height: 15px; vertical-align: -3px; margin-right: 8px; }
+.mc-req-ic { width: 8px; height: 8px; vertical-align: 1px; }
 
 // Angular dynamic-table toolbar (magic-search pages e.g. Images): keep the
 // magic-search bar, just align the action buttons to the 38px row.

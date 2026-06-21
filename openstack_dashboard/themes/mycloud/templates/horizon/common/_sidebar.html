@@ -276,7 +276,13 @@
     .btn-launch:hover, a.btn-launch:hover, .btn-launch:focus, a.btn-launch:focus {
       background: #1d4ed8 !important; color: #fff !important;
     }
-    .btn-launch .fa::before { content: "\f233" !important; }
+    /* Launch button icon: SVG via CSS mask (no Font Awesome glyph) */
+    .btn-launch .fa { display: inline-block; width: 15px; height: 15px; }
+    .btn-launch .fa::before {
+      content: ""; display: block; width: 100%; height: 100%; background-color: currentColor;
+      -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='4' width='18' height='7' rx='2'/><rect x='3' y='13' width='18' height='7' rx='2'/><path d='M7 7.5h.01M7 16.5h.01'/></svg>") center/contain no-repeat;
+      mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='4' width='18' height='7' rx='2'/><rect x='3' y='13' width='18' height='7' rx='2'/><path d='M7 7.5h.01M7 16.5h.01'/></svg>") center/contain no-repeat;
+    }
     /* Primary Create/Allocate/Import buttons -> brand blue (class added by JS),
        matching the mockup. Delete stays red, Launch keeps its own blue. */
     .mc-create-btn, a.mc-create-btn, button.mc-create-btn {
@@ -294,6 +300,9 @@
     }
     /* Semantic SVG icon injected into Create/toolbar buttons (by JS) */
     .mc-act-ic { width: 15px; height: 15px; flex: 0 0 auto; }
+    /* user-menu dropdown icons + required-field marker (SVG, no Font Awesome) */
+    .mc-menu-ic { width: 15px; height: 15px; vertical-align: -3px; margin-right: 8px; }
+    .mc-req-ic { width: 8px; height: 8px; vertical-align: 1px; }
     /* Angular dynamic-table toolbar (magic-search pages e.g. Images): keep the
        magic-search bar, just align the action buttons to the 38px row. */
     #content_body hz-resource-table,
@@ -597,7 +606,7 @@
     return '' +
       '<div class="form-group hz-select mc-kp-field">' +
         '<label class="control-label" for="mc-keypair-type">' +
-          '<span>Key Type</span> <span class="hz-icon-required fa fa-asterisk"></span>' +
+          '<span>Key Type</span> <span class="hz-icon-required"><svg class="mc-req-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M6 8l12 8M18 8 6 16"/></svg></span>' +
         '</label>' +
         '<select class="form-control" id="mc-keypair-type" name="key_type"' +
                 ' ng-model="ctrl.model.key_type" ng-init="ctrl.model.key_type = ctrl.model.key_type || &quot;ssh&quot;"' +
@@ -612,7 +621,7 @@
     var html = '' +
       '<div class="form-group hz-input mc-kp-field">' +
         '<label class="control-label" for="mc-keypair-name">' +
-          '<span>Key Pair Name</span> <span class="hz-icon-required fa fa-asterisk"></span>' +
+          '<span>Key Pair Name</span> <span class="hz-icon-required"><svg class="mc-req-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M6 8l12 8M18 8 6 16"/></svg></span>' +
         '</label>' +
         '<input class="form-control" id="mc-keypair-name" name="name" type="text"' +
                ' ng-model="ctrl.model.name" ng-required="true" ng-pattern="/^[A-Za-z0-9 _-]+$/">' +
@@ -637,14 +646,14 @@
     return '' +
       '<div class="form-group hz-input mc-modal-field">' +
         '<label class="control-label" for="mc-server-group-name">' +
-          '<span>Name</span> <span class="hz-icon-required fa fa-asterisk"></span>' +
+          '<span>Name</span> <span class="hz-icon-required"><svg class="mc-req-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M6 8l12 8M18 8 6 16"/></svg></span>' +
         '</label>' +
         '<input class="form-control" id="mc-server-group-name" name="name" type="text"' +
                ' ng-model="ctrl.model.name" ng-required="true">' +
       '</div>' +
       '<div class="form-group hz-select mc-modal-field">' +
         '<label class="control-label" for="mc-server-group-policy">' +
-          '<span>Policy</span> <span class="hz-icon-required fa fa-asterisk"></span>' +
+          '<span>Policy</span> <span class="hz-icon-required"><svg class="mc-req-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M6 8l12 8M18 8 6 16"/></svg></span>' +
         '</label>' +
         '<select class="form-control" id="mc-server-group-policy" name="policy"' +
                 ' ng-model="ctrl.model.policy"' +
