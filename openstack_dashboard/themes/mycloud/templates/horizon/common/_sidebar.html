@@ -714,7 +714,9 @@
     if (!$) return;
     $('#sidebar').on('show.bs.collapse', '.openstack-panel-group > .collapse', function () {
       var $opening = $(this);
-      $opening.closest('.openstack-dashboard')
+      // Only ONE panel group open at a time across the WHOLE sidebar (not just
+      // within the same dashboard): opening one collapses every other open one.
+      $('#sidebar')
         .find('.openstack-panel-group > .collapse.in')
         .not($opening)
         .collapse('hide');
