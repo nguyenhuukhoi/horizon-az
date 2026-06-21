@@ -295,6 +295,14 @@
     .table.datatable.table-striped > tbody > tr:hover > td { background: #f8fafc; }
     .table.datatable > tbody > tr > td a { font-weight: 600; }
     .table_count { color: #94a3b8; font-size: 13px; font-weight: 500; }
+    /* Status / Power State pills (added by JS) */
+    .mc-stat-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; line-height: 1.4; padding: 3px 10px; border-radius: 20px; white-space: nowrap; }
+    .mc-stat-badge::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; flex: 0 0 auto; }
+    .mc-stat-badge.ok    { background: #dcfce7; color: #16a34a; }
+    .mc-stat-badge.info  { background: #dbeafe; color: #2563eb; }
+    .mc-stat-badge.warn  { background: #fef3c7; color: #d97706; }
+    .mc-stat-badge.err   { background: #fee2e2; color: #dc2626; }
+    .mc-stat-badge.muted { background: #f1f5f9; color: #64748b; }
     .table.datatable > thead .breadcrumb_td .table_count { display: none; }
   </style>
   <a class="mc-sidebar-brand" href="{% site_branding_link %}" target="_self">
@@ -419,6 +427,65 @@
         .not($opening)
         .collapse('hide');
     });
+  }
+  if (document.readyState !== 'loading') init();
+  else document.addEventListener('DOMContentLoaded', init);
+})();
+</script>
+{% endverbatim %}
+
+{% verbatim %}
+<script>
+// MyCloud: colour the Status / Power State cells as pills (like the mockup).
+// Per-value classes can't be set in CSS, so map the cell text to a colour
+// here. Re-runs on Horizon's AJAX row refreshes; idempotent (skips cells
+// that already have a badge), so it cannot loop.
+(function () {
+  function classify(t) {
+    t = (t || '').toLowerCase();
+    if (/active|running/.test(t)) return 'ok';
+    if (/error|crash|fail|deleted/.test(t)) return 'err';
+    if (/build|reboot|rebuild|migrat|resiz|spawn|schedul|rescue|password|block device|networking|prepar|powering|image|pending|verify/.test(t)) return 'info';
+    if (/paus|suspend|block/.test(t)) return 'warn';
+    return 'muted'; // shutoff, stopped, shut down/off, no state, shelved, none
+  }
+  function badgeTable(table) {
+    var headers = table.querySelectorAll('thead tr.table_column_header th');
+    var cols = [];
+    for (var i = 0; i < headers.length; i++) {
+      var ht = (headers[i].textContent || '').trim().toLowerCase();
+      if (ht === 'status' || ht === 'power state') cols.push(i);
+    }
+    if (!cols.length) return;
+    var rows = table.querySelectorAll('tbody > tr');
+    for (var r = 0; r < rows.length; r++) {
+      var cells = rows[r].children;
+      for (var c = 0; c < cols.length; c++) {
+        var cell = cells[cols[c]];
+        if (!cell) continue;
+        var dw = cell.querySelector('.table_cell_data_wrapper') || cell;
+        if (dw.querySelector('.mc-stat-badge')) continue;
+        var txt = (dw.textContent || '').trim();
+        if (!txt) continue;
+        dw.innerHTML = '<span class="mc-stat-badge ' + classify(txt) + '">' + txt + '</span>';
+      }
+    }
+  }
+  function run() {
+    var tables = document.querySelectorAll('#content_body .table_wrapper table.datatable');
+    for (var t = 0; t < tables.length; t++) badgeTable(tables[t]);
+  }
+  function init() {
+    run();
+    if (!window.MutationObserver) return;
+    var pending = false;
+    var obs = new MutationObserver(function () {
+      if (pending) return;
+      pending = true;
+      setTimeout(function () { pending = false; run(); }, 200);
+    });
+    var bodies = document.querySelectorAll('#content_body .table_wrapper table.datatable > tbody');
+    for (var i = 0; i < bodies.length; i++) obs.observe(bodies[i], { childList: true, subtree: true });
   }
   if (document.readyState !== 'loading') init();
   else document.addEventListener('DOMContentLoaded', init);
