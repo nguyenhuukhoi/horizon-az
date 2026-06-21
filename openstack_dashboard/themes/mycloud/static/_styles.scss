@@ -522,13 +522,15 @@ button.mc-create-btn {
 // Clamp the magic-search bar to the same 38px row as the buttons.
 // Use min-height too in case the theme's $input-height-base is taller.
 #content_body .hz-magic-search-bar {
+  .magic-search-bar { margin: 0 !important; }
+  .magic-search-bar,
   .input-group,
   .input-group-addon,
   .input-group-btn,
   .input-group-btn > button,
   .form-control,
   .magic-search,
-  .search-bar { height: 38px; min-height: 38px; }
+  .search-bar { height: 38px !important; min-height: 38px !important; max-height: 38px !important; }
   // round the outer ends only (handles both with/without the settings cog)
   .input-group > :first-child { border-radius: 8px 0 0 8px; }
   .input-group > :last-child { border-radius: 0 8px 8px 0; }

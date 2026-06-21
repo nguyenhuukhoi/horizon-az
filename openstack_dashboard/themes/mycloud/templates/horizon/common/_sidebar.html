@@ -295,13 +295,15 @@
     #content_body .hz-dynamic-table-actions .btn { height: 38px; border-radius: 8px; display: inline-flex; align-items: center; gap: 7px; white-space: nowrap; }
     /* Clamp the magic-search bar to the same 38px row as the buttons.
        Use min-height too in case the theme's $input-height-base is taller. */
+    #content_body .hz-magic-search-bar .magic-search-bar { margin: 0 !important; }
+    #content_body .hz-magic-search-bar .magic-search-bar,
     #content_body .hz-magic-search-bar .input-group,
     #content_body .hz-magic-search-bar .input-group-addon,
     #content_body .hz-magic-search-bar .input-group-btn,
     #content_body .hz-magic-search-bar .input-group-btn > button,
     #content_body .hz-magic-search-bar .form-control,
     #content_body .hz-magic-search-bar .magic-search,
-    #content_body .hz-magic-search-bar .search-bar { height: 38px; min-height: 38px; }
+    #content_body .hz-magic-search-bar .search-bar { height: 38px !important; min-height: 38px !important; max-height: 38px !important; }
     /* round the outer ends only (handles both with/without the settings cog) */
     #content_body .hz-magic-search-bar .input-group > :first-child { border-radius: 8px 0 0 8px; }
     #content_body .hz-magic-search-bar .input-group > :last-child { border-radius: 0 8px 8px 0; }
