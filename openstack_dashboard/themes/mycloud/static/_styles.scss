@@ -557,6 +557,24 @@ button.mc-create-btn {
   min-width: 100%;
 }
 
+@media (min-width: 900px) {
+  #content_body .hz-magic-search-context table.table-rsp {
+    .rsp-p1,
+    .rsp-p2,
+    .rsp-p3,
+    .rsp-p4 {
+      display: table-cell !important;
+    }
+
+    .rsp-alt-p1,
+    .rsp-alt-p2,
+    .rsp-alt-p3,
+    .rsp-alt-p4 {
+      display: none !important;
+    }
+  }
+}
+
 // Clamp the magic-search bar to the same 38px row as the buttons.
 // Use min-height too in case the theme's $input-height-base is taller.
 #content_body .hz-magic-search-bar {

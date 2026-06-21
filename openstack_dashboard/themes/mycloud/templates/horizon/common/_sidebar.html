@@ -326,6 +326,20 @@
       width: 100%;
       min-width: 100%;
     }
+    @media (min-width: 900px) {
+      #content_body .hz-magic-search-context table.table-rsp .rsp-p1,
+      #content_body .hz-magic-search-context table.table-rsp .rsp-p2,
+      #content_body .hz-magic-search-context table.table-rsp .rsp-p3,
+      #content_body .hz-magic-search-context table.table-rsp .rsp-p4 {
+        display: table-cell !important;
+      }
+      #content_body .hz-magic-search-context table.table-rsp .rsp-alt-p1,
+      #content_body .hz-magic-search-context table.table-rsp .rsp-alt-p2,
+      #content_body .hz-magic-search-context table.table-rsp .rsp-alt-p3,
+      #content_body .hz-magic-search-context table.table-rsp .rsp-alt-p4 {
+        display: none !important;
+      }
+    }
     /* Clamp the magic-search bar to the same 38px row as the buttons.
        Use min-height too in case the theme's $input-height-base is taller. */
     #content_body .hz-magic-search-bar .magic-search-bar { margin: 0 !important; }
