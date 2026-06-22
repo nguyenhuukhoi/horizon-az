@@ -772,7 +772,45 @@ button.mc-create-btn {
   &.detail-header {
     display: block;
 
-    .detail-actions { float: none; }
+    > .row {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-left: 0;
+      margin-right: 0;
+    }
+
+    .detail-title {
+      flex: 1 1 auto;
+      width: auto;
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    .detail-actions {
+      flex: 0 0 auto;
+      width: auto;
+      margin-left: auto;
+      padding-left: 0;
+      padding-right: 0;
+      float: none;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+    }
+
+    .detail-actions-form {
+      display: inline-flex;
+      justify-content: flex-end;
+      margin: 0;
+    }
+
+    .detail-actions .btn-group {
+      display: inline-flex;
+      vertical-align: middle;
+    }
   }
 
   h1 {

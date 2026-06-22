@@ -134,7 +134,41 @@
        column so the split-button (e.g. "Create Snapshot" + dropdown) wraps onto
        two lines. Keep detail headers as block so the grid spans full width. */
     .page-header.detail-header { display: block !important; }
-    .page-header.detail-header .detail-actions { float: none; }
+    .page-header.detail-header > .row {
+      display: flex !important;
+      align-items: flex-end !important;
+      justify-content: space-between !important;
+      flex-wrap: wrap !important;
+      gap: 16px !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+    .page-header.detail-header .detail-title {
+      flex: 1 1 auto !important;
+      width: auto !important;
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+    }
+    .page-header.detail-header .detail-actions {
+      flex: 0 0 auto !important;
+      width: auto !important;
+      margin-left: auto !important;
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+      float: none !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: flex-end !important;
+    }
+    .page-header.detail-header .detail-actions-form {
+      display: inline-flex !important;
+      justify-content: flex-end !important;
+      margin: 0 !important;
+    }
+    .page-header.detail-header .detail-actions .btn-group {
+      display: inline-flex !important;
+      vertical-align: middle !important;
+    }
     .page-header h1 {
       font-size: 22px !important;
       font-weight: 700;
