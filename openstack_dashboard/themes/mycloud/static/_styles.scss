@@ -15,6 +15,9 @@ $mc-border:      #e2e8f0;
 $mc-surface:     #ffffff;
 $mc-shadow:      0 1px 2px rgba(15, 23, 42, .06), 0 4px 12px rgba(15, 23, 42, .06);
 $mc-shadow-sm:   0 1px 2px rgba(15, 23, 42, .08);
+$mc-section-gap: 16px;
+$mc-content-pad-x: 26px;
+$mc-content-pad-y: 22px;
 
 // =====================================================================
 //  Base
@@ -382,7 +385,7 @@ dl.dl-horizontal dt {
   border: 1px solid $mc-border;
   border-radius: 12px;
   box-shadow: $mc-shadow;
-  margin-bottom: 18px;
+  margin-bottom: $mc-section-gap;
 
   > form,
   > table,
@@ -892,7 +895,7 @@ button.mc-create-btn {
 //  Matches horizon_redesign_mockup.html
 // =====================================================================
 .mc-usage {
-  margin-bottom: 28px;
+  margin-bottom: $mc-section-gap;
 
   .mc-section-title {
     font-size: 21px;
@@ -1019,7 +1022,7 @@ button.mc-create-btn {
 
 // ---- AZ panel ----
 .mc-panel {
-  margin-bottom: 22px;
+  margin-bottom: $mc-section-gap;
   background: $mc-surface;
   border: 1px solid $mc-border;
   border-radius: 12px;
@@ -1159,7 +1162,7 @@ button.mc-create-btn {
 
 // ---- Limit Summary panel (quota bar rows) ----
 .mc-quota-summary-wrap {
-  margin-bottom: 22px;
+  margin-bottom: $mc-section-gap;
 }
 
 .mc-quota-summary {
@@ -1914,7 +1917,7 @@ body.modal-open {
 // #content_body already has padding-left: $sidebar-width via _layout.scss
 // Do NOT add it to #main_content — that pushes the fixed sidebar off-screen
 
-// Content area padding to match design .content{padding:22px 26px 50px}
+// Content area padding to match design .content{padding:var(--content-pad-y) var(--content-pad-x) 42px}
 #content_body > .container-fluid {
   padding-left: 0;
   padding-right: 0;
@@ -1926,10 +1929,10 @@ body.modal-open {
 }
 
 #content_body > .container-fluid > .row > .col-xs-12 {
-  padding-top: 22px;
-  padding-left: 26px;
-  padding-right: 26px;
-  padding-bottom: 50px;
+  padding-top: $mc-content-pad-y;
+  padding-left: $mc-content-pad-x;
+  padding-right: $mc-content-pad-x;
+  padding-bottom: 42px;
 }
 
 @media (max-width: 800px) {
@@ -1999,7 +2002,7 @@ body.modal-open {
   justify-content: space-between;
   gap: 16px;
   flex-wrap: wrap;
-  margin-bottom: 20px;
+  margin-bottom: $mc-section-gap;
   padding: 0;
   border-bottom: 0;
 }
@@ -2062,7 +2065,7 @@ body.modal-open {
   border-radius: 12px;
   box-shadow: $mc-shadow;
   overflow: hidden;
-  margin-bottom: 18px;
+  margin-bottom: $mc-section-gap;
 }
 
 .mc-recent-head {
@@ -2137,7 +2140,7 @@ body.modal-open {
   border-radius: 12px;
   box-shadow: $mc-shadow;
   overflow: hidden;
-  margin-bottom: 18px;
+  margin-bottom: $mc-section-gap;
 
   .mc-usage-table-head {
     display: flex;
@@ -2173,7 +2176,7 @@ body.modal-open {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
   gap: 16px;
-  margin-bottom: 22px;
+  margin-bottom: $mc-section-gap;
 
   .mc-stat--key {
     background: $mc-surface;
