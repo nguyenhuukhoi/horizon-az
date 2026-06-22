@@ -1666,8 +1666,14 @@ body.modal-open {
 .modal .transfer-allocated {
   max-height: 36vh;
   overflow-y: auto;
-  overflow-x: hidden;
+  // was hidden — let the row scroll so the allocate (up) button is reachable
+  // on narrow modals instead of being clipped off-screen
+  overflow-x: auto;
 }
+// Tighter cells so the flavor/source table fits the modal more often (the
+// allocate button is the last column and was overflowing off-screen).
+.modal .transfer-table .table > tbody > tr > td,
+.modal .transfer-table .table > thead > tr > th { padding: 8px 10px; }
 
 // Keep the transfer search/filter row in the normal table flow. Sticky here
 // makes the helper text and search field look detached on short lists.

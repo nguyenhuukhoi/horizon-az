@@ -177,8 +177,13 @@
     .modal .transfer-allocated {
       max-height: 36vh;
       overflow-y: auto;
-      overflow-x: hidden;
+      overflow-x: auto; /* was hidden — let the row scroll so the allocate (↑)
+                           button is reachable on narrow modals, not clipped */
     }
+    /* Tighter cells so the flavor/source table fits the modal more often
+       (the allocate button is the last column and was overflowing off-screen). */
+    .modal .transfer-table .table > tbody > tr > td,
+    .modal .transfer-table .table > thead > tr > th { padding: 8px 10px; }
     .ng-wizard .transfer-table .transfer-section {
       margin-top: 12px;
     }
