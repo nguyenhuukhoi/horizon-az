@@ -764,6 +764,17 @@ button.mc-create-btn {
   gap: 16px;
   flex-wrap: wrap;
 
+  // Detail pages (instance/volume/... detail) use their own Bootstrap grid
+  // (.detail-header > .row > .col-sm-9 + .col-sm-3). The flex above makes that
+  // inner .row shrink to content width, collapsing the .col-sm-3 actions column
+  // so the split-button (e.g. "Create Snapshot" + dropdown) wraps onto two
+  // lines. Keep detail headers as block so the grid spans full width.
+  &.detail-header {
+    display: block;
+
+    .detail-actions { float: none; }
+  }
+
   h1 {
     font-size: 22px;
     font-weight: 700;
