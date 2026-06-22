@@ -145,12 +145,19 @@
     }
     .page-header.detail-header .detail-title {
       flex: 1 1 auto !important;
+      min-width: 0 !important;
       width: auto !important;
       padding-left: 0 !important;
       padding-right: 0 !important;
+      text-align: left !important;
+    }
+    .page-header.detail-header .detail-title .h1 {
+      display: block !important;
+      text-align: left !important;
     }
     .page-header.detail-header .detail-actions {
       flex: 0 0 auto !important;
+      min-width: max-content !important;
       width: auto !important;
       margin-left: auto !important;
       padding-left: 0 !important;
@@ -167,14 +174,50 @@
     }
     .page-header.detail-header .detail-actions .btn-group {
       display: inline-flex !important;
+      align-items: stretch !important;
+      flex-wrap: nowrap !important;
       vertical-align: middle !important;
     }
+    .page-header.detail-header .detail-actions .btn-group > .btn {
+      float: none !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
     .page-header h1 {
+      flex: 1 1 auto !important;
+      min-width: 0 !important;
       font-size: 22px !important;
       font-weight: 700;
       line-height: 1.2;
       margin: 0;
       color: #0f172a;
+    }
+    .page-header .actions_column,
+    .page-header form.actions_column {
+      margin: 0 !important;
+      float: none !important;
+      flex: 0 0 auto !important;
+      max-width: 100% !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: flex-end !important;
+      gap: 8px !important;
+      white-space: nowrap !important;
+    }
+    .page-header .actions_column .btn-group,
+    .page-header form.actions_column .btn-group {
+      display: inline-flex !important;
+      align-items: stretch !important;
+      flex-wrap: nowrap !important;
+      vertical-align: middle !important;
+    }
+    .page-header .actions_column .btn-group > .btn,
+    .page-header form.actions_column .btn-group > .btn {
+      float: none !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
     }
     .page-breadcrumb { margin: 0; }
     .page-breadcrumb .breadcrumb,

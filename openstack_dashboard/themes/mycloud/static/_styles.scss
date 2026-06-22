@@ -784,13 +784,21 @@ button.mc-create-btn {
 
     .detail-title {
       flex: 1 1 auto;
+      min-width: 0;
       width: auto;
       padding-left: 0;
       padding-right: 0;
+      text-align: left;
+
+      .h1 {
+        display: block;
+        text-align: left;
+      }
     }
 
     .detail-actions {
       flex: 0 0 auto;
+      min-width: max-content;
       width: auto;
       margin-left: auto;
       padding-left: 0;
@@ -809,11 +817,22 @@ button.mc-create-btn {
 
     .detail-actions .btn-group {
       display: inline-flex;
+      align-items: stretch;
+      flex-wrap: nowrap;
       vertical-align: middle;
+
+      > .btn {
+        float: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
     }
   }
 
   h1 {
+    flex: 1 1 auto;
+    min-width: 0;
     font-size: 22px;
     font-weight: 700;
     line-height: 1.2;
@@ -828,6 +847,27 @@ button.mc-create-btn {
   form.actions_column {
     margin: 0;
     float: none;
+    flex: 0 0 auto;
+    max-width: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+    white-space: nowrap;
+
+    .btn-group {
+      display: inline-flex;
+      align-items: stretch;
+      flex-wrap: nowrap;
+      vertical-align: middle;
+
+      > .btn {
+        float: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
   }
 }
 
