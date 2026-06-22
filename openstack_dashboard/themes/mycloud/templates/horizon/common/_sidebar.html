@@ -128,27 +128,29 @@
       gap: 16px;
       flex-wrap: wrap;
     }
-    /* Detail pages (instance/volume/... detail) use their own Bootstrap grid
-       (.detail-header > .row > .col-sm-9 + .col-sm-3). The flex above would make
-       that inner .row shrink to content width, collapsing the .col-sm-3 actions
-       column so the split-button (e.g. "Create Snapshot" + dropdown) wraps onto
-       two lines. Keep detail headers as block so the grid spans full width. */
+    /* Detail pages use Horizon's original Bootstrap grid:
+       title col-sm-9 on the left and actions col-sm-3 on the right. Only the
+       split-button internals are forced not to wrap. */
     .page-header.detail-header { display: block !important; }
     .page-header.detail-header > .row {
-      display: flex !important;
-      align-items: flex-end !important;
-      justify-content: space-between !important;
-      flex-wrap: wrap !important;
-      gap: 16px !important;
-      margin-left: 0 !important;
-      margin-right: 0 !important;
+      display: block !important;
+      margin-left: -15px !important;
+      margin-right: -15px !important;
+    }
+    .page-header.detail-header > .row::before,
+    .page-header.detail-header > .row::after {
+      content: " " !important;
+      display: table !important;
+    }
+    .page-header.detail-header > .row::after {
+      clear: both !important;
     }
     .page-header.detail-header .detail-title {
-      flex: 1 1 auto !important;
+      float: left !important;
       min-width: 0 !important;
-      width: auto !important;
-      padding-left: 0 !important;
-      padding-right: 0 !important;
+      width: 75% !important;
+      padding-left: 15px !important;
+      padding-right: 15px !important;
       text-align: left !important;
     }
     .page-header.detail-header .detail-title .h1 {
@@ -156,16 +158,14 @@
       text-align: left !important;
     }
     .page-header.detail-header .detail-actions {
-      flex: 0 0 auto !important;
-      min-width: max-content !important;
-      width: auto !important;
-      margin-left: auto !important;
-      padding-left: 0 !important;
-      padding-right: 0 !important;
-      float: none !important;
-      display: flex !important;
-      align-items: center !important;
-      justify-content: flex-end !important;
+      float: right !important;
+      min-width: 0 !important;
+      width: 25% !important;
+      margin-left: 0 !important;
+      padding-left: 15px !important;
+      padding-right: 15px !important;
+      display: block !important;
+      text-align: right !important;
     }
     .page-header.detail-header .detail-actions-form {
       display: inline-flex !important;
@@ -183,6 +183,17 @@
       display: inline-flex !important;
       align-items: center !important;
       justify-content: center !important;
+    }
+    @media (max-width: 767px) {
+      .page-header.detail-header .detail-title,
+      .page-header.detail-header .detail-actions {
+        float: none !important;
+        width: 100% !important;
+      }
+      .page-header.detail-header .detail-actions {
+        margin-top: 12px !important;
+        text-align: left !important;
+      }
     }
     .page-header h1 {
       flex: 1 1 auto !important;

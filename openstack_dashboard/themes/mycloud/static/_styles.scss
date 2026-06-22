@@ -764,30 +764,34 @@ button.mc-create-btn {
   gap: 16px;
   flex-wrap: wrap;
 
-  // Detail pages (instance/volume/... detail) use their own Bootstrap grid
-  // (.detail-header > .row > .col-sm-9 + .col-sm-3). The flex above makes that
-  // inner .row shrink to content width, collapsing the .col-sm-3 actions column
-  // so the split-button (e.g. "Create Snapshot" + dropdown) wraps onto two
-  // lines. Keep detail headers as block so the grid spans full width.
+  // Detail pages use Horizon's original Bootstrap grid: title col-sm-9 on the
+  // left and actions col-sm-3 on the right. Only the split-button internals are
+  // forced not to wrap.
   &.detail-header {
     display: block;
 
     > .row {
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 16px;
-      margin-left: 0;
-      margin-right: 0;
+      display: block;
+      margin-left: -15px;
+      margin-right: -15px;
+
+      &::before,
+      &::after {
+        content: " ";
+        display: table;
+      }
+
+      &::after {
+        clear: both;
+      }
     }
 
     .detail-title {
-      flex: 1 1 auto;
+      float: left;
       min-width: 0;
-      width: auto;
-      padding-left: 0;
-      padding-right: 0;
+      width: 75%;
+      padding-left: 15px;
+      padding-right: 15px;
       text-align: left;
 
       .h1 {
@@ -797,16 +801,14 @@ button.mc-create-btn {
     }
 
     .detail-actions {
-      flex: 0 0 auto;
-      min-width: max-content;
-      width: auto;
-      margin-left: auto;
-      padding-left: 0;
-      padding-right: 0;
-      float: none;
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
+      float: right;
+      min-width: 0;
+      width: 25%;
+      margin-left: 0;
+      padding-left: 15px;
+      padding-right: 15px;
+      display: block;
+      text-align: right;
     }
 
     .detail-actions-form {
@@ -826,6 +828,19 @@ button.mc-create-btn {
         display: inline-flex;
         align-items: center;
         justify-content: center;
+      }
+    }
+
+    @media (max-width: 767px) {
+      .detail-title,
+      .detail-actions {
+        float: none;
+        width: 100%;
+      }
+
+      .detail-actions {
+        margin-top: 12px;
+        text-align: left;
       }
     }
   }
