@@ -667,6 +667,64 @@ button.mc-create-btn {
   .search-input { height: 34px; line-height: 34px; width: 100%; min-width: 0; }
 }
 
+// Octavia Load Balancers are shipped as an Angular dashboard plugin. Keep the
+// real workflow/actions intact and only skin the resource table to match the
+// mockup.
+body.mc-lbaas-page {
+  #content_body hz-resource-panel > div > .breadcrumb {
+    margin-bottom: 14px;
+  }
+
+  #content_body hz-resource-panel hz-page-header .page-header {
+    margin-bottom: 16px;
+  }
+
+  #content_body hz-resource-panel hz-page-header .page-header p:empty {
+    display: none;
+  }
+
+  #content_body hz-resource-table .hz-magic-search-context {
+    background: $mc-surface;
+    border: 1px solid $mc-border;
+    border-radius: 12px;
+    box-shadow: $mc-shadow;
+    margin-bottom: $mc-section-gap;
+    overflow: visible;
+  }
+
+  #content_body hz-resource-table .hz-magic-search-context > .row {
+    display: block;
+    margin-left: 0;
+    margin-right: 0;
+    padding: 16px 18px 14px;
+    border-bottom: 1px solid $mc-border;
+  }
+
+  #content_body hz-resource-table .hz-dynamic-table-preamble {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  #content_body hz-resource-table .hz-magic-search-bar {
+    flex: 0 1 300px;
+    margin-left: auto;
+    max-width: 390px;
+  }
+
+  #content_body hz-resource-table .hz-dynamic-table-actions {
+    margin-left: 0;
+  }
+
+  #content_body hz-resource-table table.table {
+    border: 0;
+    margin-bottom: 0;
+  }
+
+  #content_body hz-resource-table table.table > tfoot {
+    background: #fff;
+  }
+}
+
 // =====================================================================
 //  Buttons
 // =====================================================================
@@ -1731,7 +1789,8 @@ body.modal-open {
 .fa-close, .fa-times, .fa-angle-left, .fa-angle-right, .fa-angle-up, .fa-angle-down,
 .fa-chevron-left, .fa-chevron-right, .fa-chevron-up, .fa-chevron-down,
 .fa-caret-down, .fa-caret-up, .fa-check, .fa-asterisk, .fa-bars, .fa-plus,
-.fa-trash, .fa-trash-o, .fa-question-circle, .fa-search, .fa-info-circle, .fa-cog {
+.fa-trash, .fa-trash-o, .fa-question-circle, .fa-search, .fa-info-circle, .fa-cog,
+.fa-cloud-download {
   display: inline-block; width: 1em; height: 1em; line-height: 1; vertical-align: -0.125em;
 }
 .fa-asterisk { width: .7em; height: .7em; }
@@ -1740,7 +1799,8 @@ body.modal-open {
 .fa-angle-up::before, .fa-angle-down::before, .fa-chevron-left::before, .fa-chevron-right::before,
 .fa-chevron-up::before, .fa-chevron-down::before, .fa-caret-down::before, .fa-caret-up::before,
 .fa-check::before, .fa-asterisk::before, .fa-bars::before, .fa-plus::before, .fa-trash::before,
-.fa-trash-o::before, .fa-question-circle::before, .fa-search::before, .fa-info-circle::before, .fa-cog::before {
+.fa-trash-o::before, .fa-question-circle::before, .fa-search::before, .fa-info-circle::before, .fa-cog::before,
+.fa-cloud-download::before {
   content: ""; display: block; width: 100%; height: 100%; background-color: currentColor;
 }
 .help-toggle .fa::before, .fa-question-circle::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='9'/><path d='M9.5 9.3a2.5 2.5 0 1 1 3.6 2.25c-.8.45-1.1 1-1.1 1.95M12 16.5h.01'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='9'/><path d='M9.5 9.3a2.5 2.5 0 1 1 3.6 2.25c-.8.45-1.1 1-1.1 1.95M12 16.5h.01'/></svg>") center/contain no-repeat; }
@@ -1756,6 +1816,7 @@ body.modal-open {
 .fa-trash::before, .fa-trash-o::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'><path d='M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'><path d='M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14'/></svg>") center/contain no-repeat; }
 .fa-search::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='11' cy='11' r='7'/><path d='m21 21-4.3-4.3'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='11' cy='11' r='7'/><path d='m21 21-4.3-4.3'/></svg>") center/contain no-repeat; }
 .fa-info-circle::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='9'/><path d='M12 11v5M12 7.5h.01'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='9'/><path d='M12 11v5M12 7.5h.01'/></svg>") center/contain no-repeat; }
+.fa-cloud-download::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'><path d='M6.6 18.5A4.4 4.4 0 0 1 6 9.8 6 6 0 0 1 17.5 8a4.5 4.5 0 0 1 .7 9H16'/><path d='M12 12v8m0 0-3-3m3 3 3-3'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'><path d='M6.6 18.5A4.4 4.4 0 0 1 6 9.8 6 6 0 0 1 17.5 8a4.5 4.5 0 0 1 .7 9H16'/><path d='M12 12v8m0 0-3-3m3 3 3-3'/></svg>") center/contain no-repeat; }
 .fa-cog::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='3'/><path d='M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='3'/><path d='M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z'/></svg>") center/contain no-repeat; }
 
 // NOTE: do NOT force flex/max-height/overflow on .ng-wizard or its
