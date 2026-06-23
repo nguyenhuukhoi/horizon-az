@@ -651,32 +651,9 @@
       margin-bottom: 16px;
     }
     .table_wrapper > form, .table_wrapper > table, .table_wrapper table.datatable { margin-bottom: 0; }
-    .table_wrapper table.datatable,
-    .table.datatable {
-      border: 0;
-      font-size: 13.5px;
-      line-height: 1.45;
-      font-variant-numeric: tabular-nums;
-    }
-    .table.datatable > thead > tr > th {
-      color: #64748b;
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: .4px;
-      line-height: 1.25;
-      padding: 11px 18px;
-      text-transform: uppercase;
-      white-space: nowrap;
-    }
-    .table.datatable > tbody > tr > td {
-      color: #0f172a;
-      font-size: 13.5px;
-      font-weight: 500;
-      line-height: 1.45;
-      padding: 12px 18px;
-      vertical-align: middle;
-      white-space: nowrap;
-    }
+    .table_wrapper table.datatable { border: 0; }
+    .table.datatable > thead > tr > th { padding: 11px 18px; }
+    .table.datatable > tbody > tr > td { padding: 12px 18px; }
     /* Uniform rows for ALL tables: Django stripes via tr.odd/even classes,
        Angular (Volumes/Images/Networks…) via Bootstrap :nth-of-type. Flatten
        every striped row to one colour, keeping selection/warning + hover. */
@@ -687,7 +664,7 @@
     .table.datatable .multi_select_column { font-size: 15px; }
     .table.datatable .themable-checkbox label::before { font-size: 15px; line-height: 1; }
     .table.datatable .multi_select_column input[type="checkbox"] { width: 15px; height: 15px; margin: 0; vertical-align: middle; }
-    .table.datatable > tbody > tr > td a { color: #2563eb; font-weight: 600; }
+    .table.datatable > tbody > tr > td a { font-weight: 600; }
     .table_count { color: #94a3b8; font-size: 13px; font-weight: 500; }
     /* Status / Power State pills (added by JS) */
     .mc-stat-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; line-height: 1.4; padding: 3px 10px; border-radius: 20px; white-space: nowrap; }
