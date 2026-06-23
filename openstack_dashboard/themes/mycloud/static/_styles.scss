@@ -703,12 +703,76 @@ body.mc-lbaas-page {
   #content_body hz-resource-table .hz-dynamic-table-preamble {
     padding-left: 0;
     padding-right: 0;
+    justify-content: flex-end;
+    position: relative;
   }
 
   #content_body hz-resource-table .hz-magic-search-bar {
     flex: 0 1 300px;
     margin-left: auto;
     max-width: 390px;
+  }
+
+  #content_body hz-resource-table .hz-magic-search-bar.mc-lb-native-search {
+    position: absolute !important;
+    left: -9999px !important;
+    width: 1px !important;
+    min-width: 1px !important;
+    height: 1px !important;
+    margin: 0 !important;
+    opacity: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  #content_body hz-resource-table .mc-lb-filterbar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-left: auto;
+    min-width: 0;
+  }
+
+  #content_body hz-resource-table .mc-lb-filter-field,
+  #content_body hz-resource-table .mc-lb-filter-apply {
+    height: 38px;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  #content_body hz-resource-table .mc-lb-filter-field {
+    min-width: 106px;
+    justify-content: center;
+  }
+
+  #content_body hz-resource-table .mc-lb-filter-input {
+    width: 270px;
+    height: 38px;
+    border: 1px solid #dbe3ee;
+    border-radius: 8px;
+    box-shadow: none;
+  }
+
+  #content_body hz-resource-table .mc-lb-filter-input:focus {
+    border-color: $brand-primary;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, .15);
+  }
+
+  @media (max-width: 900px) {
+    #content_body hz-resource-table .mc-lb-filterbar {
+      flex: 1 1 100%;
+      flex-wrap: wrap;
+    }
+
+    #content_body hz-resource-table .mc-lb-filter-input {
+      flex: 1 1 180px;
+      width: auto;
+    }
   }
 
   #content_body hz-resource-table .hz-dynamic-table-actions {
@@ -824,6 +888,21 @@ body.mc-lbaas-page {
   justify-content: space-between;
   gap: 16px;
   flex-wrap: wrap;
+
+  // AngularJS routed detail pages (Images, etc.) render a plain .page-header
+  // holding a Back breadcrumb + a Bootstrap .row (col-sm-9 title + col-sm-3
+  // actions). The flex above shrinks that .row to content width and shoves it
+  // right, collapsing the actions column so Launch + dropdown wrap. Any
+  // .page-header that holds a .row must stay block so the grid lays out.
+  &:has(> .row) { display: block; }
+
+  .details-item-actions .btn-group {
+    display: inline-flex;
+    flex-wrap: nowrap;
+    vertical-align: middle;
+
+    > .btn { float: none; }
+  }
 
   // Detail pages use Horizon's original Bootstrap grid: title col-sm-9 on the
   // left and actions col-sm-3 on the right. Only the split-button internals are

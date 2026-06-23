@@ -128,6 +128,14 @@
       gap: 16px;
       flex-wrap: wrap;
     }
+    /* AngularJS routed detail pages (Images, etc.) render a plain .page-header
+       holding a Back breadcrumb + a Bootstrap .row (col-sm-9 title +
+       col-sm-3 actions). The flex above shrinks that .row to content width and
+       shoves it right, collapsing the actions column so Launch + dropdown wrap.
+       Any .page-header that holds a .row must stay block so the grid lays out. */
+    .page-header:has(> .row) { display: block !important; }
+    .page-header .details-item-actions .btn-group { display: inline-flex !important; flex-wrap: nowrap !important; vertical-align: middle !important; }
+    .page-header .details-item-actions .btn-group > .btn { float: none !important; }
     /* Detail pages use Horizon's original Bootstrap grid:
        title col-sm-9 on the left and actions col-sm-3 on the right. Only the
        split-button internals are forced not to wrap. */
@@ -571,10 +579,33 @@
       border-bottom: 1px solid #e2e8f0;
     }
     body.mc-lbaas-page #content_body hz-resource-table .hz-dynamic-table-preamble {
-      padding-left: 0; padding-right: 0;
+      padding-left: 0; padding-right: 0; justify-content: flex-end; position: relative;
     }
     body.mc-lbaas-page #content_body hz-resource-table .hz-magic-search-bar {
       flex: 0 1 300px; margin-left: auto; max-width: 390px;
+    }
+    body.mc-lbaas-page #content_body hz-resource-table .hz-magic-search-bar.mc-lb-native-search {
+      position: absolute !important; left: -9999px !important; width: 1px !important; min-width: 1px !important;
+      height: 1px !important; margin: 0 !important; opacity: 0; overflow: hidden; pointer-events: none;
+    }
+    body.mc-lbaas-page #content_body hz-resource-table .mc-lb-filterbar {
+      display: inline-flex; align-items: center; justify-content: flex-end; gap: 10px; margin-left: auto; min-width: 0;
+    }
+    body.mc-lbaas-page #content_body hz-resource-table .mc-lb-filter-field,
+    body.mc-lbaas-page #content_body hz-resource-table .mc-lb-filter-apply {
+      height: 38px; border-radius: 8px; display: inline-flex; align-items: center; gap: 7px;
+      font-weight: 600; white-space: nowrap;
+    }
+    body.mc-lbaas-page #content_body hz-resource-table .mc-lb-filter-field { min-width: 106px; justify-content: center; }
+    body.mc-lbaas-page #content_body hz-resource-table .mc-lb-filter-input {
+      width: 270px; height: 38px; border: 1px solid #dbe3ee; border-radius: 8px; box-shadow: none;
+    }
+    body.mc-lbaas-page #content_body hz-resource-table .mc-lb-filter-input:focus {
+      border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37,99,235,.15);
+    }
+    @media (max-width: 900px) {
+      body.mc-lbaas-page #content_body hz-resource-table .mc-lb-filterbar { flex: 1 1 100%; flex-wrap: wrap; }
+      body.mc-lbaas-page #content_body hz-resource-table .mc-lb-filter-input { flex: 1 1 180px; width: auto; }
     }
     body.mc-lbaas-page #content_body hz-resource-table .hz-dynamic-table-actions { margin-left: 0; }
     body.mc-lbaas-page #content_body hz-resource-table table.table { border: 0; margin-bottom: 0; }
@@ -912,17 +943,136 @@
 
 {% verbatim %}
 <script>
+// MyCloud: replace Octavia's dense magic-search toolbar with the mockup shape
+// while still driving the real Horizon magic-search input underneath.
+(function () {
+  function isLbPage() {
+    return document.body.classList.contains('mc-lbaas-page');
+  }
+  function keyEvent(type, code) {
+    var ev;
+    try {
+      ev = new KeyboardEvent(type, {
+        bubbles: true,
+        cancelable: true,
+        key: code === 13 ? 'Enter' : '',
+        code: code === 13 ? 'Enter' : '',
+        keyCode: code,
+        which: code
+      });
+      try {
+        Object.defineProperty(ev, 'keyCode', { get: function () { return code; } });
+        Object.defineProperty(ev, 'which', { get: function () { return code; } });
+      } catch (ignore) {}
+    } catch (ignore) {
+      ev = document.createEvent('Event');
+      ev.initEvent(type, true, true);
+      ev.keyCode = code;
+      ev.which = code;
+    }
+    return ev;
+  }
+  function clickNative(el) {
+    if (!el) return;
+    if (window.angular) {
+      try {
+        window.angular.element(el).triggerHandler('click');
+        return;
+      } catch (ignore) {}
+    }
+    el.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
+  }
+  function submitSearch(preamble, value) {
+    var nativeInput = preamble.querySelector('.hz-magic-search-bar .search-input');
+    if (!nativeInput) return;
+    if (!value) {
+      clickNative(preamble.querySelector('.hz-magic-search-bar .magic-search-clear'));
+      return;
+    }
+    nativeInput.value = value;
+    nativeInput.dispatchEvent(new Event('input', { bubbles: true }));
+    nativeInput.dispatchEvent(new Event('change', { bubbles: true }));
+    nativeInput.dispatchEvent(keyEvent('keyup', 13));
+  }
+  function decoratePreamble(preamble) {
+    if (!isLbPage() || !preamble || preamble.querySelector('.mc-lb-filterbar')) return;
+    var nativeSearch = preamble.querySelector('.hz-magic-search-bar');
+    if (!nativeSearch) return;
+    nativeSearch.classList.add('mc-lb-native-search');
+    var bar = document.createElement('div');
+    bar.className = 'mc-lb-filterbar';
+    bar.innerHTML =
+      '<button type="button" class="btn btn-default mc-lb-filter-field">Name = <span class="fa fa-caret-down" aria-hidden="true"></span></button>' +
+      '<input type="text" class="form-control mc-lb-filter-input" aria-label="Filter load balancers">' +
+      '<button type="button" class="btn btn-default mc-lb-filter-apply">Filter</button>';
+    nativeSearch.parentNode.insertBefore(bar, nativeSearch);
+    var input = bar.querySelector('.mc-lb-filter-input');
+    var apply = bar.querySelector('.mc-lb-filter-apply');
+    apply.addEventListener('click', function () {
+      submitSearch(preamble, (input.value || '').trim());
+    });
+    input.addEventListener('keydown', function (ev) {
+      if (ev.key === 'Enter' || ev.keyCode === 13) {
+        ev.preventDefault();
+        apply.click();
+      }
+    });
+  }
+  function fixActionsHeader(table) {
+    if (!isLbPage() || !table) return;
+    var headers = table.querySelectorAll('thead tr.table_column_header th, thead tr th');
+    if (!headers.length) return;
+    var last = headers[headers.length - 1];
+    if ((last.textContent || '').trim()) return;
+    if (!table.querySelector('td.actions_column, tbody .btn')) return;
+    last.textContent = 'Actions';
+  }
+  function run() {
+    if (!isLbPage()) return;
+    var preambles = document.querySelectorAll('#content_body hz-resource-table .hz-dynamic-table-preamble');
+    for (var i = 0; i < preambles.length; i++) decoratePreamble(preambles[i]);
+    var tables = document.querySelectorAll('#content_body hz-resource-table table.table');
+    for (var t = 0; t < tables.length; t++) fixActionsHeader(tables[t]);
+  }
+  function init() {
+    run();
+    if (!window.MutationObserver) return;
+    var pending = false;
+    var obs = new MutationObserver(function () {
+      if (pending) return;
+      pending = true;
+      (window.requestAnimationFrame || function (cb) { return setTimeout(cb, 16); })(function () {
+        pending = false;
+        run();
+      });
+    });
+    var host = document.getElementById('content_body') || document.body;
+    obs.observe(host, { childList: true, subtree: true });
+  }
+  if (document.readyState !== 'loading') init();
+  else document.addEventListener('DOMContentLoaded', init);
+})();
+</script>
+{% endverbatim %}
+
+{% verbatim %}
+<script>
 // MyCloud: colour the Status / Power State cells as pills (like the mockup).
 // Per-value classes can't be set in CSS, so map the cell text to a colour
 // here. Re-runs on Horizon's AJAX row refreshes; idempotent (skips cells
 // that already have a badge), so it cannot loop.
 (function () {
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (ch) {
+      return ({'&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'})[ch];
+    });
+  }
   function classify(t) {
     t = (t || '').toLowerCase();
     if (/active|running|online|enabled|^up$/.test(t)) return 'ok';
     if (/offline|error|crash|fail|deleted|^down$/.test(t)) return 'err';
-    if (/degraded|paus|suspend|block/.test(t)) return 'warn';
-    if (/build|reboot|rebuild|migrat|resiz|spawn|schedul|rescue|password|block device|networking|prepar|powering|image|pending|verify/.test(t)) return 'info';
+    if (/degraded|pending|paus|suspend|block/.test(t)) return 'warn';
+    if (/build|reboot|rebuild|migrat|resiz|spawn|schedul|rescue|password|block device|networking|prepar|powering|image|verify/.test(t)) return 'info';
     return 'muted'; // shutoff, stopped, shut down/off, no state, shelved, none
   }
   function badgeTable(table) {
@@ -944,7 +1094,7 @@
         if (dw.querySelector('.mc-stat-badge')) continue;
         var txt = (dw.textContent || '').trim();
         if (!txt) continue;
-        dw.innerHTML = '<span class="mc-stat-badge ' + classify(txt) + '">' + txt + '</span>';
+        dw.innerHTML = '<span class="mc-stat-badge ' + classify(txt) + '">' + esc(txt) + '</span>';
       }
     }
   }
@@ -963,10 +1113,8 @@
       pending = true;
       setTimeout(function () { pending = false; run(); }, 200);
     });
-    var bodies = document.querySelectorAll(
-      '#content_body .table_wrapper table.datatable > tbody,' +
-      '#content_body .hz-magic-search-context table.table > tbody');
-    for (var i = 0; i < bodies.length; i++) obs.observe(bodies[i], { childList: true, subtree: true });
+    var host = document.getElementById('content_body') || document.body;
+    obs.observe(host, { childList: true, subtree: true });
   }
   if (document.readyState !== 'loading') init();
   else document.addEventListener('DOMContentLoaded', init);
