@@ -70,6 +70,7 @@
   .quota-dynamic.az-limit-summary,
   .quota-dynamic.mc-quota-summary-wrap {
     padding-bottom: 0 !important;
+    margin-bottom: 0 !important;
   }
 
   .quota-dynamic.mc-key-stats {
@@ -78,12 +79,31 @@
     margin-bottom: 12px !important;
   }
 
-  .mc-panel {
+  .mc-panel,
+  .mc-usage-table,
+  .mc-recent-panel {
     margin-bottom: 16px !important;
   }
 
+  .mc-quota-summary {
+    align-items: stretch !important;
+  }
+
+  .mc-quota-group {
+    height: 100% !important;
+  }
+
+  .mc-usage-table .table_wrapper,
+  .mc-usage-table .table-responsive {
+    box-shadow: none !important;
+    border: none !important;
+    margin-bottom: 0 !important;
+  }
+
   .mc-key-stats .mc-stat--key,
-  .mc-panel {
+  .mc-panel,
+  .mc-usage-table,
+  .mc-recent-panel {
     box-shadow: 0 1px 2px rgba(15, 23, 42, .06), 0 4px 12px rgba(15, 23, 42, .06) !important;
   }
 

@@ -919,6 +919,7 @@ button.mc-create-btn {
 .quota-dynamic.az-limit-summary,
 .quota-dynamic.mc-quota-summary-wrap {
   padding-bottom: 0;
+  margin-bottom: 0;
 }
 
 .quota-dynamic.mc-key-stats {
@@ -1167,14 +1168,14 @@ button.mc-create-btn {
 
 // ---- Limit Summary panel (quota bar rows) ----
 .mc-quota-summary-wrap {
-  margin-bottom: $mc-section-gap;
+  margin-bottom: 0;
 }
 
 .mc-quota-summary {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 14px;
-  align-items: start;
+  align-items: stretch;
 }
 
 .mc-quota-group {
@@ -1182,6 +1183,7 @@ button.mc-create-btn {
   border: 1px solid $mc-border;
   border-radius: 12px;
   padding: 2px 18px 10px;
+  height: 100%;
 }
 
 .mc-quota-head {
@@ -1237,7 +1239,7 @@ button.mc-create-btn {
 //  Admin / Hypervisors — match horizon_redesign_interactive.html
 // =====================================================================
 .mc-hv-page-head {
-  margin-bottom: 18px;
+  margin-bottom: $mc-section-gap;
 }
 
 .mc-hv-refresh {
@@ -1250,7 +1252,7 @@ button.mc-create-btn {
 }
 
 .mc-hv-stats {
-  margin-bottom: 22px;
+  margin-bottom: $mc-section-gap;
 
   .mc-stat-grid {
     grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -1300,7 +1302,7 @@ button.mc-create-btn {
   }
 
   .table_wrapper {
-    margin-bottom: 22px;
+    margin-bottom: $mc-section-gap;
   }
 
   .table_wrapper > form,
@@ -2163,7 +2165,13 @@ body.modal-open {
   }
 
   // Flatten the inner horizon table wrapper
-  .table_wrapper, .table-responsive { border-radius: 0; box-shadow: none; border: none; }
+  .table_wrapper,
+  .table-responsive {
+    border-radius: 0;
+    box-shadow: none;
+    border: none;
+    margin-bottom: 0;
+  }
   .table_actions, .table-striped thead { border-radius: 0; }
 
   // Keep table-level action buttons aligned to the right.
