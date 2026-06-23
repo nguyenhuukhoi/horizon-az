@@ -916,10 +916,15 @@ button.mc-create-btn {
 }
 
 // ---- Stat cards (Limit Summary) ----
-.quota-dynamic.mc-key-stats,
 .quota-dynamic.az-limit-summary,
 .quota-dynamic.mc-quota-summary-wrap {
   padding-bottom: 0;
+}
+
+.quota-dynamic.mc-key-stats {
+  overflow: visible;
+  padding-bottom: 4px;
+  margin-bottom: 12px;
 }
 
 .mc-stat-grid {
@@ -2177,6 +2182,7 @@ body.modal-open {
   grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
   gap: 16px;
   margin-bottom: $mc-section-gap;
+  overflow: visible;
 
   .mc-stat--key {
     background: $mc-surface;
