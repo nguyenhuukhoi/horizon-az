@@ -1836,7 +1836,11 @@ body.modal-open {
 
 // Wizard "?" help toggle — clean circular ghost button instead of the
 // heavy default, nudged in from the top-right corner.
-.ng-wizard .help-toggle {
+// Help "?" toggle: same round themed button in both the launch wizard and
+// plain form modals (Create Key Pair, etc. render help-panel in .modal-body,
+// not inside .ng-wizard).
+.ng-wizard .help-toggle,
+.modal .help-toggle {
   top: 4px;
   right: 6px;
   width: 30px;
