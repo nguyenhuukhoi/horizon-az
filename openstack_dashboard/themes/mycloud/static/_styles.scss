@@ -2519,8 +2519,10 @@ body.modal-open {
    lay its h3/hr/dl out in a row). The .row parent is the flex container. ===== */
 hz-details,hz-resource-property-list,hz-resource-property,hz-field,hz-magic-search,ng-include{display:block}
 [ng-controller^="ImageOverviewController"] .row{margin-left:0 !important;margin-right:0 !important}
-[ng-controller^="ImageOverviewController"] > .row{display:grid !important;grid-template-columns:1fr;gap:16px;margin-bottom:16px !important}
+[ng-controller^="ImageOverviewController"] > .row{display:grid !important;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px !important}
+[ng-controller^="ImageOverviewController"] > .row:last-child{grid-template-columns:1fr}
 [ng-controller^="ImageOverviewController"] > .row > .col-md-6{float:none !important;width:auto !important;min-width:0}
+@media(max-width:900px){[ng-controller^="ImageOverviewController"] > .row{grid-template-columns:1fr !important}}
 [ng-controller^="ImageOverviewController"] .detail{background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(15,23,42,.06),0 4px 12px rgba(15,23,42,.06);padding:0 20px 16px;margin:0;overflow:hidden}
 [ng-controller^="ImageOverviewController"] .detail h3{font-size:15px;font-weight:700;color:#0f172a;margin:0;padding:16px 0 14px}
 [ng-controller^="ImageOverviewController"] .detail hr{margin:0 -20px 12px;border:0;border-top:1px solid #e2e8f0}
