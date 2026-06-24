@@ -529,6 +529,7 @@ table.datatable > caption,
   padding: 16px 18px 14px;   // breathing room around the toolbar cluster
   text-align: left;
   color: $text-color;
+  border-bottom: 1px solid $mc-border;
 
   .table-title { display: none; }
 }
