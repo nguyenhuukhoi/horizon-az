@@ -806,7 +806,11 @@
     .table.datatable .themable-checkbox label::before { font-size: 15px; line-height: 1; }
     .table.datatable .multi_select_column input[type="checkbox"] { width: 15px; height: 15px; margin: 0; vertical-align: middle; }
     .table.datatable > tbody > tr > td a { font-weight: 600; }
-    .table_count { color: #94a3b8; font-size: 13px; font-weight: 500; }
+    /* "Displaying N items" count: one identical style on Django (.table_count,
+       rendered inside a thead/tfoot td) and Angular tables (hz-table-footer's
+       count span), so e.g. Admin Instances matches the Images page exactly. */
+    #content_body .table_count,
+    #content_body [hz-table-footer] td > span:first-child { color: #0f172a; font-size: 13px; font-weight: 400; text-transform: none; letter-spacing: normal; }
     /* Status / Power State pills (added by JS) */
     .mc-stat-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; line-height: 1.4; padding: 3px 10px; border-radius: 20px; white-space: nowrap; }
     .mc-stat-badge::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; flex: 0 0 auto; }

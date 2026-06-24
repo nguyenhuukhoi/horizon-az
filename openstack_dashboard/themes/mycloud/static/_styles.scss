@@ -483,9 +483,17 @@ dl.dl-horizontal dt {
 }
 .table-responsive { border-radius: 12px; }
 
-// "Displaying N items" count: keep Horizon's original style (don't restyle it)
-// so it stays consistent across Django (.table_count) and Angular tables
-// (hz-table-footer), e.g. the Images page.
+// "Displaying N items" count: one identical style on Django (.table_count,
+// rendered inside a thead/tfoot td) and Angular tables (hz-table-footer's count
+// span), so e.g. Admin Instances matches the Images page exactly.
+#content_body .table_count,
+#content_body [hz-table-footer] td > span:first-child {
+  color: #0f172a;
+  font-size: 13px;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: normal;
+}
 
 // Status / Power State pills (added per-value by JS in _sidebar.html),
 // matching the mockup status badges.
