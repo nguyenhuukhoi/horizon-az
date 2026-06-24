@@ -44,6 +44,28 @@
         <dt>{% trans "User Data" %}</dt>
         <dd>{{ instance.user_data|default:_("-") }}</dd>
       {% endif %}
+    </dl>
+  </section>
+
+  {% if instance.fault %}
+  <section class="mc-instance-card mc-instance-card--wide">
+    <h4>{% trans "Fault" %}</h4>
+    <dl class="dl-horizontal">
+      <dt>{% trans "Message" %}</dt>
+      <dd>{{ instance.fault.message }}</dd>
+      <dt>{% trans "Code" %}</dt>
+      <dd>{{ instance.fault.code }}</dd>
+      <dt>{% trans "Details" %}</dt>
+      <dd>{{ instance.fault.details }}</dd>
+      <dt>{% trans "Created" %}</dt>
+      <dd>{{ instance.fault.created|parse_isotime }}</dd>
+    </dl>
+  </section>
+  {% endif %}
+
+  <section class="mc-instance-card">
+    <h4>{% trans "Specs" %}</h4>
+    <dl class="dl-horizontal">
       {% if instance.full_flavor %}
         <dt>{% trans "Flavor Name" %}</dt>
         <dd class="word-wrap">{{ instance.full_flavor.name }}</dd>
@@ -65,22 +87,6 @@
       {% endif %}
     </dl>
   </section>
-
-  {% if instance.fault %}
-  <section class="mc-instance-card mc-instance-card--wide">
-    <h4>{% trans "Fault" %}</h4>
-    <dl class="dl-horizontal">
-      <dt>{% trans "Message" %}</dt>
-      <dd>{{ instance.fault.message }}</dd>
-      <dt>{% trans "Code" %}</dt>
-      <dd>{{ instance.fault.code }}</dd>
-      <dt>{% trans "Details" %}</dt>
-      <dd>{{ instance.fault.details }}</dd>
-      <dt>{% trans "Created" %}</dt>
-      <dd>{{ instance.fault.created|parse_isotime }}</dd>
-    </dl>
-  </section>
-  {% endif %}
 
   <section class="mc-instance-card">
     <h4>{% trans "IP Addresses" %}</h4>
@@ -158,7 +164,7 @@
     </dl>
   </section>
 
-  <section class="mc-instance-card">
+  <section class="mc-instance-card mc-instance-card--wide">
     <h4>{% trans "Volumes Attached" %}</h4>
     <dl class="dl-horizontal">
     {% for volume in instance.volumes %}
