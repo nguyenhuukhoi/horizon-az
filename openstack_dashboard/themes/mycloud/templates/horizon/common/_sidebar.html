@@ -170,17 +170,17 @@
     [ng-controller^="ImageOverviewController"] .detail{background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(15,23,42,.06),0 4px 12px rgba(15,23,42,.06);padding:0 20px 16px;margin:0;overflow:hidden}
     [ng-controller^="ImageOverviewController"] .detail h3{font-size:15px;font-weight:700;color:#0f172a;margin:0;padding:16px 0 14px}
     [ng-controller^="ImageOverviewController"] .detail hr{margin:0 -20px 12px;border:0;border-top:1px solid #e2e8f0}
-    [ng-controller^="RoutedDetailsViewController"]:has([ng-controller^="ImageOverviewController"]) .page-header{display:flex !important;flex-wrap:wrap;align-items:center;gap:10px}
-    [ng-controller^="RoutedDetailsViewController"]:has([ng-controller^="ImageOverviewController"]) .page-header > .row{display:contents}
-    [ng-controller^="RoutedDetailsViewController"]:has([ng-controller^="ImageOverviewController"]) .page-header > .row > .text-left{order:1;flex:1 1 auto;min-width:0;float:none;width:auto;padding:0}
-    [ng-controller^="RoutedDetailsViewController"]:has([ng-controller^="ImageOverviewController"]) .page-header > .breadcrumb{order:2;margin:0 0 0 auto;padding:0;background:none;border:0}
-    [ng-controller^="RoutedDetailsViewController"]:has([ng-controller^="ImageOverviewController"]) .page-header > .row > .details-item-actions{order:3;flex:0 0 auto;float:none;width:auto;padding:0}
-    [ng-controller^="RoutedDetailsViewController"]:has([ng-controller^="ImageOverviewController"]) .page-header > .breadcrumb > li{display:inline}
-    [ng-controller^="RoutedDetailsViewController"]:has([ng-controller^="ImageOverviewController"]) .page-header > .breadcrumb > li::before{content:none}
-    [ng-controller^="RoutedDetailsViewController"]:has([ng-controller^="ImageOverviewController"]) .page-header .breadcrumb a{display:inline-flex;align-items:center;border:1px solid #cbd5e1;border-radius:8px;padding:7px 14px;background:#fff;color:#334155;font-weight:600;font-size:13px;line-height:1;text-decoration:none;white-space:nowrap}
-    [ng-controller^="RoutedDetailsViewController"]:has([ng-controller^="ImageOverviewController"]) .page-header .breadcrumb a::before{content:"\2039";font-size:16px;margin-right:6px}
-    [ng-controller^="RoutedDetailsViewController"]:has([ng-controller^="ImageOverviewController"]) .page-header .breadcrumb a::after{content:"to list";margin-left:.35em}
-    [ng-controller^="RoutedDetailsViewController"]:has([ng-controller^="ImageOverviewController"]) .page-header .breadcrumb a:hover{background:#f1f5f9;color:#0f172a}
+    body.mc-image-detail .page-header{display:flex !important;flex-wrap:wrap;align-items:center;gap:10px}
+    body.mc-image-detail .page-header > .row{display:contents}
+    body.mc-image-detail .page-header > .row > .text-left{order:1;flex:1 1 auto;min-width:0;float:none;width:auto;padding:0}
+    body.mc-image-detail .page-header > .breadcrumb{order:2;margin:0 0 0 auto;padding:0;background:none;border:0}
+    body.mc-image-detail .page-header > .row > .details-item-actions{order:3;flex:0 0 auto;float:none;width:auto;padding:0}
+    body.mc-image-detail .page-header > .breadcrumb > li{display:inline}
+    body.mc-image-detail .page-header > .breadcrumb > li::before{content:none}
+    body.mc-image-detail .page-header .breadcrumb a{display:inline-flex;align-items:center;border:1px solid #cbd5e1;border-radius:8px;padding:7px 14px;background:#fff;color:#334155;font-weight:600;font-size:13px;line-height:1;text-decoration:none;white-space:nowrap}
+    body.mc-image-detail .page-header .breadcrumb a::before{content:"\2039";font-size:16px;margin-right:6px}
+    body.mc-image-detail .page-header .breadcrumb a::after{content:"to list";margin-left:.35em}
+    body.mc-image-detail .page-header .breadcrumb a:hover{background:#f1f5f9;color:#0f172a}
     /* Detail pages use Horizon's original Bootstrap grid:
        title col-sm-9 on the left and actions col-sm-3 on the right. Only the
        split-button internals are forced not to wrap. */
@@ -1039,13 +1039,29 @@
   function run() {
     var path = window.location.pathname || '';
     var hash = window.location.hash || '';
+    var url = path + hash;
     var isLb = /\/project\/load_balancer\/?/.test(path) ||
                /project\/load_balancer\/?/.test(hash);
     document.body.classList.toggle('mc-lbaas-page', isLb);
+    // Image detail page (ngdetails/OS::Glance::Image, :: maybe %3A-encoded).
+    // Set from the URL on first paint so the header styling applies before
+    // Angular renders the breadcrumb — no raw "Back" flash on refresh.
+    var isImg = /ngdetails\/OS(?:::|%3A%3A)Glance(?:::|%3A%3A)Image/i.test(url);
+    document.body.classList.toggle('mc-image-detail', isImg);
   }
   run();
   window.addEventListener('hashchange', run);
   window.addEventListener('popstate', run);
+  // Angular routes with pushState; mirror it so the marker tracks client-nav.
+  ['pushState', 'replaceState'].forEach(function (m) {
+    var orig = history[m];
+    if (typeof orig !== 'function') return;
+    history[m] = function () {
+      var r = orig.apply(this, arguments);
+      try { run(); } catch (e) {}
+      return r;
+    };
+  });
 })();
 </script>
 {% endverbatim %}
