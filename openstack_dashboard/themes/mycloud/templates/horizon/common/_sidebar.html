@@ -918,6 +918,7 @@
        L7Rule): card the Overview tab's .col-md-6.detail section. Scoped to
        mc-lbaas-page; only detail pages have .col-md-6.detail (list is a table). */
     body.mc-lbaas-page .col-md-6.detail{background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(15,23,42,.06),0 4px 12px rgba(15,23,42,.06);padding:16px 20px;margin:0 0 16px;float:none;width:100%;box-sizing:border-box}
+    body.mc-lbaas-page .col-md-6.detail h4{margin:0 0 14px;padding-bottom:12px;border-bottom:1px solid #e2e8f0;font-size:15px;font-weight:700;color:#0f172a;line-height:1.25}
   </style>
   <a class="mc-sidebar-brand" href="{% site_branding_link %}" target="_self">
     <span class="mc-brand-logo"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 19A4.5 4.5 0 0 1 5.9 10 6 6 0 0 1 17.6 8.4 4.2 4.2 0 0 1 17 19z"/></svg></span>
@@ -1128,6 +1129,46 @@
       return r;
     };
   });
+})();
+</script>
+{% endverbatim %}
+
+{% verbatim %}
+<script>
+// MyCloud: title the Octavia LBaaS detail card with its resource type (e.g.
+// "Load Balancer"), read from hz-resource-property-list's resource-type-name.
+(function () {
+  function label(rt) {
+    var t = (rt || '').split('::').pop();                 // "LoadBalancer"
+    return t.replace(/([a-z0-9])([A-Z])/g, '$1 $2').trim(); // "Load Balancer"
+  }
+  function run() {
+    if (!document.body.classList.contains('mc-lbaas-page')) return;
+    var cards = document.querySelectorAll('#content_body .col-md-6.detail');
+    for (var i = 0; i < cards.length; i++) {
+      var c = cards[i];
+      if (c.dataset.mcTitled || c.querySelector('h3, h4')) continue;
+      var rp = c.querySelector('hz-resource-property-list[resource-type-name]');
+      var t = rp ? label(rp.getAttribute('resource-type-name')) : '';
+      if (!t) continue;
+      c.dataset.mcTitled = '1';
+      var hh = document.createElement('h4');
+      hh.textContent = t;
+      c.insertBefore(hh, c.firstChild);
+    }
+  }
+  function init() {
+    run();
+    if (!window.MutationObserver) return;
+    var p = false;
+    var obs = new MutationObserver(function () {
+      if (p) return; p = true;
+      setTimeout(function () { p = false; run(); }, 150);
+    });
+    obs.observe(document.getElementById('content_body') || document.body, { childList: true, subtree: true });
+  }
+  if (document.readyState !== 'loading') init();
+  else document.addEventListener('DOMContentLoaded', init);
 })();
 </script>
 {% endverbatim %}
