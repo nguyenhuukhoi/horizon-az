@@ -483,11 +483,9 @@ dl.dl-horizontal dt {
 }
 .table-responsive { border-radius: 12px; }
 
-// "Displaying N items" count -> muted, matching the mockup's .hz-display
-// (#94a3b8 / 13.5px / 600). Covers Django (.table_count) and Angular tables
-// (the hz-table-footer in both the thead and the tfoot).
-.table_count,
-#content_body [hz-table-footer] { color: #94a3b8; font-size: 13.5px; font-weight: 600; }
+// "Displaying N items" count: keep Horizon's original style (don't restyle it)
+// so it stays consistent across Django (.table_count) and Angular tables
+// (hz-table-footer), e.g. the Images page.
 
 // Status / Power State pills (added per-value by JS in _sidebar.html),
 // matching the mockup status badges.
