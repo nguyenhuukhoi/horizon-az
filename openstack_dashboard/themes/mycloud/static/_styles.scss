@@ -2538,6 +2538,14 @@ hz-details,hz-resource-property-list,hz-resource-property,hz-field,hz-magic-sear
 [ng-controller^="ServerGroupOverviewController"]::before{content:"Server Group";display:block;font-size:15px;font-weight:700;color:#0f172a;margin:0 -20px 12px;padding:16px 20px 14px;border-bottom:1px solid #e2e8f0}
 [ng-controller^="ServerGroupOverviewController"] .h4{font-size:15px;font-weight:700;color:#0f172a;margin:0;padding:14px 0 12px}
 [ng-controller^="ServerGroupOverviewController"] hr{margin:0 -20px 12px;border:0;border-top:1px solid #e2e8f0}
+/* Django volume-family detail (Volumes / Snapshots / Groups / Group Snapshots):
+   each overview has a single <div class="detail"> wrapping h4-sections, so card
+   that box and style the section headings. Scoped via mc-vol-detail body marker
+   (URL-based) so other Django detail pages are untouched. */
+body.mc-vol-detail .detail{background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(15,23,42,.06),0 4px 12px rgba(15,23,42,.06);padding:16px 20px;margin-bottom:16px}
+body.mc-vol-detail .detail h4{font-size:15px;font-weight:700;color:#0f172a;margin:0;padding:14px 0 10px}
+body.mc-vol-detail .detail hr.header_rule{margin:0 -20px 12px;border:0;border-top:1px solid #e2e8f0}
+body.mc-vol-detail .detail > dl:last-child{margin-bottom:0}
 body.mc-ngdetail .page-header{display:flex !important;flex-wrap:wrap;align-items:center;gap:10px}
 body.mc-ngdetail .page-header > .row{display:contents}
 body.mc-ngdetail .page-header > .row > .text-left{order:1;flex:1 1 auto;min-width:0;float:none;width:auto;padding:0}

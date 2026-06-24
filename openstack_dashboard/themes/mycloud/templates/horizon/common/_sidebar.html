@@ -190,6 +190,14 @@
     [ng-controller^="ServerGroupOverviewController"]::before{content:"Server Group";display:block;font-size:15px;font-weight:700;color:#0f172a;margin:0 -20px 12px;padding:16px 20px 14px;border-bottom:1px solid #e2e8f0}
     [ng-controller^="ServerGroupOverviewController"] .h4{font-size:15px;font-weight:700;color:#0f172a;margin:0;padding:14px 0 12px}
     [ng-controller^="ServerGroupOverviewController"] hr{margin:0 -20px 12px;border:0;border-top:1px solid #e2e8f0}
+    /* Django volume-family detail (Volumes / Snapshots / Groups / Group Snapshots):
+       each overview has a single <div class="detail"> wrapping h4-sections, so card
+       that box and style the section headings. Scoped via mc-vol-detail body marker
+       (URL-based) so other Django detail pages are untouched. */
+    body.mc-vol-detail .detail{background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(15,23,42,.06),0 4px 12px rgba(15,23,42,.06);padding:16px 20px;margin-bottom:16px}
+    body.mc-vol-detail .detail h4{font-size:15px;font-weight:700;color:#0f172a;margin:0;padding:14px 0 10px}
+    body.mc-vol-detail .detail hr.header_rule{margin:0 -20px 12px;border:0;border-top:1px solid #e2e8f0}
+    body.mc-vol-detail .detail > dl:last-child{margin-bottom:0}
     body.mc-ngdetail .page-header{display:flex !important;flex-wrap:wrap;align-items:center;gap:10px}
     body.mc-ngdetail .page-header > .row{display:contents}
     body.mc-ngdetail .page-header > .row > .text-left{order:1;flex:1 1 auto;min-width:0;float:none;width:auto;padding:0}
@@ -1074,6 +1082,11 @@
     var u = url; try { u = decodeURIComponent(url); } catch (e) {}
     var isNg = /\/ngdetails\/(OS::Glance::Image|OS::Nova::Keypair|OS::Nova::ServerGroup|OS::Keystone::User)\b/.test(u);
     document.body.classList.toggle('mc-ngdetail', isNg);
+    // Django volume-family detail (volumes/snapshots/groups/group-snapshots):
+    // card the overview .detail box. Match the resource UUID so list/action
+    // URLs don't trigger it.
+    var isVol = /\/project\/(volumes|snapshots|volume_groups|vg_snapshots)\/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}(\/detail)?\/?(\?|#|$)/i.test(u);
+    document.body.classList.toggle('mc-vol-detail', isVol);
   }
   run();
   window.addEventListener('hashchange', run);
