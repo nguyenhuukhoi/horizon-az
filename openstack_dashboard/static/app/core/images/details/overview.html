@@ -16,16 +16,26 @@
       <h3>{$ 'Security' | translate $}</h3>
       <hr>
       <dl class="dl-horizontal">
-        <dt translate>Owner</dt>
-        <dd>{$ ctrl.image.owner $}</dd>
-        <dt translate>Filename</dt>
-        <dd>{$ ctrl.image.properties.filename | noValue $}</dd>
-        <dt translate>Visibility</dt>
-        <dd>{$ ctrl.image | imageVisibility:ctrl.projectId $}</dd>
-        <dt translate>Protected</dt>
-        <dd>{$ ctrl.image.protected | yesno $}</dd>
-        <dt translate>Checksum</dt>
-        <dd>{$ ctrl.image.checksum | noValue $}</dd>
+        <div>
+          <dt translate>Owner</dt>
+          <dd>{$ ctrl.image.owner $}</dd>
+        </div>
+        <div>
+          <dt translate>Filename</dt>
+          <dd>{$ ctrl.image.properties.filename | noValue $}</dd>
+        </div>
+        <div>
+          <dt translate>Visibility</dt>
+          <dd>{$ ctrl.image | imageVisibility:ctrl.projectId $}</dd>
+        </div>
+        <div>
+          <dt translate>Protected</dt>
+          <dd>{$ ctrl.image.protected | yesno $}</dd>
+        </div>
+        <div>
+          <dt translate>Checksum</dt>
+          <dd>{$ ctrl.image.checksum | noValue $}</dd>
+        </div>
       </dl>
     </div>
   </div>
