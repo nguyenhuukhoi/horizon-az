@@ -900,6 +900,13 @@ body.mc-lbaas-page {
 // icon and label become the button's own flex items and centre properly.
 .btn > ng-transclude,
 .btn > [ng-transclude] { display: contents; }
+// The generic .btn rules above must not break two .btn special-cases:
+// 1) the responsive nav toggle — keep it hidden on desktop (inline-flex above
+//    would otherwise override Bootstrap's display:none).
+@media (min-width: 768px) { .navbar-toggle { display: none; } }
+// 2) the themable <select> toggle — value on the left, caret on the right
+//    (justify-content:center above would otherwise centre them).
+.themable-select > .btn { width: 100%; justify-content: space-between; }
 
 .btn-primary {
   box-shadow: 0 1px 2px rgba(37, 99, 235, .25);

@@ -584,6 +584,10 @@
        through so they become the button's own flex items and centre. */
     .btn > ng-transclude,
     .btn > [ng-transclude] { display: contents; }
+    /* Keep the generic .btn rules from breaking the responsive nav toggle and
+       the themable <select> caret. */
+    @media (min-width: 768px) { .navbar-toggle { display: none; } }
+    .themable-select > .btn { width: 100%; justify-content: space-between; }
     .btn-launch, a.btn-launch {
       background: #2563eb !important; border-color: #2563eb !important; color: #fff !important;
       box-shadow: 0 1px 2px rgba(15,23,42,.08);
