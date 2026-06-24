@@ -166,13 +166,6 @@
        lay its h3/hr/dl out in a row). The .row parent is the flex container. ===== */
     /* Angular custom elements render inline theo mặc định — force block */
     hz-details,hz-resource-property-list,hz-resource-property,hz-field,hz-magic-search,ng-include{display:block}
-    /* Reset Bootstrap .row negative margins bên trong image detail */
-    [ng-controller^="ImageOverviewController"] .row{margin-left:0 !important;margin-right:0 !important}
-    /* Image + Security cùng 1 hàng; Custom Properties full width bên dưới */
-    [ng-controller^="ImageOverviewController"] > .row{display:grid !important;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px !important}
-    [ng-controller^="ImageOverviewController"] > .row:last-child{grid-template-columns:1fr}
-    [ng-controller^="ImageOverviewController"] > .row > .col-md-6{float:none !important;width:auto !important;min-width:0}
-    @media(max-width:900px){[ng-controller^="ImageOverviewController"] > .row{grid-template-columns:1fr !important}}
     /* Card styling — giữ dl-horizontal gốc của Horizon, chỉ thêm border/radius/shadow */
     [ng-controller^="ImageOverviewController"] .detail{background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(15,23,42,.06),0 4px 12px rgba(15,23,42,.06);padding:0 20px 16px;margin:0;overflow:hidden}
     [ng-controller^="ImageOverviewController"] .detail h3{font-size:15px;font-weight:700;color:#0f172a;margin:0;padding:16px 0 14px}
@@ -1282,6 +1275,53 @@
     });
     var host = document.getElementById('content_body') || document.body;
     obs.observe(host, { childList: true, subtree: true, characterData: true });
+  }
+  if (document.readyState !== 'loading') init();
+  else document.addEventListener('DOMContentLoaded', init);
+})();
+</script>
+{% endverbatim %}
+
+{% verbatim %}
+<script>
+// MyCloud: Image detail — Image+Security side-by-side flex row via JS
+// (CSS > combinator unreliable with Angular custom-element wrapper layers).
+(function () {
+  function fix() {
+    var ctrl = document.querySelector('[ng-controller^="ImageOverviewController"]');
+    if (!ctrl || ctrl.dataset.mcGrid) return;
+    // children gives ELEMENT nodes only — no Angular comment nodes
+    var rows = [];
+    for (var i = 0; i < ctrl.children.length; i++) {
+      if (ctrl.children[i].classList.contains('row')) rows.push(ctrl.children[i]);
+    }
+    if (rows.length < 2) return; // Angular not done rendering yet
+    ctrl.dataset.mcGrid = '1';
+    // Row 0: Image + Security — 50/50 flex
+    var r0 = rows[0];
+    r0.style.cssText = 'display:flex!important;margin-left:0!important;margin-right:0!important;gap:16px;margin-bottom:16px';
+    for (var j = 0; j < r0.children.length; j++) {
+      r0.children[j].style.cssText = 'flex:1;min-width:0;float:none!important;width:auto!important;padding:0;box-sizing:border-box';
+    }
+    // Remaining rows: full width
+    for (var k = 1; k < rows.length; k++) {
+      rows[k].style.cssText = 'margin-left:0!important;margin-right:0!important;margin-bottom:16px';
+      for (var m = 0; m < rows[k].children.length; m++) {
+        rows[k].children[m].style.cssText = 'float:none!important;width:100%!important;padding:0;box-sizing:border-box';
+      }
+    }
+  }
+  function init() {
+    fix();
+    if (!window.MutationObserver) return;
+    var pending = false;
+    var obs = new MutationObserver(function () {
+      if (pending) return;
+      pending = true;
+      setTimeout(function () { pending = false; fix(); }, 150);
+    });
+    var host = document.getElementById('content_body') || document.body;
+    obs.observe(host, { childList: true, subtree: true });
   }
   if (document.readyState !== 'loading') init();
   else document.addEventListener('DOMContentLoaded', init);
