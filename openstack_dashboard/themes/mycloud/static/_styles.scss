@@ -2523,15 +2523,30 @@ hz-details,hz-resource-property-list,hz-resource-property,hz-field,hz-magic-sear
 [ng-controller^="ImageOverviewController"] .detail hr{margin:0 -20px 12px;border:0;border-top:1px solid #e2e8f0}
 [ng-controller^="ImageOverviewController"] > .row::before,
 [ng-controller^="ImageOverviewController"] > .row::after{content:none;display:none}
-body.mc-image-detail .page-header{display:flex !important;flex-wrap:wrap;align-items:center;gap:10px}
-body.mc-image-detail .page-header > .row{display:contents}
-body.mc-image-detail .page-header > .row > .text-left{order:1;flex:1 1 auto;min-width:0;float:none;width:auto;padding:0}
-body.mc-image-detail .page-header > .breadcrumb{order:2;margin:0 0 0 auto;padding:0;background:none;border:0}
-body.mc-image-detail .page-header > .row > .details-item-actions{order:3;flex:0 0 auto;float:none;width:auto;padding:0;min-width:104px}
-body.mc-image-detail .page-header > .row > .details-item-actions:not(:has(.btn))::after{content:"";display:inline-block;width:104px;height:38px;border-radius:8px;background:linear-gradient(90deg,#eef2f7 25%,#e2e8f0 50%,#eef2f7 75%);background-size:200% 100%;animation:mc-skel 1.2s ease-in-out infinite}
-body.mc-image-detail .page-header > .breadcrumb > li{display:inline}
-body.mc-image-detail .page-header > .breadcrumb > li::before{content:none}
-body.mc-image-detail .page-header .breadcrumb a{display:inline-flex;align-items:center;border:1px solid #cbd5e1;border-radius:8px;padding:7px 14px;background:#fff;color:#334155;font-weight:600;font-size:13px;line-height:1;text-decoration:none;white-space:nowrap}
-body.mc-image-detail .page-header .breadcrumb a::before{content:"\2039";font-size:16px;margin-right:6px}
-body.mc-image-detail .page-header .breadcrumb a::after{content:"to list";margin-left:.35em}
-body.mc-image-detail .page-header .breadcrumb a:hover{background:#f1f5f9;color:#0f172a}
+/* ===== keypairs / users / server-group detail -> cards (Angular ngdetails,
+   same family as image; pure CSS, single card each so no JS normaliser). ===== */
+[ng-controller^="horizon.app.core.keypairs.DetailsController"] .row{margin:0}
+[ng-controller^="horizon.app.core.keypairs.DetailsController"] .row > .col-md-12{float:none;width:100%}
+[ng-controller^="horizon.app.core.keypairs.DetailsController"] .detail{background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(15,23,42,.06),0 4px 12px rgba(15,23,42,.06);padding:0 20px 16px;margin:0}
+[ng-controller^="horizon.app.core.keypairs.DetailsController"] .detail::before{content:"Key Pair";display:block;font-size:15px;font-weight:700;color:#0f172a;margin:0 -20px 12px;padding:16px 20px 14px;border-bottom:1px solid #e2e8f0}
+[ng-controller^="UserOverviewController"] .row{margin:0}
+[ng-controller^="UserOverviewController"] .row > .col-md-6{float:none;width:100%}
+[ng-controller^="UserOverviewController"] .detail{background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(15,23,42,.06),0 4px 12px rgba(15,23,42,.06);padding:0 20px 16px;margin:0}
+[ng-controller^="UserOverviewController"] .detail h3{font-size:15px;font-weight:700;color:#0f172a;margin:0;padding:16px 0 14px}
+[ng-controller^="UserOverviewController"] .detail hr{margin:0 -20px 12px;border:0;border-top:1px solid #e2e8f0}
+[ng-controller^="ServerGroupOverviewController"]{display:block;background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(15,23,42,.06),0 4px 12px rgba(15,23,42,.06);padding:0 20px 16px}
+[ng-controller^="ServerGroupOverviewController"]::before{content:"Server Group";display:block;font-size:15px;font-weight:700;color:#0f172a;margin:0 -20px 12px;padding:16px 20px 14px;border-bottom:1px solid #e2e8f0}
+[ng-controller^="ServerGroupOverviewController"] .h4{font-size:15px;font-weight:700;color:#0f172a;margin:0;padding:14px 0 12px}
+[ng-controller^="ServerGroupOverviewController"] hr{margin:0 -20px 12px;border:0;border-top:1px solid #e2e8f0}
+body.mc-ngdetail .page-header{display:flex !important;flex-wrap:wrap;align-items:center;gap:10px}
+body.mc-ngdetail .page-header > .row{display:contents}
+body.mc-ngdetail .page-header > .row > .text-left{order:1;flex:1 1 auto;min-width:0;float:none;width:auto;padding:0}
+body.mc-ngdetail .page-header > .breadcrumb{order:2;margin:0 0 0 auto;padding:0;background:none;border:0}
+body.mc-ngdetail .page-header > .row > .details-item-actions{order:3;flex:0 0 auto;float:none;width:auto;padding:0;min-width:104px}
+body.mc-ngdetail .page-header > .row > .details-item-actions:not(:has(.btn))::after{content:"";display:inline-block;width:104px;height:38px;border-radius:8px;background:linear-gradient(90deg,#eef2f7 25%,#e2e8f0 50%,#eef2f7 75%);background-size:200% 100%;animation:mc-skel 1.2s ease-in-out infinite}
+body.mc-ngdetail .page-header > .breadcrumb > li{display:inline}
+body.mc-ngdetail .page-header > .breadcrumb > li::before{content:none}
+body.mc-ngdetail .page-header .breadcrumb a{display:inline-flex;align-items:center;border:1px solid #cbd5e1;border-radius:8px;padding:7px 14px;background:#fff;color:#334155;font-weight:600;font-size:13px;line-height:1;text-decoration:none;white-space:nowrap}
+body.mc-ngdetail .page-header .breadcrumb a::before{content:"\2039";font-size:16px;margin-right:6px}
+body.mc-ngdetail .page-header .breadcrumb a::after{content:"to list";margin-left:.35em}
+body.mc-ngdetail .page-header .breadcrumb a:hover{background:#f1f5f9;color:#0f172a}
