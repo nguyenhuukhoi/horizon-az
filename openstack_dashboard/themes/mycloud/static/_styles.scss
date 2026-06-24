@@ -2524,7 +2524,7 @@ hz-details,hz-resource-property-list,hz-resource-property,hz-field,hz-magic-sear
 [ng-controller^="RoutedDetailsViewController"]:has([ng-controller^="ImageOverviewController"]) .page-header{display:flex !important;flex-wrap:wrap;align-items:center;gap:10px}
 [ng-controller^="RoutedDetailsViewController"]:has([ng-controller^="ImageOverviewController"]) .page-header > .row{display:contents}
 [ng-controller^="RoutedDetailsViewController"]:has([ng-controller^="ImageOverviewController"]) .page-header > .row > .text-left{order:1;flex:1 1 auto;min-width:0;float:none;width:auto;padding:0}
-[ng-controller^="RoutedDetailsViewController"]:has([ng-controller^="ImageOverviewController"]) .page-header > .breadcrumb{order:2;margin:0;padding:0;background:none;border:0}
+[ng-controller^="RoutedDetailsViewController"]:has([ng-controller^="ImageOverviewController"]) .page-header > .breadcrumb{order:2;margin:0 0 0 auto;padding:0;background:none;border:0}
 [ng-controller^="RoutedDetailsViewController"]:has([ng-controller^="ImageOverviewController"]) .page-header > .row > .details-item-actions{order:3;flex:0 0 auto;float:none;width:auto;padding:0}
 [ng-controller^="RoutedDetailsViewController"]:has([ng-controller^="ImageOverviewController"]) .page-header > .breadcrumb > li{display:inline}
 [ng-controller^="RoutedDetailsViewController"]:has([ng-controller^="ImageOverviewController"]) .page-header > .breadcrumb > li::before{content:none}
