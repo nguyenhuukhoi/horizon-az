@@ -1284,9 +1284,10 @@
 
 {% verbatim %}
 <script>
-// MyCloud: Image detail — stack Image / Security / Custom Properties as
-// full-width cards, one per row (the CSS > combinator is unreliable through
-// Angular's custom-element wrapper layers, so normalise the rows in JS).
+// MyCloud: Image detail — Image + Security side by side (2 cards), then
+// Custom Properties full width below, like the default theme. The CSS >
+// combinator is unreliable through Angular's custom-element wrappers, so
+// normalise the rows in JS.
 (function () {
   function fix() {
     var ctrl = document.querySelector('[ng-controller^="ImageOverviewController"]');
@@ -1298,12 +1299,19 @@
     }
     if (rows.length < 2) return; // Angular not done rendering yet
     ctrl.dataset.mcGrid = '1';
-    // Every section (incl. Image + Security) becomes a full-width card stacked
-    // one per row — the layout in image 1, not the devstack side-by-side.
-    for (var k = 0; k < rows.length; k++) {
-      rows[k].style.cssText = 'display:block!important;margin-left:0!important;margin-right:0!important;margin-bottom:0';
+    var CARD = 'padding:0 20px 16px!important;box-sizing:border-box;margin:0!important';
+    // Row 0: Image + Security side by side — 2 equal cards (stretch to same
+    // height so the shorter Security card has no bare gap below it).
+    var r0 = rows[0];
+    r0.style.cssText = 'display:flex!important;flex-wrap:wrap;align-items:stretch;margin:0 0 16px!important;gap:16px';
+    for (var j = 0; j < r0.children.length; j++) {
+      r0.children[j].style.cssText = 'flex:1 1 0;min-width:0;float:none!important;width:auto!important;' + CARD;
+    }
+    // Remaining rows (Custom Properties): full width.
+    for (var k = 1; k < rows.length; k++) {
+      rows[k].style.cssText = 'display:block!important;margin:0 0 16px!important';
       for (var m = 0; m < rows[k].children.length; m++) {
-        rows[k].children[m].style.cssText = 'float:none!important;width:100%!important;padding:0 20px 16px!important;box-sizing:border-box;margin:0 0 16px!important';
+        rows[k].children[m].style.cssText = 'float:none!important;width:100%!important;' + CARD;
       }
     }
   }
