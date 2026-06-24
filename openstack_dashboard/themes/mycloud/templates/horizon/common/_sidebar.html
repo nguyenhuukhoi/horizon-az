@@ -159,18 +159,22 @@
     .page-header:has(> .row) { display: block !important; }
     .page-header .details-item-actions .btn-group { display: inline-flex !important; flex-wrap: nowrap !important; vertical-align: middle !important; }
     .page-header .details-item-actions .btn-group > .btn { float: none !important; }
-    /* ===== Image detail: 3 cards + "Back to list" button (mockup look). CSS-only,
+        /* ===== Image detail: 3 cards + "Back to list" button (mockup look). CSS-only,
        scoped to the image detail page (ImageOverviewController) so no other detail
        page and no Angular workflow/behaviour is touched. ===== */
-    [ng-controller^="ImageOverviewController"] .detail{background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(15,23,42,.06),0 4px 12px rgba(15,23,42,.06);padding:0 18px 14px;margin-bottom:16px}
+    [ng-controller^="ImageOverviewController"] .row{display:flex;flex-wrap:wrap}
+    [ng-controller^="ImageOverviewController"] .row > .col-md-6{display:flex;float:none}
+    [ng-controller^="ImageOverviewController"] .detail{flex:1 1 auto;width:100%;background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(15,23,42,.06),0 4px 12px rgba(15,23,42,.06);padding:0 18px 14px;margin-bottom:16px}
     [ng-controller^="ImageOverviewController"] .detail h3{font-size:15px;font-weight:700;color:#0f172a;margin:0;padding:14px 0 12px}
     [ng-controller^="ImageOverviewController"] .detail hr{margin:0 -18px 12px;border:0;border-top:1px solid #e2e8f0}
     [ng-controller^="ImageOverviewController"] .detail .dl-horizontal dt{width:150px;text-align:left;color:#64748b;font-weight:600;white-space:normal}
     [ng-controller^="ImageOverviewController"] .detail .dl-horizontal dd{margin-left:166px;overflow-wrap:anywhere}
     [ng-controller^="ImageOverviewController"] > .row:last-child > .col-md-6{width:100%}
     [ng-controller^="RoutedDetailsViewController"]:has([ng-controller^="ImageOverviewController"]) .page-header{display:flex !important;flex-wrap:wrap;align-items:center;gap:10px}
-    [ng-controller^="RoutedDetailsViewController"]:has([ng-controller^="ImageOverviewController"]) .page-header > .row{order:1;flex:1 1 auto;min-width:0}
+    [ng-controller^="RoutedDetailsViewController"]:has([ng-controller^="ImageOverviewController"]) .page-header > .row{display:contents}
+    [ng-controller^="RoutedDetailsViewController"]:has([ng-controller^="ImageOverviewController"]) .page-header > .row > .text-left{order:1;flex:1 1 auto;min-width:0;float:none;width:auto;padding:0}
     [ng-controller^="RoutedDetailsViewController"]:has([ng-controller^="ImageOverviewController"]) .page-header > .breadcrumb{order:2;margin:0;padding:0;background:none;border:0}
+    [ng-controller^="RoutedDetailsViewController"]:has([ng-controller^="ImageOverviewController"]) .page-header > .row > .details-item-actions{order:3;flex:0 0 auto;float:none;width:auto;padding:0}
     [ng-controller^="RoutedDetailsViewController"]:has([ng-controller^="ImageOverviewController"]) .page-header > .breadcrumb > li{display:inline}
     [ng-controller^="RoutedDetailsViewController"]:has([ng-controller^="ImageOverviewController"]) .page-header > .breadcrumb > li::before{content:none}
     [ng-controller^="RoutedDetailsViewController"]:has([ng-controller^="ImageOverviewController"]) .page-header .breadcrumb a{display:inline-flex;align-items:center;border:1px solid #cbd5e1;border-radius:8px;padding:7px 14px;background:#fff;color:#334155;font-weight:600;font-size:13px;line-height:1;text-decoration:none;white-space:nowrap}
