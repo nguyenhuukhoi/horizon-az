@@ -190,14 +190,7 @@
     [ng-controller^="ServerGroupOverviewController"]::before{content:"Server Group";display:block;font-size:15px;font-weight:700;color:#0f172a;margin:0 -20px 12px;padding:16px 20px 14px;border-bottom:1px solid #e2e8f0}
     [ng-controller^="ServerGroupOverviewController"] .h4{font-size:15px;font-weight:700;color:#0f172a;margin:0;padding:14px 0 12px}
     [ng-controller^="ServerGroupOverviewController"] hr{margin:0 -20px 12px;border:0;border-top:1px solid #e2e8f0}
-    /* Django volume-family detail (Volumes / Snapshots / Groups / Group Snapshots):
-       each overview has a single <div class="detail"> wrapping h4-sections, so card
-       that box and style the section headings. Scoped via mc-vol-detail body marker
-       (URL-based) so other Django detail pages are untouched. */
-    body.mc-vol-detail .detail{background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(15,23,42,.06),0 4px 12px rgba(15,23,42,.06);padding:16px 20px;margin-bottom:16px}
-    body.mc-vol-detail .detail h4{font-size:15px;font-weight:700;color:#0f172a;margin:0;padding:14px 0 10px}
-    body.mc-vol-detail .detail hr.header_rule{margin:0 -20px 12px;border:0;border-top:1px solid #e2e8f0}
-    body.mc-vol-detail .detail > dl:last-child{margin-bottom:0}
+    /* Django volume-family detail: cards built by the JS wrapper below (reuses .mc-instance-card). */
     body.mc-ngdetail .page-header{display:flex !important;flex-wrap:wrap;align-items:center;gap:10px}
     body.mc-ngdetail .page-header > .row{display:contents}
     body.mc-ngdetail .page-header > .row > .text-left{order:1;flex:1 1 auto;min-width:0;float:none;width:auto;padding:0}
@@ -1101,6 +1094,66 @@
       return r;
     };
   });
+})();
+</script>
+{% endverbatim %}
+
+{% verbatim %}
+<script>
+// MyCloud: turn the Django volume-family detail overview (a flat .detail with
+// h4 sections) into separate cards, reusing the instance-detail card grid so it
+// looks identical. Django renders the DOM server-side, so this is reliable.
+(function () {
+  function wrapOne(detail) {
+    if (detail.dataset.mcCarded || detail.classList.contains('mc-instance-overview')) return;
+    if (!detail.querySelector('dl.dl-horizontal')) return;
+    detail.dataset.mcCarded = '1';
+    var els = Array.prototype.slice.call(detail.children);
+    var groups = [], g = null;
+    for (var i = 0; i < els.length; i++) {
+      var el = els[i];
+      if (el.tagName === 'H4') { g = [el]; groups.push(g); }
+      else if (el.tagName === 'HR') { if (el.parentNode) el.parentNode.removeChild(el); }
+      else { if (!g) { g = []; groups.unshift(g); } g.push(el); }
+    }
+    detail.classList.add('mc-instance-overview');
+    for (var k = 0; k < groups.length; k++) {
+      var grp = groups[k];
+      var noH4 = !(grp[0] && grp[0].tagName === 'H4');
+      var hasTable = false;
+      for (var t = 0; t < grp.length; t++) {
+        if (grp[t].querySelector && grp[t].querySelector('table')) hasTable = true;
+      }
+      var sec = document.createElement('section');
+      sec.className = 'mc-instance-card' + ((noH4 || hasTable) ? ' mc-instance-card--wide' : '');
+      if (noH4) {
+        var hh = document.createElement('h4');
+        hh.textContent = 'General';
+        sec.appendChild(hh);
+      }
+      for (var m = 0; m < grp.length; m++) sec.appendChild(grp[m]);
+      detail.appendChild(sec);
+    }
+  }
+  function run() {
+    if (!document.body.classList.contains('mc-vol-detail')) return;
+    var ds = document.querySelectorAll('#content_body .detail');
+    for (var d = 0; d < ds.length; d++) wrapOne(ds[d]);
+  }
+  function init() {
+    run();
+    if (!window.MutationObserver) return;
+    var pending = false;
+    var obs = new MutationObserver(function () {
+      if (pending) return;
+      pending = true;
+      setTimeout(function () { pending = false; run(); }, 150);
+    });
+    var host = document.getElementById('content_body') || document.body;
+    obs.observe(host, { childList: true, subtree: true });
+  }
+  if (document.readyState !== 'loading') init();
+  else document.addEventListener('DOMContentLoaded', init);
 })();
 </script>
 {% endverbatim %}
