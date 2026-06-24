@@ -886,7 +886,15 @@ body.mc-lbaas-page {
   border-radius: 8px;
   font-weight: 600;
   transition: background .12s ease, box-shadow .12s ease, border-color .12s ease;
+  // Centre the icon with the label on EVERY button (not just table actions).
+  // Flex drops the whitespace between an icon <span> and the label, so gap
+  // gives consistent spacing without double-spacing where markup had a space.
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
 }
+.btn-block { display: flex; }
 
 .btn-primary {
   box-shadow: 0 1px 2px rgba(37, 99, 235, .25);
