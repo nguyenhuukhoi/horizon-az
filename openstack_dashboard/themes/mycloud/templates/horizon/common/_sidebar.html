@@ -1154,6 +1154,18 @@
     });
     row.appendChild(a);
   }
+  function resourceLabel() {
+    // Heading for the leading (id/status) card = the resource type, taken from
+    // the breadcrumb's last link (the list name) singularised. e.g. Volumes ->
+    // Volume, Snapshots -> Snapshot, RBAC Policies -> RBAC Policy.
+    var bc = document.querySelector('.page-breadcrumb .breadcrumb, .breadcrumb');
+    var links = bc ? bc.querySelectorAll('a') : [];
+    var t = links.length ? (links[links.length - 1].textContent || '').trim() : '';
+    if (!t) return 'Details';
+    if (/ies$/i.test(t)) return t.replace(/ies$/i, 'y');
+    if (/s$/i.test(t)) return t.replace(/s$/i, '');
+    return t;
+  }
   function wrapOne(detail) {
     if (detail.dataset.mcCarded || detail.classList.contains('mc-instance-overview')) return;
     if (!detail.querySelector('dl.dl-horizontal')) return;
@@ -1178,7 +1190,7 @@
       sec.className = 'mc-instance-card' + ((noH4 || hasTable) ? ' mc-instance-card--wide' : '');
       if (noH4) {
         var hh = document.createElement('h4');
-        hh.textContent = 'General';
+        hh.textContent = resourceLabel();
         sec.appendChild(hh);
       }
       for (var m = 0; m < grp.length; m++) sec.appendChild(grp[m]);
