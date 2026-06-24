@@ -557,7 +557,7 @@ table.datatable > caption,
   }
   .table_search .form-group { margin: 0; }
   .table_search .form-control {
-    height: 38px;
+    height: 34px;
     border-radius: 8px;
     border: 1px solid $mc-border;
     min-width: 200px;
@@ -568,7 +568,7 @@ table.datatable > caption,
   .btn,
   .table_search .btn,
   .table_actions_menu > .btn {
-    height: 38px;
+    height: 34px;
     border-radius: 8px;
     display: inline-flex;
     align-items: center;
@@ -682,7 +682,7 @@ button.mc-create-btn {
 #content_body .hz-dynamic-table-actions { display: inline-flex; align-items: center; gap: 10px; flex: 0 0 auto; }
 // neutralise Horizon's per-action padding so every gap is exactly 10px
 #content_body .hz-dynamic-table-actions action-list { padding-left: 0 !important; }
-#content_body .hz-dynamic-table-actions .btn { height: 38px; border-radius: 8px; display: inline-flex; align-items: center; gap: 7px; white-space: nowrap; }
+#content_body .hz-dynamic-table-actions .btn { height: 34px; border-radius: 8px; display: inline-flex; align-items: center; gap: 7px; white-space: nowrap; }
 // Cold-load: batch actions render ~1-2s after the magic-search bar, so the bar
 // briefly spans the whole row and "swallows" the buttons. Fade the toolbar in
 // only once the buttons exist (1.8s fallback for tables without batch actions).
@@ -741,7 +741,7 @@ button.mc-create-btn {
   .input-group-btn > button,
   .form-control,
   .magic-search,
-  .search-bar { height: 38px !important; min-height: 38px !important; max-height: 38px !important; }
+  .search-bar { height: 34px !important; min-height: 34px !important; max-height: 34px !important; }
   // round the outer ends only (handles both with/without the settings cog)
   .input-group > :first-child { border-radius: 8px 0 0 8px; }
   .input-group > :last-child { border-radius: 0 8px 8px 0; }
@@ -826,7 +826,7 @@ body.mc-lbaas-page {
 
   #content_body hz-resource-table .mc-lb-filter-field,
   #content_body hz-resource-table .mc-lb-filter-apply {
-    height: 38px;
+    height: 34px;
     border-radius: 8px;
     display: inline-flex;
     align-items: center;
@@ -842,7 +842,7 @@ body.mc-lbaas-page {
 
   #content_body hz-resource-table .mc-lb-filter-input {
     width: 270px;
-    height: 38px;
+    height: 34px;
     border: 1px solid #dbe3ee;
     border-radius: 8px;
     box-shadow: none;
@@ -1494,7 +1494,7 @@ body.mc-lbaas-page {
 }
 
 .mc-hv-refresh {
-  height: 38px;
+  height: 34px;
   border-radius: 8px;
   display: inline-flex;
   align-items: center;
@@ -1648,7 +1648,7 @@ body.mc-lbaas-page {
 
 .mc-hv-filter input {
   width: 100%;
-  height: 38px;
+  height: 34px;
   border: 1px solid $mc-border;
   border-radius: 8px;
   background: #f8fafc;
@@ -1667,8 +1667,8 @@ body.mc-lbaas-page {
 }
 
 .mc-hv-icon-btn {
-  width: 38px;
-  height: 38px;
+  width: 34px;
+  height: 34px;
   border: 1px solid $mc-border;
   border-radius: 8px;
   background: #fff;
