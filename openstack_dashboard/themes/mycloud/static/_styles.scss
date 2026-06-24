@@ -2567,3 +2567,15 @@ body.mc-ngdetail .page-header .breadcrumb a{display:inline-flex;align-items:cent
 body.mc-ngdetail .page-header .breadcrumb a::before{content:"\2039";font-size:16px;margin-right:6px}
 body.mc-ngdetail .page-header .breadcrumb a::after{content:"to list";margin-left:.35em}
 body.mc-ngdetail .page-header .breadcrumb a:hover{background:#f1f5f9;color:#0f172a}
+
+/* Django detail header -> flex so the injected "Back to list" button sits
+   between the title and the actions (like Angular routed-detail). Declared after
+   the float rules above so it overrides them (same specificity, later wins). */
+.page-header.detail-header{display:flex !important;flex-wrap:wrap;align-items:center;gap:10px}
+.page-header.detail-header > .row{display:contents !important}
+.page-header.detail-header .detail-title{order:1 !important;flex:1 1 auto !important;float:none !important;width:auto !important;padding:0 !important}
+.page-header.detail-header .detail-actions{order:3 !important;float:none !important;width:auto !important;padding:0 !important;display:inline-flex !important;align-items:center}
+.page-header.detail-header .mc-back-to-list{order:2 !important;display:inline-flex;align-items:center;border:1px solid #cbd5e1;border-radius:8px;padding:7px 14px;background:#fff;color:#334155;font-weight:600;font-size:13px;line-height:1;text-decoration:none;white-space:nowrap;cursor:pointer}
+.page-header.detail-header .mc-back-to-list::before{content:"\2039";font-size:16px;margin-right:6px}
+.page-header.detail-header .mc-back-to-list:hover{background:#f1f5f9;color:#0f172a}
+@media (max-width:767px){.page-header.detail-header .detail-title{flex:1 1 100% !important}}

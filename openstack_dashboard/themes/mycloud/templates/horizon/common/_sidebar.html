@@ -895,6 +895,17 @@
       .mc-hv-table-head { align-items: flex-start; flex-direction: column; }
       .mc-hv-table-actions, .mc-hv-filter { width: 100%; }
     }
+    /* Django detail header -> flex so the injected "Back to list" button sits
+       between the title and the actions (like Angular routed-detail). Declared after
+       the float rules above so it overrides them (same specificity, later wins). */
+    .page-header.detail-header{display:flex !important;flex-wrap:wrap;align-items:center;gap:10px}
+    .page-header.detail-header > .row{display:contents !important}
+    .page-header.detail-header .detail-title{order:1 !important;flex:1 1 auto !important;float:none !important;width:auto !important;padding:0 !important}
+    .page-header.detail-header .detail-actions{order:3 !important;float:none !important;width:auto !important;padding:0 !important;display:inline-flex !important;align-items:center}
+    .page-header.detail-header .mc-back-to-list{order:2 !important;display:inline-flex;align-items:center;border:1px solid #cbd5e1;border-radius:8px;padding:7px 14px;background:#fff;color:#334155;font-weight:600;font-size:13px;line-height:1;text-decoration:none;white-space:nowrap;cursor:pointer}
+    .page-header.detail-header .mc-back-to-list::before{content:"\2039";font-size:16px;margin-right:6px}
+    .page-header.detail-header .mc-back-to-list:hover{background:#f1f5f9;color:#0f172a}
+    @media (max-width:767px){.page-header.detail-header .detail-title{flex:1 1 100% !important}}
   </style>
   <a class="mc-sidebar-brand" href="{% site_branding_link %}" target="_self">
     <span class="mc-brand-logo"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 19A4.5 4.5 0 0 1 5.9 10 6 6 0 0 1 17.6 8.4 4.2 4.2 0 0 1 17 19z"/></svg></span>
@@ -1115,6 +1126,18 @@
 // h4 sections) into separate cards, reusing the instance-detail card grid so it
 // looks identical. Django renders the DOM server-side, so this is reliable.
 (function () {
+  function addBack() {
+    var hdr = document.querySelector('.page-header.detail-header');
+    if (!hdr) return;
+    var row = hdr.querySelector('.row') || hdr;
+    if (row.querySelector('.mc-back-to-list')) return;
+    var a = document.createElement('a');
+    a.className = 'mc-back-to-list';
+    a.href = '#';
+    a.textContent = 'Back to list';
+    a.addEventListener('click', function (e) { e.preventDefault(); history.back(); });
+    row.appendChild(a);
+  }
   function wrapOne(detail) {
     if (detail.dataset.mcCarded || detail.classList.contains('mc-instance-overview')) return;
     if (!detail.querySelector('dl.dl-horizontal')) return;
@@ -1150,6 +1173,7 @@
     // Django detail pages render a .detail-header; Angular routed-detail does
     // not, so this only touches Django pages (Angular handled separately).
     if (!document.querySelector('.detail-header')) return;
+    addBack();
     var ds = document.querySelectorAll('#content_body .detail');
     for (var d = 0; d < ds.length; d++) wrapOne(ds[d]);
   }
