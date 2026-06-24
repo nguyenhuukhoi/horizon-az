@@ -907,6 +907,13 @@ body.mc-lbaas-page {
 // 2) the themable <select> toggle — value on the left, caret on the right
 //    (justify-content:center above would otherwise centre them).
 .themable-select > .btn { width: 100%; justify-content: space-between; }
+// Django server-filter row ("Field = | input | Filter"): the themable-select
+// toggle and the Filter submit button keep Bootstrap's ~38px height because the
+// .table_actions height rule doesn't always reach them. Force the 34px toolbar
+// height directly on both so they line up with every other action button.
+.table_search .themable-select > .btn,
+.table_search > .btn,
+.table_search button[type="submit"] { height: 34px !important; min-height: 34px !important; max-height: 34px !important; }
 // Split buttons: the inline-flex .btn above sizes each button to its content,
 // so a caret-only toggle ends up shorter than its text sibling. Make the group
 // flex with stretch so both buttons share the tallest height.

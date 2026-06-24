@@ -588,6 +588,12 @@
        the themable <select> caret. */
     @media (min-width: 768px) { .navbar-toggle { display: none; } }
     .themable-select > .btn { width: 100%; justify-content: space-between; }
+    /* Django server-filter row: force the 34px toolbar height on the
+       themable-select toggle and the Filter submit button (the .table_actions
+       height rule doesn't always reach them, so they keep Bootstrap's ~38px). */
+    .table_search .themable-select > .btn,
+    .table_search > .btn,
+    .table_search button[type="submit"] { height: 34px !important; min-height: 34px !important; max-height: 34px !important; }
     /* Split buttons: make the group flex+stretch so a caret-only toggle is as
        tall as its text sibling (the inline-flex .btn sizes to content). */
     .btn-group:not(.btn-group-vertical) { display: inline-flex; align-items: stretch; vertical-align: middle; }
