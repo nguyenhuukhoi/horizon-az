@@ -2538,6 +2538,22 @@ hz-details,hz-resource-property-list,hz-resource-property,hz-field,hz-magic-sear
 [ng-controller^="ServerGroupOverviewController"]::before{content:"Server Group";display:block;font-size:15px;font-weight:700;color:#0f172a;margin:0 -20px 12px;padding:16px 20px 14px;border-bottom:1px solid #e2e8f0}
 [ng-controller^="ServerGroupOverviewController"] .h4{font-size:15px;font-weight:700;color:#0f172a;margin:0;padding:14px 0 12px}
 [ng-controller^="ServerGroupOverviewController"] hr{margin:0 -20px 12px;border:0;border-top:1px solid #e2e8f0}
+/* network_qos — image-like (2 cards side-by-side + Rules full; JS normaliser). */
+[ng-controller^="NetworkQoSOverviewController"] .detail{background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(15,23,42,.06),0 4px 12px rgba(15,23,42,.06);padding:0 20px 16px;margin:0}
+[ng-controller^="NetworkQoSOverviewController"] .detail h3{font-size:15px;font-weight:700;color:#0f172a;margin:0;padding:16px 0 14px}
+[ng-controller^="NetworkQoSOverviewController"] .detail hr{margin:0 -20px 12px;border:0;border-top:1px solid #e2e8f0}
+[ng-controller^="NetworkQoSOverviewController"] > .row::before,[ng-controller^="NetworkQoSOverviewController"] > .row::after{content:none;display:none}
+/* trunks — flat, card the controller div (like server group) */
+[ng-controller^="TrunkOverviewController"]{display:block;background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(15,23,42,.06),0 4px 12px rgba(15,23,42,.06);padding:0 20px 16px}
+[ng-controller^="TrunkOverviewController"]::before{content:"Trunk";display:block;font-size:15px;font-weight:700;color:#0f172a;margin:0 -20px 12px;padding:16px 20px 14px;border-bottom:1px solid #e2e8f0}
+[ng-controller^="TrunkOverviewController"] .h4{font-size:15px;font-weight:700;color:#0f172a;margin:0;padding:14px 0 12px}
+[ng-controller^="TrunkOverviewController"] hr{margin:0 -20px 12px;border:0;border-top:1px solid #e2e8f0}
+/* domains — single full-width card (like users) */
+[ng-controller^="DomainOverviewController"] .row{margin:0}
+[ng-controller^="DomainOverviewController"] .row > .col-md-6{float:none;width:100%}
+[ng-controller^="DomainOverviewController"] .detail{background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(15,23,42,.06),0 4px 12px rgba(15,23,42,.06);padding:0 20px 16px;margin:0}
+[ng-controller^="DomainOverviewController"] .detail h3{font-size:15px;font-weight:700;color:#0f172a;margin:0;padding:16px 0 14px}
+[ng-controller^="DomainOverviewController"] .detail hr{margin:0 -20px 12px;border:0;border-top:1px solid #e2e8f0}
 /* Django volume-family detail: cards built by JS (reuses .mc-instance-card). */
 body.mc-ngdetail .page-header{display:flex !important;flex-wrap:wrap;align-items:center;gap:10px}
 body.mc-ngdetail .page-header > .row{display:contents}
