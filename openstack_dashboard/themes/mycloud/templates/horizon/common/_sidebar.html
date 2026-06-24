@@ -170,6 +170,11 @@
     [ng-controller^="ImageOverviewController"] .detail{background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(15,23,42,.06),0 4px 12px rgba(15,23,42,.06);padding:0 20px 16px;margin:0;overflow:hidden}
     [ng-controller^="ImageOverviewController"] .detail h3{font-size:15px;font-weight:700;color:#0f172a;margin:0;padding:16px 0 14px}
     [ng-controller^="ImageOverviewController"] .detail hr{margin:0 -20px 12px;border:0;border-top:1px solid #e2e8f0}
+    /* Bootstrap .row clearfix ::before/::after become flex items in our flex
+       row and (with the gap) inset Image+Security ~20px, so their outer edges
+       no longer line up with the full-width Custom Properties card. Drop them. */
+    [ng-controller^="ImageOverviewController"] > .row::before,
+    [ng-controller^="ImageOverviewController"] > .row::after{content:none;display:none}
     body.mc-image-detail .page-header{display:flex !important;flex-wrap:wrap;align-items:center;gap:10px}
     body.mc-image-detail .page-header > .row{display:contents}
     body.mc-image-detail .page-header > .row > .text-left{order:1;flex:1 1 auto;min-width:0;float:none;width:auto;padding:0}
