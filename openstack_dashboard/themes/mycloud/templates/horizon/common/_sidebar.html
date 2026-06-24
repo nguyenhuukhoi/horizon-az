@@ -165,9 +165,9 @@
        are the SAME element, so the card itself must NOT be display:flex (that would
        lay its h3/hr/dl out in a row). The .row parent is the flex container. ===== */
     [ng-controller^="ImageOverviewController"] > .row{display:flex;flex-wrap:wrap;gap:16px;align-items:stretch;margin:0 0 16px}
-    [ng-controller^="ImageOverviewController"] > .row > .col-md-6{float:none;width:calc(50% - 8px);padding:0}
-    [ng-controller^="ImageOverviewController"] > .row:last-child > .col-md-6{width:100%}
-    [ng-controller^="ImageOverviewController"] .detail{background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(15,23,42,.06),0 4px 12px rgba(15,23,42,.06);padding:0 18px 14px;margin:0}
+    [ng-controller^="ImageOverviewController"] > .row > .col-md-6{float:none;flex:0 0 calc(50% - 8px);width:calc(50% - 8px);max-width:calc(50% - 8px);min-width:0;padding:0}
+    [ng-controller^="ImageOverviewController"] > .row:last-child > .col-md-6{flex:0 0 100%;width:100%;max-width:100%}
+    [ng-controller^="ImageOverviewController"] .detail{background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(15,23,42,.06),0 4px 12px rgba(15,23,42,.06);padding:0 18px 14px;margin:0;overflow:hidden}
     [ng-controller^="ImageOverviewController"] .detail h3{font-size:15px;font-weight:700;color:#0f172a;margin:0;padding:14px 0 12px}
     [ng-controller^="ImageOverviewController"] .detail hr{margin:0 -18px 12px;border:0;border-top:1px solid #e2e8f0}
     [ng-controller^="ImageOverviewController"] .detail .dl-horizontal dt{width:150px;text-align:left;color:#64748b;font-weight:600;white-space:normal}
@@ -182,7 +182,7 @@
     [ng-controller^="RoutedDetailsViewController"]:has([ng-controller^="ImageOverviewController"]) .page-header > .breadcrumb > li::before{content:none}
     [ng-controller^="RoutedDetailsViewController"]:has([ng-controller^="ImageOverviewController"]) .page-header .breadcrumb a{display:inline-flex;align-items:center;border:1px solid #cbd5e1;border-radius:8px;padding:7px 14px;background:#fff;color:#334155;font-weight:600;font-size:13px;line-height:1;text-decoration:none;white-space:nowrap}
     [ng-controller^="RoutedDetailsViewController"]:has([ng-controller^="ImageOverviewController"]) .page-header .breadcrumb a::before{content:"\2039";font-size:16px;margin-right:6px}
-    [ng-controller^="RoutedDetailsViewController"]:has([ng-controller^="ImageOverviewController"]) .page-header .breadcrumb a::after{content:" to list"}
+    [ng-controller^="RoutedDetailsViewController"]:has([ng-controller^="ImageOverviewController"]) .page-header .breadcrumb a::after{content:"to list";margin-left:.35em}
     [ng-controller^="RoutedDetailsViewController"]:has([ng-controller^="ImageOverviewController"]) .page-header .breadcrumb a:hover{background:#f1f5f9;color:#0f172a}
     /* Detail pages use Horizon's original Bootstrap grid:
        title col-sm-9 on the left and actions col-sm-3 on the right. Only the
@@ -1227,6 +1227,57 @@
     });
     var host = document.getElementById('content_body') || document.body;
     obs.observe(host, { childList: true, subtree: true });
+  }
+  if (document.readyState !== 'loading') init();
+  else document.addEventListener('DOMContentLoaded', init);
+})();
+</script>
+{% endverbatim %}
+
+{% verbatim %}
+<script>
+// MyCloud: badge the Status row inside the image detail dl-horizontal.
+// The badgeTable() above only handles <table> rows; this handles the
+// hz-resource-property-list rendered as a dl-horizontal inside the detail page.
+(function () {
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (ch) {
+      return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[ch];
+    });
+  }
+  function classify(t) {
+    t = (t || '').toLowerCase();
+    if (/active|running|online|enabled|^up$/.test(t)) return 'ok';
+    if (/offline|error|crash|fail|deleted|^down$/.test(t)) return 'err';
+    if (/degraded|pending|paus|suspend|block/.test(t)) return 'warn';
+    if (/build|reboot|rebuild|migrat|resiz|spawn|schedul|rescue|password|block device|networking|prepar|powering|image|verify/.test(t)) return 'info';
+    return 'muted';
+  }
+  function run() {
+    var root = document.querySelector('[ng-controller^="ImageOverviewController"]');
+    if (!root) return;
+    var dts = root.querySelectorAll('.detail .dl-horizontal dt');
+    for (var i = 0; i < dts.length; i++) {
+      if ((dts[i].textContent || '').trim().toLowerCase() !== 'status') continue;
+      var dd = dts[i].nextElementSibling;
+      if (!dd || dd.tagName !== 'DD') continue;
+      if (dd.querySelector('.mc-stat-badge')) continue;
+      var txt = (dd.textContent || '').trim();
+      if (!txt) continue;
+      dd.innerHTML = '<span class="mc-stat-badge ' + classify(txt) + '">' + esc(txt) + '</span>';
+    }
+  }
+  function init() {
+    run();
+    if (!window.MutationObserver) return;
+    var pending = false;
+    var obs = new MutationObserver(function () {
+      if (pending) return;
+      pending = true;
+      setTimeout(function () { pending = false; run(); }, 200);
+    });
+    var host = document.getElementById('content_body') || document.body;
+    obs.observe(host, { childList: true, subtree: true, characterData: true });
   }
   if (document.readyState !== 'loading') init();
   else document.addEventListener('DOMContentLoaded', init);
