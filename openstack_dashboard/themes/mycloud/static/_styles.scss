@@ -360,6 +360,72 @@ dl.dl-horizontal dt {
   font-weight: 600;
 }
 
+.mc-instance-overview {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: $mc-section-gap;
+
+  .mc-instance-card {
+    min-width: 0;
+    background: $mc-surface;
+    border: 1px solid $mc-border;
+    border-radius: 12px;
+    box-shadow: $mc-shadow;
+    padding: 18px 20px;
+
+    &--wide {
+      grid-column: 1 / -1;
+    }
+
+    h4 {
+      margin: 0 0 14px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid $mc-border;
+      color: $text-color;
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.25;
+    }
+
+    .dl-horizontal {
+      margin-bottom: 0;
+    }
+
+    .dl-horizontal dt {
+      width: 160px;
+      color: #64748b;
+      font-weight: 600;
+      text-align: right;
+    }
+
+    .dl-horizontal dd {
+      margin-left: 178px;
+      min-height: 20px;
+      color: #0f172a;
+      overflow-wrap: anywhere;
+    }
+  }
+
+  @media (max-width: 991px) {
+    grid-template-columns: 1fr;
+  }
+
+  @media (max-width: 767px) {
+    .mc-instance-card {
+      padding: 16px;
+
+      .dl-horizontal dt {
+        width: auto;
+        text-align: left;
+      }
+
+      .dl-horizontal dd {
+        margin-left: 0;
+      }
+    }
+  }
+}
+
 // =====================================================================
 //  Tables
 // =====================================================================

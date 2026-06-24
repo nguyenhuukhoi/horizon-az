@@ -235,6 +235,63 @@
       margin: 0;
       color: #0f172a;
     }
+    .mc-instance-overview {
+      display: grid !important;
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      gap: 16px !important;
+    }
+    .mc-instance-overview .mc-instance-card {
+      min-width: 0 !important;
+      background: #fff !important;
+      border: 1px solid #e2e8f0 !important;
+      border-radius: 12px !important;
+      box-shadow: 0 1px 2px rgba(15, 23, 42, .06), 0 4px 12px rgba(15, 23, 42, .06) !important;
+      padding: 18px 20px !important;
+    }
+    .mc-instance-overview .mc-instance-card--wide {
+      grid-column: 1 / -1 !important;
+    }
+    .mc-instance-overview .mc-instance-card h4 {
+      margin: 0 0 14px !important;
+      padding-bottom: 12px !important;
+      border-bottom: 1px solid #e2e8f0 !important;
+      color: #0f172a !important;
+      font-size: 16px !important;
+      font-weight: 700 !important;
+      line-height: 1.25 !important;
+    }
+    .mc-instance-overview .mc-instance-card .dl-horizontal {
+      margin-bottom: 0 !important;
+    }
+    .mc-instance-overview .mc-instance-card .dl-horizontal dt {
+      width: 160px !important;
+      color: #64748b !important;
+      font-weight: 600 !important;
+      text-align: right !important;
+    }
+    .mc-instance-overview .mc-instance-card .dl-horizontal dd {
+      margin-left: 178px !important;
+      min-height: 20px !important;
+      color: #0f172a !important;
+      overflow-wrap: anywhere !important;
+    }
+    @media (max-width: 991px) {
+      .mc-instance-overview {
+        grid-template-columns: 1fr !important;
+      }
+    }
+    @media (max-width: 767px) {
+      .mc-instance-overview .mc-instance-card {
+        padding: 16px !important;
+      }
+      .mc-instance-overview .mc-instance-card .dl-horizontal dt {
+        width: auto !important;
+        text-align: left !important;
+      }
+      .mc-instance-overview .mc-instance-card .dl-horizontal dd {
+        margin-left: 0 !important;
+      }
+    }
     .page-header .actions_column,
     .page-header form.actions_column {
       margin: 0 !important;
