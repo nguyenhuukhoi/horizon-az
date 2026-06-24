@@ -906,6 +906,10 @@
     .page-header.detail-header .mc-back-to-list::before{content:"\2039";font-size:16px;margin-right:6px}
     .page-header.detail-header .mc-back-to-list:hover{background:#f1f5f9;color:#0f172a}
     @media (max-width:767px){.page-header.detail-header .detail-title{flex:1 1 100% !important}}
+    /* Octavia LBaaS detail (LoadBalancer/Listener/Pool/Member/Monitor/L7Policy/
+       L7Rule): card the Overview tab's .col-md-6.detail section. Scoped to
+       mc-lbaas-page; only detail pages have .col-md-6.detail (list is a table). */
+    body.mc-lbaas-page .col-md-6.detail{background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(15,23,42,.06),0 4px 12px rgba(15,23,42,.06);padding:16px 20px;margin:0 0 16px;float:none;width:100%;box-sizing:border-box}
   </style>
   <a class="mc-sidebar-brand" href="{% site_branding_link %}" target="_self">
     <span class="mc-brand-logo"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 19A4.5 4.5 0 0 1 5.9 10 6 6 0 0 1 17.6 8.4 4.2 4.2 0 0 1 17 19z"/></svg></span>
@@ -1135,7 +1139,15 @@
     a.className = 'mc-back-to-list';
     a.href = '#';
     a.textContent = 'Back to list';
-    a.addEventListener('click', function (e) { e.preventDefault(); history.back(); });
+    a.addEventListener('click', function (e) {
+      e.preventDefault();
+      // The page breadcrumb's last link is the resource list URL; go straight
+      // there so Back always lands on the right list (fallback: history.back()).
+      var bc = document.querySelector('.page-breadcrumb .breadcrumb, .breadcrumb');
+      var links = bc ? bc.querySelectorAll('a') : [];
+      var url = links.length ? links[links.length - 1].getAttribute('href') : null;
+      if (url) { location.href = url; } else { history.back(); }
+    });
     row.appendChild(a);
   }
   function wrapOne(detail) {

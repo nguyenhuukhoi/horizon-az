@@ -2579,3 +2579,8 @@ body.mc-ngdetail .page-header .breadcrumb a:hover{background:#f1f5f9;color:#0f17
 .page-header.detail-header .mc-back-to-list::before{content:"\2039";font-size:16px;margin-right:6px}
 .page-header.detail-header .mc-back-to-list:hover{background:#f1f5f9;color:#0f172a}
 @media (max-width:767px){.page-header.detail-header .detail-title{flex:1 1 100% !important}}
+
+/* Octavia LBaaS detail (LoadBalancer/Listener/Pool/Member/Monitor/L7Policy/
+   L7Rule): card the Overview tab's .col-md-6.detail section. Scoped to
+   mc-lbaas-page; only detail pages have .col-md-6.detail (list is a table). */
+body.mc-lbaas-page .col-md-6.detail{background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(15,23,42,.06),0 4px 12px rgba(15,23,42,.06);padding:16px 20px;margin:0 0 16px;float:none;width:100%;box-sizing:border-box}
