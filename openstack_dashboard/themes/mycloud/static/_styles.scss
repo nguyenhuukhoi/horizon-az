@@ -2735,3 +2735,6 @@ body.mc-lbaas-page .col-md-6.detail h4{margin:0 0 14px;padding-bottom:12px;borde
   border-radius: 50%; background: none !important;
   animation: mc-fa-spin .7s linear infinite !important;
 }
+
+/* Loading-modal spinner (.loader): centre it (block + auto margins). */
+.fa-spinner.loader { display: block; margin: 6px auto 12px; }
