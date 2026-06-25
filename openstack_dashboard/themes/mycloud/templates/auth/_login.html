@@ -31,7 +31,10 @@
   .mc-inp>svg.mc-lead{position:absolute;left:13px;top:50%;transform:translateY(-50%);pointer-events:none}
   .mc-login-form input,.mc-login-form select{width:100%;border:1px solid #cbd5e1;border-radius:9px;padding:11px 13px;font-family:inherit;font-size:14.5px;line-height:1.4;color:#0f172a;background:#fff;outline:none !important;-webkit-appearance:none;-moz-appearance:none;appearance:none;caret-color:#2563eb;box-shadow:none}
   .mc-inp input{padding-left:40px}
+  .mc-inp input[type="password"],.mc-inp input.mc-pw{padding-right:44px}
   .mc-login-form input:focus,.mc-login-form select:focus{border-color:#2563eb;box-shadow:0 0 0 3px rgba(37,99,235,.15)}
+  .mc-eye{position:absolute;right:5px;top:50%;transform:translateY(-50%);width:34px;height:34px;display:grid;place-items:center;border:none;background:transparent;color:#64748b;cursor:pointer;border-radius:7px;z-index:2}
+  .mc-eye:hover{color:#0f172a;background:#f1f5f9}
   /* remove the browser's native password reveal / autofill eye entirely */
   input::-ms-reveal,input::-ms-clear{display:none !important;width:0 !important;height:0 !important}
   input::-webkit-credentials-auto-fill-button,input::-webkit-strong-password-auto-fill-button,input::-webkit-strong-password-generation-auto-fill-button,input::-webkit-caps-lock-indicator{display:none !important;visibility:hidden !important;pointer-events:none !important;width:0 !important;max-width:0 !important;margin:0 !important;opacity:0 !important}
@@ -126,6 +129,9 @@
             <div class="mc-inp">
               <svg class="mc-lead" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
               {{ form.password }}
+              <button type="button" class="mc-eye" id="mc-eye" tabindex="-1" aria-label="{% trans 'Show or hide password' %}">
+                <svg id="mc-eye-svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.9 5.2A9.8 9.8 0 0 1 12 5c6.5 0 10 7 10 7a17 17 0 0 1-3.2 4"/><path d="M6.3 6.3A17 17 0 0 0 2 12s3.5 7 10 7a9.8 9.8 0 0 0 4.1-.9"/><path d="M3 3l18 18"/></svg>
+              </button>
             </div>
           </div>
 
@@ -149,7 +155,21 @@
   var pw = document.getElementById('{{ form.password.id_for_label }}');
   var u = document.getElementById('{{ form.username.id_for_label }}');
   if (u) { u.setAttribute('placeholder', u.getAttribute('placeholder') || 'Enter your user name'); u.focus(); }
-  if (pw) { pw.setAttribute('placeholder', pw.getAttribute('placeholder') || 'Enter your password'); }
+  if (pw) { pw.setAttribute('placeholder', pw.getAttribute('placeholder') || 'Enter your password'); pw.classList.add('mc-pw'); }
+
+  // show / hide password (our own clickable eye)
+  var eye = document.getElementById('mc-eye');
+  var eyeSvg = document.getElementById('mc-eye-svg');
+  var EYE = '<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/>';
+  var EYE_OFF = '<path d="M9.9 5.2A9.8 9.8 0 0 1 12 5c6.5 0 10 7 10 7a17 17 0 0 1-3.2 4"/><path d="M6.3 6.3A17 17 0 0 0 2 12s3.5 7 10 7a9.8 9.8 0 0 0 4.1-.9"/><path d="M3 3l18 18"/>';
+  if (pw && eye && eyeSvg) {
+    eye.addEventListener('click', function(){
+      var reveal = pw.type === 'password';
+      pw.type = reveal ? 'text' : 'password';
+      eyeSvg.innerHTML = reveal ? EYE : EYE_OFF;
+      pw.focus();
+    });
+  }
 
   // spinner on submit
   var form = document.querySelector('.mc-login-form');
