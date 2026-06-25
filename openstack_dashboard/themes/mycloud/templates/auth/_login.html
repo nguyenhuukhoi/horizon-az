@@ -1,4 +1,4 @@
-{% load i18n %}
+{% load i18n static %}
 {% if 'is_modal' in request.GET or 'is_modal' in request.POST %}
   {% include 'auth/_login_modal.html' %}
 {% else %}
@@ -19,6 +19,7 @@
   .mc-stripe>i:nth-child(1){background:#005bab}.mc-stripe>i:nth-child(2){background:#f47920}.mc-stripe>i:nth-child(3){background:#4cb050}
   .mc-login-body{padding:38px 42px 30px}
   .mc-brand{display:flex;justify-content:center}
+  .mc-logo{width:190px;max-width:80%;height:auto;display:block}
   .mc-brand-badge{width:60px;height:60px;border-radius:16px;background:linear-gradient(135deg,#2563eb,#1d4ed8);display:grid;place-items:center;box-shadow:0 8px 20px -6px rgba(37,99,235,.5)}
   .mc-login-head{text-align:center;margin-top:20px}
   .mc-login-head h1{font-size:19px;font-weight:700;color:#0f172a;margin:0}
@@ -58,7 +59,9 @@
       <div class="mc-login-body">
 
         <div class="mc-brand">
-          <span class="mc-brand-badge">
+          <img class="mc-logo" src="{% static 'themes/mycloud/img/fpt-telecom-logo.png' %}" alt="FPT Telecom"
+               onerror="this.style.display='none';var f=document.getElementById('mc-logo-fb');if(f)f.style.display='grid'">
+          <span class="mc-brand-badge" id="mc-logo-fb" style="display:none">
             <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6.6 18.5A4.4 4.4 0 0 1 6 9.8 6 6 0 0 1 17.5 8a4.5 4.5 0 0 1 .7 9H6.6z"/></svg>
           </span>
         </div>
