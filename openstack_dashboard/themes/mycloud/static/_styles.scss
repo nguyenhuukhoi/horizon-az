@@ -2681,14 +2681,20 @@ body.mc-lbaas-page .col-md-6.detail h4{margin:0 0 14px;padding-bottom:12px;borde
 // Transfer-table allocate/deallocate: the fa-arrow class sits on the <button>
 // itself (empty content), so the masked ::before collapses to 0. Centre it and
 // give the ::before a fixed size so the circle-plus / circle-minus shows.
+#content_body .fa-arrow-up, #content_body .fa-arrow-down,
 .fa-arrow-up, .fa-arrow-down {
   display: inline-flex !important; align-items: center; justify-content: center;
-  width: auto !important; height: auto !important; line-height: 1;
-  border: 0 !important; background: transparent !important; box-shadow: none !important; -webkit-appearance: none !important; appearance: none !important;
-  padding: 3px !important; border-radius: 50%; cursor: pointer; outline: none !important;
+  width: auto !important; min-width: 0 !important; height: auto !important; line-height: 1;
+  border: 0 !important; background: transparent !important; background-color: transparent !important;
+  box-shadow: none !important; -webkit-appearance: none !important; appearance: none !important;
+  padding: 3px !important; border-radius: 50%; cursor: pointer; outline: 0 !important;
 }
-.fa-arrow-up { color: #2563eb !important; }
-.fa-arrow-down { color: #dc2626 !important; }
+#content_body .fa-arrow-up:focus, #content_body .fa-arrow-down:focus,
+.fa-arrow-up:focus, .fa-arrow-down:focus, .fa-arrow-up:active, .fa-arrow-down:active {
+  border: 0 !important; box-shadow: none !important; outline: 0 !important; background-color: transparent !important;
+}
+#content_body .fa-arrow-up, .fa-arrow-up { color: #2563eb !important; }
+#content_body .fa-arrow-down, .fa-arrow-down { color: #dc2626 !important; }
 .fa-arrow-up:hover { background: #dbeafe !important; }
 .fa-arrow-down:hover { background: #fee2e2 !important; }
 .fa-arrow-up::before, .fa-arrow-down::before {
