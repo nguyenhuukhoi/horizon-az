@@ -2677,3 +2677,14 @@ body.mc-ngdetail .page-header .breadcrumb a:hover{background:#f1f5f9;color:#0f17
    mc-lbaas-page; only detail pages have .col-md-6.detail (list is a table). */
 body.mc-lbaas-page .col-md-6.detail{background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(15,23,42,.06),0 4px 12px rgba(15,23,42,.06);padding:16px 20px;margin:0 0 16px;float:none;width:100%;box-sizing:border-box}
 body.mc-lbaas-page .col-md-6.detail h4{margin:0 0 14px;padding-bottom:12px;border-bottom:1px solid #e2e8f0;font-size:15px;font-weight:700;color:#0f172a;line-height:1.25}
+
+// Transfer-table allocate/deallocate: the fa-arrow class sits on the <button>
+// itself (empty content), so the masked ::before collapses to 0. Centre it and
+// give the ::before a fixed size so the circle-plus / circle-minus shows.
+.fa-arrow-up, .fa-arrow-down {
+  display: inline-flex !important; align-items: center; justify-content: center;
+  width: auto !important; height: auto !important; color: #475569; line-height: 1;
+}
+.fa-arrow-up::before, .fa-arrow-down::before {
+  width: 16px !important; height: 16px !important; display: block;
+}
