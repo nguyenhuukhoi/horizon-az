@@ -1,0 +1,159 @@
+{% load i18n %}
+{% if 'is_modal' in request.GET or 'is_modal' in request.POST %}
+  {% include 'auth/_login_modal.html' %}
+{% else %}
+{# MyCloud / FTEL custom login — self-contained card, real Keystone form. #}
+<style>
+  .mc-login-bg{position:fixed;inset:0;z-index:10;overflow:auto;display:flex;align-items:center;justify-content:center;padding:40px 16px;
+    font-family:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;letter-spacing:-.006em;
+    background:radial-gradient(900px circle at 16% 18%,rgba(37,99,235,.12),transparent 45%),radial-gradient(820px circle at 84% 82%,rgba(244,121,32,.11),transparent 46%),linear-gradient(160deg,#f4f7fb 0%,#eaeff6 100%);overflow:hidden}
+  .mc-login-bg *{box-sizing:border-box}
+  .mc-login-dots{position:absolute;inset:0;background-image:radial-gradient(rgba(15,23,42,.05) 1px,transparent 1px);background-size:26px 26px;pointer-events:none}
+  .mc-login-blob{position:absolute;top:-120px;right:-80px;width:360px;height:360px;border-radius:50%;background:radial-gradient(circle,rgba(76,176,80,.10),transparent 70%);pointer-events:none}
+  .mc-login-col{position:relative;z-index:1;width:430px;max-width:calc(100vw - 32px)}
+  .mc-login-card{background:#fff;border-radius:16px;box-shadow:0 1px 2px rgba(15,23,42,.06),0 28px 64px -12px rgba(15,23,42,.28);overflow:hidden;animation:mc-rise .5s ease both}
+  @keyframes mc-rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+  @keyframes mc-spin{to{transform:rotate(360deg)}}
+  .mc-stripe{height:4px;display:flex}
+  .mc-stripe>i{flex:1}
+  .mc-stripe>i:nth-child(1){background:#005bab}.mc-stripe>i:nth-child(2){background:#f47920}.mc-stripe>i:nth-child(3){background:#4cb050}
+  .mc-login-body{padding:38px 42px 30px}
+  .mc-brand{display:flex;justify-content:center}
+  .mc-brand-badge{width:60px;height:60px;border-radius:16px;background:linear-gradient(135deg,#2563eb,#1d4ed8);display:grid;place-items:center;box-shadow:0 8px 20px -6px rgba(37,99,235,.5)}
+  .mc-login-head{text-align:center;margin-top:20px}
+  .mc-login-head h1{font-size:19px;font-weight:700;color:#0f172a;margin:0}
+  .mc-login-head p{font-size:13px;color:#64748b;margin:5px 0 0}
+  .mc-login-form{margin-top:24px}
+  .mc-fld{margin-bottom:16px}
+  .mc-fld>label{display:block;font-weight:600;font-size:13px;color:#334155;margin-bottom:7px}
+  .mc-inp{position:relative}
+  .mc-inp>svg.mc-lead{position:absolute;left:13px;top:50%;transform:translateY(-50%);pointer-events:none}
+  .mc-login-form input,.mc-login-form select{width:100%;border:1px solid #cbd5e1;border-radius:9px;padding:11px 13px;font-family:inherit;font-size:14.5px;color:#0f172a;background:#fff;outline:none;transition:border-color .12s,box-shadow .12s}
+  .mc-inp input{padding-left:40px}
+  .mc-inp input[type="password"],.mc-inp input.mc-pw{padding-right:44px}
+  .mc-login-form input:focus,.mc-login-form select:focus{border-color:#2563eb;box-shadow:0 0 0 3px rgba(37,99,235,.15)}
+  .mc-sel{position:relative}
+  .mc-sel>select{appearance:none;-webkit-appearance:none;padding-right:38px;cursor:pointer}
+  .mc-sel>svg{position:absolute;right:13px;top:50%;transform:translateY(-50%);pointer-events:none}
+  .mc-eye{position:absolute;right:6px;top:50%;transform:translateY(-50%);width:32px;height:32px;display:grid;place-items:center;border:none;background:transparent;color:#94a3b8;cursor:pointer;border-radius:7px}
+  .mc-eye:hover{color:#475569;background:#f1f5f9}
+  .mc-submit{width:100%;margin-top:18px;background:#2563eb;color:#fff;border:none;border-radius:9px;padding:12px;font-family:inherit;font-weight:600;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:9px;box-shadow:0 1px 2px rgba(15,23,42,.12);transition:background .12s}
+  .mc-submit:hover{background:#1d4ed8}
+  .mc-err{display:flex;align-items:flex-start;gap:9px;background:#fee2e2;border:1px solid #fecaca;color:#b91c1c;border-radius:9px;padding:10px 13px;font-size:13px;font-weight:500;margin-top:20px}
+  .mc-err svg{flex:0 0 auto;margin-top:1px}
+  .mc-err p{margin:0}
+  .mc-foot{text-align:center;margin-top:20px;font-size:12px;color:#64748b;line-height:1.7}
+  .mc-sso{margin-top:18px}
+  .mc-sso .btn,.mc-sso a.btn{width:100%;margin-bottom:8px;border-radius:9px;padding:11px;font-weight:600}
+  /* neutralise the default Horizon login panel chrome if it leaks in */
+  .mc-login-bg .panel{border:0;box-shadow:none;background:transparent;margin:0}
+</style>
+
+<div class="mc-login-bg">
+  <div class="mc-login-dots"></div>
+  <div class="mc-login-blob"></div>
+  <div class="mc-login-col">
+    <div class="mc-login-card">
+      <div class="mc-stripe"><i></i><i></i><i></i></div>
+      <div class="mc-login-body">
+
+        <div class="mc-brand">
+          <span class="mc-brand-badge">
+            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6.6 18.5A4.4 4.4 0 0 1 6 9.8 6 6 0 0 1 17.5 8a4.5 4.5 0 0 1 .7 9H6.6z"/></svg>
+          </span>
+        </div>
+        <div class="mc-login-head">
+          <h1>{% trans "Sign in to FTEL Cloud" %}</h1>
+          <p>{% trans "Private Cloud Console · Powered by OpenStack" %}</p>
+        </div>
+
+        {% if form.errors or form.non_field_errors %}
+          <div class="mc-err">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5"/><path d="M12 16.2v.2"/></svg>
+            <p>
+              {% for e in form.non_field_errors %}{{ e }} {% endfor %}
+              {% if not form.non_field_errors %}{% trans "Please check your credentials and try again." %}{% endif %}
+            </p>
+          </div>
+        {% endif %}
+
+        {% if logout_reason %}
+          <div class="mc-err" style="background:#eff6ff;border-color:#bfdbfe;color:#1d4ed8"><p>{{ logout_reason }}</p></div>
+        {% endif %}
+
+        <form class="mc-login-form" method="post" action="{% url 'login' %}" autocomplete="off">
+          {% csrf_token %}
+          {% if next %}<input type="hidden" name="{{ redirect_field_name }}" value="{{ next }}">{% endif %}
+          {% for field in form.hidden_fields %}{{ field }}{% endfor %}
+
+          {% if show_sso_opts %}
+            <div class="mc-sso">{% include "auth/_description.html" %}</div>
+          {% endif %}
+
+          {% if form.domain and not form.domain.is_hidden %}
+            <div class="mc-fld">
+              <label for="{{ form.domain.id_for_label }}">{{ form.domain.label }}</label>
+              {{ form.domain }}
+            </div>
+          {% endif %}
+
+          {% if form.region and not form.region.is_hidden %}
+            <div class="mc-fld">
+              <label for="{{ form.region.id_for_label }}">{{ form.region.label }}</label>
+              <div class="mc-sel">
+                {{ form.region }}
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+              </div>
+            </div>
+          {% endif %}
+
+          <div class="mc-fld">
+            <label for="{{ form.username.id_for_label }}">{% trans "User Name" %}</label>
+            <div class="mc-inp">
+              <svg class="mc-lead" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              {{ form.username }}
+            </div>
+          </div>
+
+          <div class="mc-fld" style="margin-bottom:8px">
+            <label for="{{ form.password.id_for_label }}">{% trans "Password" %}</label>
+            <div class="mc-inp">
+              <svg class="mc-lead" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+              {{ form.password }}
+              <button type="button" class="mc-eye" id="mc-eye" aria-label="{% trans 'Toggle password visibility' %}">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.9 5.2A9.8 9.8 0 0 1 12 5c6.5 0 10 7 10 7a17 17 0 0 1-3.2 4"/><path d="M6.3 6.3A17 17 0 0 0 2 12s3.5 7 10 7a9.8 9.8 0 0 0 4.1-.9"/><path d="M3 3l18 18"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <button type="submit" class="mc-submit" id="loginBtn">
+            <span>{% trans "Sign In" %}</span>
+          </button>
+        </form>
+
+      </div>
+    </div>
+
+    <div class="mc-foot">
+      {% trans "© 2026 FPT Telecom · Need access? Contact your cloud administrator." %}
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  // password fields get .mc-pw padding + an eye toggle
+  var pw = document.getElementById('{{ form.password.id_for_label }}');
+  var eye = document.getElementById('mc-eye');
+  if (pw) { pw.classList.add('mc-pw'); }
+  if (pw && eye) {
+    eye.addEventListener('click', function(){
+      pw.type = pw.type === 'password' ? 'text' : 'password';
+    });
+  }
+  var u = document.getElementById('{{ form.username.id_for_label }}');
+  if (u) { u.setAttribute('placeholder', u.getAttribute('placeholder') || 'Enter your user name'); u.focus(); }
+  if (pw) { pw.setAttribute('placeholder', pw.getAttribute('placeholder') || 'Enter your password'); }
+})();
+</script>
+{% endif %}
