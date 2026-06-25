@@ -927,6 +927,24 @@ body.mc-lbaas-page {
 // flex with stretch so both buttons share the tallest height.
 .btn-group:not(.btn-group-vertical) { display: inline-flex; align-items: stretch; vertical-align: middle; }
 
+// Bootstrap's .btn-sm defaults to 3px radius — override to match theme 8px
+.btn-sm {
+  border-radius: 8px !important;
+}
+
+// Split buttons (.btn-group): Bootstrap overrides to asymmetric radius
+// (e.g. "6px 0 0 6px" / "0 6px 6px 0"). Fix to use 8px corners throughout.
+.btn-group > .btn:first-child:not(:last-child):not(.dropdown-toggle) {
+  border-radius: 8px 0 0 8px !important;
+}
+.btn-group > .btn:last-child:not(:first-child),
+.btn-group > .dropdown-toggle:not(:first-child) {
+  border-radius: 0 8px 8px 0 !important;
+}
+.btn-group > .btn:only-child {
+  border-radius: 8px !important;
+}
+
 .btn-primary {
   box-shadow: 0 1px 2px rgba(37, 99, 235, .25);
 }
