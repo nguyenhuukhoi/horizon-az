@@ -762,7 +762,11 @@ button.mc-create-btn {
   .search-bar,
   .search-main-area,
   .search-entry { flex: 1 1 auto; min-width: 0; }
-  .search-input { height: 34px; line-height: 34px; width: 100%; min-width: 0; }
+  // search-input is not a .form-control and sits inside .search-entry (not a
+  // direct .input-group child), so Bootstrap's group-radius rule never reaches
+  // it. Apply the left-rounded corner explicitly.
+  .search-input { height: 34px; line-height: 34px; width: 100%; min-width: 0;
+                  border-radius: 8px 0 0 8px !important; }
 }
 
 // Octavia Load Balancers are shipped as an Angular dashboard plugin. Keep the
