@@ -42,7 +42,7 @@
   .mc-submit:hover{background:#1d4ed8}
   .mc-submit[disabled]{opacity:.9;cursor:default}
   /* hide the browser's native password reveal/clear (Edge) so only our eye shows */
-  .mc-login-form input::-ms-reveal,.mc-login-form input::-ms-clear{display:none}
+  input::-ms-reveal,input::-ms-clear{display:none !important;width:0 !important;height:0 !important}
   /* CSS-only spinner (always rotates, no FontAwesome dependency) */
   .mc-spin{width:16px;height:16px;border:2px solid rgba(255,255,255,.45);border-top-color:#fff;border-radius:50%;display:inline-block;animation:mc-login-spin .7s linear infinite}
   @keyframes mc-login-spin{to{transform:rotate(360deg)}}
