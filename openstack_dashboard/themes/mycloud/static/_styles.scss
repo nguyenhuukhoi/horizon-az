@@ -2724,3 +2724,14 @@ body.mc-lbaas-page .col-md-6.detail h4{margin:0 0 14px;padding-bottom:12px;borde
 // element). Force it so loading states spin even without the FA animation CSS.
 @keyframes mc-fa-spin { to { transform: rotate(360deg); } }
 .fa-spin, .fa-pulse { animation: mc-fa-spin 1s linear infinite !important; }
+
+// Loading spinner: the masked fa-spinner glyph + FA spin animation didn't
+// render/rotate reliably, so draw a clean CSS ring spinner instead (scales with
+// font-size via em, uses currentColor, always rotates).
+.fa-spinner::before { display: none !important; }
+.fa-spinner {
+  display: inline-block; box-sizing: border-box; width: 1em; height: 1em;
+  border: .12em solid currentColor; border-top-color: transparent;
+  border-radius: 50%; background: none !important;
+  animation: mc-fa-spin .7s linear infinite !important;
+}
