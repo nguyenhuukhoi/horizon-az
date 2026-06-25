@@ -972,10 +972,16 @@
     // give the ::before a fixed size so the circle-plus / circle-minus shows.
     .fa-arrow-up, .fa-arrow-down {
       display: inline-flex !important; align-items: center; justify-content: center;
-      width: auto !important; height: auto !important; color: #475569; line-height: 1;
+      width: auto !important; height: auto !important; line-height: 1;
+      border: 0 !important; background: transparent !important; box-shadow: none !important;
+      padding: 3px !important; border-radius: 8px; cursor: pointer;
     }
+    .fa-arrow-up { color: #16a34a !important; }    /* allocate (+) = green */
+    .fa-arrow-down { color: #dc2626 !important; }   /* deallocate (-) = red */
+    .fa-arrow-up:hover { background: #dcfce7 !important; }
+    .fa-arrow-down:hover { background: #fee2e2 !important; }
     .fa-arrow-up::before, .fa-arrow-down::before {
-      width: 16px !important; height: 16px !important; display: block;
+      width: 18px !important; height: 18px !important; display: block;
     }
   </style>
   <a class="mc-sidebar-brand" href="{% site_branding_link %}" target="_self">
