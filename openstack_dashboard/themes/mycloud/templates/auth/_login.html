@@ -17,15 +17,15 @@
   .mc-stripe{height:4px;display:flex}
   .mc-stripe>i{flex:1}
   .mc-stripe>i:nth-child(1){background:#005bab}.mc-stripe>i:nth-child(2){background:#f47920}.mc-stripe>i:nth-child(3){background:#4cb050}
-  .mc-login-body{padding:38px 42px 30px}
+  .mc-login-body{padding:42px 44px 36px}
   .mc-brand{display:flex;justify-content:center}
   .mc-logo{width:190px;max-width:80%;height:auto;display:block}
   .mc-brand-badge{width:60px;height:60px;border-radius:16px;background:linear-gradient(135deg,#2563eb,#1d4ed8);display:grid;place-items:center;box-shadow:0 8px 20px -6px rgba(37,99,235,.5)}
-  .mc-login-head{text-align:center;margin-top:20px}
-  .mc-login-head h1{font-size:19px;font-weight:700;color:#0f172a;margin:0}
+  .mc-login-head{text-align:center;margin-top:22px}
+  .mc-login-head h1{font-size:20px;font-weight:700;color:#0f172a;margin:0}
   .mc-login-head p{font-size:13px;color:#64748b;margin:5px 0 0}
-  .mc-login-form{margin-top:24px}
-  .mc-fld{margin-bottom:16px}
+  .mc-login-form{margin-top:28px}
+  .mc-fld{margin-bottom:18px}
   .mc-fld>label{display:block;font-weight:600;font-size:13px;color:#334155;margin-bottom:7px}
   .mc-inp{position:relative}
   .mc-inp>svg.mc-lead{position:absolute;left:13px;top:50%;transform:translateY(-50%);pointer-events:none}
@@ -38,11 +38,15 @@
   .mc-sel>svg{position:absolute;right:13px;top:50%;transform:translateY(-50%);pointer-events:none}
   .mc-eye{position:absolute;right:6px;top:50%;transform:translateY(-50%);width:32px;height:32px;display:grid;place-items:center;border:none;background:transparent;color:#94a3b8;cursor:pointer;border-radius:7px}
   .mc-eye:hover{color:#475569;background:#f1f5f9}
-  .mc-submit{width:100%;margin-top:18px;background:#2563eb;color:#fff;border:none;border-radius:9px;padding:12px;font-family:inherit;font-weight:600;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:9px;box-shadow:0 1px 2px rgba(15,23,42,.12);transition:background .12s}
+  .mc-submit{width:100%;margin-top:24px;background:#2563eb;color:#fff;border:none;border-radius:9px;padding:12px;font-family:inherit;font-weight:600;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:9px;box-shadow:0 1px 2px rgba(15,23,42,.12);transition:background .12s}
   .mc-submit:hover{background:#1d4ed8}
   .mc-submit[disabled]{opacity:.9;cursor:default}
-  /* hide the browser's native password reveal/clear (Edge) so only our eye shows */
+  /* hide the browser's native password reveal / autofill buttons (Edge, Chrome,
+     Safari) so only our own eye button shows */
   input::-ms-reveal,input::-ms-clear{display:none !important;width:0 !important;height:0 !important}
+  input::-webkit-credentials-auto-fill-button,
+  input::-webkit-strong-password-auto-fill-button,
+  input::-webkit-caps-lock-indicator{visibility:hidden !important;display:none !important;pointer-events:none !important;width:0 !important;margin:0 !important}
   /* CSS-only spinner (always rotates, no FontAwesome dependency) */
   .mc-spin{width:16px;height:16px;border:2px solid rgba(255,255,255,.45);border-top-color:#fff;border-radius:50%;display:inline-block;animation:mc-login-spin .7s linear infinite}
   @keyframes mc-login-spin{to{transform:rotate(360deg)}}
