@@ -29,7 +29,7 @@
   .mc-fld>label{display:block;font-weight:600;font-size:13px;color:#334155;margin-bottom:7px}
   .mc-inp{position:relative}
   .mc-inp>svg.mc-lead{position:absolute;left:13px;top:50%;transform:translateY(-50%);pointer-events:none}
-  .mc-login-form input,.mc-login-form select{width:100%;border:1px solid #cbd5e1;border-radius:9px;padding:11px 13px;font-family:inherit;font-size:14.5px;color:#0f172a;background:#fff;outline:none;transition:border-color .12s,box-shadow .12s}
+  .mc-login-form input,.mc-login-form select{width:100%;border:1px solid #cbd5e1;border-radius:9px;padding:11px 13px;font-family:inherit;font-size:14.5px;line-height:1.4;color:#0f172a;background:#fff;outline:none !important;-webkit-appearance:none;-moz-appearance:none;appearance:none;caret-color:#2563eb;box-shadow:none}
   .mc-inp input{padding-left:40px}
   .mc-inp input[type="password"],.mc-inp input.mc-pw{padding-right:44px}
   .mc-login-form input:focus,.mc-login-form select:focus{border-color:#2563eb;box-shadow:0 0 0 3px rgba(37,99,235,.15)}
@@ -40,6 +40,12 @@
   .mc-eye:hover{color:#475569;background:#f1f5f9}
   .mc-submit{width:100%;margin-top:18px;background:#2563eb;color:#fff;border:none;border-radius:9px;padding:12px;font-family:inherit;font-weight:600;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:9px;box-shadow:0 1px 2px rgba(15,23,42,.12);transition:background .12s}
   .mc-submit:hover{background:#1d4ed8}
+  .mc-submit[disabled]{opacity:.9;cursor:default}
+  /* hide the browser's native password reveal/clear (Edge) so only our eye shows */
+  .mc-login-form input::-ms-reveal,.mc-login-form input::-ms-clear{display:none}
+  /* CSS-only spinner (always rotates, no FontAwesome dependency) */
+  .mc-spin{width:16px;height:16px;border:2px solid rgba(255,255,255,.45);border-top-color:#fff;border-radius:50%;display:inline-block;animation:mc-login-spin .7s linear infinite}
+  @keyframes mc-login-spin{to{transform:rotate(360deg)}}
   .mc-err{display:flex;align-items:flex-start;gap:9px;background:#fee2e2;border:1px solid #fecaca;color:#b91c1c;border-radius:9px;padding:10px 13px;font-size:13px;font-weight:500;margin-top:20px}
   .mc-err svg{flex:0 0 auto;margin-top:1px}
   .mc-err p{margin:0}
@@ -130,7 +136,8 @@
           </div>
 
           <button type="submit" class="mc-submit" id="loginBtn">
-            <span>{% trans "Sign In" %}</span>
+            <span class="mc-spin" id="mc-spin" style="display:none"></span>
+            <span id="mc-btn-label">{% trans "Sign In" %}</span>
           </button>
         </form>
 
@@ -145,18 +152,34 @@
 
 <script>
 (function(){
-  // password fields get .mc-pw padding + an eye toggle
+  var EYE = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>';
+  var EYE_OFF = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.9 5.2A9.8 9.8 0 0 1 12 5c6.5 0 10 7 10 7a17 17 0 0 1-3.2 4"/><path d="M6.3 6.3A17 17 0 0 0 2 12s3.5 7 10 7a9.8 9.8 0 0 0 4.1-.9"/><path d="M3 3l18 18"/></svg>';
   var pw = document.getElementById('{{ form.password.id_for_label }}');
   var eye = document.getElementById('mc-eye');
   if (pw) { pw.classList.add('mc-pw'); }
   if (pw && eye) {
     eye.addEventListener('click', function(){
-      pw.type = pw.type === 'password' ? 'text' : 'password';
+      var show = pw.type === 'password';
+      pw.type = show ? 'text' : 'password';
+      eye.innerHTML = show ? EYE : EYE_OFF;
     });
   }
   var u = document.getElementById('{{ form.username.id_for_label }}');
   if (u) { u.setAttribute('placeholder', u.getAttribute('placeholder') || 'Enter your user name'); u.focus(); }
   if (pw) { pw.setAttribute('placeholder', pw.getAttribute('placeholder') || 'Enter your password'); }
+
+  // spinner on submit
+  var form = document.querySelector('.mc-login-form');
+  var btn = document.getElementById('loginBtn');
+  var spin = document.getElementById('mc-spin');
+  var label = document.getElementById('mc-btn-label');
+  if (form && btn && spin) {
+    form.addEventListener('submit', function(){
+      spin.style.display = 'inline-block';
+      if (label) { label.textContent = '{% trans "Signing in…" %}'; }
+      btn.setAttribute('disabled', 'disabled');
+    });
+  }
 })();
 </script>
 {% endif %}

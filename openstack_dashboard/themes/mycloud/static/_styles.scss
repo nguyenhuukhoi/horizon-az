@@ -2719,3 +2719,8 @@ body.mc-lbaas-page .col-md-6.detail h4{margin:0 0 14px;padding-bottom:12px;borde
   border-color: #2563eb;
   background: #2563eb url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round'><path d='M5 12h14'/></svg>") center / 12px 12px no-repeat;
 }
+
+// Make FontAwesome spinners actually rotate (the masked ::before spins with the
+// element). Force it so loading states spin even without the FA animation CSS.
+@keyframes mc-fa-spin { to { transform: rotate(360deg); } }
+.fa-spin, .fa-pulse { animation: mc-fa-spin 1s linear infinite !important; }
