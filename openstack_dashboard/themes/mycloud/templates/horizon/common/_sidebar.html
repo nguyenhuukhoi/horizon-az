@@ -983,6 +983,27 @@
     .fa-arrow-up::before, .fa-arrow-down::before {
       width: 20px !important; height: 20px !important; display: block;
     }
+    /* MyCloud checkbox: self-contained box + Lucide check. The core themable
+       checkbox draws its tick with a FontAwesome glyph (content:'
+    046'); when the
+       FA webfont isn't applied (we render icons via masks) that glyph shows up as a
+       stray vertical bar. Draw the box + tick in pure CSS instead (row select,
+       select-all header, and form checkboxes). */
+    .themable-checkbox input[type=checkbox] + label::before {
+      content: "" !important; font-family: inherit !important;
+      display: inline-block; width: 16px !important; height: 16px !important;
+      box-sizing: border-box; border: 1.5px solid #cbd5e1; border-radius: 4px;
+      background: #fff; vertical-align: middle;
+      -webkit-mask: none !important; mask: none !important;
+    }
+    .themable-checkbox input[type=checkbox]:checked + label::before {
+      border-color: #2563eb;
+      background: #2563eb url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><path d='M20 6 9 17l-5-5'/></svg>") center / 12px 12px no-repeat;
+    }
+    .themable-checkbox input[type=checkbox]:indeterminate + label::before {
+      border-color: #2563eb;
+      background: #2563eb url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round'><path d='M5 12h14'/></svg>") center / 12px 12px no-repeat;
+    }
   </style>
   <a class="mc-sidebar-brand" href="{% site_branding_link %}" target="_self">
     <span class="mc-brand-logo"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 19A4.5 4.5 0 0 1 5.9 10 6 6 0 0 1 17.6 8.4 4.2 4.2 0 0 1 17 19z"/></svg></span>
