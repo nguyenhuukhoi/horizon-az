@@ -31,8 +31,10 @@
   .mc-inp>svg.mc-lead{position:absolute;left:13px;top:50%;transform:translateY(-50%);pointer-events:none}
   .mc-login-form input,.mc-login-form select{width:100%;border:1px solid #cbd5e1;border-radius:9px;padding:11px 13px;font-family:inherit;font-size:14.5px;line-height:1.4;color:#0f172a;background:#fff;outline:none !important;-webkit-appearance:none;-moz-appearance:none;appearance:none;caret-color:#2563eb;box-shadow:none}
   .mc-inp input{padding-left:40px}
-  .mc-inp input[type="password"],.mc-inp input.mc-pw{padding-right:44px}
   .mc-login-form input:focus,.mc-login-form select:focus{border-color:#2563eb;box-shadow:0 0 0 3px rgba(37,99,235,.15)}
+  /* remove the browser's native password reveal / autofill eye entirely */
+  input::-ms-reveal,input::-ms-clear{display:none !important;width:0 !important;height:0 !important}
+  input::-webkit-credentials-auto-fill-button,input::-webkit-strong-password-auto-fill-button,input::-webkit-strong-password-generation-auto-fill-button,input::-webkit-caps-lock-indicator{display:none !important;visibility:hidden !important;pointer-events:none !important;width:0 !important;max-width:0 !important;margin:0 !important;opacity:0 !important}
   .mc-sel{position:relative}
   .mc-sel>select{appearance:none;-webkit-appearance:none;padding-right:38px;cursor:pointer}
   .mc-sel>svg{position:absolute;right:13px;top:50%;transform:translateY(-50%);pointer-events:none}
