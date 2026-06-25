@@ -63,7 +63,7 @@
 
     #sidebar .openstack-dashboard > .panel-collapse > .list-group,
     #sidebar .openstack-panel-group .list-group {
-      border-left: 1px solid rgba(255, 255, 255, .06) !important;
+      border-left: 0 !important;
       margin-left: 12px !important;
       padding-left: 4px !important;
       overflow: hidden !important;
@@ -1049,8 +1049,8 @@
       if (title === 'project') dashboards[d].classList.add('mc-dashboard-project');
       if (title === 'admin') dashboards[d].classList.add('mc-dashboard-admin');
       hideAdminOverview(dashboards[d]);
-      // Project AND Admin stay always-open (static); only Identity collapses.
-      if (title.indexOf('project') === -1 && title.indexOf('admin') === -1) continue;
+      // Project, Admin AND Identity all stay always-open (static, no collapse).
+      if (title.indexOf('project') === -1 && title.indexOf('admin') === -1 && title.indexOf('identity') === -1) continue;
       dashboards[d].classList.add('mc-dashboard-static');
       label.removeAttribute('data-toggle');
       label.removeAttribute('data-target');
