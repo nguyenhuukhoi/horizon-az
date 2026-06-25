@@ -1042,6 +1042,13 @@
   }
   function run() {
     var dashboards = document.querySelectorAll('#sidebar .openstack-dashboard');
+    // Admin user? The Admin dashboard only renders when the user has the admin
+    // role; we use its presence to keep Identity open for admins only.
+    var hasAdmin = false;
+    for (var k = 0; k < dashboards.length; k++) {
+      var al = dashboards[k].querySelector(':scope > a');
+      if (al && labelText(al) === 'admin') { hasAdmin = true; break; }
+    }
     for (var d = 0; d < dashboards.length; d++) {
       var label = dashboards[d].querySelector(':scope > a');
       if (!label) continue;
@@ -1049,8 +1056,11 @@
       if (title === 'project') dashboards[d].classList.add('mc-dashboard-project');
       if (title === 'admin') dashboards[d].classList.add('mc-dashboard-admin');
       hideAdminOverview(dashboards[d]);
-      // Project, Admin AND Identity all stay always-open (static, no collapse).
-      if (title.indexOf('project') === -1 && title.indexOf('admin') === -1 && title.indexOf('identity') === -1) continue;
+      // Project & Admin always stay open. Identity stays open only for admins;
+      // regular (non-admin) users can still collapse it.
+      var isStatic = title.indexOf('project') !== -1 || title.indexOf('admin') !== -1
+                     || (hasAdmin && title.indexOf('identity') !== -1);
+      if (!isStatic) continue;
       dashboards[d].classList.add('mc-dashboard-static');
       label.removeAttribute('data-toggle');
       label.removeAttribute('data-target');
