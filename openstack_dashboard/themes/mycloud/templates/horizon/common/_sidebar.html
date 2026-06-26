@@ -2170,19 +2170,25 @@
     var el = scope && scope.querySelector('.modal-title, .modal-header h3, .modal-header h4, .h4.modal-title');
     return el ? (el.textContent || '').replace(/\s+/g, ' ').trim() : '';
   }
-  // Modal/wizard submit button: derive the icon from the modal TITLE (the
-  // button text may be generic like "Submit"), e.g. "Create Server Group" ->
-  // boxes, "Create Key Pair" -> key-round. Matches the sidebar set.
+  var CREATE_VERB = /^(create|launch|allocate|import|register|add)\b/i;
+  // Modal/wizard SUBMIT button only (NOT Next/Back): icon from the modal title,
+  // or the button's own label as fallback. Create Server Group -> boxes,
+  // Create Volume -> database, Create Key Pair -> key-round, etc.
   function decorateModals() {
     var sbs = document.querySelectorAll(
-      '.modal .btn-primary, .modal-dialog .btn-primary, .modal-content .btn-primary, .ng-wizard .btn.finish');
+      '.modal .btn-primary:not(.next):not(.back), .modal-dialog .btn-primary:not(.next):not(.back),' +
+      '.modal-content .btn-primary:not(.next):not(.back), .ng-wizard .btn.finish');
     for (var i = 0; i < sbs.length; i++) {
       var sb = sbs[i];
       if (sb.querySelector('.mc-act-ic')) continue;
       var scope = sb.closest ? sb.closest('.modal-content, .modal-dialog, .modal, .ng-wizard') : null;
-      var title = modalTitle(scope);
-      if (!/^(create|launch|allocate|import|register|add)\b/i.test(title)) continue;
-      var key = pick(title);
+      var key = null;
+      var t = modalTitle(scope);
+      if (CREATE_VERB.test(t)) { key = pick(t); }
+      if (!key) {
+        var lbl = (sb.textContent || '').replace(/\s+/g, ' ').trim();
+        if (CREATE_VERB.test(lbl)) { key = pick(lbl); }
+      }
       if (!key) continue;
       var fa = sb.querySelector('.fa, .glyphicon, i[class*="fa-"]');
       if (fa && /fa-spin/.test(fa.className)) continue; // submitting -> keep spinner
@@ -2190,13 +2196,26 @@
       else { sb.insertAdjacentHTML('afterbegin', svg(key)); }
     }
   }
+  // Cancel buttons in modals/wizards: give them a consistent X icon.
+  var X_ICON = '<svg class="mc-act-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>';
+  function decorateCancel() {
+    var btns = document.querySelectorAll('.modal .btn, .modal-dialog .btn, .modal-content .btn, .ng-wizard .btn');
+    for (var i = 0; i < btns.length; i++) {
+      var b = btns[i];
+      if (!/^cancel\b/i.test((b.textContent || '').replace(/\s+/g, ' ').trim())) continue;
+      if (b.querySelector('.mc-act-ic')) continue;
+      if (b.querySelector('.fa, .glyphicon, i[class*="fa-"]')) continue; // already has (masked X)
+      b.insertAdjacentHTML('afterbegin', X_ICON);
+    }
+  }
   function run() {
     var btns = document.querySelectorAll(
       '#content_body .table_actions a.btn, #content_body .table_actions button.btn,' +
       '#content_body .hz-dynamic-table-actions a.btn, #content_body .hz-dynamic-table-actions button.btn,' +
-      '.modal-dialog button.btn.finish, .ng-wizard button.btn.finish, .modal button.btn.finish');
+      '.ng-wizard button.btn.finish');
     for (var i = 0; i < btns.length; i++) decorate(btns[i]);
     decorateModals();
+    decorateCancel();
   }
   function init() {
     run();
