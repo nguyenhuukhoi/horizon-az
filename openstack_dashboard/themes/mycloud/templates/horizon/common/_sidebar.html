@@ -2123,6 +2123,7 @@
   // always matches its sidebar icon. Specific before generic. Bare 'group'
   // resolved by path: identity Groups -> users, volume groups -> library-big.
   var RULES = [
+    [/instance/, 'server'],
     [/key pair/, 'key-round'], [/server group/, 'boxes'], [/security group/, 'shield'],
     [/group type/, 'tags'], [/volume type/, 'tag'], [/host aggregate/, 'layers'],
     [/flavor/, 'cpu'], [/rbac/, 'shield-check'], [/namespace/, 'tags'],
@@ -2152,19 +2153,24 @@
   function decorate(btn) {
     if (btn.querySelector('.mc-act-ic')) return; // already has our icon (self-healing)
     var label = (btn.textContent || '').replace(/\s+/g, ' ').trim();
-    if (!/^(create|allocate|import|register|add)\b/i.test(label)) return;
+    if (!/^(create|allocate|import|register|add|launch)\b/i.test(label)) return;
     if (/btn-launch/.test(btn.className)) return;
     var key = pick(label);
     if (!key) return;
+    var isFinish = /\bfinish\b/.test(btn.className); // wizard submit button
     var fa = btn.querySelector('.fa, .glyphicon, i[class*="fa-"]');
+    // The wizard finish icon span carries an Angular spinner binding; don't
+    // touch it while submitting (let the spinner show), only swap the check.
+    if (isFinish && fa && /fa-spin/.test(fa.className)) return;
     if (fa) fa.outerHTML = svg(key);
     else btn.insertAdjacentHTML('afterbegin', svg(key));
-    btn.classList.add('mc-create-btn'); // brand-blue primary, like the mockup
+    if (!isFinish) { btn.classList.add('mc-create-btn'); } // brand-blue, like the mockup
   }
   function run() {
     var btns = document.querySelectorAll(
       '#content_body .table_actions a.btn, #content_body .table_actions button.btn,' +
-      '#content_body .hz-dynamic-table-actions a.btn, #content_body .hz-dynamic-table-actions button.btn');
+      '#content_body .hz-dynamic-table-actions a.btn, #content_body .hz-dynamic-table-actions button.btn,' +
+      '.modal-dialog button.btn.finish, .ng-wizard button.btn.finish, .modal button.btn.finish');
     for (var i = 0; i < btns.length; i++) decorate(btns[i]);
   }
   function init() {
@@ -2178,6 +2184,9 @@
     });
     var host = document.getElementById('content_body');
     if (host) obs.observe(host, { childList: true, subtree: true });
+    // Also watch <body> for modals/wizards (rendered outside #content_body) so
+    // their finish button gets the resource icon too.
+    obs.observe(document.body, { childList: true, subtree: true });
   }
   if (document.readyState !== 'loading') init();
   else document.addEventListener('DOMContentLoaded', init);
