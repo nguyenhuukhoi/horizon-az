@@ -37,7 +37,9 @@
   .mc-eye:hover{color:#0f172a;background:transparent}
   /* remove the browser's native password reveal / autofill eye entirely */
   input::-ms-reveal,input::-ms-clear{display:none !important;width:0 !important;height:0 !important}
-  input::-webkit-credentials-auto-fill-button,input::-webkit-strong-password-auto-fill-button,input::-webkit-strong-password-generation-auto-fill-button,input::-webkit-caps-lock-indicator{display:none !important;visibility:hidden !important;pointer-events:none !important;width:0 !important;max-width:0 !important;margin:0 !important;opacity:0 !important}
+  input::-webkit-reveal{display:none !important;width:0 !important;height:0 !important}
+  input::-webkit-textfield-decoration-container{display:none !important}
+  input::-webkit-credentials-auto-fill-button,input::-webkit-strong-password-auto-fill-button,input::-webkit-strong-password-generation-auto-fill-button,input::-webkit-caps-lock-indicator,input::-webkit-contacts-auto-fill-button,input::-webkit-credit-card-auto-fill-button{display:none !important;visibility:hidden !important;pointer-events:none !important;width:0 !important;max-width:0 !important;margin:0 !important;opacity:0 !important}
   .mc-sel{position:relative}
   .mc-sel>select{appearance:none;-webkit-appearance:none;padding-right:38px;cursor:pointer}
   .mc-sel>svg{position:absolute;right:13px;top:50%;transform:translateY(-50%);pointer-events:none}
@@ -221,7 +223,6 @@
     }
   }
   if (auth) { auth.addEventListener('change', syncAuth); syncAuth(); }
-
   // spinner on submit
   var form = document.querySelector('.mc-login-form');
   var btn = document.getElementById('loginBtn');
