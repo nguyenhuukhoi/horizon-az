@@ -2174,9 +2174,14 @@
   // Modal/wizard SUBMIT button only (NOT Next/Back): icon from the modal title,
   // or the button's own label as fallback. Create Server Group -> boxes,
   // Create Volume -> database, Create Key Pair -> key-round, etc.
+  function btnKey(scope, lbl) {
+    var t = modalTitle(scope);
+    if (CREATE_VERB.test(t)) { var k = pick(t); if (k) return k; }
+    if (CREATE_VERB.test(lbl)) { return pick(lbl); }
+    return null;
+  }
   function decorateModals() {
-    // Any primary/finish submit button (NOT Next/Back). Covers wizard finish +
-    // simple Create modals regardless of their container.
+    // 1) <button>/<a> primary (NOT Next/Back) + wizard finish: swap/insert icon.
     var sbs = document.querySelectorAll(
       'button.btn-primary:not(.next):not(.back), a.btn-primary:not(.next):not(.back), .btn.finish');
     for (var i = 0; i < sbs.length; i++) {
@@ -2184,18 +2189,35 @@
       if (sb.querySelector('.mc-act-ic')) continue;
       if (/\bnext\b|\bback\b/.test(sb.className)) continue;
       var scope = sb.closest ? sb.closest('.modal-content, .modal-dialog, .modal, .ng-wizard') : null;
-      var key = null;
-      var t = modalTitle(scope);
-      if (CREATE_VERB.test(t)) { key = pick(t); }
-      if (!key) {
-        var lbl = (sb.textContent || '').replace(/\s+/g, ' ').trim();
-        if (CREATE_VERB.test(lbl)) { key = pick(lbl); }
-      }
+      var key = btnKey(scope, (sb.textContent || '').replace(/\s+/g, ' ').trim());
       if (!key) continue;
       var fa = sb.querySelector('.fa, .glyphicon, i[class*="fa-"]');
       if (fa && /fa-spin/.test(fa.className)) continue; // submitting -> keep spinner
       if (fa) { fa.outerHTML = svg(key); }
       else { sb.insertAdjacentHTML('afterbegin', svg(key)); }
+    }
+    // 2) Django modals use <input type=submit class=btn-primary>, which can't
+    //    hold a child icon. Replace it with an equivalent <button type=submit>
+    //    (name/value preserved so the form submits natively) carrying the icon.
+    var ins = document.querySelectorAll('input.btn-primary[type="submit"], input.btn.button-final[type="submit"]');
+    for (var j = 0; j < ins.length; j++) {
+      var inp = ins[j];
+      if (inp.getAttribute('data-mc-iconed')) continue;
+      var scope2 = inp.closest ? inp.closest('.modal-content, .modal-dialog, .modal') : null;
+      var key2 = btnKey(scope2, (inp.value || '').replace(/\s+/g, ' ').trim());
+      if (!key2) { inp.setAttribute('data-mc-iconed', '0'); continue; }
+      var b = document.createElement('button');
+      b.type = 'submit';
+      b.className = inp.className;
+      if (inp.name) { b.name = inp.name; }
+      if (inp.value) { b.setAttribute('value', inp.value); }
+      if (inp.disabled) { b.disabled = true; }
+      b.setAttribute('data-mc-iconed', '1');
+      b.innerHTML = svg(key2);
+      var sp = document.createElement('span');
+      sp.textContent = inp.value;
+      b.appendChild(sp);
+      if (inp.parentNode) { inp.parentNode.replaceChild(b, inp); }
     }
   }
   // Cancel buttons in modals/wizards: give them a consistent X icon.
