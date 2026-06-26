@@ -2175,12 +2175,14 @@
   // or the button's own label as fallback. Create Server Group -> boxes,
   // Create Volume -> database, Create Key Pair -> key-round, etc.
   function decorateModals() {
+    // Any primary/finish submit button (NOT Next/Back). Covers wizard finish +
+    // simple Create modals regardless of their container.
     var sbs = document.querySelectorAll(
-      '.modal .btn-primary:not(.next):not(.back), .modal-dialog .btn-primary:not(.next):not(.back),' +
-      '.modal-content .btn-primary:not(.next):not(.back), .ng-wizard .btn.finish');
+      'button.btn-primary:not(.next):not(.back), a.btn-primary:not(.next):not(.back), .btn.finish');
     for (var i = 0; i < sbs.length; i++) {
       var sb = sbs[i];
       if (sb.querySelector('.mc-act-ic')) continue;
+      if (/\bnext\b|\bback\b/.test(sb.className)) continue;
       var scope = sb.closest ? sb.closest('.modal-content, .modal-dialog, .modal, .ng-wizard') : null;
       var key = null;
       var t = modalTitle(scope);
