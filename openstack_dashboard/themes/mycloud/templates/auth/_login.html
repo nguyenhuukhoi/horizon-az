@@ -126,6 +126,7 @@
             </div>
           {% endif %}
 
+          <div id="mc-creds">
           <div class="mc-fld">
             <label for="{{ form.username.id_for_label }}">{% trans "User Name" %}</label>
             <div class="mc-inp">
@@ -143,6 +144,7 @@
                 <svg id="mc-eye-svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.9 5.2A9.8 9.8 0 0 1 12 5c6.5 0 10 7 10 7a17 17 0 0 1-3.2 4"/><path d="M6.3 6.3A17 17 0 0 0 2 12s3.5 7 10 7a9.8 9.8 0 0 0 4.1-.9"/><path d="M3 3l18 18"/></svg>
               </button>
             </div>
+          </div>
           </div>
 
           <button type="submit" class="mc-submit" id="loginBtn">
@@ -193,6 +195,23 @@
       pw.focus();
     });
   }
+
+  // auth method: hide user/password when an SSO method is picked (only the
+  // "credentials" option uses them; SSO redirects to the identity provider).
+  var auth = document.getElementById('{{ form.auth_type.id_for_label }}');
+  var creds = document.getElementById('mc-creds');
+  var btnLabel0 = null;
+  function syncAuth(){
+    if (!auth || !creds) return;
+    var isCred = auth.value === 'credentials';
+    creds.style.display = isCred ? '' : 'none';
+    var lbl = document.getElementById('mc-btn-label');
+    if (lbl) {
+      if (btnLabel0 === null) { btnLabel0 = lbl.textContent; }
+      lbl.textContent = isCred ? btnLabel0 : '{% trans "Continue" %}';
+    }
+  }
+  if (auth) { auth.addEventListener('change', syncAuth); syncAuth(); }
 
   // spinner on submit
   var form = document.querySelector('.mc-login-form');
