@@ -2166,12 +2166,37 @@
     else btn.insertAdjacentHTML('afterbegin', svg(key));
     if (!isFinish) { btn.classList.add('mc-create-btn'); } // brand-blue, like the mockup
   }
+  function modalTitle(scope) {
+    var el = scope && scope.querySelector('.modal-title, .modal-header h3, .modal-header h4, .h4.modal-title');
+    return el ? (el.textContent || '').replace(/\s+/g, ' ').trim() : '';
+  }
+  // Modal/wizard submit button: derive the icon from the modal TITLE (the
+  // button text may be generic like "Submit"), e.g. "Create Server Group" ->
+  // boxes, "Create Key Pair" -> key-round. Matches the sidebar set.
+  function decorateModals() {
+    var sbs = document.querySelectorAll(
+      '.modal .btn-primary, .modal-dialog .btn-primary, .modal-content .btn-primary, .ng-wizard .btn.finish');
+    for (var i = 0; i < sbs.length; i++) {
+      var sb = sbs[i];
+      if (sb.querySelector('.mc-act-ic')) continue;
+      var scope = sb.closest ? sb.closest('.modal-content, .modal-dialog, .modal, .ng-wizard') : null;
+      var title = modalTitle(scope);
+      if (!/^(create|launch|allocate|import|register|add)\b/i.test(title)) continue;
+      var key = pick(title);
+      if (!key) continue;
+      var fa = sb.querySelector('.fa, .glyphicon, i[class*="fa-"]');
+      if (fa && /fa-spin/.test(fa.className)) continue; // submitting -> keep spinner
+      if (fa) { fa.outerHTML = svg(key); }
+      else { sb.insertAdjacentHTML('afterbegin', svg(key)); }
+    }
+  }
   function run() {
     var btns = document.querySelectorAll(
       '#content_body .table_actions a.btn, #content_body .table_actions button.btn,' +
       '#content_body .hz-dynamic-table-actions a.btn, #content_body .hz-dynamic-table-actions button.btn,' +
       '.modal-dialog button.btn.finish, .ng-wizard button.btn.finish, .modal button.btn.finish');
     for (var i = 0; i < btns.length; i++) decorate(btns[i]);
+    decorateModals();
   }
   function init() {
     run();
