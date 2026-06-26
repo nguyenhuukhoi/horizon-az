@@ -2700,7 +2700,7 @@ body.mc-lbaas-page .col-md-6.detail h4{margin:0 0 14px;padding-bottom:12px;borde
 }
 
 /* MyCloud checkbox: self-contained box + Lucide check. The core themable
-   checkbox draws its tick with a FontAwesome glyph (content:'046'); when the
+   checkbox draws its tick with a FontAwesome glyph (content:'\f046'); when the
    FA webfont isn't applied (we render icons via masks) that glyph shows up as a
    stray vertical bar. Draw the box + tick in pure CSS instead (row select,
    select-all header, and form checkboxes). */
