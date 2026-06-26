@@ -44,6 +44,9 @@
   .mc-submit{width:100%;margin-top:24px;background:#2563eb;color:#fff;border:none;border-radius:9px;padding:12px;font-family:inherit;font-weight:600;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:9px;box-shadow:0 1px 2px rgba(15,23,42,.12);transition:background .12s}
   .mc-submit:hover{background:#1d4ed8}
   .mc-submit[disabled]{opacity:.9;cursor:default}
+  .mc-submit.mc-submit--sso{background:#f47920}
+  .mc-submit.mc-submit--sso:hover{background:#e06a14}
+  .mc-note{font-size:13px;color:#64748b;line-height:1.55;margin:-2px 0 18px}
   /* CSS-only spinner (always rotates, no FontAwesome dependency) */
   .mc-spin{width:16px;height:16px;border:2px solid rgba(255,255,255,.45);border-top-color:#fff;border-radius:50%;display:inline-block;animation:mc-login-spin .7s linear infinite}
   @keyframes mc-login-spin{to{transform:rotate(360deg)}}
@@ -105,8 +108,10 @@
             </div>
           {% endif %}
 
-          {% if show_sso_opts %}
-            <div class="mc-sso">{% include "auth/_description.html" %}</div>
+          {% if form.auth_type %}
+            <div id="mc-sso-note" class="mc-note" style="display:none">
+              {% trans "You will be redirected to the FPT Telecom identity provider to complete sign-in with your corporate account." %}
+            </div>
           {% endif %}
 
           {% if form.domain and not form.domain.is_hidden %}
@@ -202,13 +207,17 @@
   var creds = document.getElementById('mc-creds');
   var btnLabel0 = null;
   function syncAuth(){
-    if (!auth || !creds) return;
+    if (!auth) return;
     var isCred = auth.value === 'credentials';
-    creds.style.display = isCred ? '' : 'none';
+    if (creds) { creds.style.display = isCred ? '' : 'none'; }
+    var note = document.getElementById('mc-sso-note');
+    if (note) { note.style.display = isCred ? 'none' : ''; }
+    var btn = document.getElementById('loginBtn');
+    if (btn) { btn.classList.toggle('mc-submit--sso', !isCred); }
     var lbl = document.getElementById('mc-btn-label');
     if (lbl) {
       if (btnLabel0 === null) { btnLabel0 = lbl.textContent; }
-      lbl.textContent = isCred ? btnLabel0 : '{% trans "Continue" %}';
+      lbl.textContent = isCred ? btnLabel0 : '{% trans "Continue with FPT SSO" %}';
     }
   }
   if (auth) { auth.addEventListener('change', syncAuth); syncAuth(); }
