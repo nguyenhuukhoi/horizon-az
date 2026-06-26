@@ -35,6 +35,8 @@
   .mc-login-form input:focus,.mc-login-form select:focus{border-color:#2563eb;box-shadow:0 0 0 3px rgba(37,99,235,.15)}
   .mc-eye{position:absolute;right:5px;top:50%;transform:translateY(-50%);width:34px;height:34px;display:grid;place-items:center;border:none;background:transparent;color:#64748b;cursor:pointer;border-radius:7px;z-index:2}
   .mc-eye:hover{color:#0f172a;background:transparent}
+  /* hide Horizon's auto-injected FontAwesome eye (horizon.forms.js adds it to every password field) */
+  .mc-inp .password-icon{display:none !important}
   /* remove the browser's native password reveal / autofill eye entirely */
   input::-ms-reveal,input::-ms-clear{display:none !important;width:0 !important;height:0 !important}
   input::-webkit-reveal{display:none !important;width:0 !important;height:0 !important}
