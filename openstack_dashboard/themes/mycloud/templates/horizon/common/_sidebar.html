@@ -2187,7 +2187,8 @@
     for (var i = 0; i < sbs.length; i++) {
       var sb = sbs[i];
       if (sb.querySelector('.mc-act-ic')) continue;
-      if (/\bnext\b|\bback\b/.test(sb.className)) continue;
+      // Skip Next/Back and the transfer-table allocate/deallocate (+/-) buttons.
+      if (/\b(next|back|fa-arrow-up|fa-arrow-down)\b/.test(sb.className)) continue;
       var scope = sb.closest ? sb.closest('.modal-content, .modal-dialog, .modal, .ng-wizard') : null;
       var key = btnKey(scope, (sb.textContent || '').replace(/\s+/g, ' ').trim());
       if (!key) continue;
