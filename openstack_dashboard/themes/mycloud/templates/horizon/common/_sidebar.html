@@ -2128,12 +2128,12 @@
     [/group type/, 'tags'], [/volume type/, 'tag'], [/host aggregate/, 'layers'],
     [/flavor/, 'cpu'], [/rbac/, 'shield-check'], [/namespace/, 'tags'],
     [/qos/, 'gauge'], [/trunk/, 'cable'], [/router/, 'router'],
-    [/rule|forwarding/, 'forward'], [/floating ip|allocate ip|ip/, 'globe'],
+    [/rule|forwarding/, 'forward'], [/floating ip|allocate ip|\bip\b/, 'globe'],
     [/domain/, 'building-2'], [/project/, 'folder'], [/identity provider/, 'fingerprint'],
     [/application credential/, 'key-round'], [/credential/, 'id-card'], [/mapping/, 'git-compare'],
     [/role/, 'award'], [/load balancer/, 'scale'], [/image/, 'image'],
     [/network/, 'network'], [/container/, 'package'], [/volume group/, 'library-big'],
-    [/snapshot/, 'camera'], [/volume/, 'database'], [/user/, 'user'], [/group/, null]
+    [/snapshot/, 'camera'], [/volume/, 'database'], [/\buser\b/, 'user'], [/group/, null]
   ];
   function pick(label) {
     var l = label.toLowerCase();
