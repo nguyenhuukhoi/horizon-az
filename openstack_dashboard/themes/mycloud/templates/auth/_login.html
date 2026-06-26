@@ -95,6 +95,16 @@
           {% if next %}<input type="hidden" name="{{ redirect_field_name }}" value="{{ next }}">{% endif %}
           {% for field in form.hidden_fields %}{{ field }}{% endfor %}
 
+          {% if form.auth_type %}
+            <div class="mc-fld">
+              <label for="{{ form.auth_type.id_for_label }}">{{ form.auth_type.label }}</label>
+              <div class="mc-sel">
+                {{ form.auth_type }}
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+              </div>
+            </div>
+          {% endif %}
+
           {% if show_sso_opts %}
             <div class="mc-sso">{% include "auth/_description.html" %}</div>
           {% endif %}
@@ -156,6 +166,19 @@
   var u = document.getElementById('{{ form.username.id_for_label }}');
   if (u) { u.setAttribute('placeholder', u.getAttribute('placeholder') || 'Enter your user name'); u.focus(); }
   if (pw) { pw.setAttribute('placeholder', pw.getAttribute('placeholder') || 'Enter your password'); pw.classList.add('mc-pw'); }
+
+  // Ask password-manager extensions to skip these fields so they don't inject
+  // their own eye/key icon next to ours (the extension stays installed and
+  // keeps working on every other site — it just ignores this login field).
+  [u, pw].forEach(function(el){
+    if (!el) return;
+    el.setAttribute('data-lpignore', 'true');         // LastPass
+    el.setAttribute('data-1p-ignore', 'true');        // 1Password
+    el.setAttribute('data-bwignore', 'true');         // Bitwarden
+    el.setAttribute('data-protonpass-ignore', 'true');// Proton Pass
+    el.setAttribute('data-dashlane-ignore', 'true');  // Dashlane
+    el.setAttribute('data-form-type', 'other');
+  });
 
   // show / hide password (our own clickable eye)
   var eye = document.getElementById('mc-eye');
