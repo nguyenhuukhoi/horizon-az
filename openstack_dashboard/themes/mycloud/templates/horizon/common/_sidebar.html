@@ -978,23 +978,35 @@
     /* Transfer-table allocate/deallocate: the fa-arrow class sits on the <button> */
     /* itself (empty content), so the masked ::before collapses to 0. Centre it and */
     /* give the ::before a fixed size so the circle-plus / circle-minus shows. */
-    .fa-arrow-up, .fa-arrow-down {
+    .fa-arrow-up, .fa-arrow-down,
+    .mc-transfer-add, .mc-transfer-remove {
       display: inline-flex !important; align-items: center; justify-content: center;
       width: 48px !important; min-width: 48px !important; height: 34px !important; min-height: 34px !important; line-height: 0;
       border: 0 !important; border-radius: 999px !important; cursor: pointer; color: #fff !important;
       box-shadow: none !important; -webkit-appearance: none !important; appearance: none !important;
       box-sizing: border-box; outline: 0 !important; padding: 0 !important; text-align: center;
     }
-    .fa-arrow-up { background: #2563eb !important; }
-    .fa-arrow-down { background: #dc2626 !important; }
-    .fa-arrow-up:hover { background: #1d4ed8 !important; }
-    .fa-arrow-down:hover { background: #b91c1c !important; }
-    .fa-arrow-up:focus, .fa-arrow-down:focus, .fa-arrow-up:active, .fa-arrow-down:active {
+    .fa-arrow-up, .mc-transfer-add { background: #2563eb !important; }
+    .fa-arrow-down, .mc-transfer-remove { background: #dc2626 !important; }
+    .fa-arrow-up:hover, .mc-transfer-add:hover { background: #1d4ed8 !important; }
+    .fa-arrow-down:hover, .mc-transfer-remove:hover { background: #b91c1c !important; }
+    .fa-arrow-up:focus, .fa-arrow-down:focus, .fa-arrow-up:active, .fa-arrow-down:active,
+    .mc-transfer-add:focus, .mc-transfer-remove:focus, .mc-transfer-add:active, .mc-transfer-remove:active {
       box-shadow: none !important; outline: 0 !important;
     }
     .fa-arrow-up::before, .fa-arrow-down::before {
       width: 16px !important; height: 16px !important; display: block; flex: 0 0 auto;
       margin: 0 !important; position: static !important; background-color: #fff !important;
+    }
+    .membership a[href="#add_remove"] {
+      font-size: 20px !important; font-weight: 400 !important; text-decoration: none !important;
+    }
+    .membership a[href="#add_remove"] > .mc-act-ic,
+    .membership a[href="#add_remove"] > .mc-btn-ic,
+    .membership a[href="#add_remove"] > svg,
+    .membership a[href="#add_remove"] > .fa,
+    .membership a[href="#add_remove"] > .glyphicon {
+      display: none !important;
     }
     /* MyCloud checkbox: self-contained box + Lucide check. The core themable
        checkbox draws its tick with a FontAwesome glyph (content:'
@@ -2407,7 +2419,38 @@
   function svg(key) {
     return '<svg class="mc-act-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">' + IC[key] + '</svg>';
   }
+  function isTransferAction(btn) {
+    if (!btn || !btn.matches) return false;
+    if (btn.matches('.membership a[href="#add_remove"], .fa-arrow-up, .fa-arrow-down')) return true;
+    return !!(btn.closest && btn.closest('.transfer-table') &&
+      (btn.matches('.fa-plus, .fa-minus') || btn.querySelector('.fa-plus, .fa-minus, .fa-arrow-up, .fa-arrow-down')));
+  }
+  function setTransferState(btn, isAdd) {
+    var injected = btn.querySelectorAll('.mc-act-ic, .mc-btn-ic');
+    for (var i = 0; i < injected.length; i++) injected[i].remove();
+    btn.classList.remove('mc-create-btn', 'mc-transfer-add', 'mc-transfer-remove');
+    btn.classList.add(isAdd ? 'mc-transfer-add' : 'mc-transfer-remove');
+  }
+  function decorateTransferActions() {
+    var membership = document.querySelectorAll('.membership a[href="#add_remove"]');
+    for (var i = 0; i < membership.length; i++) {
+      var memberButton = membership[i];
+      var isAvailable = !!(memberButton.closest && memberButton.closest('.available_members'));
+      setTransferState(memberButton, isAvailable || (memberButton.textContent || '').trim() === '+');
+    }
+    var transfers = document.querySelectorAll(
+      '.transfer-table .fa-arrow-up, .transfer-table .fa-arrow-down,' +
+      '.transfer-table .fa-plus, .transfer-table .fa-minus');
+    for (var j = 0; j < transfers.length; j++) {
+      var control = transfers[j];
+      var button = control.matches('.btn, button, a') ? control : control.closest('.btn, button, a');
+      if (!button) continue;
+      setTransferState(button,
+        control.matches('.fa-arrow-up, .fa-plus') || !!control.querySelector('.fa-arrow-up, .fa-plus'));
+    }
+  }
   function decorate(btn) {
+    if (isTransferAction(btn)) return;
     if (btn.querySelector('.mc-act-ic, .mc-btn-ic')) return; // already has our icon
     var label = (btn.textContent || '').replace(/\s+/g, ' ').trim();
     if (!/^(create|allocate|import|register|add|launch)\b/i.test(label)) return;
@@ -2443,6 +2486,7 @@
       'button.btn-primary:not(.next):not(.back), a.btn-primary:not(.next):not(.back), .btn.finish');
     for (var i = 0; i < sbs.length; i++) {
       var sb = sbs[i];
+      if (isTransferAction(sb)) continue;
       if (sb.querySelector('.mc-act-ic, .mc-btn-ic')) continue;
       // Skip Next/Back and the transfer-table allocate/deallocate (+/-) buttons.
       if (/\b(next|back|fa-arrow-up|fa-arrow-down)\b/.test(sb.className)) continue;
@@ -2491,6 +2535,7 @@
     }
   }
   function run() {
+    decorateTransferActions();
     var btns = document.querySelectorAll(
       '#content_body .table_actions a.btn, #content_body .table_actions button.btn,' +
       '#content_body .hz-dynamic-table-actions a.btn, #content_body .hz-dynamic-table-actions button.btn,' +

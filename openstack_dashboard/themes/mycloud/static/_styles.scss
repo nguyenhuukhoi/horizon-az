@@ -2729,23 +2729,41 @@ body.mc-lbaas-page .col-md-6.detail h4{margin:0 0 14px;padding-bottom:12px;borde
 // Transfer-table allocate/deallocate: the fa-arrow class sits on the <button>
 // itself (empty content), so the masked ::before collapses to 0. Centre it and
 // give the ::before a fixed size so the circle-plus / circle-minus shows.
-.fa-arrow-up, .fa-arrow-down {
+.fa-arrow-up, .fa-arrow-down,
+.mc-transfer-add, .mc-transfer-remove {
   display: inline-flex !important; align-items: center; justify-content: center;
   width: 48px !important; min-width: 48px !important; height: 34px !important; min-height: 34px !important; line-height: 0;
   border: 0 !important; border-radius: 999px !important; cursor: pointer; color: #fff !important;
   box-shadow: none !important; -webkit-appearance: none !important; appearance: none !important;
   box-sizing: border-box; outline: 0 !important; padding: 0 !important; text-align: center;
 }
-.fa-arrow-up { background: #2563eb !important; }
-.fa-arrow-down { background: #dc2626 !important; }
-.fa-arrow-up:hover { background: #1d4ed8 !important; }
-.fa-arrow-down:hover { background: #b91c1c !important; }
-.fa-arrow-up:focus, .fa-arrow-down:focus, .fa-arrow-up:active, .fa-arrow-down:active {
+.fa-arrow-up, .mc-transfer-add { background: #2563eb !important; }
+.fa-arrow-down, .mc-transfer-remove { background: #dc2626 !important; }
+.fa-arrow-up:hover, .mc-transfer-add:hover { background: #1d4ed8 !important; }
+.fa-arrow-down:hover, .mc-transfer-remove:hover { background: #b91c1c !important; }
+.fa-arrow-up:focus, .fa-arrow-down:focus, .fa-arrow-up:active, .fa-arrow-down:active,
+.mc-transfer-add:focus, .mc-transfer-remove:focus, .mc-transfer-add:active, .mc-transfer-remove:active {
   box-shadow: none !important; outline: 0 !important;
 }
 .fa-arrow-up::before, .fa-arrow-down::before {
   width: 16px !important; height: 16px !important; display: block; flex: 0 0 auto;
   margin: 0 !important; position: static !important; background-color: #fff !important;
+}
+
+// Membership workflows render a literal +/- label. Keep that single glyph and
+// suppress any semantic resource icon injected before the list is hydrated.
+.membership a[href="#add_remove"] {
+  font-size: 20px !important;
+  font-weight: 400 !important;
+  text-decoration: none !important;
+
+  > .mc-act-ic,
+  > .mc-btn-ic,
+  > svg,
+  > .fa,
+  > .glyphicon {
+    display: none !important;
+  }
 }
 
 /* MyCloud checkbox: self-contained box + Lucide check. The core themable
