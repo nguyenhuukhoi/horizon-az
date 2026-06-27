@@ -4,7 +4,7 @@
 {% else %}
 {# MyCloud / FTEL custom login — self-contained card, real Keystone form. #}
 <style>
-  .mc-login-bg{--mc-login-primary:#2563eb;--mc-login-on-primary:#fff;--mc-login-error:#dc2626;--mc-login-error-container:#fee2e2;--mc-login-on-error-container:#991b1b;--mc-login-surface:#fff;--mc-login-surface-dim:#e7edf5;--mc-login-surface-low:#f8fafc;--mc-login-on-surface:#0f172a;--mc-login-on-surface-variant:#64748b;--mc-login-outline:#cbd5e1;--mc-login-outline-variant:#e2e8f0;--mc-login-shadow:15,23,42;--mc-login-radius-lg:16px;--mc-login-radius-xl:24px;--mc-login-radius-xxl:28px;--mc-login-radius-full:999px;--mc-login-elevation-1:0 1px 2px rgba(var(--mc-login-shadow),.08),0 1px 3px rgba(var(--mc-login-shadow),.06);--mc-login-elevation-2:0 3px 8px rgba(var(--mc-login-shadow),.10),0 1px 3px rgba(var(--mc-login-shadow),.08);--mc-login-elevation-4:0 18px 48px rgba(var(--mc-login-shadow),.18),0 8px 20px rgba(var(--mc-login-shadow),.10);--mc-login-state-hover:rgba(37,99,235,.08);--mc-login-state-focus:rgba(37,99,235,.14);position:fixed;inset:0;z-index:10;overflow:auto;display:flex;align-items:center;justify-content:center;padding:40px 16px;
+  .mc-login-bg{--mc-login-primary:#2563eb;--mc-login-on-primary:#fff;--mc-login-error:#dc2626;--mc-login-error-container:#fee2e2;--mc-login-on-error-container:#991b1b;--mc-login-surface:#fff;--mc-login-surface-dim:#e7edf5;--mc-login-surface-low:#f8fafc;--mc-login-input-bg:#f8fafc;--mc-login-input-text:#0f172a;--mc-login-placeholder:#94a3b8;--mc-login-on-surface:#0f172a;--mc-login-on-surface-variant:#64748b;--mc-login-outline:#cbd5e1;--mc-login-outline-variant:#e2e8f0;--mc-login-shadow:15,23,42;--mc-login-radius-lg:16px;--mc-login-radius-xl:24px;--mc-login-radius-xxl:28px;--mc-login-radius-full:999px;--mc-login-elevation-1:0 1px 2px rgba(var(--mc-login-shadow),.08),0 1px 3px rgba(var(--mc-login-shadow),.06);--mc-login-elevation-2:0 3px 8px rgba(var(--mc-login-shadow),.10),0 1px 3px rgba(var(--mc-login-shadow),.08);--mc-login-elevation-4:0 18px 48px rgba(var(--mc-login-shadow),.18),0 8px 20px rgba(var(--mc-login-shadow),.10);--mc-login-state-hover:rgba(37,99,235,.08);--mc-login-state-focus:rgba(37,99,235,.14);position:fixed;inset:0;z-index:10;overflow:auto;display:flex;align-items:center;justify-content:center;padding:40px 16px;
     font-family:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;letter-spacing:-.006em;color:var(--mc-login-on-surface);background:linear-gradient(160deg,#f8fafc 0%,#e8eef7 100%)}
   .mc-login-bg *{box-sizing:border-box}
   .mc-login-dots{position:absolute;inset:0;background-image:radial-gradient(rgba(15,23,42,.045) 1px,transparent 1px);background-size:28px 28px;pointer-events:none}
@@ -25,11 +25,15 @@
   .mc-fld>label{display:block;font-weight:600;font-size:14px;line-height:20px;color:#334155;margin-bottom:8px}
   .mc-inp{position:relative}
   .mc-inp>svg.mc-lead{position:absolute;left:16px;top:50%;transform:translateY(-50%);pointer-events:none}
-  .mc-login-form input,.mc-login-form select{width:100%;min-height:56px;border:1px solid var(--mc-login-outline);border-radius:var(--mc-login-radius-lg);padding:16px;font-family:inherit;font-size:14px;line-height:20px;color:var(--mc-login-on-surface);background:var(--mc-login-surface-low);outline:none !important;-webkit-appearance:none;-moz-appearance:none;appearance:none;caret-color:var(--mc-login-primary);box-shadow:none;transition:background-color .16s ease,border-color .16s ease,box-shadow .16s ease}
+  .mc-login-form input,.mc-login-form select{width:100%;min-height:56px;border:1px solid var(--mc-login-outline);border-radius:var(--mc-login-radius-lg);padding:16px;font-family:inherit;font-size:14px;line-height:20px;color:var(--mc-login-input-text) !important;background-color:var(--mc-login-input-bg) !important;outline:none !important;-webkit-appearance:none;-moz-appearance:none;appearance:none;caret-color:var(--mc-login-primary);box-shadow:none;transition:background-color .16s ease,border-color .16s ease,box-shadow .16s ease}
+  .mc-login-form input::placeholder{color:var(--mc-login-placeholder) !important;opacity:1 !important;font-weight:400}
+  .mc-login-form input::-webkit-input-placeholder{color:var(--mc-login-placeholder) !important;opacity:1 !important;font-weight:400}
+  .mc-login-form input::-moz-placeholder{color:var(--mc-login-placeholder) !important;opacity:1 !important;font-weight:400}
+  .mc-login-form input:-ms-input-placeholder{color:var(--mc-login-placeholder) !important;opacity:1 !important;font-weight:400}
   .mc-inp input{padding-left:46px}
   .mc-inp input[type="password"],.mc-inp input.mc-pw{padding-right:50px}
-  .mc-login-form input:hover,.mc-login-form select:hover{border-color:#94a3b8;background:var(--mc-login-surface)}
-  .mc-login-form input:focus,.mc-login-form select:focus{border-color:var(--mc-login-primary);background:var(--mc-login-surface);box-shadow:0 0 0 4px var(--mc-login-state-focus)}
+  .mc-login-form input:hover,.mc-login-form select:hover{border-color:#94a3b8;background-color:var(--mc-login-surface) !important}
+  .mc-login-form input:focus,.mc-login-form select:focus{border-color:var(--mc-login-primary);background-color:var(--mc-login-surface) !important;box-shadow:0 0 0 4px var(--mc-login-state-focus)}
   .mc-eye{position:absolute;right:8px;top:50%;transform:translateY(-50%);width:40px;height:40px;display:grid;place-items:center;border:none;background:transparent;color:#64748b;cursor:pointer;border-radius:var(--mc-login-radius-full);z-index:2;transition:background-color .16s ease,color .16s ease}
   .mc-eye:hover{color:var(--mc-login-primary);background:var(--mc-login-state-hover)}
   /* hide Horizon's auto-injected FontAwesome eye (horizon.forms.js adds it to every password field) */
@@ -39,6 +43,8 @@
   input::-webkit-reveal{display:none !important;width:0 !important;height:0 !important}
   input::-webkit-textfield-decoration-container{display:none !important}
   input::-webkit-credentials-auto-fill-button,input::-webkit-strong-password-auto-fill-button,input::-webkit-strong-password-generation-auto-fill-button,input::-webkit-caps-lock-indicator,input::-webkit-contacts-auto-fill-button,input::-webkit-credit-card-auto-fill-button{display:none !important;visibility:hidden !important;pointer-events:none !important;width:0 !important;max-width:0 !important;margin:0 !important;opacity:0 !important}
+  .mc-login-form input:-webkit-autofill,.mc-login-form input:-webkit-autofill:hover{-webkit-text-fill-color:var(--mc-login-input-text) !important;-webkit-box-shadow:0 0 0 1000px var(--mc-login-input-bg) inset !important;box-shadow:0 0 0 1000px var(--mc-login-input-bg) inset !important;caret-color:var(--mc-login-primary)}
+  .mc-login-form input:-webkit-autofill:focus{-webkit-text-fill-color:var(--mc-login-input-text) !important;-webkit-box-shadow:0 0 0 1000px var(--mc-login-surface) inset,0 0 0 4px var(--mc-login-state-focus) !important;box-shadow:0 0 0 1000px var(--mc-login-surface) inset,0 0 0 4px var(--mc-login-state-focus) !important}
   .mc-sel{position:relative}
   .mc-sel>select{appearance:none;-webkit-appearance:none;padding-right:44px;cursor:pointer}
   .mc-sel>svg{position:absolute;right:16px;top:50%;transform:translateY(-50%);pointer-events:none}
