@@ -2860,6 +2860,11 @@ body.mc-lbaas-page #content_body hz-resource-table .mc-lb-filter-input:focus,
 #sidebar .openstack-toggle .mc-cv {
   width: 16px !important;
   height: 16px !important;
+  min-width: 16px !important;
+  max-width: 16px !important;
+  min-height: 16px !important;
+  max-height: 16px !important;
+  flex: 0 0 16px !important;
 }
 
 .btn > svg,
@@ -2870,7 +2875,11 @@ body.mc-lbaas-page #content_body hz-resource-table .mc-lb-filter-input:focus,
 .mc-hv-icon-btn > svg {
   width: 14px !important;
   height: 14px !important;
-  flex: 0 0 auto;
+  min-width: 14px !important;
+  max-width: 14px !important;
+  min-height: 14px !important;
+  max-height: 14px !important;
+  flex: 0 0 14px !important;
 }
 
 .fa-arrow-up::before,
