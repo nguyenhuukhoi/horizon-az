@@ -30,18 +30,18 @@
       <div class="mc-stat mc-stat--key">
         <div class="mc-stat-top">
           <span class="mc-stat-ic mc-ic-2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20v2"/> <path d="M12 2v2"/> <path d="M17 20v2"/> <path d="M17 2v2"/> <path d="M2 12h2"/> <path d="M2 17h2"/> <path d="M2 7h2"/> <path d="M20 12h2"/> <path d="M20 17h2"/> <path d="M20 7h2"/> <path d="M7 20v2"/> <path d="M7 2v2"/> <rect x="4" y="4" width="16" height="16" rx="2"/> <rect x="8" y="8" width="8" height="8" rx="1"/></svg></span>
-          <span class="mc-trend is-ok">{{ vcpu_pct|default:0 }}%</span>
+          <span class="mc-trend is-ok" id="mc-hv-vcpu-pct">{{ vcpu_pct|default:0 }}%</span>
         </div>
-        <div class="mc-stat-num">{{ stats.vcpus_used|default:0|intcomma }}</div>
-        <div class="mc-stat-label">{% trans "vCPUs" %} / {{ stats.vcpus|default:0|intcomma }}</div>
+        <div class="mc-stat-num" id="mc-hv-vcpu-used">{{ stats.vcpus_used|default:0|intcomma }}</div>
+        <div class="mc-stat-label">{% trans "vCPUs" %} / <span id="mc-hv-vcpu-total">{{ stats.vcpus|default:0|intcomma }}</span></div>
       </div>
       <div class="mc-stat mc-stat--key">
         <div class="mc-stat-top">
           <span class="mc-stat-ic mc-ic-3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 12v-2"/> <path d="M12 18v-2"/> <path d="M16 12v-2"/> <path d="M16 18v-2"/> <path d="M2 11h1.5"/> <path d="M20 18v-2"/> <path d="M20.5 11H22"/> <path d="M4 18v-2"/> <path d="M8 12v-2"/> <path d="M8 18v-2"/> <rect x="2" y="6" width="20" height="10" rx="2"/></svg></span>
-          <span class="mc-trend is-ok">{{ ram_pct|default:0 }}%</span>
+          <span class="mc-trend is-ok" id="mc-hv-ram-pct">{{ ram_pct|default:0 }}%</span>
         </div>
-        <div class="mc-stat-num">{{ stats.memory_mb_used|default:0|mb_float_format }}</div>
-        <div class="mc-stat-label">{% trans "RAM" %} / {{ stats.memory_mb|default:0|mb_float_format }}</div>
+        <div class="mc-stat-num" id="mc-hv-ram-used">{{ stats.memory_mb_used|default:0|mb_float_format }}</div>
+        <div class="mc-stat-label">{% trans "RAM" %} / <span id="mc-hv-ram-total">{{ stats.memory_mb|default:0|mb_float_format }}</span></div>
       </div>
       <div class="mc-stat mc-stat--key">
         <div class="mc-stat-top">
@@ -57,4 +57,98 @@
   <div class="mc-hv-tabs-shell">
     {{ tab_group.render }}
   </div>
+
+  {% comment %} Dữ liệu overcommit thật từ placement (per-host: used / capacity = ratio*total) {% endcomment %}
+  <script type="text/javascript">{% verbatim %}
+  window.MC_HV_PROV = [{% endverbatim %}{% for p in providers %}{"n":"{{ p.name|escapejs }}","vu":{{ p.vcpus_used|default:0 }},"vc":{{ p.vcpus_capacity|default:0 }},"mu":{{ p.memory_mb_used|default:0 }},"mc":{{ p.memory_mb_capacity|default:0 }}}{% if not forloop.last %},{% endif %}{% endfor %}{% verbatim %}];
+  (function(){
+    var prov = window.MC_HV_PROV || [];
+    if (!prov.length) return;
+
+    /* ---- tổng overcommit cho 2 card ---- */
+    var vu=0, vc=0, mu=0, mc=0, i;
+    for (i=0;i<prov.length;i++){
+      vu += +prov[i].vu||0; vc += +prov[i].vc||0;
+      mu += +prov[i].mu||0; mc += +prov[i].mc||0;
+    }
+    function fmtInt(n){ return Math.round(n).toLocaleString('en-US'); }
+    function fmtMB(mb){
+      if(!mb) return '0';
+      var g = mb/1024;
+      if(g >= 1024){ return (g/1024).toFixed(1).replace(/\.0$/,'')+'TB'; }
+      if(g >= 100){ return Math.round(g)+'GB'; }
+      return g.toFixed(1).replace(/\.0$/,'')+'GB';
+    }
+    function pct(a,b){ return b>0 ? Math.round(a/b*100) : 0; }
+    function setText(id,t){ var el=document.getElementById(id); if(el) el.textContent=t; }
+
+    if (vc>0){
+      setText('mc-hv-vcpu-used', fmtInt(vu));
+      setText('mc-hv-vcpu-total', fmtInt(vc));
+      setText('mc-hv-vcpu-pct', pct(vu,vc)+'%');
+    }
+    if (mc>0){
+      setText('mc-hv-ram-used', fmtMB(mu));
+      setText('mc-hv-ram-total', fmtMB(mc));
+      setText('mc-hv-ram-pct', pct(mu,mc)+'%');
+    }
+
+    /* ---- map hostname -> {used, capacity} (khớp RP name = hypervisor hostname) ---- */
+    function norm(s){ return (s||'').trim().toLowerCase(); }
+    var map = {};
+    for (i=0;i<prov.length;i++){
+      var n = prov[i].n, cell = {vu:+prov[i].vu||0, vc:+prov[i].vc||0};
+      map[norm(n)] = cell;
+      map[norm(n).split('.')[0]] = map[norm(n).split('.')[0]] || cell;
+    }
+    function lookup(host){
+      var h = norm(host);
+      return map[h] || map[h.split('.')[0]] || null;
+    }
+
+    /* ---- chèn cột vCPU trước cột RAM trong bảng Hosts ---- */
+    function injectColumn(){
+      var tbl = document.getElementById('hypervisors');
+      if(!tbl || tbl.getAttribute('data-mc-vcpu')==='1') return false;
+      var headRow = tbl.querySelector('thead tr');
+      if(!headRow) return false;
+      var ths = headRow.children, ramIdx=-1, hostIdx=-1, j;
+      for (j=0;j<ths.length;j++){
+        var t = (ths[j].textContent||'').trim().toLowerCase();
+        if(hostIdx<0 && t.indexOf('host')>-1) hostIdx=j;
+        if(ramIdx<0 && t.indexOf('ram')>-1) ramIdx=j;
+      }
+      if(ramIdx<0 || hostIdx<0) return false;
+
+      /* header */
+      var th = document.createElement('th');
+      th.className = ths[ramIdx].className;
+      th.textContent = 'vCPU';
+      ths[ramIdx].parentNode.insertBefore(th, ths[ramIdx]);
+
+      /* rows */
+      var rows = tbl.querySelectorAll('tbody tr');
+      for (var r=0;r<rows.length;r++){
+        var tds = rows[r].children;
+        if(tds.length <= ramIdx) continue;
+        var hostCell = tds[hostIdx];
+        var host = hostCell ? (hostCell.textContent||'') : '';
+        var c = lookup(host);
+        var td = document.createElement('td');
+        td.setAttribute('data-mc-vcpu','1');
+        td.textContent = c ? (fmtInt(c.vu)+' / '+fmtInt(c.vc)) : '-';
+        tds[ramIdx].parentNode.insertBefore(td, tds[ramIdx]);
+      }
+      tbl.setAttribute('data-mc-vcpu','1');
+      return true;
+    }
+
+    if(!injectColumn()){
+      /* bảng nằm trong tab có thể load trễ -> theo dõi DOM */
+      var obs = new MutationObserver(function(){ if(injectColumn()) obs.disconnect(); });
+      obs.observe(document.body, {childList:true, subtree:true});
+      setTimeout(function(){ obs.disconnect(); }, 8000);
+    }
+  })();
+  {% endverbatim %}</script>
 {% endblock %}
