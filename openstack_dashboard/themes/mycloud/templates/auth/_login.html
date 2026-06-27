@@ -218,7 +218,7 @@
     var lbl = document.getElementById('mc-btn-label');
     if (lbl) {
       if (btnLabel0 === null) { btnLabel0 = lbl.textContent; }
-      lbl.textContent = isCred ? btnLabel0 : '{% trans "Continue with FPT SSO" %}';
+      lbl.textContent = isCred ? btnLabel0 : '{% trans "Continue" %}';
     }
   }
   if (auth) { auth.addEventListener('change', syncAuth); syncAuth(); }
