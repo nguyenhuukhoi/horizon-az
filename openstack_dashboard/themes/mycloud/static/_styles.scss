@@ -2945,3 +2945,28 @@ a.btn-launch,
   line-height: 20px !important;
   white-space: nowrap;
 }
+
+// Keep all navigable sidebar labels on the MD3 labelLarge token. Dashboard
+// section captions (PROJECT / ADMIN / IDENTITY) retain their 11px treatment.
+#sidebar a.openstack-panel,
+#sidebar .openstack-panel-group > a {
+  font-size: 14px !important;
+  line-height: 20px !important;
+}
+
+// Overview and table toolbars now share the same .fa icon source. Lock both
+// the glyph box and its mask so their visible size is identical.
+.btn-launch > .fa,
+.btn-launch .fa,
+.mc-launch-btn > .fa {
+  width: 14px !important;
+  height: 14px !important;
+  flex: 0 0 14px !important;
+}
+
+.btn-launch > .fa::before,
+.btn-launch .fa::before,
+.mc-launch-btn > .fa::before {
+  width: 14px !important;
+  height: 14px !important;
+}
