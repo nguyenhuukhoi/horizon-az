@@ -93,62 +93,6 @@
       setText('mc-hv-ram-pct', pct(mu,mc)+'%');
     }
 
-    /* ---- map hostname -> {used, capacity} (khớp RP name = hypervisor hostname) ---- */
-    function norm(s){ return (s||'').trim().toLowerCase(); }
-    var map = {};
-    for (i=0;i<prov.length;i++){
-      var n = prov[i].n, cell = {vu:+prov[i].vu||0, vc:+prov[i].vc||0};
-      map[norm(n)] = cell;
-      map[norm(n).split('.')[0]] = map[norm(n).split('.')[0]] || cell;
-    }
-    function lookup(host){
-      var h = norm(host);
-      return map[h] || map[h.split('.')[0]] || null;
-    }
-
-    /* ---- chèn cột vCPU trước cột RAM trong bảng Hosts ---- */
-    function injectColumn(){
-      var tbl = document.getElementById('hypervisors');
-      if(!tbl || tbl.getAttribute('data-mc-vcpu')==='1') return false;
-      var headRow = tbl.querySelector('thead tr');
-      if(!headRow) return false;
-      var ths = headRow.children, ramIdx=-1, hostIdx=-1, j;
-      for (j=0;j<ths.length;j++){
-        var t = (ths[j].textContent||'').trim().toLowerCase();
-        if(hostIdx<0 && t.indexOf('host')>-1) hostIdx=j;
-        if(ramIdx<0 && t.indexOf('ram')>-1) ramIdx=j;
-      }
-      if(ramIdx<0 || hostIdx<0) return false;
-
-      /* header */
-      var th = document.createElement('th');
-      th.className = ths[ramIdx].className;
-      th.textContent = 'vCPU';
-      ths[ramIdx].parentNode.insertBefore(th, ths[ramIdx]);
-
-      /* rows */
-      var rows = tbl.querySelectorAll('tbody tr');
-      for (var r=0;r<rows.length;r++){
-        var tds = rows[r].children;
-        if(tds.length <= ramIdx) continue;
-        var hostCell = tds[hostIdx];
-        var host = hostCell ? (hostCell.textContent||'') : '';
-        var c = lookup(host);
-        var td = document.createElement('td');
-        td.setAttribute('data-mc-vcpu','1');
-        td.textContent = c ? (fmtInt(c.vu)+' / '+fmtInt(c.vc)) : '-';
-        tds[ramIdx].parentNode.insertBefore(td, tds[ramIdx]);
-      }
-      tbl.setAttribute('data-mc-vcpu','1');
-      return true;
-    }
-
-    if(!injectColumn()){
-      /* bảng nằm trong tab có thể load trễ -> theo dõi DOM */
-      var obs = new MutationObserver(function(){ if(injectColumn()) obs.disconnect(); });
-      obs.observe(document.body, {childList:true, subtree:true});
-      setTimeout(function(){ obs.disconnect(); }, 8000);
-    }
   })();
   {% endverbatim %}</script>
 {% endblock %}

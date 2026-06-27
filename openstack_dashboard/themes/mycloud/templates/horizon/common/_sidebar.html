@@ -1781,8 +1781,55 @@
     }
     return n;
   }
+  function providerForHost(host) {
+    var providers = window.MC_HV_PROV || [];
+    var target = String(host || '').trim().toLowerCase();
+    var shortTarget = target.split('.')[0];
+    for (var i = 0; i < providers.length; i++) {
+      var name = String(providers[i].n || '').trim().toLowerCase();
+      if (name === target || name.split('.')[0] === shortTarget) {
+        return providers[i];
+      }
+    }
+    return null;
+  }
+  function ensureHypervisorVcpuColumn(table) {
+    if (!table || table.getAttribute('data-mc-vcpu') === '1') return;
+    var hs = headers(table);
+    if (findHeader(hs, 'vCPU') >= 0) {
+      table.setAttribute('data-mc-vcpu', '1');
+      return;
+    }
+    var hostname = findHeader(hs, 'Hostname');
+    var ram = findHeader(hs, 'RAM (used)');
+    if (ram < 0) ram = findHeader(hs, 'RAM');
+    if (hostname < 0 || ram < 0) return;
+
+    var th = document.createElement('th');
+    th.className = hs[ram].className;
+    th.textContent = 'vCPU';
+    hs[ram].parentNode.insertBefore(th, hs[ram]);
+
+    var rows = tableRows(table);
+    for (var r = 0; r < rows.length; r++) {
+      var cells = rows[r].children;
+      if (!cells[hostname] || !cells[ram] || /no items to display/i.test(text(rows[r]))) continue;
+      var provider = providerForHost(text(cells[hostname]));
+      var td = document.createElement('td');
+      td.setAttribute('data-mc-vcpu', '1');
+      if (provider && +provider.vc > 0) {
+        td.innerHTML = meterHtml(String(+provider.vu || 0), String(+provider.vc), '');
+      } else {
+        td.textContent = '-';
+      }
+      cells[ram].parentNode.insertBefore(td, cells[ram]);
+    }
+    table.setAttribute('data-mc-vcpu', '1');
+  }
   function decorateHypervisors(table) {
-    if (!table || table.classList.contains('mc-hv-enhanced')) return;
+    if (!table) return;
+    ensureHypervisorVcpuColumn(table);
+    if (table.classList.contains('mc-hv-enhanced')) return;
     var hs = headers(table);
     var hostname = findHeader(hs, 'Hostname');
     var type = findHeader(hs, 'Type');
