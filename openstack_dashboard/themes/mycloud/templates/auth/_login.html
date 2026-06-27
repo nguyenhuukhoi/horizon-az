@@ -4,37 +4,34 @@
 {% else %}
 {# MyCloud / FTEL custom login — self-contained card, real Keystone form. #}
 <style>
-  .mc-login-bg{position:fixed;inset:0;z-index:10;overflow:auto;display:flex;align-items:center;justify-content:center;padding:40px 16px;
-    font-family:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;letter-spacing:-.006em;
-    background:radial-gradient(900px circle at 16% 18%,rgba(37,99,235,.12),transparent 45%),radial-gradient(820px circle at 84% 82%,rgba(244,121,32,.11),transparent 46%),linear-gradient(160deg,#f4f7fb 0%,#eaeff6 100%);overflow:hidden}
+  .mc-login-bg{--mc-login-primary:#2563eb;--mc-login-on-primary:#fff;--mc-login-error:#dc2626;--mc-login-error-container:#fee2e2;--mc-login-on-error-container:#991b1b;--mc-login-surface:#fff;--mc-login-surface-dim:#e7edf5;--mc-login-surface-low:#f8fafc;--mc-login-on-surface:#0f172a;--mc-login-on-surface-variant:#64748b;--mc-login-outline:#cbd5e1;--mc-login-outline-variant:#e2e8f0;--mc-login-shadow:15,23,42;--mc-login-radius-lg:16px;--mc-login-radius-xl:24px;--mc-login-radius-xxl:28px;--mc-login-radius-full:999px;--mc-login-elevation-1:0 1px 2px rgba(var(--mc-login-shadow),.08),0 1px 3px rgba(var(--mc-login-shadow),.06);--mc-login-elevation-2:0 3px 8px rgba(var(--mc-login-shadow),.10),0 1px 3px rgba(var(--mc-login-shadow),.08);--mc-login-elevation-4:0 18px 48px rgba(var(--mc-login-shadow),.18),0 8px 20px rgba(var(--mc-login-shadow),.10);--mc-login-state-hover:rgba(37,99,235,.08);--mc-login-state-focus:rgba(37,99,235,.14);position:fixed;inset:0;z-index:10;overflow:auto;display:flex;align-items:center;justify-content:center;padding:40px 16px;
+    font-family:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;letter-spacing:-.006em;color:var(--mc-login-on-surface);background:linear-gradient(160deg,#f8fafc 0%,#e8eef7 100%)}
   .mc-login-bg *{box-sizing:border-box}
-  .mc-login-dots{position:absolute;inset:0;background-image:radial-gradient(rgba(15,23,42,.05) 1px,transparent 1px);background-size:26px 26px;pointer-events:none}
-  .mc-login-blob{position:absolute;top:-120px;right:-80px;width:360px;height:360px;border-radius:50%;background:radial-gradient(circle,rgba(76,176,80,.10),transparent 70%);pointer-events:none}
-  .mc-login-col{position:relative;z-index:1;width:430px;max-width:calc(100vw - 32px)}
-  .mc-login-card{background:#fff;border-radius:16px;box-shadow:0 1px 2px rgba(15,23,42,.06),0 28px 64px -12px rgba(15,23,42,.28);overflow:hidden;animation:mc-rise .5s ease both}
-  @keyframes mc-rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
-  @keyframes mc-spin{to{transform:rotate(360deg)}}
-  .mc-stripe{height:4px;display:flex}
-  .mc-stripe>i{flex:1}
-  .mc-stripe>i:nth-child(1){background:#005bab}.mc-stripe>i:nth-child(2){background:#f47920}.mc-stripe>i:nth-child(3){background:#4cb050}
-  .mc-login-body{padding:42px 44px 36px}
-  .mc-brand{display:flex;justify-content:center}
-  .mc-logo{width:190px;max-width:80%;height:auto;display:block}
-  .mc-brand-badge{width:60px;height:60px;border-radius:16px;background:linear-gradient(135deg,#2563eb,#1d4ed8);display:grid;place-items:center;box-shadow:0 8px 20px -6px rgba(37,99,235,.5)}
-  .mc-login-head{text-align:center;margin-top:22px}
-  .mc-login-head h1{font-size:20px;font-weight:700;color:#0f172a;margin:0}
-  .mc-login-head p{font-size:13px;color:#64748b;margin:5px 0 0}
+  .mc-login-dots{position:absolute;inset:0;background-image:radial-gradient(rgba(15,23,42,.045) 1px,transparent 1px);background-size:28px 28px;pointer-events:none}
+  .mc-login-col{position:relative;z-index:1;width:440px;max-width:calc(100vw - 32px);animation:mc-rise .24s cubic-bezier(.2,0,0,1)}
+  .mc-login-card{position:relative;background:rgba(255,255,255,.94);border:1px solid rgba(203,213,225,.72);border-radius:var(--mc-login-radius-xxl);box-shadow:var(--mc-login-elevation-4);overflow:hidden;backdrop-filter:blur(16px)}
+  .mc-login-card:before{content:"";position:absolute;inset:0 0 auto;height:5px;background:linear-gradient(90deg,#005bab 0 33.333%,#f47920 33.333% 66.666%,#4cb050 66.666% 100%)}
+  @keyframes mc-rise{from{opacity:0;transform:translateY(14px) scale(.985)}to{opacity:1;transform:none}}
+  .mc-login-body{padding:42px 42px 36px}
+  .mc-brand{display:flex;justify-content:center;align-items:center}
+  .mc-logo-surface{display:flex;align-items:center;justify-content:center;min-height:64px;padding:0 10px;border-radius:var(--mc-login-radius-xl);background:#f8fafc;box-shadow:inset 0 0 0 1px rgba(226,232,240,.82)}
+  .mc-logo{width:184px;max-width:100%;height:auto;display:block}
+  .mc-brand-badge{width:60px;height:60px;border-radius:var(--mc-login-radius-xl);background:#2563eb;display:grid;place-items:center;box-shadow:var(--mc-login-elevation-2)}
+  .mc-login-head{text-align:center;margin-top:24px}
+  .mc-login-head h1{font-size:22px;line-height:28px;font-weight:700;color:var(--mc-login-on-surface);letter-spacing:-.018em;margin:0}
+  .mc-login-head p{font-size:14px;line-height:20px;font-weight:500;color:var(--mc-login-on-surface-variant);margin:6px 0 0}
   .mc-login-form{margin-top:28px}
   .mc-fld{margin-bottom:18px}
-  .mc-fld>label{display:block;font-weight:600;font-size:13px;color:#334155;margin-bottom:7px}
+  .mc-fld>label{display:block;font-weight:600;font-size:14px;line-height:20px;color:#334155;margin-bottom:8px}
   .mc-inp{position:relative}
-  .mc-inp>svg.mc-lead{position:absolute;left:13px;top:50%;transform:translateY(-50%);pointer-events:none}
-  .mc-login-form input,.mc-login-form select{width:100%;border:1px solid #cbd5e1;border-radius:9px;padding:11px 13px;font-family:inherit;font-size:14.5px;line-height:1.4;color:#0f172a;background:#fff;outline:none !important;-webkit-appearance:none;-moz-appearance:none;appearance:none;caret-color:#2563eb;box-shadow:none}
-  .mc-inp input{padding-left:40px}
-  .mc-inp input[type="password"],.mc-inp input.mc-pw{padding-right:44px}
-  .mc-login-form input:focus,.mc-login-form select:focus{border-color:#2563eb;box-shadow:0 0 0 3px rgba(37,99,235,.15)}
-  .mc-eye{position:absolute;right:5px;top:50%;transform:translateY(-50%);width:34px;height:34px;display:grid;place-items:center;border:none;background:transparent;color:#64748b;cursor:pointer;border-radius:7px;z-index:2}
-  .mc-eye:hover{color:#0f172a;background:transparent}
+  .mc-inp>svg.mc-lead{position:absolute;left:16px;top:50%;transform:translateY(-50%);pointer-events:none}
+  .mc-login-form input,.mc-login-form select{width:100%;min-height:56px;border:1px solid var(--mc-login-outline);border-radius:var(--mc-login-radius-lg);padding:16px;font-family:inherit;font-size:14px;line-height:20px;color:var(--mc-login-on-surface);background:var(--mc-login-surface-low);outline:none !important;-webkit-appearance:none;-moz-appearance:none;appearance:none;caret-color:var(--mc-login-primary);box-shadow:none;transition:background-color .16s ease,border-color .16s ease,box-shadow .16s ease}
+  .mc-inp input{padding-left:46px}
+  .mc-inp input[type="password"],.mc-inp input.mc-pw{padding-right:50px}
+  .mc-login-form input:hover,.mc-login-form select:hover{border-color:#94a3b8;background:var(--mc-login-surface)}
+  .mc-login-form input:focus,.mc-login-form select:focus{border-color:var(--mc-login-primary);background:var(--mc-login-surface);box-shadow:0 0 0 4px var(--mc-login-state-focus)}
+  .mc-eye{position:absolute;right:8px;top:50%;transform:translateY(-50%);width:40px;height:40px;display:grid;place-items:center;border:none;background:transparent;color:#64748b;cursor:pointer;border-radius:var(--mc-login-radius-full);z-index:2;transition:background-color .16s ease,color .16s ease}
+  .mc-eye:hover{color:var(--mc-login-primary);background:var(--mc-login-state-hover)}
   /* hide Horizon's auto-injected FontAwesome eye (horizon.forms.js adds it to every password field) */
   .mc-inp .password-icon{display:none !important}
   /* remove the browser's native password reveal / autofill eye entirely */
@@ -43,39 +40,39 @@
   input::-webkit-textfield-decoration-container{display:none !important}
   input::-webkit-credentials-auto-fill-button,input::-webkit-strong-password-auto-fill-button,input::-webkit-strong-password-generation-auto-fill-button,input::-webkit-caps-lock-indicator,input::-webkit-contacts-auto-fill-button,input::-webkit-credit-card-auto-fill-button{display:none !important;visibility:hidden !important;pointer-events:none !important;width:0 !important;max-width:0 !important;margin:0 !important;opacity:0 !important}
   .mc-sel{position:relative}
-  .mc-sel>select{appearance:none;-webkit-appearance:none;padding-right:38px;cursor:pointer}
-  .mc-sel>svg{position:absolute;right:13px;top:50%;transform:translateY(-50%);pointer-events:none}
-  .mc-submit{width:100%;margin-top:24px;background:#2563eb;color:#fff;border:none;border-radius:9px;padding:12px;font-family:inherit;font-weight:600;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:9px;box-shadow:0 1px 2px rgba(15,23,42,.12);transition:background .12s}
-  .mc-submit:hover{background:#1d4ed8}
+  .mc-sel>select{appearance:none;-webkit-appearance:none;padding-right:44px;cursor:pointer}
+  .mc-sel>svg{position:absolute;right:16px;top:50%;transform:translateY(-50%);pointer-events:none}
+  .mc-submit{width:100%;min-height:48px;margin-top:20px;background:var(--mc-login-primary);color:var(--mc-login-on-primary);border:none;border-radius:var(--mc-login-radius-full);padding:0 24px;font-family:inherit;font-weight:700;font-size:14px;line-height:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:var(--mc-login-elevation-1);transition:background-color .16s ease,box-shadow .16s ease,transform .08s ease}
+  .mc-submit:hover{background:#1d4ed8;box-shadow:var(--mc-login-elevation-2)}
+  .mc-submit:active{transform:translateY(1px);box-shadow:var(--mc-login-elevation-1)}
   .mc-submit[disabled]{opacity:.9;cursor:default}
   .mc-submit.mc-submit--sso{background:#f47920}
   .mc-submit.mc-submit--sso:hover{background:#e06a14}
-  .mc-note{font-size:13px;color:#64748b;line-height:1.55;margin:-2px 0 18px}
+  .mc-note{font-size:14px;line-height:20px;color:var(--mc-login-on-surface-variant);margin:0 0 18px;padding:14px 16px;border-radius:var(--mc-login-radius-lg);background:var(--mc-login-surface-low);border:1px solid var(--mc-login-outline-variant)}
   /* CSS-only spinner (always rotates, no FontAwesome dependency) */
   .mc-spin{width:16px;height:16px;border:2px solid rgba(255,255,255,.45);border-top-color:#fff;border-radius:50%;display:inline-block;animation:mc-login-spin .7s linear infinite}
   @keyframes mc-login-spin{to{transform:rotate(360deg)}}
-  .mc-err{display:flex;align-items:flex-start;gap:9px;background:#fee2e2;border:1px solid #fecaca;color:#b91c1c;border-radius:9px;padding:10px 13px;font-size:13px;font-weight:500;margin-top:20px}
-  .mc-err svg{flex:0 0 auto;margin-top:1px}
+  .mc-err{display:flex;align-items:center;gap:10px;background:var(--mc-login-error-container);border:1px solid #fecaca;color:var(--mc-login-on-error-container);border-radius:var(--mc-login-radius-lg);padding:12px 14px;font-size:14px;line-height:20px;font-weight:600;margin-top:24px}
+  .mc-err svg{flex:0 0 auto}
   .mc-err p{margin:0}
-  .mc-foot{text-align:center;margin-top:20px;font-size:12px;color:#64748b;line-height:1.7}
-  .mc-sso{margin-top:18px}
-  .mc-sso .btn,.mc-sso a.btn{width:100%;margin-bottom:8px;border-radius:9px;padding:11px;font-weight:600}
   /* neutralise the default Horizon login panel chrome if it leaks in */
   .mc-login-bg .panel{border:0;box-shadow:none;background:transparent;margin:0}
+  @media(max-width:560px){.mc-login-bg{padding:24px 14px}.mc-login-col{width:100%;max-width:none}.mc-login-body{padding:34px 24px 28px}.mc-logo{width:168px}.mc-login-head h1{font-size:20px;line-height:28px}}
+  @media(prefers-reduced-motion:reduce){.mc-login-bg *,.mc-login-bg *:before,.mc-login-bg *:after{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important}}
 </style>
 
 <div class="mc-login-bg">
   <div class="mc-login-dots"></div>
-  <div class="mc-login-blob"></div>
   <div class="mc-login-col">
     <div class="mc-login-card">
-      <div class="mc-stripe"><i></i><i></i><i></i></div>
       <div class="mc-login-body">
 
         <div class="mc-brand">
-          <img class="mc-logo" src="{% static 'themes/mycloud/img/fpt-telecom-logo.png' %}" alt="FPT Telecom" onerror="this.style.display='none';var f=document.getElementById('mc-logo-fb');if(f)f.style.display='grid'">
-          <span class="mc-brand-badge" id="mc-logo-fb" style="display:none">
-            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6.6 18.5A4.4 4.4 0 0 1 6 9.8 6 6 0 0 1 17.5 8a4.5 4.5 0 0 1 .7 9H6.6z"/></svg>
+          <span class="mc-logo-surface">
+            <img class="mc-logo" src="{% static 'themes/mycloud/img/fpt-telecom-logo.png' %}" alt="FPT Telecom" onerror="this.style.display='none';var f=document.getElementById('mc-logo-fb');if(f)f.style.display='grid'">
+            <span class="mc-brand-badge" id="mc-logo-fb" style="display:none">
+              <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6.6 18.5A4.4 4.4 0 0 1 6 9.8 6 6 0 0 1 17.5 8a4.5 4.5 0 0 1 .7 9H6.6z"/></svg>
+            </span>
           </span>
         </div>
         <div class="mc-login-head">
@@ -107,7 +104,7 @@
               <label for="{{ form.auth_type.id_for_label }}">{{ form.auth_type.label }}</label>
               <div class="mc-sel">
                 {{ form.auth_type }}
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
               </div>
             </div>
           {% endif %}
@@ -130,7 +127,7 @@
               <label for="{{ form.region.id_for_label }}">{{ form.region.label }}</label>
               <div class="mc-sel">
                 {{ form.region }}
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
               </div>
             </div>
           {% endif %}
@@ -139,7 +136,7 @@
           <div class="mc-fld">
             <label for="{{ form.username.id_for_label }}">{% trans "User Name" %}</label>
             <div class="mc-inp">
-              <svg class="mc-lead" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              <svg class="mc-lead" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
               {{ form.username }}
             </div>
           </div>
@@ -147,7 +144,7 @@
           <div class="mc-fld" style="margin-bottom:8px">
             <label for="{{ form.password.id_for_label }}">{% trans "Password" %}</label>
             <div class="mc-inp">
-              <svg class="mc-lead" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+              <svg class="mc-lead" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
               {{ form.password }}
               <button type="button" class="mc-eye" id="mc-eye" tabindex="-1" aria-label="{% trans 'Show or hide password' %}">
                 <svg id="mc-eye-svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.9 5.2A9.8 9.8 0 0 1 12 5c6.5 0 10 7 10 7a17 17 0 0 1-3.2 4"/><path d="M6.3 6.3A17 17 0 0 0 2 12s3.5 7 10 7a9.8 9.8 0 0 0 4.1-.9"/><path d="M3 3l18 18"/></svg>
