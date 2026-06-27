@@ -999,7 +999,8 @@
       margin: 0 !important; position: static !important; background-color: #fff !important;
     }
     .membership a[href="#add_remove"] {
-      font-size: 20px !important; font-weight: 400 !important; text-decoration: none !important;
+      font-size: 20px !important; font-weight: 400 !important; line-height: 20px !important;
+      text-decoration: none !important;
     }
     .membership a[href="#add_remove"] > .mc-act-ic,
     .membership a[href="#add_remove"] > .mc-btn-ic,
@@ -1008,6 +1009,23 @@
     .membership a[href="#add_remove"] > .glyphicon {
       display: none !important;
     }
+    .membership .members > ul.btn-group,
+    .membership .available_members > ul.btn-group {
+      display: grid !important; grid-template-columns: minmax(0,1fr) auto auto;
+      align-items: center !important; gap: 6px; width: 100% !important;
+    }
+    .membership .members > ul.btn-group > li,
+    .membership .available_members > ul.btn-group > li {
+      float: none !important; align-self: center !important; margin: 0 !important;
+    }
+    .membership .members > ul.btn-group > li.member,
+    .membership .available_members > ul.btn-group > li.member {
+      grid-column: 1; min-width: 0; max-width: none !important;
+    }
+    .membership .members > ul.btn-group > li.role_options,
+    .membership .available_members > ul.btn-group > li.role_options { grid-column: 2; }
+    .membership .members > ul.btn-group > li.active,
+    .membership .available_members > ul.btn-group > li.active { grid-column: 3; }
     /* MyCloud checkbox: self-contained box + Lucide check. The core themable
        checkbox draws its tick with a FontAwesome glyph (content:'
     046'); when the
@@ -2449,6 +2467,18 @@
         control.matches('.fa-arrow-up, .fa-plus') || !!control.querySelector('.fa-arrow-up, .fa-plus'));
     }
   }
+  function bindTransferActions() {
+    document.addEventListener('click', function (event) {
+      var target = event.target && event.target.closest ?
+        event.target.closest('.membership a[href="#add_remove"]') : null;
+      if (!target) return;
+      // Horizon's delegated membership handler runs on the list before this
+      // document handler. Read the new parent/text and repaint in the same
+      // click instead of waiting for the debounced mutation observer.
+      var isAvailable = !!(target.closest && target.closest('.available_members'));
+      setTransferState(target, isAvailable || (target.textContent || '').trim() === '+');
+    });
+  }
   function decorate(btn) {
     if (isTransferAction(btn)) return;
     if (btn.querySelector('.mc-act-ic, .mc-btn-ic')) return; // already has our icon
@@ -2545,6 +2575,7 @@
     decorateCancel();
   }
   function init() {
+    bindTransferActions();
     run();
     if (!window.MutationObserver) return;
     var pending = false;

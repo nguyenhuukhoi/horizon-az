@@ -2755,6 +2755,7 @@ body.mc-lbaas-page .col-md-6.detail h4{margin:0 0 14px;padding-bottom:12px;borde
 .membership a[href="#add_remove"] {
   font-size: 20px !important;
   font-weight: 400 !important;
+  line-height: 20px !important;
   text-decoration: none !important;
 
   > .mc-act-ic,
@@ -2764,6 +2765,32 @@ body.mc-lbaas-page .col-md-6.detail h4{margin:0 0 14px;padding-bottom:12px;borde
   > .glyphicon {
     display: none !important;
   }
+}
+
+// Membership rows are a three-part control: name, optional role, transfer.
+// Grid keeps the icon-only action optically centred regardless of label wrap.
+.membership .members > ul.btn-group,
+.membership .available_members > ul.btn-group {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  align-items: center !important;
+  gap: 6px;
+  width: 100% !important;
+
+  > li {
+    float: none !important;
+    align-self: center !important;
+    margin: 0 !important;
+  }
+
+  > li.member {
+    grid-column: 1;
+    min-width: 0;
+    max-width: none !important;
+  }
+
+  > li.role_options { grid-column: 2; }
+  > li.active { grid-column: 3; }
 }
 
 /* MyCloud checkbox: self-contained box + Lucide check. The core themable
