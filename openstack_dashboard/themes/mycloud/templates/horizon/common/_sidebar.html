@@ -658,9 +658,17 @@
       background: #2563eb; border-color: #2563eb; color: #fff;
     }
     /* Semantic SVG icon injected into Create/toolbar buttons (by JS) */
-    .mc-act-ic, .mc-btn-ic { width: 14px; height: 14px; flex: 0 0 auto; }
+    .mc-act-ic, .mc-btn-ic {
+      width: 14px; height: 14px; min-width: 14px; max-width: 14px;
+      min-height: 14px; max-height: 14px;
+      flex: 0 0 14px;
+    }
     /* user-menu dropdown icons + required-field marker (SVG, no Font Awesome) */
-    .mc-menu-ic { width: 15px; height: 15px; vertical-align: -3px; margin-right: 8px; }
+    .mc-menu-ic {
+      width: 16px; height: 16px; min-width: 16px; max-width: 16px;
+      min-height: 16px; max-height: 16px;
+      vertical-align: -3px; margin-right: 8px;
+    }
     .mc-req-ic { width: 8px; height: 8px; vertical-align: 1px; }
     /* Angular dynamic-table toolbar (magic-search pages e.g. Images): keep the
        magic-search bar, just align the action buttons to the 38px row. */
@@ -906,7 +914,7 @@
     .mc-hv-table-actions { display: inline-flex; align-items: center; justify-content: flex-end; gap: 10px; margin-left: auto; min-width: 0; max-width: 100%; }
     .mc-hv-filter { position: relative; min-width: 0; width: 260px; max-width: 100%; }
     .mc-hv-filter::before {
-      content: ""; position: absolute; left: 13px; top: 50%; width: 15px; height: 15px; transform: translateY(-50%);
+      content: ""; position: absolute; left: 13px; top: 50%; width: 14px; height: 14px; transform: translateY(-50%);
       background: #94a3b8;
       -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m21 21-4.34-4.34'/> <circle cx='11' cy='11' r='8'/></svg>") center/contain no-repeat;
       mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m21 21-4.34-4.34'/> <circle cx='11' cy='11' r='8'/></svg>") center/contain no-repeat;
@@ -2321,9 +2329,9 @@
 
 {% verbatim %}
 <script>
-// MyCloud: give each Create/Allocate/Import toolbar button a semantic SVG icon
-// (same icon set as the design mockup). Matched by action verb + label so it
-// never touches Delete/Edit/Launch. Idempotent + re-runs on AJAX refresh.
+// MyCloud: give Create/Allocate/Import/Launch controls a semantic SVG icon
+// from the same icon set as the design mockup. Delete/Edit stay untouched.
+// Idempotent + re-runs on AJAX refresh.
 (function () {
   // Mirror the sidebar nav glyph set (ICN) so a resource's Create button shows
   // the SAME icon as its sidebar entry. Keys = sidebar glyph names; the strings
@@ -2403,17 +2411,17 @@
     if (btn.querySelector('.mc-act-ic, .mc-btn-ic')) return; // already has our icon
     var label = (btn.textContent || '').replace(/\s+/g, ' ').trim();
     if (!/^(create|allocate|import|register|add|launch)\b/i.test(label)) return;
-    if (/btn-launch/.test(btn.className)) return;
     var key = pick(label);
     if (!key) return;
     var isFinish = /\bfinish\b/.test(btn.className); // wizard submit button
+    var isLaunch = /^launch\b/i.test(label) || /\bbtn-launch\b/.test(btn.className);
     var fa = btn.querySelector('.fa, .glyphicon, i[class*="fa-"]');
     // The wizard finish icon span carries an Angular spinner binding; don't
     // touch it while submitting (let the spinner show), only swap the check.
     if (isFinish && fa && /fa-spin/.test(fa.className)) return;
     if (fa) fa.outerHTML = svg(key);
     else btn.insertAdjacentHTML('afterbegin', svg(key));
-    if (!isFinish) { btn.classList.add('mc-create-btn'); } // brand-blue, like the mockup
+    if (!isFinish && !isLaunch) { btn.classList.add('mc-create-btn'); } // brand-blue, like the mockup
   }
   function modalTitle(scope) {
     var el = scope && scope.querySelector('.modal-title, .modal-header h3, .modal-header h4, .h4.modal-title');
@@ -2435,7 +2443,7 @@
       'button.btn-primary:not(.next):not(.back), a.btn-primary:not(.next):not(.back), .btn.finish');
     for (var i = 0; i < sbs.length; i++) {
       var sb = sbs[i];
-      if (/\bbtn-launch\b/.test(sb.className) || sb.querySelector('.mc-act-ic, .mc-btn-ic')) continue;
+      if (sb.querySelector('.mc-act-ic, .mc-btn-ic')) continue;
       // Skip Next/Back and the transfer-table allocate/deallocate (+/-) buttons.
       if (/\b(next|back|fa-arrow-up|fa-arrow-down)\b/.test(sb.className)) continue;
       var scope = sb.closest ? sb.closest('.modal-content, .modal-dialog, .modal, .ng-wizard') : null;

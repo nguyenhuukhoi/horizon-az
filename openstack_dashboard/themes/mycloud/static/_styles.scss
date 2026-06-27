@@ -132,15 +132,34 @@ body {
   }
 
   // Inline SVG icons inside pills (project box, region globe, chevrons)
-  .mc-pill-ic { width: 15px; height: 15px; color: #64748b; flex-shrink: 0; }
-  .mc-pill-cv { width: 14px; height: 14px; color: #94a3b8; flex-shrink: 0; }
+  .mc-pill-ic {
+    width: 16px;
+    height: 16px;
+    min-width: 16px;
+    max-width: 16px;
+    min-height: 16px;
+    max-height: 16px;
+    color: #64748b;
+    flex: 0 0 16px;
+  }
+  .mc-pill-cv {
+    width: 14px;
+    height: 14px;
+    min-width: 14px;
+    max-width: 14px;
+    min-height: 14px;
+    max-height: 14px;
+    color: #94a3b8;
+    flex: 0 0 14px;
+  }
 
   // Region dropdown variant: SVG globe before the selector (muted)
   .mc-region-pill > a.dropdown-toggle::before {
     content: "";
     display: inline-block;
-    width: 15px;
-    height: 15px;
+    width: 16px;
+    height: 16px;
+    flex: 0 0 16px;
     margin-right: 4px;
     vertical-align: -3px;
     background: no-repeat center / contain;
@@ -647,10 +666,27 @@ button.mc-create-btn {
 }
 
 // Semantic SVG icon injected into Create / toolbar buttons (by JS in _sidebar)
-.mc-act-ic { width: 14px; height: 14px; flex: 0 0 auto; }
+.mc-act-ic {
+  width: 14px;
+  height: 14px;
+  min-width: 14px;
+  max-width: 14px;
+  min-height: 14px;
+  max-height: 14px;
+  flex: 0 0 14px;
+}
 
 // user-menu dropdown icons + required-field marker (SVG, no Font Awesome)
-.mc-menu-ic { width: 15px; height: 15px; vertical-align: -3px; margin-right: 8px; }
+.mc-menu-ic {
+  width: 16px;
+  height: 16px;
+  min-width: 16px;
+  max-width: 16px;
+  min-height: 16px;
+  max-height: 16px;
+  vertical-align: -3px;
+  margin-right: 8px;
+}
 .mc-req-ic { width: 8px; height: 8px; vertical-align: 1px; }
 
 // Angular dynamic-table toolbar (magic-search pages e.g. Images): keep the
@@ -1674,8 +1710,8 @@ body.mc-lbaas-page {
     position: absolute;
     left: 13px;
     top: 50%;
-    width: 15px;
-    height: 15px;
+    width: 14px;
+    height: 14px;
     transform: translateY(-50%);
     background: #94a3b8;
     -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m21 21-4.34-4.34'/> <circle cx='11' cy='11' r='8'/></svg>") center/contain no-repeat;
@@ -1714,10 +1750,7 @@ body.mc-lbaas-page {
   align-items: center;
   justify-content: center;
 
-  svg {
-    width: 16px;
-    height: 16px;
-  }
+  svg { width: 14px; height: 14px; }
 }
 
 .mc-hv-table-title {
@@ -2389,7 +2422,15 @@ body.modal-open {
 }
 
 // Inline SVG icon inside buttons (e.g. + Launch Instance)
-.mc-btn-ic { width: 14px; height: 14px; flex-shrink: 0; }
+.mc-btn-ic {
+  width: 14px;
+  height: 14px;
+  min-width: 14px;
+  max-width: 14px;
+  min-height: 14px;
+  max-height: 14px;
+  flex: 0 0 14px;
+}
 
 .mc-btn-ghost {
   background: $mc-surface;
