@@ -1817,8 +1817,8 @@
       var provider = providerForHost(text(cells[hostname]));
       var td = document.createElement('td');
       td.setAttribute('data-mc-vcpu', '1');
-      if (provider && +provider.vc > 0) {
-        td.innerHTML = meterHtml(String(+provider.vu || 0), String(+provider.vc), '');
+      if (provider && +provider.vt > 0) {
+        td.innerHTML = meterHtml(String(+provider.vu || 0), String(+provider.vt), '');
       } else {
         td.textContent = '-';
       }

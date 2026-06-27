@@ -58,12 +58,13 @@
     {{ tab_group.render }}
   </div>
 
-  {% comment %} Dữ liệu overcommit thật từ placement (per-host: used / capacity = ratio*total) {% endcomment %}
+  {% comment %} Physical totals drive Hypervisor/Compute Host; Placement capacity drives Resource Provider. {% endcomment %}
   <script type="text/javascript">{% verbatim %}
-  window.MC_HV_PROV = [{% endverbatim %}{% for p in providers %}{"n":"{{ p.name|escapejs }}","vu":{{ p.vcpus_used|default:0 }},"vc":{{ p.vcpus_capacity|default:0 }},"mu":{{ p.memory_mb_used|default:0 }},"mc":{{ p.memory_mb_capacity|default:0 }}}{% if not forloop.last %},{% endif %}{% endfor %}{% verbatim %}];
+  window.MC_HV_PHYS = {% endverbatim %}{"vu":{{ stats.vcpus_used|default:0 }},"vt":{{ stats.vcpus|default:0 }},"mu":{{ stats.memory_mb_used|default:0 }},"mt":{{ stats.memory_mb|default:0 }}}{% verbatim %};
+  window.MC_HV_PROV = [{% endverbatim %}{% for p in providers %}{"n":"{{ p.name|escapejs }}","vu":{{ p.vcpus_used|default:0 }},"vt":{{ p.vcpus|default:0 }},"vc":{{ p.vcpus_capacity|default:0 }},"mu":{{ p.memory_mb_used|default:0 }},"mt":{{ p.memory_mb|default:0 }},"mc":{{ p.memory_mb_capacity|default:0 }}}{% if not forloop.last %},{% endif %}{% endfor %}{% verbatim %}];
   (function(){
     var prov = window.MC_HV_PROV || [];
-    if (!prov.length) return;
+    var physical = window.MC_HV_PHYS || {};
 
     /* ---- tổng overcommit cho 2 card ---- */
     var vu=0, vc=0, mu=0, mc=0, i;
@@ -82,17 +83,36 @@
     function pct(a,b){ return b>0 ? Math.round(a/b*100) : 0; }
     function setText(id,t){ var el=document.getElementById(id); if(el) el.textContent=t; }
 
-    if (vc>0){
-      setText('mc-hv-vcpu-used', fmtInt(vu));
-      setText('mc-hv-vcpu-total', fmtInt(vc));
-      setText('mc-hv-vcpu-pct', pct(vu,vc)+'%');
-    }
-    if (mc>0){
-      setText('mc-hv-ram-used', fmtMB(mu));
-      setText('mc-hv-ram-total', fmtMB(mc));
-      setText('mc-hv-ram-pct', pct(mu,mc)+'%');
+    function renderCapacity(data){
+      if (+data.vt>0){
+        setText('mc-hv-vcpu-used', fmtInt(+data.vu||0));
+        setText('mc-hv-vcpu-total', fmtInt(+data.vt||0));
+        setText('mc-hv-vcpu-pct', pct(+data.vu||0,+data.vt||0)+'%');
+      }
+      if (+data.mt>0){
+        setText('mc-hv-ram-used', fmtMB(+data.mu||0));
+        setText('mc-hv-ram-total', fmtMB(+data.mt||0));
+        setText('mc-hv-ram-pct', pct(+data.mu||0,+data.mt||0)+'%');
+      }
     }
 
+    function syncCapacity(){
+      var active = document.querySelector('.mc-hv-tabs-shell .nav-tabs li.active a');
+      var target = active ? (active.getAttribute('data-target') || active.getAttribute('href') || '') : '';
+      var useOvercommit = target.indexOf('__provider') !== -1;
+      renderCapacity(useOvercommit && vc>0 && mc>0 ?
+        {vu:vu,vt:vc,mu:mu,mt:mc} : physical);
+    }
+
+    window.MC_HV_SYNC_CAPACITY = syncCapacity;
+    document.addEventListener('click', function(event){
+      var tab = event.target.closest && event.target.closest('.mc-hv-tabs-shell .nav-tabs a[data-toggle="tab"]');
+      if (tab) setTimeout(syncCapacity, 0);
+    });
+    if (window.jQuery) {
+      window.jQuery(document).on('shown.bs.tab', '.mc-hv-tabs-shell .nav-tabs a[data-toggle="tab"]', syncCapacity);
+    }
+    syncCapacity();
   })();
   {% endverbatim %}</script>
 {% endblock %}
