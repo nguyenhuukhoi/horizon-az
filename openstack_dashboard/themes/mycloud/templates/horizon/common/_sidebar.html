@@ -1009,23 +1009,6 @@
     .membership a[href="#add_remove"] > .glyphicon {
       display: none !important;
     }
-    .membership .members > ul.btn-group,
-    .membership .available_members > ul.btn-group {
-      display: grid !important; grid-template-columns: minmax(0,1fr) auto auto;
-      align-items: center !important; gap: 6px; width: 100% !important;
-    }
-    .membership .members > ul.btn-group > li,
-    .membership .available_members > ul.btn-group > li {
-      float: none !important; align-self: center !important; margin: 0 !important;
-    }
-    .membership .members > ul.btn-group > li.member,
-    .membership .available_members > ul.btn-group > li.member {
-      grid-column: 1; min-width: 0; max-width: none !important;
-    }
-    .membership .members > ul.btn-group > li.role_options,
-    .membership .available_members > ul.btn-group > li.role_options { grid-column: 2; }
-    .membership .members > ul.btn-group > li.active,
-    .membership .available_members > ul.btn-group > li.active { grid-column: 3; }
     /* MyCloud checkbox: self-contained box + Lucide check. The core themable
        checkbox draws its tick with a FontAwesome glyph (content:'
     046'); when the

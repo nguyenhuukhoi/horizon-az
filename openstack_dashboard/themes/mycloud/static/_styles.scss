@@ -2767,32 +2767,6 @@ body.mc-lbaas-page .col-md-6.detail h4{margin:0 0 14px;padding-bottom:12px;borde
   }
 }
 
-// Membership rows are a three-part control: name, optional role, transfer.
-// Grid keeps the icon-only action optically centred regardless of label wrap.
-.membership .members > ul.btn-group,
-.membership .available_members > ul.btn-group {
-  display: grid !important;
-  grid-template-columns: minmax(0, 1fr) auto auto;
-  align-items: center !important;
-  gap: 6px;
-  width: 100% !important;
-
-  > li {
-    float: none !important;
-    align-self: center !important;
-    margin: 0 !important;
-  }
-
-  > li.member {
-    grid-column: 1;
-    min-width: 0;
-    max-width: none !important;
-  }
-
-  > li.role_options { grid-column: 2; }
-  > li.active { grid-column: 3; }
-}
-
 /* MyCloud checkbox: self-contained box + Lucide check. The core themable
    checkbox draws its tick with a FontAwesome glyph (content:'\f046'); when the
    FA webfont isn't applied (we render icons via masks) that glyph shows up as a
