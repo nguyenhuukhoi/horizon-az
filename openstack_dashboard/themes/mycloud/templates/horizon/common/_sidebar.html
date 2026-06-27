@@ -2198,7 +2198,7 @@
     return '<svg class="mc-act-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">' + IC[key] + '</svg>';
   }
   function decorate(btn) {
-    if (btn.querySelector('.mc-act-ic')) return; // already has our icon (self-healing)
+    if (btn.querySelector('.mc-act-ic, .mc-btn-ic')) return; // already has our icon
     var label = (btn.textContent || '').replace(/\s+/g, ' ').trim();
     if (!/^(create|allocate|import|register|add|launch)\b/i.test(label)) return;
     if (/btn-launch/.test(btn.className)) return;
@@ -2233,7 +2233,7 @@
       'button.btn-primary:not(.next):not(.back), a.btn-primary:not(.next):not(.back), .btn.finish');
     for (var i = 0; i < sbs.length; i++) {
       var sb = sbs[i];
-      if (sb.querySelector('.mc-act-ic')) continue;
+      if (/\bbtn-launch\b/.test(sb.className) || sb.querySelector('.mc-act-ic, .mc-btn-ic')) continue;
       // Skip Next/Back and the transfer-table allocate/deallocate (+/-) buttons.
       if (/\b(next|back|fa-arrow-up|fa-arrow-down)\b/.test(sb.className)) continue;
       var scope = sb.closest ? sb.closest('.modal-content, .modal-dialog, .modal, .ng-wizard') : null;
