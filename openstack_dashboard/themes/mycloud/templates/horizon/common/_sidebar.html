@@ -50,13 +50,13 @@
        glyph so only the injected SVG shows — prevents duplicate icons. */
     #sidebar a.openstack-panel::before { content: none !important; }
     #sidebar a.openstack-panel { display: flex !important; align-items: center; }
-    #sidebar a.openstack-panel .mc-nav-ic { margin-right: 9px; flex: 0 0 auto; }
+    #sidebar a.openstack-panel .mc-nav-ic { width: 16px; height: 16px; margin-right: 9px; flex: 0 0 auto; }
     #sidebar .mc-nav-hidden { display: none !important; }
 
     /* SVG chevron (injected below) replaces the Font Awesome glyph */
     #sidebar .openstack-toggle.fa::before { content: none !important; }
     #sidebar .openstack-toggle .mc-cv {
-      width: 14px; height: 14px; opacity: .7;
+      width: 16px; height: 16px; opacity: .7;
       color: #94a3b8; transition: transform .15s ease;
     }
     #sidebar a.collapsed .openstack-toggle .mc-cv { transform: rotate(-90deg) !important; }
@@ -636,7 +636,7 @@
       background: #1d4ed8 !important; color: #fff !important;
     }
     /* Launch button icon: SVG via CSS mask (no Font Awesome glyph) */
-    .btn-launch .fa { display: inline-block; width: 15px; height: 15px; }
+    .btn-launch .fa { display: inline-block; width: 14px; height: 14px; }
     .btn-launch .fa::before {
       content: ""; display: block; width: 100%; height: 100%; background-color: currentColor;
       -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='4' width='18' height='7' rx='2'/><rect x='3' y='13' width='18' height='7' rx='2'/><path d='M7 7.5h.01M7 16.5h.01'/></svg>") center/contain no-repeat;
@@ -658,7 +658,7 @@
       background: #2563eb; border-color: #2563eb; color: #fff;
     }
     /* Semantic SVG icon injected into Create/toolbar buttons (by JS) */
-    .mc-act-ic { width: 15px; height: 15px; flex: 0 0 auto; }
+    .mc-act-ic, .mc-btn-ic { width: 14px; height: 14px; flex: 0 0 auto; }
     /* user-menu dropdown icons + required-field marker (SVG, no Font Awesome) */
     .mc-menu-ic { width: 15px; height: 15px; vertical-align: -3px; margin-right: 8px; }
     .mc-req-ic { width: 8px; height: 8px; vertical-align: 1px; }
@@ -921,7 +921,7 @@
       width: 34px; height: 34px; border: 1px solid #e2e8f0; border-radius: 8px; background: #fff; color: #334155;
       display: inline-flex; align-items: center; justify-content: center;
     }
-    .mc-hv-icon-btn svg { width: 16px; height: 16px; }
+    .mc-hv-icon-btn svg { width: 14px; height: 14px; }
     .mc-hv-table-title { color: #0f172a; font-size: 15px; font-weight: 700; line-height: 1.3; }
     .mc-hv-count {
       display: inline-flex; align-items: center; gap: 6px; min-height: 24px; border-radius: 20px;
@@ -1024,6 +1024,114 @@
     }
     /* Loading-modal spinner (.loader): centre it (block + auto margins). */
     .fa-spinner.loader { display: block; margin: 6px auto 12px; }
+
+    /* MD3 control surfaces. Shape/state only: preserve the existing palette,
+       DOM, dimensions, toolbar placement, action order, and workflows. */
+    @media (min-width: 768px) {
+      #sidebar, #sidebar-accordion { width: 280px; }
+      #content_body { padding-left: 280px; }
+      .navbar.navbar-default.navbar-fixed-top { left: 280px; }
+    }
+    @media (max-width: 767px) {
+      #sidebar, #sidebar-accordion { width: 280px; }
+      #sidebar { left: -280px; }
+      #sidebar.on-screen { left: 0; }
+    }
+
+    .mc-topbar-pills .mc-ctx-pill > .dropdown-toggle,
+    .mc-topbar-pills .mc-region-pill > a,
+    .mc-topbar-pills .mc-pill-static,
+    .btn,
+    .btn-sm,
+    .mc-hv-refresh,
+    .mc-hv-icon-btn,
+    .mc-lb-filter-field,
+    .mc-lb-filter-apply,
+    .page-header .mc-back-to-list,
+    body.mc-ngdetail .page-header .breadcrumb a {
+      border-radius: 999px !important;
+      transition: background-color .16s ease, border-color .16s ease,
+                  color .16s ease, box-shadow .16s ease;
+    }
+
+    .btn-primary,
+    .btn-danger,
+    .btn-launch,
+    .mc-create-btn {
+      box-shadow: 0 1px 2px rgba(15,23,42,.08), 0 1px 3px rgba(15,23,42,.06);
+    }
+    .btn-primary:hover, .btn-primary:focus,
+    .btn-danger:hover, .btn-danger:focus,
+    .btn-launch:hover, .btn-launch:focus,
+    .mc-create-btn:hover, .mc-create-btn:focus {
+      box-shadow: 0 2px 6px rgba(15,23,42,.10), 0 1px 2px rgba(15,23,42,.08);
+    }
+    .btn-default:not(.mc-create-btn):not(.btn-launch), .btn-link { box-shadow: none; }
+    .btn:active, .btn.active { transform: none; }
+    .btn:focus-visible,
+    .mc-hv-refresh:focus-visible,
+    .mc-hv-icon-btn:focus-visible {
+      outline: 0;
+      box-shadow: 0 0 0 3px rgba(37,99,235,.14),
+                  0 1px 2px rgba(15,23,42,.08), 0 1px 3px rgba(15,23,42,.06);
+    }
+
+    .btn-group > .btn:first-child:not(:last-child):not(.dropdown-toggle) {
+      border-radius: 999px 0 0 999px !important;
+    }
+    .btn-group > .btn:last-child:not(:first-child),
+    .btn-group > .dropdown-toggle:not(:first-child) {
+      border-radius: 0 999px 999px 0 !important;
+    }
+    .btn-group > .btn:only-child { border-radius: 999px !important; }
+
+    .table_actions .table_search .form-control,
+    #content_body .hz-dynamic-table-actions .btn,
+    body.mc-lbaas-page #content_body hz-resource-table .mc-lb-filter-field,
+    body.mc-lbaas-page #content_body hz-resource-table .mc-lb-filter-input,
+    body.mc-lbaas-page #content_body hz-resource-table .mc-lb-filter-apply,
+    .mc-hv-filter input {
+      border-radius: 999px !important;
+    }
+    #content_body .hz-magic-search-bar .input-group > :first-child {
+      border-radius: 999px 0 0 999px !important;
+    }
+    #content_body .hz-magic-search-bar .input-group > :last-child {
+      border-radius: 0 999px 999px 0 !important;
+    }
+    #content_body .hz-magic-search-bar .search-input {
+      border-radius: 999px 0 0 999px !important;
+    }
+    .table_actions .table_search .form-control:focus,
+    #content_body .hz-magic-search-bar .form-control:focus,
+    #content_body .hz-magic-search-bar .search-input:focus,
+    body.mc-lbaas-page #content_body hz-resource-table .mc-lb-filter-input:focus,
+    .mc-hv-filter input:focus {
+      border-color: #2563eb;
+      box-shadow: 0 0 0 3px rgba(37,99,235,.14);
+    }
+
+    /* Consistent icon scale: sidebar navigation 16px, button icons 14px. */
+    #sidebar a.openstack-panel .mc-nav-ic,
+    #sidebar .openstack-toggle .mc-cv {
+      width: 16px !important;
+      height: 16px !important;
+    }
+    .btn > svg,
+    .btn .mc-act-ic,
+    .btn .mc-btn-ic,
+    .btn .fa,
+    .btn .glyphicon,
+    .mc-hv-icon-btn > svg {
+      width: 14px !important;
+      height: 14px !important;
+      flex: 0 0 auto;
+    }
+    .fa-arrow-up::before,
+    .fa-arrow-down::before {
+      width: 14px !important;
+      height: 14px !important;
+    }
   </style>
   <a class="mc-sidebar-brand" href="{% site_branding_link %}" target="_self">
     <span class="mc-brand-logo"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 19A4.5 4.5 0 0 1 5.9 10 6 6 0 0 1 17.6 8.4 4.2 4.2 0 0 1 17 19z"/></svg></span>
@@ -1166,12 +1274,12 @@
       var a = links[i];
       if (a.querySelector('.mc-nav-ic')) continue;
       var href = a.getAttribute('href') || '';
-      a.insertAdjacentHTML('afterbegin', svg(ICN[keyFor(href)] || ICN.dot, 'mc-nav-ic', 17));
+      a.insertAdjacentHTML('afterbegin', svg(ICN[keyFor(href)] || ICN.dot, 'mc-nav-ic', 16));
     }
     var tg = document.querySelectorAll('#sidebar .openstack-toggle');
     for (var j = 0; j < tg.length; j++) {
       if (tg[j].querySelector('.mc-cv')) continue;
-      tg[j].innerHTML = svg('<path d="M6 9l6 6 6-6"/>', 'mc-cv', 14);
+      tg[j].innerHTML = svg('<path d="M6 9l6 6 6-6"/>', 'mc-cv', 16);
     }
   }
   // This script is rendered immediately after the sidebar markup. Run now so

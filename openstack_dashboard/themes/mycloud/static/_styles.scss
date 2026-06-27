@@ -605,8 +605,8 @@ a.btn-launch {
   // Launch button icon: SVG via CSS mask (no Font Awesome glyph)
   .fa {
     display: inline-block;
-    width: 15px;
-    height: 15px;
+    width: 14px;
+    height: 14px;
     &::before {
       content: "";
       display: block;
@@ -647,7 +647,7 @@ button.mc-create-btn {
 }
 
 // Semantic SVG icon injected into Create / toolbar buttons (by JS in _sidebar)
-.mc-act-ic { width: 15px; height: 15px; flex: 0 0 auto; }
+.mc-act-ic { width: 14px; height: 14px; flex: 0 0 auto; }
 
 // user-menu dropdown icons + required-field marker (SVG, no Font Awesome)
 .mc-menu-ic { width: 15px; height: 15px; vertical-align: -3px; margin-right: 8px; }
@@ -1863,11 +1863,15 @@ body.mc-lbaas-page {
   }
 
   .mc-nav-ic {
-    width: 17px;
-    height: 17px;
+    width: 16px;
+    height: 16px;
     flex-shrink: 0;
     margin-right: 9px;
     opacity: .9;
+  }
+  .mc-cv {
+    width: 16px;
+    height: 16px;
   }
   a.openstack-panel.active .mc-nav-ic { opacity: 1; }
 }
@@ -2382,7 +2386,7 @@ body.modal-open {
 }
 
 // Inline SVG icon inside buttons (e.g. + Launch Instance)
-.mc-btn-ic { width: 18px; height: 18px; flex-shrink: 0; }
+.mc-btn-ic { width: 14px; height: 14px; flex-shrink: 0; }
 
 .mc-btn-ghost {
   background: $mc-surface;
@@ -2738,3 +2742,135 @@ body.mc-lbaas-page .col-md-6.detail h4{margin:0 0 14px;padding-bottom:12px;borde
 
 /* Loading-modal spinner (.loader): centre it (block + auto margins). */
 .fa-spinner.loader { display: block; margin: 6px auto 12px; }
+
+// =====================================================================
+//  MD3 control surfaces
+//  Shape/state only: keep the existing palette, DOM, control dimensions,
+//  toolbar alignment, action order, spacing, and Horizon workflows intact.
+// =====================================================================
+$mc-md-pill: 999px;
+$mc-md-elevation-1: 0 1px 2px rgba(15, 23, 42, .08), 0 1px 3px rgba(15, 23, 42, .06);
+$mc-md-elevation-2: 0 2px 6px rgba(15, 23, 42, .10), 0 1px 2px rgba(15, 23, 42, .08);
+
+// Topbar context controls follow the same MD3 pill language as toolbars.
+.mc-topbar-pills .mc-ctx-pill > .dropdown-toggle,
+.mc-topbar-pills .mc-region-pill > a,
+.mc-topbar-pills .mc-pill-static {
+  border-radius: $mc-md-pill !important;
+}
+
+// Buttons keep their existing dimensions and colors. Filled buttons receive
+// MD3 elevation; outlined/default buttons stay flat.
+.btn,
+.btn-sm,
+.mc-hv-refresh,
+.mc-hv-icon-btn,
+.mc-lb-filter-field,
+.mc-lb-filter-apply,
+.page-header .mc-back-to-list,
+body.mc-ngdetail .page-header .breadcrumb a {
+  border-radius: $mc-md-pill !important;
+  transition: background-color .16s ease, border-color .16s ease,
+              color .16s ease, box-shadow .16s ease;
+}
+
+.btn-primary,
+.btn-danger,
+.btn-launch,
+.mc-create-btn {
+  box-shadow: $mc-md-elevation-1;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-danger:hover,
+.btn-danger:focus,
+.btn-launch:hover,
+.btn-launch:focus,
+.mc-create-btn:hover,
+.mc-create-btn:focus {
+  box-shadow: $mc-md-elevation-2;
+}
+
+.btn-default:not(.mc-create-btn):not(.btn-launch),
+.btn-link {
+  box-shadow: none;
+}
+
+.btn:active,
+.btn.active {
+  transform: none;
+}
+
+.btn:focus-visible,
+.mc-hv-refresh:focus-visible,
+.mc-hv-icon-btn:focus-visible {
+  outline: 0;
+  box-shadow: 0 0 0 3px rgba($brand-primary, .14), $mc-md-elevation-1;
+}
+
+// Connected split actions keep one continuous pill instead of two capsules.
+.btn-group > .btn:first-child:not(:last-child):not(.dropdown-toggle) {
+  border-radius: $mc-md-pill 0 0 $mc-md-pill !important;
+}
+.btn-group > .btn:last-child:not(:first-child),
+.btn-group > .dropdown-toggle:not(:first-child) {
+  border-radius: 0 $mc-md-pill $mc-md-pill 0 !important;
+}
+.btn-group > .btn:only-child {
+  border-radius: $mc-md-pill !important;
+}
+
+// Django and Angular table toolboxes: shape only, no geometry changes.
+.table_actions .table_search .form-control,
+#content_body .hz-dynamic-table-actions .btn,
+body.mc-lbaas-page #content_body hz-resource-table .mc-lb-filter-field,
+body.mc-lbaas-page #content_body hz-resource-table .mc-lb-filter-input,
+body.mc-lbaas-page #content_body hz-resource-table .mc-lb-filter-apply,
+.mc-hv-filter input {
+  border-radius: $mc-md-pill !important;
+}
+
+#content_body .hz-magic-search-bar .input-group > :first-child {
+  border-radius: $mc-md-pill 0 0 $mc-md-pill !important;
+}
+#content_body .hz-magic-search-bar .input-group > :last-child {
+  border-radius: 0 $mc-md-pill $mc-md-pill 0 !important;
+}
+#content_body .hz-magic-search-bar .search-input {
+  border-radius: $mc-md-pill 0 0 $mc-md-pill !important;
+}
+
+.table_actions .table_search .form-control:focus,
+#content_body .hz-magic-search-bar .form-control:focus,
+#content_body .hz-magic-search-bar .search-input:focus,
+body.mc-lbaas-page #content_body hz-resource-table .mc-lb-filter-input:focus,
+.mc-hv-filter input:focus {
+  border-color: $brand-primary;
+  box-shadow: 0 0 0 3px rgba($brand-primary, .14);
+}
+
+// Icon scale: navigation icons are 16px; every icon rendered inside a button
+// is 14px. Brand/logo and non-button status graphics remain unchanged.
+#sidebar a.openstack-panel .mc-nav-ic,
+#sidebar .openstack-toggle .mc-cv {
+  width: 16px !important;
+  height: 16px !important;
+}
+
+.btn > svg,
+.btn .mc-act-ic,
+.btn .mc-btn-ic,
+.btn .fa,
+.btn .glyphicon,
+.mc-hv-icon-btn > svg {
+  width: 14px !important;
+  height: 14px !important;
+  flex: 0 0 auto;
+}
+
+.fa-arrow-up::before,
+.fa-arrow-down::before {
+  width: 14px !important;
+  height: 14px !important;
+}
