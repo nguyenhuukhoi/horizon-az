@@ -210,7 +210,7 @@ body {
     background: transparent;
     color: $mc-side-fg;
     border: 0 !important;
-    border-radius: 8px !important;
+    border-radius: 999px !important;
     margin: 2px 0 !important;
     padding: 8px 12px !important;
     font-size: 13.5px;
@@ -1921,7 +1921,7 @@ body.modal-open {
 
   // step list
   .nav-pills > li > a {
-    border-radius: 8px;
+    border-radius: 999px;
     color: #64748b;
     font-weight: 600;
   }
@@ -1929,7 +1929,10 @@ body.modal-open {
   .nav-pills > li.active > a:hover,
   .nav-pills > li.active > a:focus {
     background: $brand-primary;
+    border-color: transparent;
+    border-radius: 999px;
     color: #fff;
+    outline: 0;
   }
 
   // transfer table (available / allocated)
@@ -2687,10 +2690,10 @@ body.mc-lbaas-page .col-md-6.detail h4{margin:0 0 14px;padding-bottom:12px;borde
 // give the ::before a fixed size so the circle-plus / circle-minus shows.
 .fa-arrow-up, .fa-arrow-down {
   display: inline-flex !important; align-items: center; justify-content: center;
-  width: auto !important; min-width: 40px !important; height: auto !important; line-height: 1;
-  border: 0 !important; border-radius: 8px !important; cursor: pointer; color: #fff !important;
+  width: 48px !important; min-width: 48px !important; height: 34px !important; min-height: 34px !important; line-height: 0;
+  border: 0 !important; border-radius: 999px !important; cursor: pointer; color: #fff !important;
   box-shadow: none !important; -webkit-appearance: none !important; appearance: none !important;
-  outline: 0 !important; padding: 6px 14px !important;
+  box-sizing: border-box; outline: 0 !important; padding: 0 !important; text-align: center;
 }
 .fa-arrow-up { background: #2563eb !important; }
 .fa-arrow-down { background: #dc2626 !important; }
@@ -2700,7 +2703,8 @@ body.mc-lbaas-page .col-md-6.detail h4{margin:0 0 14px;padding-bottom:12px;borde
   box-shadow: none !important; outline: 0 !important;
 }
 .fa-arrow-up::before, .fa-arrow-down::before {
-  width: 16px !important; height: 16px !important; display: block; background-color: #fff !important;
+  width: 16px !important; height: 16px !important; display: block; flex: 0 0 auto;
+  margin: 0 !important; position: static !important; background-color: #fff !important;
 }
 
 /* MyCloud checkbox: self-contained box + Lucide check. The core themable
@@ -2873,4 +2877,46 @@ body.mc-lbaas-page #content_body hz-resource-table .mc-lb-filter-input:focus,
 .fa-arrow-down::before {
   width: 14px !important;
   height: 14px !important;
+}
+
+// Sidebar entries and wizard steps are navigation surfaces, not Bootstrap
+// buttons, so explicitly give them the same MD3 pill shape.
+#sidebar .panel > a,
+#sidebar .list-group .list-group-item,
+#sidebar .list-group > a.list-group-item,
+.ng-wizard .nav-pills > li > a {
+  border-radius: $mc-md-pill !important;
+}
+
+.ng-wizard .nav-pills > li.active > a,
+.ng-wizard .nav-pills > li.active > a:hover,
+.ng-wizard .nav-pills > li.active > a:focus {
+  border-color: transparent !important;
+  border-radius: $mc-md-pill !important;
+  outline: 0 !important;
+}
+
+.ng-wizard .nav-pills > li.active > a:focus-visible {
+  box-shadow: 0 0 0 3px rgba($brand-primary, .14);
+}
+
+// Transfer actions are icon-only controls. A stable box plus zero padding
+// keeps the plus/minus mask centered independent of table-cell typography.
+.ng-wizard .transfer-table .btn.fa-arrow-up,
+.ng-wizard .transfer-table .btn.fa-arrow-down {
+  width: 48px !important;
+  min-width: 48px !important;
+  height: 34px !important;
+  min-height: 34px !important;
+  padding: 0 !important;
+  line-height: 0 !important;
+  border-radius: $mc-md-pill !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.ng-wizard .transfer-table .btn.fa-arrow-up::before,
+.ng-wizard .transfer-table .btn.fa-arrow-down::before {
+  margin: 0 !important;
+  position: static !important;
 }

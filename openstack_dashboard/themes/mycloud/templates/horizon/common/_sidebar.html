@@ -972,10 +972,10 @@
     /* give the ::before a fixed size so the circle-plus / circle-minus shows. */
     .fa-arrow-up, .fa-arrow-down {
       display: inline-flex !important; align-items: center; justify-content: center;
-      width: auto !important; min-width: 40px !important; height: auto !important; line-height: 1;
-      border: 0 !important; border-radius: 8px !important; cursor: pointer; color: #fff !important;
+      width: 48px !important; min-width: 48px !important; height: 34px !important; min-height: 34px !important; line-height: 0;
+      border: 0 !important; border-radius: 999px !important; cursor: pointer; color: #fff !important;
       box-shadow: none !important; -webkit-appearance: none !important; appearance: none !important;
-      outline: 0 !important; padding: 6px 14px !important;
+      box-sizing: border-box; outline: 0 !important; padding: 0 !important; text-align: center;
     }
     .fa-arrow-up { background: #2563eb !important; }
     .fa-arrow-down { background: #dc2626 !important; }
@@ -985,7 +985,8 @@
       box-shadow: none !important; outline: 0 !important;
     }
     .fa-arrow-up::before, .fa-arrow-down::before {
-      width: 16px !important; height: 16px !important; display: block; background-color: #fff !important;
+      width: 16px !important; height: 16px !important; display: block; flex: 0 0 auto;
+      margin: 0 !important; position: static !important; background-color: #fff !important;
     }
     /* MyCloud checkbox: self-contained box + Lucide check. The core themable
        checkbox draws its tick with a FontAwesome glyph (content:'
@@ -1131,6 +1132,44 @@
     .fa-arrow-down::before {
       width: 14px !important;
       height: 14px !important;
+    }
+
+    /* MD3 navigation surfaces: sidebar entries and wizard steps are links,
+       so they are not covered by the generic .btn pill rule above. */
+    #sidebar .panel > a,
+    #sidebar .list-group .list-group-item,
+    #sidebar .list-group > a.list-group-item,
+    .ng-wizard .nav-pills > li > a {
+      border-radius: 999px !important;
+    }
+    .ng-wizard .nav-pills > li.active > a,
+    .ng-wizard .nav-pills > li.active > a:hover,
+    .ng-wizard .nav-pills > li.active > a:focus {
+      border-color: transparent !important;
+      border-radius: 999px !important;
+      outline: 0 !important;
+    }
+    .ng-wizard .nav-pills > li.active > a:focus-visible {
+      box-shadow: 0 0 0 3px rgba(37,99,235,.14);
+    }
+
+    /* Fixed icon-button geometry keeps the plus/minus mask perfectly centred. */
+    .ng-wizard .transfer-table .btn.fa-arrow-up,
+    .ng-wizard .transfer-table .btn.fa-arrow-down {
+      width: 48px !important;
+      min-width: 48px !important;
+      height: 34px !important;
+      min-height: 34px !important;
+      padding: 0 !important;
+      line-height: 0 !important;
+      border-radius: 999px !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+    .ng-wizard .transfer-table .btn.fa-arrow-up::before,
+    .ng-wizard .transfer-table .btn.fa-arrow-down::before {
+      margin: 0 !important;
+      position: static !important;
     }
   </style>
   <a class="mc-sidebar-brand" href="{% site_branding_link %}" target="_self">
