@@ -1156,6 +1156,7 @@
     /* Fixed icon-button geometry keeps the plus/minus mask perfectly centred. */
     .ng-wizard .transfer-table .btn.fa-arrow-up,
     .ng-wizard .transfer-table .btn.fa-arrow-down {
+      position: relative !important;
       width: 48px !important;
       min-width: 48px !important;
       height: 34px !important;
@@ -1169,7 +1170,30 @@
     .ng-wizard .transfer-table .btn.fa-arrow-up::before,
     .ng-wizard .transfer-table .btn.fa-arrow-down::before {
       margin: 0 !important;
-      position: static !important;
+      position: absolute !important;
+      left: 50% !important;
+      top: 50% !important;
+      transform: translate(-50%, -50%) !important;
+    }
+
+    /* One compact MD3 Launch Instance control across Overview and toolbars. */
+    .btn-launch,
+    a.btn-launch,
+    .mc-launch-btn {
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 7px !important;
+      box-sizing: border-box;
+      height: 34px !important;
+      min-height: 34px !important;
+      padding: 0 16px !important;
+      border-width: 1px !important;
+      border-radius: 999px !important;
+      font-size: 14px !important;
+      font-weight: 600 !important;
+      line-height: 20px !important;
+      white-space: nowrap;
     }
   </style>
   <a class="mc-sidebar-brand" href="{% site_branding_link %}" target="_self">
