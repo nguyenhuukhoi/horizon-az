@@ -1373,47 +1373,15 @@
       min-height:40px;
       border-radius:12px;
     }
-    /* MD3 outlined select at the theme's compact 40px density. Keep Horizon's
-       markup/workflow intact while replacing native arrows and partial borders. */
+    /* Preserve Horizon's native/select-widget rendering; only restore the
+       complete outlined border that Bootstrap can drop in modal forms. */
     .modal select.form-control:not([multiple]),
     .ng-wizard select.form-control:not([multiple]) {
-      display:block;
-      width:100%;
-      height:40px !important;
-      min-height:40px !important;
-      padding:0 44px 0 14px !important;
       border:1px solid #cbd5e1 !important;
-      border-radius:12px !important;
-      background-color:#fff !important;
-      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2364758b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") !important;
-      background-repeat:no-repeat !important;
-      background-position:right 14px center !important;
-      background-size:18px 18px !important;
-      box-shadow:none !important;
-      color:#0f172a;
-      line-height:1.5;
-      -webkit-appearance:none !important;
-      appearance:none !important;
-      box-sizing:border-box;
-    }
-    .modal select.form-control:not([multiple]):not(:disabled):hover,
-    .ng-wizard select.form-control:not([multiple]):not(:disabled):hover {
-      border-color:#64748b !important;
     }
     .modal select.form-control:not([multiple]):focus,
     .ng-wizard select.form-control:not([multiple]):focus {
-      padding-left:13px !important;
-      padding-right:43px !important;
-      border:2px solid #2563eb !important;
-      outline:0;
-      box-shadow:none !important;
-    }
-    .modal select.form-control:not([multiple]):disabled,
-    .ng-wizard select.form-control:not([multiple]):disabled {
-      border-color:#e2e8f0 !important;
-      background-color:#f8fafc !important;
-      color:#94a3b8;
-      cursor:not-allowed;
+      border-color:#2563eb !important;
     }
     .modal textarea.form-control, .ng-wizard textarea.form-control,
     .modal select[multiple], .ng-wizard select[multiple] { height:auto; }
@@ -1521,44 +1489,6 @@
     .ng-wizard .help-toggle, .modal .help-toggle {
       width:40px;
       height:40px;
-    }
-    /* Membership dual lists inherit a 34px Bootstrap feedback box. Centre the
-       existing SVG search mask in the same 40px box as the compact MD3 field. */
-    .modal .membership .fake_table_header .form-group.has-feedback,
-    .ng-wizard .membership .fake_table_header .form-group.has-feedback {
-      position:relative;
-      min-height:40px;
-      margin:0;
-    }
-    .modal .membership .fake_table_header .form-group.has-feedback > .form-control,
-    .ng-wizard .membership .fake_table_header .form-group.has-feedback > .form-control {
-      height:40px !important;
-      min-height:40px !important;
-      padding-right:44px !important;
-      border:1px solid #cbd5e1 !important;
-      border-radius:12px !important;
-      box-sizing:border-box;
-    }
-    .modal .membership .fake_table_header .form-group.has-feedback > .form-control-feedback.fa-search,
-    .ng-wizard .membership .fake_table_header .form-group.has-feedback > .form-control-feedback.fa-search {
-      display:inline-flex !important;
-      align-items:center;
-      justify-content:center;
-      top:50% !important;
-      right:0 !important;
-      width:40px !important;
-      height:40px !important;
-      margin:0 !important;
-      color:#64748b;
-      font-size:18px !important;
-      line-height:1 !important;
-      transform:translateY(-50%);
-      pointer-events:none;
-    }
-    .modal .membership .fake_table_header .form-group.has-feedback > .form-control-feedback.fa-search::before,
-    .ng-wizard .membership .fake_table_header .form-group.has-feedback > .form-control-feedback.fa-search::before {
-      width:18px !important;
-      height:18px !important;
     }
     /* Bootstrap leaves metadata-tree search feedback at 34px while the MD3
        field is 40px. Use one centred control box for search and +/- actions. */
