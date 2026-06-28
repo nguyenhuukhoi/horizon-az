@@ -1998,6 +1998,16 @@ body.mc-spinner-modal-open .modal-backdrop {
   backdrop-filter: none;
 }
 
+// Loading dialogs only need horizontal centring. Preserve Horizon's vertical
+// placement and the Bootstrap mobile edge gutter.
+@media (min-width: 768px) {
+  .modal.loading .modal-dialog,
+  .modal.modal-wait-spinner .modal-dialog {
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+}
+
 .modal-dialog-wizard .modal-dialog,
 .modal-dialog.modal-dialog-wizard {
   margin-top: 36px;

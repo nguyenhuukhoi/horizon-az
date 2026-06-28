@@ -430,6 +430,14 @@
       -webkit-backdrop-filter: none;
       backdrop-filter: none;
     }
+    /* Centre loading dialogs horizontally; keep their current vertical offset. */
+    @media (min-width: 768px) {
+      .modal.loading .modal-dialog,
+      .modal.modal-wait-spinner .modal-dialog {
+        margin-left: auto !important;
+        margin-right: auto !important;
+      }
+    }
     .modal-dialog-wizard .modal-dialog,
     .modal-dialog.modal-dialog-wizard {
       margin-top: 36px !important;
