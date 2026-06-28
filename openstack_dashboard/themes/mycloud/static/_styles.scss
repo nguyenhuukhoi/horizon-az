@@ -3140,6 +3140,7 @@ a.btn-launch,
   --mc-type-caption-line: 16px;
   --mc-type-metric-size: 28px;
   --mc-type-metric-line: 36px;
+  --mc-table-edge-space: 24px;
 }
 
 body {
@@ -3257,6 +3258,32 @@ body {
 
 // The project/admin Instances table has more columns than most Horizon tables.
 // Give content-heavy fields room first and keep compact/status columns stable.
+// Keep the image data in Horizon, but omit Image Name from the MyCloud project
+// table. Admin Instances and other themes retain their original columns.
+body.mc-project-instances-page #instances th:nth-child(3),
+body.mc-project-instances-page #instances td:nth-child(3) {
+  display: none;
+}
+
+// One MD3 desktop gutter across the toolbar, counts, header, rows and footer.
+body.mc-project-instances-page #instances > caption,
+body.mc-project-instances-page #instances > thead > tr > td,
+body.mc-project-instances-page #instances > tfoot > tr > td {
+  padding-left: var(--mc-table-edge-space) !important;
+  padding-right: var(--mc-table-edge-space) !important;
+}
+
+body.mc-project-instances-page #instances > thead > tr.table_column_header > th:first-child,
+body.mc-project-instances-page #instances > tbody > tr > td:first-child {
+  padding-left: var(--mc-table-edge-space) !important;
+}
+
+body.mc-project-instances-page #instances > thead > tr.table_column_header > th:last-child,
+body.mc-project-instances-page #instances > tbody > tr > td:last-child {
+  padding-right: var(--mc-table-edge-space) !important;
+  text-align: right;
+}
+
 @media (min-width: 1200px) {
   body.mc-project-instances-page #content_body #instances {
     width: 100%;

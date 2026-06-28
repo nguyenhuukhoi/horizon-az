@@ -251,8 +251,6 @@ class InstanceTableTests(InstanceTestBase, InstanceTableTestMixin):
         instances = res.context['instances_table'].data
 
         self.assertCountEqual(instances, self.servers.list())
-        self.assertTrue(
-            res.context['instances_table'].columns['image_name'].hidden)
         self.assertNotContains(res, "Launch Instance (Quota exceeded)")
         self._check_get_index()
 

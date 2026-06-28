@@ -1280,8 +1280,7 @@ class InstancesTable(tables.DataTable):
                                  link=get_server_detail_link,
                                  verbose_name=_("Instance Name"))
     image_name = tables.WrappingColumn("image_name",
-                                       verbose_name=_("Image Name"),
-                                       hidden=True)
+                                       verbose_name=_("Image Name"))
     ip = tables.Column(get_ips,
                        verbose_name=_("IP Address"),
                        attrs={'data-type': "ip"})
