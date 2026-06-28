@@ -3217,6 +3217,87 @@ a.btn-launch,
   height: auto;
 }
 
+// Horizon's numeric field is one 40px input plus two half-height controls.
+// The generic modal button height must not expand each spinner button to 40px.
+.modal .themable-spinner,
+.ng-wizard .themable-spinner {
+  display: flex;
+  align-items: stretch;
+  height: 40px;
+}
+
+.modal .themable-spinner > .form-control,
+.ng-wizard .themable-spinner > .form-control {
+  flex: 1 1 auto;
+  width: 1% !important;
+  min-width: 0;
+  height: 40px !important;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.modal .themable-spinner .input-group-btn-vertical,
+.ng-wizard .themable-spinner .input-group-btn-vertical {
+  display: block;
+  flex: 0 0 32px;
+  width: 32px;
+  height: 40px;
+}
+
+.modal .themable-spinner .input-group-btn-vertical-container,
+.ng-wizard .themable-spinner .input-group-btn-vertical-container {
+  display: flex;
+  flex-direction: column;
+  width: 32px;
+  height: 40px;
+}
+
+.modal .themable-spinner .btn-container,
+.ng-wizard .themable-spinner .btn-container {
+  flex: 0 0 20px;
+  width: 32px;
+  height: 20px;
+}
+
+.modal .themable-spinner .themable-spinner-btn,
+.ng-wizard .themable-spinner .themable-spinner-btn {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  width: 32px !important;
+  min-width: 32px !important;
+  height: 20px !important;
+  min-height: 20px !important;
+  margin-left: -1px;
+  padding: 0 !important;
+  border-color: #cbd5e1;
+  border-radius: 0 !important;
+  line-height: 1 !important;
+}
+
+.modal .themable-spinner .spinner-up,
+.ng-wizard .themable-spinner .spinner-up {
+  border-top-right-radius: 12px !important;
+}
+
+.modal .themable-spinner .spinner-down,
+.ng-wizard .themable-spinner .spinner-down {
+  border-bottom-right-radius: 12px !important;
+}
+
+.modal .themable-spinner .hz-spinner-icon-up,
+.modal .themable-spinner .hz-spinner-icon-down,
+.ng-wizard .themable-spinner .hz-spinner-icon-up,
+.ng-wizard .themable-spinner .hz-spinner-icon-down,
+.modal .themable-spinner .hz-spinner-icon-up::before,
+.modal .themable-spinner .hz-spinner-icon-down::before,
+.ng-wizard .themable-spinner .hz-spinner-icon-up::before,
+.ng-wizard .themable-spinner .hz-spinner-icon-down::before {
+  width: 12px !important;
+  height: 12px !important;
+  margin: 0 !important;
+}
+
 .modal input[type="checkbox"],
 .modal input[type="radio"],
 .ng-wizard input[type="checkbox"],
@@ -3306,6 +3387,22 @@ a.btn-launch,
   height: 40px !important;
   min-height: 40px !important;
   padding: 0 !important;
+}
+
+// The Custom-field action is a full-size trailing control. Keep it separate
+// from the text field instead of letting Bootstrap's -1px join overlap it.
+.ng-wizard .metadata-tree .input-group-btn > .mc-transfer-add {
+  margin-left: 8px !important;
+}
+
+// Catalog rows use Horizon's compact btn-xs action and should remain visibly
+// smaller than the Custom-field action above.
+.ng-wizard .metadata-tree .metadata-list-group > .list-group-item >
+  .clearfix .pull-right > .mc-transfer-add {
+  width: 32px !important;
+  min-width: 32px !important;
+  height: 32px !important;
+  min-height: 32px !important;
 }
 
 .ng-wizard .metadata-tree .mc-transfer-add .fa-plus,
