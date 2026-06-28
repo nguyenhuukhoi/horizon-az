@@ -119,11 +119,13 @@
        with the direct panels (Overview/API Access); the grouped panels' own
        list-group margin then stacks to put them one level deeper. */
     #sidebar .mc-dashboard-project .openstack-panel-group,
-    #sidebar .mc-dashboard-admin .openstack-panel-group {
+    #sidebar .mc-dashboard-admin .openstack-panel-group,
+    #sidebar .mc-dashboard-identity .mc-panel-group-federation {
       margin-left: 12px !important;
     }
     #sidebar .mc-dashboard-project .openstack-panel-group > a,
-    #sidebar .mc-dashboard-admin .openstack-panel-group > a {
+    #sidebar .mc-dashboard-admin .openstack-panel-group > a,
+    #sidebar .mc-dashboard-identity .mc-panel-group-federation > a {
       padding-left: 16px !important;
     }
     #sidebar .openstack-dashboard > a:hover,
@@ -1504,6 +1506,17 @@
       var title = labelText(label);
       if (title === 'project') dashboards[d].classList.add('mc-dashboard-project');
       if (title === 'admin') dashboards[d].classList.add('mc-dashboard-admin');
+      if (title === 'identity') {
+        dashboards[d].classList.add('mc-dashboard-identity');
+        var identityGroups = dashboards[d].querySelectorAll('.openstack-panel-group');
+        for (var ig = 0; ig < identityGroups.length; ig++) {
+          var groupLabel = identityGroups[ig].querySelector(':scope > a');
+          var groupTarget = groupLabel && groupLabel.getAttribute('data-target') || '';
+          if (/-federation$/.test(groupTarget) || labelText(groupLabel) === 'federation') {
+            identityGroups[ig].classList.add('mc-panel-group-federation');
+          }
+        }
+      }
       hideAdminOverview(dashboards[d]);
       // Project & Admin always stay open. Identity stays open only for admins;
       // regular (non-admin) users can still collapse it.
