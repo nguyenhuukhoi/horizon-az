@@ -600,6 +600,8 @@ table.datatable > caption,
     min-width: 200px;
     box-shadow: none;
   }
+  .table_search.client .search-icon { display: none !important; }
+  .table_search.client .form-control { padding-right: 12px; }
 
   // every button in the row → consistent height/shape
   .btn,
