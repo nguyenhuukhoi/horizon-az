@@ -1943,6 +1943,19 @@ body.modal-open {
   overflow: hidden !important;
 }
 
+// MD3 modal scrim: keep the dialog sharp while softening the page beneath it.
+// The translucent color remains a usable fallback when backdrop-filter is absent.
+.modal-backdrop {
+  background-color: rgba(15, 23, 42, .46) !important;
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+
+.modal-backdrop.in,
+.modal-backdrop.show {
+  opacity: 1 !important;
+}
+
 .modal-dialog-wizard .modal-dialog,
 .modal-dialog.modal-dialog-wizard {
   margin-top: 36px;
@@ -2752,6 +2765,35 @@ body.mc-lbaas-page .col-md-6.detail h4{margin:0 0 14px;padding-bottom:12px;borde
 
 // Membership workflows render a literal +/- label. Keep that single glyph and
 // suppress any semantic resource icon injected before the list is hydrated.
+.membership .members > ul.btn-group,
+.membership .available_members > ul.btn-group {
+  display: flex !important;
+  align-items: center !important;
+}
+
+.membership .members > ul.btn-group > li.member,
+.membership .available_members > ul.btn-group > li.member {
+  order: 1;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.membership .members > ul.btn-group > li.role_options,
+.membership .available_members > ul.btn-group > li.role_options {
+  order: 2;
+  flex: 0 1 auto;
+  margin-left: auto !important;
+}
+
+.membership .members > ul.btn-group > li.active,
+.membership .available_members > ul.btn-group > li.active {
+  order: 3;
+  align-self: center;
+  flex: 0 0 auto;
+  float: none !important;
+  margin-left: 8px;
+}
+
 .membership a[href="#add_remove"] {
   font-size: 20px !important;
   font-weight: 400 !important;

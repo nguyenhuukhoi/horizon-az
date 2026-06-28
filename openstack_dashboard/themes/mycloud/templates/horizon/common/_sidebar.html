@@ -400,6 +400,16 @@
     body.modal-open {
       overflow: hidden !important;
     }
+    /* MD3 modal scrim: blur only the page behind the modal. */
+    .modal-backdrop {
+      background-color: rgba(15, 23, 42, .46) !important;
+      -webkit-backdrop-filter: blur(6px);
+      backdrop-filter: blur(6px);
+    }
+    .modal-backdrop.in,
+    .modal-backdrop.show {
+      opacity: 1 !important;
+    }
     .modal-dialog-wizard .modal-dialog,
     .modal-dialog.modal-dialog-wizard {
       margin-top: 36px !important;
@@ -997,6 +1007,22 @@
     .fa-arrow-up::before, .fa-arrow-down::before {
       width: 16px !important; height: 16px !important; display: block; flex: 0 0 auto;
       margin: 0 !important; position: static !important; background-color: #fff !important;
+    }
+    .membership .members > ul.btn-group,
+    .membership .available_members > ul.btn-group {
+      display: flex !important; align-items: center !important;
+    }
+    .membership .members > ul.btn-group > li.member,
+    .membership .available_members > ul.btn-group > li.member {
+      order: 1; flex: 1 1 auto; min-width: 0;
+    }
+    .membership .members > ul.btn-group > li.role_options,
+    .membership .available_members > ul.btn-group > li.role_options {
+      order: 2; flex: 0 1 auto; margin-left: auto !important;
+    }
+    .membership .members > ul.btn-group > li.active,
+    .membership .available_members > ul.btn-group > li.active {
+      order: 3; align-self: center; flex: 0 0 auto; float: none !important; margin-left: 8px;
     }
     .membership a[href="#add_remove"] {
       font-size: 20px !important; font-weight: 400 !important; line-height: 20px !important;
