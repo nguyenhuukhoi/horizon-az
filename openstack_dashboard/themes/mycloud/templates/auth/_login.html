@@ -56,7 +56,7 @@
   .mc-submit.mc-submit--sso:hover{background:#e06a14}
   .mc-note{font-size:14px;line-height:20px;color:var(--mc-login-on-surface-variant);margin:0 0 18px;padding:14px 16px;border-radius:var(--mc-login-radius-lg);background:var(--mc-login-surface-low);border:1px solid var(--mc-login-outline-variant)}
   /* CSS-only spinner (always rotates, no FontAwesome dependency) */
-  .mc-spin{width:16px;height:16px;border:2px solid rgba(255,255,255,.45);border-top-color:#fff;border-radius:50%;display:inline-block;animation:mc-login-spin .7s linear infinite}
+  .mc-spin{width:16px;height:16px;border:2px solid rgba(255,255,255,.45);border-top-color:#fff;border-radius:50%;display:inline-block;transform-origin:center;will-change:transform;animation:mc-login-spin .7s linear infinite !important}
   @keyframes mc-login-spin{to{transform:rotate(360deg)}}
   .mc-err{display:flex;align-items:center;gap:10px;background:var(--mc-login-error-container);border:1px solid #fecaca;color:var(--mc-login-on-error-container);border-radius:var(--mc-login-radius-lg);padding:12px 14px;font-size:14px;line-height:20px;font-weight:600;margin-top:24px}
   .mc-err svg{flex:0 0 auto}
@@ -64,7 +64,7 @@
   /* neutralise the default Horizon login panel chrome if it leaks in */
   .mc-login-bg .panel{border:0;box-shadow:none;background:transparent;margin:0}
   @media(max-width:560px){.mc-login-bg{padding:24px 14px}.mc-login-col{width:100%;max-width:none}.mc-login-body{padding:34px 24px 28px}.mc-logo{width:168px}.mc-login-head h1{font-size:20px;line-height:28px}}
-  @media(prefers-reduced-motion:reduce){.mc-login-bg *,.mc-login-bg *:before,.mc-login-bg *:after{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important}}
+  @media(prefers-reduced-motion:reduce){.mc-login-bg *,.mc-login-bg *:before,.mc-login-bg *:after{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important}.mc-login-bg .mc-spin{animation-duration:.7s !important;animation-iteration-count:infinite !important}}
 </style>
 
 <div class="mc-login-bg">
