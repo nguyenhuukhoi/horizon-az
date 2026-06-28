@@ -2829,7 +2829,7 @@
   function isTransferAction(btn) {
     if (!btn || !btn.matches) return false;
     if (btn.matches('.membership a[href="#add_remove"], .fa-arrow-up, .fa-arrow-down')) return true;
-    return !!(btn.closest && btn.closest('.transfer-table') &&
+    return !!(btn.closest && btn.closest('.transfer-table, .metadata-tree') &&
       (btn.matches('.fa-plus, .fa-minus') || btn.querySelector('.fa-plus, .fa-minus, .fa-arrow-up, .fa-arrow-down')));
   }
   function setTransferState(btn, isAdd) {
@@ -2847,7 +2847,8 @@
     }
     var transfers = document.querySelectorAll(
       '.transfer-table .fa-arrow-up, .transfer-table .fa-arrow-down,' +
-      '.transfer-table .fa-plus, .transfer-table .fa-minus');
+      '.transfer-table .fa-plus, .transfer-table .fa-minus,' +
+      '.metadata-tree .fa-plus, .metadata-tree .fa-minus');
     for (var j = 0; j < transfers.length; j++) {
       var control = transfers[j];
       var button = control.matches('.btn, button, a') ? control : control.closest('.btn, button, a');
@@ -2902,7 +2903,9 @@
   function decorateModals() {
     // 1) <button>/<a> primary (NOT Next/Back) + wizard finish: swap/insert icon.
     var sbs = document.querySelectorAll(
-      'button.btn-primary:not(.next):not(.back), a.btn-primary:not(.next):not(.back), .btn.finish');
+      '.modal-footer button.btn-primary:not(.next):not(.back),' +
+      '.modal-footer a.btn-primary:not(.next):not(.back),' +
+      '.ng-wizard .btn.finish');
     for (var i = 0; i < sbs.length; i++) {
       var sb = sbs[i];
       if (isTransferAction(sb)) continue;
