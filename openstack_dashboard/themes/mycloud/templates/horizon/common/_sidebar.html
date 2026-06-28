@@ -400,6 +400,20 @@
     body.modal-open {
       overflow: hidden !important;
     }
+    @media (min-width: 768px) {
+      .modal .mc-app-credential-form .modal-body > .row {
+        display: flex;
+        align-items: stretch;
+      }
+      .modal .mc-app-credential-form .mc-app-credential-help {
+        max-height: calc(100vh - 250px);
+        overflow-x: hidden;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        padding-right: 12px;
+        scrollbar-gutter: stable;
+      }
+    }
     /* MD3 modal scrim: blur only the page behind the modal. */
     .modal-backdrop {
       background-color: rgba(15, 23, 42, .46) !important;
@@ -846,6 +860,12 @@
     }
     .table_wrapper > form, .table_wrapper > table, .table_wrapper table.datatable { margin-bottom: 0; }
     .table_wrapper table.datatable { border: 0; }
+    #content_body td.actions_column .btn-group.mc-action-dropup > .dropdown-menu {
+      top: auto !important;
+      bottom: calc(100% + 4px) !important;
+      margin-top: 0 !important;
+      margin-bottom: 0 !important;
+    }
     .table.datatable > thead > tr > th { padding: 11px 18px; }
     .table.datatable > tbody > tr > td { padding: 12px 18px; }
     /* Uniform rows for ALL tables: Django stripes via tr.odd/even classes,
@@ -1519,6 +1539,66 @@
   run();
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', run, { once: true });
+  }
+})();
+</script>
+{% endverbatim %}
+
+{% verbatim %}
+<script>
+// MyCloud: row-action dropdowns near the viewport bottom open upward so all
+// Horizon actions remain visible. Do not add an internal scrollbar: the menu
+// keeps its natural height and only changes placement.
+(function () {
+  var selector = '#content_body td.actions_column .dropdown-toggle[data-toggle="dropdown"]';
+
+  function menuHeight(menu) {
+    var display = menu.style.display;
+    var visibility = menu.style.visibility;
+    var pointerEvents = menu.style.pointerEvents;
+
+    menu.style.display = 'block';
+    menu.style.visibility = 'hidden';
+    menu.style.pointerEvents = 'none';
+    var height = menu.getBoundingClientRect().height || menu.scrollHeight;
+    menu.style.display = display;
+    menu.style.visibility = visibility;
+    menu.style.pointerEvents = pointerEvents;
+    return height;
+  }
+
+  function placeMenu(toggle) {
+    var group = toggle.closest ? toggle.closest('.btn-group') : null;
+    if (!group) return;
+    var menu = group.querySelector('.dropdown-menu');
+    if (!menu) return;
+
+    group.classList.remove('mc-action-dropup');
+    var rect = toggle.getBoundingClientRect();
+    var height = menuHeight(menu);
+    var below = window.innerHeight - rect.bottom - 12;
+    var above = rect.top - 12;
+
+    if (height > below && above > below) {
+      group.classList.add('mc-action-dropup');
+    }
+  }
+
+  // Capture runs before Bootstrap's delegated click handler, preventing one
+  // frame of the menu appearing in the wrong direction.
+  document.addEventListener('click', function (event) {
+    var toggle = event.target.closest ? event.target.closest(selector) : null;
+    if (toggle) placeMenu(toggle);
+  }, true);
+
+  // AJAX table refreshes reuse the delegated listener. Clear placement when a
+  // menu closes so the next opening is measured against its current position.
+  if (window.jQuery) {
+    window.jQuery(document).on(
+      'hidden.bs.dropdown',
+      '#content_body td.actions_column .btn-group',
+      function () { this.classList.remove('mc-action-dropup'); }
+    );
   }
 })();
 </script>

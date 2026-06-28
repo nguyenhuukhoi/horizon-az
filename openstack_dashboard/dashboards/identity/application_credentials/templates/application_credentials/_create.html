@@ -1,7 +1,10 @@
 {% extends "horizon/common/_modal_form.html" %}
 {% load i18n %}
 
+{% block form_class %}mc-app-credential-form{% endblock %}
+
 {% block modal-body-right %}
+<div class="mc-app-credential-help">
   <h3>{% trans "Description:" %}</h3>
   <p>{% trans "Create a new application credential." %}</p>
   <p>
@@ -84,4 +87,5 @@
   {% endblocktrans %}
   {% endif %}
   </p>
+</div>
 {% endblock %}

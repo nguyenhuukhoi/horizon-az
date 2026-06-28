@@ -502,6 +502,16 @@ dl.dl-horizontal dt {
 }
 .table-responsive { border-radius: 12px; }
 
+// Keep every row action visible near the viewport bottom. The placement
+// script toggles this class before Bootstrap opens the dropdown; the menu is
+// intentionally not height-limited or internally scrollable.
+#content_body td.actions_column .btn-group.mc-action-dropup > .dropdown-menu {
+  top: auto !important;
+  bottom: calc(100% + 4px) !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
 // "Displaying N items" count: one identical style on Django (.table_count,
 // rendered inside a thead/tfoot td) and Angular tables (hz-table-footer's count
 // span), so e.g. Admin Instances matches the Images page exactly.
@@ -1941,6 +1951,24 @@ body.mc-lbaas-page {
 
 body.modal-open {
   overflow: hidden !important;
+}
+
+// Create Application Credential has a long explanatory column. Keep the
+// modal itself stable and let only that help column scroll on desktop.
+@media (min-width: 768px) {
+  .modal .mc-app-credential-form .modal-body > .row {
+    display: flex;
+    align-items: stretch;
+  }
+
+  .modal .mc-app-credential-form .mc-app-credential-help {
+    max-height: calc(100vh - 250px);
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding-right: 12px;
+    scrollbar-gutter: stable;
+  }
 }
 
 // MD3 modal scrim: keep the dialog sharp while softening the page beneath it.
