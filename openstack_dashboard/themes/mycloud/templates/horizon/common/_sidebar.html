@@ -403,41 +403,12 @@
       overflow: hidden !important;
     }
     @media (min-width: 768px) {
-      .modal.mc-app-credential-modal.in {
-        display: flex !important;
-        align-items: center;
-        padding: 32px 0;
-      }
-      .modal.mc-app-credential-modal .modal-dialog {
-        flex: 0 0 auto;
-        margin: 0 auto;
-        max-height: calc(100vh - 64px);
-      }
-      .modal.mc-app-credential-modal .modal-content {
-        display: flex;
-        flex-direction: column;
-        max-height: calc(100vh - 64px);
-        overflow: hidden;
-      }
-      .modal.mc-app-credential-modal .mc-app-credential-form {
-        display: flex;
-        flex: 1 1 auto;
-        flex-direction: column;
-        min-height: 0;
-      }
-      .modal.mc-app-credential-modal .mc-app-credential-form .modal-body {
-        flex: 1 1 auto;
-        min-height: 0;
-        overflow: hidden;
-      }
       .modal .mc-app-credential-form .modal-body > .row {
         display: flex;
-        height: 100%;
         align-items: stretch;
       }
       .modal .mc-app-credential-form .mc-app-credential-help {
-        height: 100%;
-        max-height: none;
+        max-height: calc(100vh - 250px);
         overflow-x: hidden;
         overflow-y: auto;
         overscroll-behavior: contain;
