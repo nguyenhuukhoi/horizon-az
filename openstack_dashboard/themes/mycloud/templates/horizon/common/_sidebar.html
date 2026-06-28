@@ -410,6 +410,10 @@
     .modal-backdrop.show {
       opacity: 1 !important;
     }
+    body.mc-spinner-modal-open .modal-backdrop {
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
     .modal-dialog-wizard .modal-dialog,
     .modal-dialog.modal-dialog-wizard {
       margin-top: 36px !important;
@@ -2573,7 +2577,21 @@
       b.insertAdjacentHTML('afterbegin', X_ICON);
     }
   }
+  function syncSpinnerScrim() {
+    var spinners = document.querySelectorAll('.modal.loading, .modal.modal-wait-spinner');
+    var isOpen = false;
+    for (var i = 0; i < spinners.length; i++) {
+      var spinner = spinners[i];
+      if (spinner.classList.contains('in') || spinner.classList.contains('show') ||
+          window.getComputedStyle(spinner).display !== 'none') {
+        isOpen = true;
+        break;
+      }
+    }
+    document.body.classList.toggle('mc-spinner-modal-open', isOpen);
+  }
   function run() {
+    syncSpinnerScrim();
     decorateTransferActions();
     var btns = document.querySelectorAll(
       '#content_body .table_actions a.btn, #content_body .table_actions button.btn,' +
@@ -2589,6 +2607,7 @@
     if (!window.MutationObserver) return;
     var pending = false;
     var obs = new MutationObserver(function () {
+      syncSpinnerScrim();
       if (pending) return;
       pending = true;
       setTimeout(function () { pending = false; run(); }, 200);
