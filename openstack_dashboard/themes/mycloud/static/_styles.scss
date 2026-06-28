@@ -36,6 +36,11 @@ $mc-side-fg-mut: #64748b;   // sidebar muted / group headers
 $mc-side-active: $brand-primary;
 $mc-border:      #e2e8f0;
 $mc-surface:     #ffffff;
+$mc-md-surface-container-low: #f8fafc;
+$mc-md-surface-container: #f1f5f9;
+$mc-md-on-surface-variant: #475569;
+$mc-md-primary-container: #dbeafe;
+$mc-md-on-primary-container: #1e3a8a;
 $mc-shadow:      0 1px 2px rgba(15, 23, 42, .06), 0 4px 12px rgba(15, 23, 42, .06);
 $mc-shadow-sm:   0 1px 2px rgba(15, 23, 42, .08);
 $mc-section-gap: 16px;
@@ -2015,21 +2020,25 @@ body.mc-spinner-modal-open .modal-backdrop {
 }
 
 .ng-wizard {
-  .wizard-navigation { background: #f8fafc; }
+  .wizard-navigation {
+    background: $mc-md-surface-container-low;
+    border-right: 1px solid $mc-border;
+  }
 
   // step list
   .nav-pills > li > a {
     border-radius: 999px;
-    color: #64748b;
+    background: transparent;
+    color: $mc-md-on-surface-variant;
     font-weight: 600;
   }
   .nav-pills > li.active > a,
   .nav-pills > li.active > a:hover,
   .nav-pills > li.active > a:focus {
-    background: $brand-primary;
+    background: $mc-md-primary-container;
     border-color: transparent;
     border-radius: 999px;
-    color: #fff;
+    color: $mc-md-on-primary-container;
     outline: 0;
   }
 
@@ -3076,11 +3085,18 @@ body.mc-lbaas-page #content_body hz-resource-table .mc-lb-filter-input:focus,
   border-radius: $mc-md-pill !important;
 }
 
+.ng-wizard .nav-pills > li > a {
+  background: transparent !important;
+  color: $mc-md-on-surface-variant !important;
+}
+
 .ng-wizard .nav-pills > li.active > a,
 .ng-wizard .nav-pills > li.active > a:hover,
 .ng-wizard .nav-pills > li.active > a:focus {
+  background: $mc-md-primary-container !important;
   border-color: transparent !important;
   border-radius: $mc-md-pill !important;
+  color: $mc-md-on-primary-container !important;
   outline: 0 !important;
 }
 
@@ -3300,8 +3316,8 @@ a.btn-launch,
 
 .ng-wizard .nav-pills > li:not(.active) > a:hover,
 .ng-wizard .nav-pills > li:not(.active) > a:focus {
-  background: rgba($brand-primary, .08);
-  color: $brand-primary;
+  background: $mc-md-surface-container !important;
+  color: $mc-md-on-primary-container !important;
 }
 
 @media (max-width: 767px) {
