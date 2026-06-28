@@ -3267,6 +3267,56 @@ a.btn-launch,
   height: 40px;
 }
 
+// Metadata and scheduler-hint trees still use Bootstrap's 34px feedback box
+// inside the 40px MD3 fields. Give both the search glyph and row transfer
+// controls an explicit 40px container so they align without crowding inputs.
+.ng-wizard .metadata-tree .has-feedback {
+  position: relative;
+}
+
+.ng-wizard .metadata-tree .has-feedback .form-control {
+  height: 40px !important;
+  padding-right: 44px !important;
+}
+
+.ng-wizard .metadata-tree .has-feedback > .form-control-feedback.fa-search {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  top: 0 !important;
+  right: 0 !important;
+  width: 40px !important;
+  height: 40px !important;
+  margin: 0 !important;
+  color: #64748b;
+  font-size: 18px !important;
+  line-height: 40px !important;
+  pointer-events: none;
+}
+
+.ng-wizard .metadata-tree .has-feedback > .form-control-feedback.fa-search::before {
+  width: 18px !important;
+  height: 18px !important;
+}
+
+.ng-wizard .metadata-tree .mc-transfer-add,
+.ng-wizard .metadata-tree .mc-transfer-remove {
+  width: 40px !important;
+  min-width: 40px !important;
+  height: 40px !important;
+  min-height: 40px !important;
+  padding: 0 !important;
+}
+
+.ng-wizard .metadata-tree .mc-transfer-add .fa-plus,
+.ng-wizard .metadata-tree .mc-transfer-remove .fa-minus,
+.ng-wizard .metadata-tree .mc-transfer-add .fa-plus::before,
+.ng-wizard .metadata-tree .mc-transfer-remove .fa-minus::before {
+  width: 14px !important;
+  height: 14px !important;
+  margin: 0 !important;
+}
+
 .ng-wizard .transfer-table .btn.fa-arrow-up,
 .ng-wizard .transfer-table .btn.fa-arrow-down,
 .modal .mc-transfer-add,
