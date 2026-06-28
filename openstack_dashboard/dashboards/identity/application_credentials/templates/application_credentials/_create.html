@@ -1,6 +1,7 @@
 {% extends "horizon/common/_modal_form.html" %}
 {% load i18n %}
 
+{% block modal_class %}{% if hide %}modal mc-app-credential-modal{% else %}static_page{% endif %}{% endblock %}
 {% block form_class %}mc-app-credential-form{% endblock %}
 
 {% block modal-body-right %}
