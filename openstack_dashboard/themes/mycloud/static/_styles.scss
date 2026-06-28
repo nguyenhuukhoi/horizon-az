@@ -24,7 +24,7 @@ code, pre, kbd, samp, tt, .mono { font-family: $font-family-monospace; }
 body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  letter-spacing: -.006em;
+  letter-spacing: 0;
 }
 table { font-variant-numeric: tabular-nums; }
 
@@ -232,7 +232,7 @@ body {
     border-radius: 999px !important;
     margin: 2px 0 !important;
     padding: 8px 12px !important;
-    font-size: 13.5px;
+    font-size: 14px;
     line-height: 1.4;
     font-weight: 500;
     transition: background .12s ease, color .12s ease;
@@ -290,7 +290,7 @@ body {
     align-items: center;
     justify-content: space-between;
     color: #94a3b8 !important;
-    font-size: 13.5px;
+    font-size: 14px;
     font-weight: 600;
     margin-top: 4px !important;
   }
@@ -481,8 +481,8 @@ dl.dl-horizontal dt {
 
   // uniform checkbox size (the "select all" th font is smaller, so its 1em
   // FontAwesome glyph rendered smaller than the row checkboxes)
-  .multi_select_column { font-size: 15px; }
-  .themable-checkbox label::before { font-size: 15px; line-height: 1; }
+  .multi_select_column { font-size: 16px; }
+  .themable-checkbox label::before { font-size: 16px; line-height: 1; }
   .multi_select_column input[type="checkbox"] { width: 15px; height: 15px; margin: 0; vertical-align: middle; }
 }
 
@@ -1045,7 +1045,7 @@ body.mc-lbaas-page {
   border-radius: 0;
   margin: 0 0 8px;
   padding: 0;
-  font-size: 13.5px;
+  font-size: 14px;
   line-height: 1.4;
   color: #94a3b8;
 
@@ -1222,7 +1222,7 @@ body.mc-lbaas-page {
   margin-bottom: $mc-section-gap;
 
   .mc-section-title {
-    font-size: 21px;
+    font-size: 22px;
     font-weight: 700;
     color: $text-color;
     margin: 6px 0 16px;
@@ -1333,7 +1333,7 @@ body.mc-lbaas-page {
   }
 
   .mc-stat-label {
-    font-size: 13.5px;
+    font-size: 14px;
     font-weight: 600;
     color: #64748b;
     margin-top: 8px;
@@ -1368,14 +1368,14 @@ body.mc-lbaas-page {
   }
 
   .mc-panel-title {
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 700;
     margin: 0;
     color: $text-color;
   }
 
   .mc-panel-sub {
-    font-size: 12.5px;
+    font-size: 12px;
     color: #94a3b8;
     margin-top: 2px;
   }
@@ -1455,7 +1455,7 @@ body.mc-lbaas-page {
   .ml {
     display: flex;
     justify-content: space-between;
-    font-size: 13.5px;
+    font-size: 14px;
     margin-bottom: 5px;
     gap: 8px;
   }
@@ -1512,7 +1512,7 @@ body.mc-lbaas-page {
 
 .mc-quota-head {
   color: #64748b;
-  font-size: 11.5px;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: .05em;
   text-transform: uppercase;
@@ -1542,13 +1542,13 @@ body.mc-lbaas-page {
   text-overflow: ellipsis;
   white-space: nowrap;
   color: $text-color;
-  font-size: 13.5px;
+  font-size: 14px;
   font-weight: 600;
 }
 
 .mc-quota-val {
   color: #64748b;
-  font-size: 12.5px;
+  font-size: 12px;
   font-weight: 600;
   min-width: 64px;
   text-align: right;
@@ -1601,7 +1601,7 @@ body.mc-lbaas-page {
     border-radius: 0;
     background: transparent !important;
     color: #64748b;
-    font-size: 13.5px;
+    font-size: 14px;
     font-weight: 600;
     padding: 10px 16px;
     margin: 0;
@@ -1726,7 +1726,7 @@ body.mc-lbaas-page {
   border-radius: 8px;
   background: #f8fafc;
   color: $text-color;
-  font-size: 13.5px;
+  font-size: 14px;
   padding: 0 12px 0 36px;
   outline: 0;
   box-shadow: none;
@@ -1755,7 +1755,7 @@ body.mc-lbaas-page {
 
 .mc-hv-table-title {
   color: $text-color;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 700;
   line-height: 1.3;
 }
@@ -1832,13 +1832,13 @@ body.mc-lbaas-page {
   min-width: 230px;
 
   .mc-hv-meter-line {
-    font-size: 12.5px;
+    font-size: 12px;
   }
 }
 
 .mc-hv-provider-meta {
   color: #94a3b8;
-  font-size: 11.5px;
+  font-size: 11px;
   font-weight: 600;
   margin-top: 4px;
   white-space: nowrap;
@@ -2227,7 +2227,7 @@ body.mc-spinner-modal-open .modal-backdrop {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 15px;
+  font-size: 16px;
   flex-shrink: 0;
 
   .fa {
@@ -2407,7 +2407,7 @@ body.mc-spinner-modal-open .modal-backdrop {
 
 .mc-page-crumb {
   color: #94a3b8;
-  font-size: 13.5px;
+  font-size: 14px;
   line-height: 1.4;
   margin-bottom: 8px;
 
@@ -2416,7 +2416,7 @@ body.mc-spinner-modal-open .modal-backdrop {
 
 .mc-page-sub {
   color: #64748b;
-  font-size: 13.5px;
+  font-size: 14px;
   margin: 0;
 }
 
@@ -2478,7 +2478,7 @@ body.mc-spinner-modal-open .modal-backdrop {
 }
 
 .mc-recent-title {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 700;
   margin: 0;
   color: $text-color;
@@ -2551,7 +2551,7 @@ body.mc-spinner-modal-open .modal-backdrop {
   }
 
   .mc-usage-table-title {
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 700;
     color: $text-color;
   }
@@ -2658,7 +2658,7 @@ body.mc-spinner-modal-open .modal-backdrop {
     }
 
     .mc-stat-label {
-      font-size: 13.5px;
+      font-size: 14px;
       font-weight: 600;
       line-height: 1.35;
       color: #64748b;
@@ -2677,7 +2677,7 @@ body.mc-spinner-modal-open .modal-backdrop {
    lay its h3/hr/dl out in a row). The .row parent is the flex container. ===== */
 hz-details,hz-resource-property-list,hz-resource-property,hz-field,hz-magic-search,ng-include{display:block}
 [ng-controller^="ImageOverviewController"] .detail{background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(15,23,42,.06),0 4px 12px rgba(15,23,42,.06);padding:0 20px 16px;margin:0;overflow:hidden}
-[ng-controller^="ImageOverviewController"] .detail h3{font-size:15px;font-weight:700;color:#0f172a;margin:0;padding:16px 0 14px}
+[ng-controller^="ImageOverviewController"] .detail h3{font-size:16px;font-weight:700;color:#0f172a;margin:0;padding:16px 0 14px}
 [ng-controller^="ImageOverviewController"] .detail hr{margin:0 -20px 12px;border:0;border-top:1px solid #e2e8f0}
 [ng-controller^="ImageOverviewController"] > .row::before,
 [ng-controller^="ImageOverviewController"] > .row::after{content:none;display:none}
@@ -2686,31 +2686,31 @@ hz-details,hz-resource-property-list,hz-resource-property,hz-field,hz-magic-sear
 [ng-controller^="horizon.app.core.keypairs.DetailsController"] .row{margin:0}
 [ng-controller^="horizon.app.core.keypairs.DetailsController"] .row > .col-md-12{float:none;width:100%}
 [ng-controller^="horizon.app.core.keypairs.DetailsController"] .detail{background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(15,23,42,.06),0 4px 12px rgba(15,23,42,.06);padding:0 20px 16px;margin:0}
-[ng-controller^="horizon.app.core.keypairs.DetailsController"] .detail::before{content:"Key Pair";display:block;font-size:15px;font-weight:700;color:#0f172a;margin:0 -20px 12px;padding:16px 20px 14px;border-bottom:1px solid #e2e8f0}
+[ng-controller^="horizon.app.core.keypairs.DetailsController"] .detail::before{content:"Key Pair";display:block;font-size:16px;font-weight:700;color:#0f172a;margin:0 -20px 12px;padding:16px 20px 14px;border-bottom:1px solid #e2e8f0}
 [ng-controller^="UserOverviewController"] .row{margin:0}
 [ng-controller^="UserOverviewController"] .row > .col-md-6{float:none;width:100%}
 [ng-controller^="UserOverviewController"] .detail{background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(15,23,42,.06),0 4px 12px rgba(15,23,42,.06);padding:0 20px 16px;margin:0}
-[ng-controller^="UserOverviewController"] .detail h3{font-size:15px;font-weight:700;color:#0f172a;margin:0;padding:16px 0 14px}
+[ng-controller^="UserOverviewController"] .detail h3{font-size:16px;font-weight:700;color:#0f172a;margin:0;padding:16px 0 14px}
 [ng-controller^="UserOverviewController"] .detail hr{margin:0 -20px 12px;border:0;border-top:1px solid #e2e8f0}
 [ng-controller^="ServerGroupOverviewController"]{display:block;background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(15,23,42,.06),0 4px 12px rgba(15,23,42,.06);padding:0 20px 16px}
-[ng-controller^="ServerGroupOverviewController"]::before{content:"Server Group";display:block;font-size:15px;font-weight:700;color:#0f172a;margin:0 -20px 12px;padding:16px 20px 14px;border-bottom:1px solid #e2e8f0}
-[ng-controller^="ServerGroupOverviewController"] .h4{font-size:15px;font-weight:700;color:#0f172a;margin:0;padding:14px 0 12px}
+[ng-controller^="ServerGroupOverviewController"]::before{content:"Server Group";display:block;font-size:16px;font-weight:700;color:#0f172a;margin:0 -20px 12px;padding:16px 20px 14px;border-bottom:1px solid #e2e8f0}
+[ng-controller^="ServerGroupOverviewController"] .h4{font-size:16px;font-weight:700;color:#0f172a;margin:0;padding:14px 0 12px}
 [ng-controller^="ServerGroupOverviewController"] hr{margin:0 -20px 12px;border:0;border-top:1px solid #e2e8f0}
 /* network_qos — image-like (2 cards side-by-side + Rules full; JS normaliser). */
 [ng-controller^="NetworkQoSOverviewController"] .detail{background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(15,23,42,.06),0 4px 12px rgba(15,23,42,.06);padding:0 20px 16px;margin:0}
-[ng-controller^="NetworkQoSOverviewController"] .detail h3{font-size:15px;font-weight:700;color:#0f172a;margin:0;padding:16px 0 14px}
+[ng-controller^="NetworkQoSOverviewController"] .detail h3{font-size:16px;font-weight:700;color:#0f172a;margin:0;padding:16px 0 14px}
 [ng-controller^="NetworkQoSOverviewController"] .detail hr{margin:0 -20px 12px;border:0;border-top:1px solid #e2e8f0}
 [ng-controller^="NetworkQoSOverviewController"] > .row::before,[ng-controller^="NetworkQoSOverviewController"] > .row::after{content:none;display:none}
 /* trunks — flat, card the controller div (like server group) */
 [ng-controller^="TrunkOverviewController"]{display:block;background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(15,23,42,.06),0 4px 12px rgba(15,23,42,.06);padding:0 20px 16px}
-[ng-controller^="TrunkOverviewController"]::before{content:"Trunk";display:block;font-size:15px;font-weight:700;color:#0f172a;margin:0 -20px 12px;padding:16px 20px 14px;border-bottom:1px solid #e2e8f0}
-[ng-controller^="TrunkOverviewController"] .h4{font-size:15px;font-weight:700;color:#0f172a;margin:0;padding:14px 0 12px}
+[ng-controller^="TrunkOverviewController"]::before{content:"Trunk";display:block;font-size:16px;font-weight:700;color:#0f172a;margin:0 -20px 12px;padding:16px 20px 14px;border-bottom:1px solid #e2e8f0}
+[ng-controller^="TrunkOverviewController"] .h4{font-size:16px;font-weight:700;color:#0f172a;margin:0;padding:14px 0 12px}
 [ng-controller^="TrunkOverviewController"] hr{margin:0 -20px 12px;border:0;border-top:1px solid #e2e8f0}
 /* domains — single full-width card (like users) */
 [ng-controller^="DomainOverviewController"] .row{margin:0}
 [ng-controller^="DomainOverviewController"] .row > .col-md-6{float:none;width:100%}
 [ng-controller^="DomainOverviewController"] .detail{background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(15,23,42,.06),0 4px 12px rgba(15,23,42,.06);padding:0 20px 16px;margin:0}
-[ng-controller^="DomainOverviewController"] .detail h3{font-size:15px;font-weight:700;color:#0f172a;margin:0;padding:16px 0 14px}
+[ng-controller^="DomainOverviewController"] .detail h3{font-size:16px;font-weight:700;color:#0f172a;margin:0;padding:16px 0 14px}
 [ng-controller^="DomainOverviewController"] .detail hr{margin:0 -20px 12px;border:0;border-top:1px solid #e2e8f0}
 /* Django volume-family detail: cards built by JS (reuses .mc-instance-card). */
 body.mc-ngdetail .page-header{display:flex !important;flex-wrap:wrap;align-items:center;gap:10px}
@@ -2742,7 +2742,7 @@ body.mc-ngdetail .page-header .breadcrumb a:hover{background:#f1f5f9;color:#0f17
    L7Rule): card the Overview tab's .col-md-6.detail section. Scoped to
    mc-lbaas-page; only detail pages have .col-md-6.detail (list is a table). */
 body.mc-lbaas-page .col-md-6.detail{background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(15,23,42,.06),0 4px 12px rgba(15,23,42,.06);padding:16px 20px;margin:0 0 16px;float:none;width:100%;box-sizing:border-box}
-body.mc-lbaas-page .col-md-6.detail h4{margin:0 0 14px;padding-bottom:12px;border-bottom:1px solid #e2e8f0;font-size:15px;font-weight:700;color:#0f172a;line-height:1.25}
+body.mc-lbaas-page .col-md-6.detail h4{margin:0 0 14px;padding-bottom:12px;border-bottom:1px solid #e2e8f0;font-size:16px;font-weight:700;color:#0f172a;line-height:1.25}
 
 // Transfer-table allocate/deallocate: the fa-arrow class sits on the <button>
 // itself (empty content), so the masked ::before collapses to 0. Centre it and
@@ -3085,4 +3085,200 @@ a.btn-launch,
 .mc-launch-btn > .fa::before {
   width: 14px !important;
   height: 14px !important;
+}
+
+// =====================================================================
+//  MD3 typography + dense data-table rhythm
+// =====================================================================
+:root {
+  --mc-type-page-size: 22px;
+  --mc-type-page-line: 28px;
+  --mc-type-title-size: 16px;
+  --mc-type-title-line: 24px;
+  --mc-type-body-size: 14px;
+  --mc-type-body-line: 20px;
+  --mc-type-label-size: 12px;
+  --mc-type-label-line: 16px;
+  --mc-type-caption-size: 11px;
+  --mc-type-caption-line: 16px;
+  --mc-type-metric-size: 28px;
+  --mc-type-metric-line: 36px;
+}
+
+body {
+  font-size: var(--mc-type-body-size);
+  line-height: var(--mc-type-body-line);
+}
+
+#content_body .page-header h1,
+#content_body .mc-page-title,
+#content_body h1 {
+  font-size: var(--mc-type-page-size);
+  font-weight: 700;
+  line-height: var(--mc-type-page-line);
+  letter-spacing: 0;
+}
+
+#content_body .breadcrumb,
+#content_body .mc-page-crumb {
+  font-size: var(--mc-type-label-size);
+  line-height: var(--mc-type-label-line);
+  letter-spacing: 0;
+}
+
+#content_body .panel-title,
+#content_body .mc-panel-title,
+#content_body .mc-recent-title,
+#content_body .mc-usage-table-title,
+#content_body .mc-hv-table-title,
+#content_body .mc-instance-card h4,
+#content_body .detail h3,
+#content_body .detail h4 {
+  font-size: var(--mc-type-title-size);
+  line-height: var(--mc-type-title-line);
+  letter-spacing: 0;
+}
+
+#content_body .form-control,
+#content_body label,
+#content_body .btn,
+#sidebar a.openstack-panel,
+#sidebar .openstack-panel-group > a {
+  font-size: var(--mc-type-body-size);
+  line-height: var(--mc-type-body-line);
+  letter-spacing: 0;
+}
+
+#sidebar .openstack-dashboard > a {
+  font-size: var(--mc-type-caption-size);
+  line-height: var(--mc-type-caption-line);
+  letter-spacing: 0;
+}
+
+#content_body .mc-stat-num {
+  font-size: var(--mc-type-metric-size);
+  line-height: var(--mc-type-metric-line);
+}
+
+#content_body .mc-stat-label,
+#content_body .mc-az-row,
+#content_body .mc-quota-name,
+#content_body .mc-hv-tabs-shell .nav-tabs > li > a,
+#content_body .mc-hv-filter input {
+  font-size: var(--mc-type-body-size);
+  line-height: var(--mc-type-body-line);
+}
+
+#content_body .table {
+  width: 100%;
+  table-layout: auto;
+  font-size: var(--mc-type-body-size);
+  line-height: var(--mc-type-body-line);
+}
+
+#content_body .table > thead > tr > th {
+  padding: 10px 12px;
+  font-size: var(--mc-type-label-size);
+  line-height: var(--mc-type-label-line);
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+
+#content_body .table > tbody > tr > td,
+#content_body .table > tbody > tr > th {
+  padding: 12px;
+  font-size: var(--mc-type-body-size);
+  line-height: var(--mc-type-body-line);
+}
+
+#content_body .table_count,
+#content_body [hz-table-footer] td > span:first-child,
+#content_body .help-block,
+#content_body .mc-panel-subtitle,
+#content_body .mc-quota-value,
+#content_body .mc-hv-provider-meter .mc-hv-meter-line {
+  font-size: var(--mc-type-label-size);
+  line-height: var(--mc-type-label-line);
+  letter-spacing: 0;
+}
+
+#content_body .mc-stat-badge,
+#content_body .label,
+#content_body .badge {
+  font-size: var(--mc-type-label-size);
+  line-height: var(--mc-type-label-line);
+  letter-spacing: 0;
+}
+
+#content_body .mc-limit-title,
+#content_body .mc-hv-tag,
+#content_body .mc-hv-provider-meta {
+  font-size: var(--mc-type-caption-size);
+  line-height: var(--mc-type-caption-line);
+  letter-spacing: 0;
+}
+
+// The project/admin Instances table has more columns than most Horizon tables.
+// Give content-heavy fields room first and keep compact/status columns stable.
+@media (min-width: 1200px) {
+  body.mc-project-instances-page #content_body #instances {
+    width: 100%;
+    min-width: 0;
+    table-layout: auto;
+  }
+
+  body.mc-project-instances-page #content_body .table-responsive:has(#instances) {
+    overflow-x: visible;
+  }
+
+  body.mc-project-instances-page #instances th:nth-child(1), body.mc-project-instances-page #instances td:nth-child(1) { width: 40px; min-width: 40px; }
+  body.mc-project-instances-page #instances th:nth-child(2), body.mc-project-instances-page #instances td:nth-child(2) { width: 170px; }
+  body.mc-project-instances-page #instances th:nth-child(3), body.mc-project-instances-page #instances td:nth-child(3) { width: 145px; }
+  body.mc-project-instances-page #instances th:nth-child(4), body.mc-project-instances-page #instances td:nth-child(4) { width: 220px; }
+  body.mc-project-instances-page #instances th:nth-child(5), body.mc-project-instances-page #instances td:nth-child(5) { width: 115px; }
+  body.mc-project-instances-page #instances th:nth-child(6), body.mc-project-instances-page #instances td:nth-child(6) { width: 130px; }
+  body.mc-project-instances-page #instances th:nth-child(7), body.mc-project-instances-page #instances td:nth-child(7) { width: 100px; }
+  body.mc-project-instances-page #instances th:nth-child(8), body.mc-project-instances-page #instances td:nth-child(8) { width: 34px; padding-left: 6px; padding-right: 6px; }
+  body.mc-project-instances-page #instances th:nth-child(9), body.mc-project-instances-page #instances td:nth-child(9) { width: 100px; }
+  body.mc-project-instances-page #instances th:nth-child(10), body.mc-project-instances-page #instances td:nth-child(10) { width: 80px; }
+  body.mc-project-instances-page #instances th:nth-child(11), body.mc-project-instances-page #instances td:nth-child(11) { width: 112px; }
+  body.mc-project-instances-page #instances th:nth-child(12), body.mc-project-instances-page #instances td:nth-child(12) { width: 118px; }
+  body.mc-project-instances-page #instances th:nth-child(13), body.mc-project-instances-page #instances td:nth-child(13) { width: 150px; min-width: 150px; }
+
+  body.mc-project-instances-page #instances th:nth-child(1), body.mc-project-instances-page #instances td:nth-child(1),
+  body.mc-project-instances-page #instances th:nth-child(5), body.mc-project-instances-page #instances td:nth-child(5),
+  body.mc-project-instances-page #instances th:nth-child(7), body.mc-project-instances-page #instances td:nth-child(7),
+  body.mc-project-instances-page #instances th:nth-child(8), body.mc-project-instances-page #instances td:nth-child(8),
+  body.mc-project-instances-page #instances th:nth-child(9), body.mc-project-instances-page #instances td:nth-child(9),
+  body.mc-project-instances-page #instances th:nth-child(10), body.mc-project-instances-page #instances td:nth-child(10),
+  body.mc-project-instances-page #instances th:nth-child(11), body.mc-project-instances-page #instances td:nth-child(11),
+  body.mc-project-instances-page #instances th:nth-child(13), body.mc-project-instances-page #instances td:nth-child(13) {
+    white-space: nowrap;
+  }
+
+  body.mc-project-instances-page #instances td:nth-child(2),
+  body.mc-project-instances-page #instances td:nth-child(3),
+  body.mc-project-instances-page #instances td:nth-child(4),
+  body.mc-project-instances-page #instances td:nth-child(6),
+  body.mc-project-instances-page #instances td:nth-child(12) {
+    overflow-wrap: anywhere;
+    word-break: normal;
+  }
+}
+
+// At narrower desktop widths, preserve the workflow-critical columns and move
+// secondary information to the instance detail page rather than shrinking text.
+@media (min-width: 1200px) and (max-width: 1599px) {
+  body.mc-project-instances-page #instances th:nth-child(3), body.mc-project-instances-page #instances td:nth-child(3),
+  body.mc-project-instances-page #instances th:nth-child(10), body.mc-project-instances-page #instances td:nth-child(10) {
+    display: none;
+  }
+}
+
+@media (min-width: 1200px) and (max-width: 1365px) {
+  body.mc-project-instances-page #instances th:nth-child(6), body.mc-project-instances-page #instances td:nth-child(6),
+  body.mc-project-instances-page #instances th:nth-child(8), body.mc-project-instances-page #instances td:nth-child(8),
+  body.mc-project-instances-page #instances th:nth-child(12), body.mc-project-instances-page #instances td:nth-child(12) {
+    display: none;
+  }
 }

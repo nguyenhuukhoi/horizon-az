@@ -21,7 +21,7 @@
     code, pre, kbd, samp, tt, .mono {
       font-family: "JetBrains Mono", ui-monospace, "Cascadia Code", "Consolas", monospace !important;
     }
-    body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; letter-spacing: -.006em; }
+    body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; letter-spacing: 0; }
     table { font-variant-numeric: tabular-nums; }
 
     #sidebar .mc-sidebar-brand {
@@ -168,7 +168,7 @@
     hz-details,hz-resource-property-list,hz-resource-property,hz-field,hz-magic-search,ng-include{display:block}
     /* Card styling — giữ dl-horizontal gốc của Horizon, chỉ thêm border/radius/shadow */
     [ng-controller^="ImageOverviewController"] .detail{background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(15,23,42,.06),0 4px 12px rgba(15,23,42,.06);padding:0 20px 16px;margin:0;overflow:hidden}
-    [ng-controller^="ImageOverviewController"] .detail h3{font-size:15px;font-weight:700;color:#0f172a;margin:0;padding:16px 0 14px}
+    [ng-controller^="ImageOverviewController"] .detail h3{font-size:16px;font-weight:700;color:#0f172a;margin:0;padding:16px 0 14px}
     [ng-controller^="ImageOverviewController"] .detail hr{margin:0 -20px 12px;border:0;border-top:1px solid #e2e8f0}
     /* Bootstrap .row clearfix ::before/::after become flex items in our flex
        row and (with the gap) inset Image+Security ~20px, so their outer edges
@@ -180,31 +180,31 @@
     [ng-controller^="horizon.app.core.keypairs.DetailsController"] .row{margin:0}
     [ng-controller^="horizon.app.core.keypairs.DetailsController"] .row > .col-md-12{float:none;width:100%}
     [ng-controller^="horizon.app.core.keypairs.DetailsController"] .detail{background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(15,23,42,.06),0 4px 12px rgba(15,23,42,.06);padding:0 20px 16px;margin:0}
-    [ng-controller^="horizon.app.core.keypairs.DetailsController"] .detail::before{content:"Key Pair";display:block;font-size:15px;font-weight:700;color:#0f172a;margin:0 -20px 12px;padding:16px 20px 14px;border-bottom:1px solid #e2e8f0}
+    [ng-controller^="horizon.app.core.keypairs.DetailsController"] .detail::before{content:"Key Pair";display:block;font-size:16px;font-weight:700;color:#0f172a;margin:0 -20px 12px;padding:16px 20px 14px;border-bottom:1px solid #e2e8f0}
     [ng-controller^="UserOverviewController"] .row{margin:0}
     [ng-controller^="UserOverviewController"] .row > .col-md-6{float:none;width:100%}
     [ng-controller^="UserOverviewController"] .detail{background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(15,23,42,.06),0 4px 12px rgba(15,23,42,.06);padding:0 20px 16px;margin:0}
-    [ng-controller^="UserOverviewController"] .detail h3{font-size:15px;font-weight:700;color:#0f172a;margin:0;padding:16px 0 14px}
+    [ng-controller^="UserOverviewController"] .detail h3{font-size:16px;font-weight:700;color:#0f172a;margin:0;padding:16px 0 14px}
     [ng-controller^="UserOverviewController"] .detail hr{margin:0 -20px 12px;border:0;border-top:1px solid #e2e8f0}
     [ng-controller^="ServerGroupOverviewController"]{display:block;background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(15,23,42,.06),0 4px 12px rgba(15,23,42,.06);padding:0 20px 16px}
-    [ng-controller^="ServerGroupOverviewController"]::before{content:"Server Group";display:block;font-size:15px;font-weight:700;color:#0f172a;margin:0 -20px 12px;padding:16px 20px 14px;border-bottom:1px solid #e2e8f0}
-    [ng-controller^="ServerGroupOverviewController"] .h4{font-size:15px;font-weight:700;color:#0f172a;margin:0;padding:14px 0 12px}
+    [ng-controller^="ServerGroupOverviewController"]::before{content:"Server Group";display:block;font-size:16px;font-weight:700;color:#0f172a;margin:0 -20px 12px;padding:16px 20px 14px;border-bottom:1px solid #e2e8f0}
+    [ng-controller^="ServerGroupOverviewController"] .h4{font-size:16px;font-weight:700;color:#0f172a;margin:0;padding:14px 0 12px}
     [ng-controller^="ServerGroupOverviewController"] hr{margin:0 -20px 12px;border:0;border-top:1px solid #e2e8f0}
     /* network_qos — image-like (2 cards side-by-side + Rules full; JS normaliser). */
     [ng-controller^="NetworkQoSOverviewController"] .detail{background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(15,23,42,.06),0 4px 12px rgba(15,23,42,.06);padding:0 20px 16px;margin:0}
-    [ng-controller^="NetworkQoSOverviewController"] .detail h3{font-size:15px;font-weight:700;color:#0f172a;margin:0;padding:16px 0 14px}
+    [ng-controller^="NetworkQoSOverviewController"] .detail h3{font-size:16px;font-weight:700;color:#0f172a;margin:0;padding:16px 0 14px}
     [ng-controller^="NetworkQoSOverviewController"] .detail hr{margin:0 -20px 12px;border:0;border-top:1px solid #e2e8f0}
     [ng-controller^="NetworkQoSOverviewController"] > .row::before,[ng-controller^="NetworkQoSOverviewController"] > .row::after{content:none;display:none}
     /* trunks — flat, card the controller div (like server group) */
     [ng-controller^="TrunkOverviewController"]{display:block;background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(15,23,42,.06),0 4px 12px rgba(15,23,42,.06);padding:0 20px 16px}
-    [ng-controller^="TrunkOverviewController"]::before{content:"Trunk";display:block;font-size:15px;font-weight:700;color:#0f172a;margin:0 -20px 12px;padding:16px 20px 14px;border-bottom:1px solid #e2e8f0}
-    [ng-controller^="TrunkOverviewController"] .h4{font-size:15px;font-weight:700;color:#0f172a;margin:0;padding:14px 0 12px}
+    [ng-controller^="TrunkOverviewController"]::before{content:"Trunk";display:block;font-size:16px;font-weight:700;color:#0f172a;margin:0 -20px 12px;padding:16px 20px 14px;border-bottom:1px solid #e2e8f0}
+    [ng-controller^="TrunkOverviewController"] .h4{font-size:16px;font-weight:700;color:#0f172a;margin:0;padding:14px 0 12px}
     [ng-controller^="TrunkOverviewController"] hr{margin:0 -20px 12px;border:0;border-top:1px solid #e2e8f0}
     /* domains — single full-width card (like users) */
     [ng-controller^="DomainOverviewController"] .row{margin:0}
     [ng-controller^="DomainOverviewController"] .row > .col-md-6{float:none;width:100%}
     [ng-controller^="DomainOverviewController"] .detail{background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(15,23,42,.06),0 4px 12px rgba(15,23,42,.06);padding:0 20px 16px;margin:0}
-    [ng-controller^="DomainOverviewController"] .detail h3{font-size:15px;font-weight:700;color:#0f172a;margin:0;padding:16px 0 14px}
+    [ng-controller^="DomainOverviewController"] .detail h3{font-size:16px;font-weight:700;color:#0f172a;margin:0;padding:16px 0 14px}
     [ng-controller^="DomainOverviewController"] .detail hr{margin:0 -20px 12px;border:0;border-top:1px solid #e2e8f0}
     /* Django volume-family detail: cards built by the JS wrapper below (reuses .mc-instance-card). */
     body.mc-ngdetail .page-header{display:flex !important;flex-wrap:wrap;align-items:center;gap:10px}
@@ -388,7 +388,7 @@
       border-radius: 0;
       margin: 0 0 8px;
       padding: 0;
-      font-size: 13.5px;
+      font-size: 14px;
       line-height: 1.4;
       color: #94a3b8;
     }
@@ -855,8 +855,8 @@
     #content_body table.table-striped > tbody > tr:hover > td { background-color: #f8fafc; }
     /* Uniform checkbox size: the "select all" th uses a smaller font so its 1em
        FontAwesome glyph rendered smaller than the row checkboxes. */
-    .table.datatable .multi_select_column { font-size: 15px; }
-    .table.datatable .themable-checkbox label::before { font-size: 15px; line-height: 1; }
+    .table.datatable .multi_select_column { font-size: 16px; }
+    .table.datatable .themable-checkbox label::before { font-size: 16px; line-height: 1; }
     .table.datatable .multi_select_column input[type="checkbox"] { width: 15px; height: 15px; margin: 0; vertical-align: middle; }
     .table.datatable > tbody > tr > td a { font-weight: 600; }
     /* "Displaying N items" count: one identical style on Django (.table_count,
@@ -887,7 +887,7 @@
     .mc-hv-tabs-shell .nav-tabs > li { margin-bottom: -1px; }
     .mc-hv-tabs-shell .nav-tabs > li > a {
       border: 0 !important; border-bottom: 2px solid transparent !important; border-radius: 0;
-      background: transparent !important; color: #64748b; font-size: 13.5px; font-weight: 600;
+      background: transparent !important; color: #64748b; font-size: 14px; font-weight: 600;
       padding: 10px 16px; margin: 0; outline: 0 !important; box-shadow: none !important;
     }
     .mc-hv-tabs-shell .nav-tabs > li > a:hover,
@@ -935,7 +935,7 @@
     }
     .mc-hv-filter input {
       width: 100%; height: 34px; border: 1px solid #e2e8f0; border-radius: 8px; background: #f8fafc;
-      color: #0f172a; font-size: 13.5px; padding: 0 12px 0 36px; outline: 0; box-shadow: none; box-sizing: border-box;
+      color: #0f172a; font-size: 14px; padding: 0 12px 0 36px; outline: 0; box-shadow: none; box-sizing: border-box;
     }
     .mc-hv-filter input::placeholder { color: #94a3b8; }
     .mc-hv-filter input:focus { border-color: #bfdbfe; background: #fff; }
@@ -944,7 +944,7 @@
       display: inline-flex; align-items: center; justify-content: center;
     }
     .mc-hv-icon-btn svg { width: 14px; height: 14px; }
-    .mc-hv-table-title { color: #0f172a; font-size: 15px; font-weight: 700; line-height: 1.3; }
+    .mc-hv-table-title { color: #0f172a; font-size: 16px; font-weight: 700; line-height: 1.3; }
     .mc-hv-count {
       display: inline-flex; align-items: center; gap: 6px; min-height: 24px; border-radius: 20px;
       padding: 3px 10px; background: #f1f5f9; color: #64748b; font-size: 12px; font-weight: 700; white-space: nowrap;
@@ -961,8 +961,8 @@
     .mc-hv-instances { color: #0f172a; font-weight: 700; }
     .mc-hv-col-hide { display: none !important; }
     .mc-hv-provider-meter { min-width: 230px; }
-    .mc-hv-provider-meter .mc-hv-meter-line { font-size: 12.5px; }
-    .mc-hv-provider-meta { color: #94a3b8; font-size: 11.5px; font-weight: 600; margin-top: 4px; white-space: nowrap; }
+    .mc-hv-provider-meter .mc-hv-meter-line { font-size: 12px; }
+    .mc-hv-provider-meta { color: #94a3b8; font-size: 11px; font-weight: 600; margin-top: 4px; white-space: nowrap; }
     @media (max-width: 900px) {
       .mc-hv-stats .mc-stat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .mc-hv-tabs-shell .nav-tabs { overflow-x: auto; white-space: nowrap; }
@@ -988,7 +988,7 @@
        L7Rule): card the Overview tab's .col-md-6.detail section. Scoped to
        mc-lbaas-page; only detail pages have .col-md-6.detail (list is a table). */
     body.mc-lbaas-page .col-md-6.detail{background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(15,23,42,.06),0 4px 12px rgba(15,23,42,.06);padding:16px 20px;margin:0 0 16px;float:none;width:100%;box-sizing:border-box}
-    body.mc-lbaas-page .col-md-6.detail h4{margin:0 0 14px;padding-bottom:12px;border-bottom:1px solid #e2e8f0;font-size:15px;font-weight:700;color:#0f172a;line-height:1.25}
+    body.mc-lbaas-page .col-md-6.detail h4{margin:0 0 14px;padding-bottom:12px;border-bottom:1px solid #e2e8f0;font-size:16px;font-weight:700;color:#0f172a;line-height:1.25}
     /* Transfer-table allocate/deallocate: the fa-arrow class sits on the <button> */
     /* itself (empty content), so the masked ::before collapses to 0. Centre it and */
     /* give the ::before a fixed size so the circle-plus / circle-minus shows. */
@@ -1080,13 +1080,13 @@
     /* MD3 control surfaces. Shape/state only: preserve the existing palette,
        DOM, dimensions, toolbar placement, action order, and workflows. */
     @media (min-width: 768px) {
-      #sidebar, #sidebar-accordion { width: 280px; }
-      #content_body { padding-left: 280px; }
-      .navbar.navbar-default.navbar-fixed-top { left: 280px; }
+      #sidebar, #sidebar-accordion { width: 265px; }
+      #content_body { padding-left: 265px; }
+      .navbar.navbar-default.navbar-fixed-top { left: 265px; }
     }
     @media (max-width: 767px) {
-      #sidebar, #sidebar-accordion { width: 280px; }
-      #sidebar { left: -280px; }
+      #sidebar, #sidebar-accordion { width: 265px; }
+      #sidebar { left: -265px; }
       #sidebar.on-screen { left: 0; }
     }
 
@@ -1276,6 +1276,92 @@
     .mc-launch-btn > .fa::before {
       width: 14px !important;
       height: 14px !important;
+    }
+
+    /* MD3 typography roles mirrored inline so DevStack stays correct even when
+       the offline-compressed stylesheet is stale. */
+    :root {
+      --mc-type-page-size:22px; --mc-type-page-line:28px;
+      --mc-type-title-size:16px; --mc-type-title-line:24px;
+      --mc-type-body-size:14px; --mc-type-body-line:20px;
+      --mc-type-label-size:12px; --mc-type-label-line:16px;
+      --mc-type-caption-size:11px; --mc-type-caption-line:16px;
+      --mc-type-metric-size:28px; --mc-type-metric-line:36px;
+    }
+    body { font-size:var(--mc-type-body-size); line-height:var(--mc-type-body-line); }
+    #content_body .page-header h1, #content_body .mc-page-title, #content_body h1 {
+      font-size:var(--mc-type-page-size); font-weight:700; line-height:var(--mc-type-page-line); letter-spacing:0;
+    }
+    #content_body .breadcrumb, #content_body .mc-page-crumb {
+      font-size:var(--mc-type-label-size); line-height:var(--mc-type-label-line); letter-spacing:0;
+    }
+    #content_body .panel-title, #content_body .mc-panel-title,
+    #content_body .mc-recent-title, #content_body .mc-usage-table-title,
+    #content_body .mc-hv-table-title, #content_body .mc-instance-card h4,
+    #content_body .detail h3, #content_body .detail h4 {
+      font-size:var(--mc-type-title-size); line-height:var(--mc-type-title-line); letter-spacing:0;
+    }
+    #content_body .form-control, #content_body label, #content_body .btn,
+    #sidebar a.openstack-panel, #sidebar .openstack-panel-group > a {
+      font-size:var(--mc-type-body-size); line-height:var(--mc-type-body-line); letter-spacing:0;
+    }
+    #sidebar .openstack-dashboard > a {
+      font-size:var(--mc-type-caption-size); line-height:var(--mc-type-caption-line); letter-spacing:0;
+    }
+    #content_body .mc-stat-num { font-size:var(--mc-type-metric-size); line-height:var(--mc-type-metric-line); }
+    #content_body .mc-stat-label, #content_body .mc-az-row,
+    #content_body .mc-quota-name, #content_body .mc-hv-tabs-shell .nav-tabs > li > a,
+    #content_body .mc-hv-filter input {
+      font-size:var(--mc-type-body-size); line-height:var(--mc-type-body-line);
+    }
+    #content_body .table { width:100%; table-layout:auto; font-size:var(--mc-type-body-size); line-height:var(--mc-type-body-line); }
+    #content_body .table > thead > tr > th {
+      padding:10px 12px; font-size:var(--mc-type-label-size); line-height:var(--mc-type-label-line);
+      letter-spacing:0; white-space:nowrap;
+    }
+    #content_body .table > tbody > tr > td, #content_body .table > tbody > tr > th {
+      padding:12px; font-size:var(--mc-type-body-size); line-height:var(--mc-type-body-line);
+    }
+    #content_body .table_count, #content_body [hz-table-footer] td > span:first-child,
+    #content_body .help-block, #content_body .mc-panel-subtitle,
+    #content_body .mc-quota-value, #content_body .mc-hv-provider-meter .mc-hv-meter-line {
+      font-size:var(--mc-type-label-size); line-height:var(--mc-type-label-line); letter-spacing:0;
+    }
+    #content_body .mc-stat-badge, #content_body .label, #content_body .badge {
+      font-size:var(--mc-type-label-size); line-height:var(--mc-type-label-line); letter-spacing:0;
+    }
+    #content_body .mc-limit-title, #content_body .mc-hv-tag, #content_body .mc-hv-provider-meta {
+      font-size:var(--mc-type-caption-size); line-height:var(--mc-type-caption-line); letter-spacing:0;
+    }
+    @media (min-width:1200px) {
+      body.mc-project-instances-page #content_body #instances { width:100%; min-width:0; table-layout:auto; }
+      body.mc-project-instances-page #content_body .table-responsive:has(#instances) { overflow-x:visible; }
+      body.mc-project-instances-page #instances th:nth-child(1),body.mc-project-instances-page #instances td:nth-child(1){width:40px;min-width:40px}
+      body.mc-project-instances-page #instances th:nth-child(2),body.mc-project-instances-page #instances td:nth-child(2){width:170px}
+      body.mc-project-instances-page #instances th:nth-child(3),body.mc-project-instances-page #instances td:nth-child(3){width:145px}
+      body.mc-project-instances-page #instances th:nth-child(4),body.mc-project-instances-page #instances td:nth-child(4){width:220px}
+      body.mc-project-instances-page #instances th:nth-child(5),body.mc-project-instances-page #instances td:nth-child(5){width:115px}
+      body.mc-project-instances-page #instances th:nth-child(6),body.mc-project-instances-page #instances td:nth-child(6){width:130px}
+      body.mc-project-instances-page #instances th:nth-child(7),body.mc-project-instances-page #instances td:nth-child(7){width:100px}
+      body.mc-project-instances-page #instances th:nth-child(8),body.mc-project-instances-page #instances td:nth-child(8){width:34px;padding-left:6px;padding-right:6px}
+      body.mc-project-instances-page #instances th:nth-child(9),body.mc-project-instances-page #instances td:nth-child(9){width:100px}
+      body.mc-project-instances-page #instances th:nth-child(10),body.mc-project-instances-page #instances td:nth-child(10){width:80px}
+      body.mc-project-instances-page #instances th:nth-child(11),body.mc-project-instances-page #instances td:nth-child(11){width:112px}
+      body.mc-project-instances-page #instances th:nth-child(12),body.mc-project-instances-page #instances td:nth-child(12){width:118px}
+      body.mc-project-instances-page #instances th:nth-child(13),body.mc-project-instances-page #instances td:nth-child(13){width:150px;min-width:150px}
+      body.mc-project-instances-page #instances th:nth-child(1),body.mc-project-instances-page #instances td:nth-child(1),body.mc-project-instances-page #instances th:nth-child(5),body.mc-project-instances-page #instances td:nth-child(5),
+      body.mc-project-instances-page #instances th:nth-child(7),body.mc-project-instances-page #instances td:nth-child(7),body.mc-project-instances-page #instances th:nth-child(8),body.mc-project-instances-page #instances td:nth-child(8),
+      body.mc-project-instances-page #instances th:nth-child(9),body.mc-project-instances-page #instances td:nth-child(9),body.mc-project-instances-page #instances th:nth-child(10),body.mc-project-instances-page #instances td:nth-child(10),
+      body.mc-project-instances-page #instances th:nth-child(11),body.mc-project-instances-page #instances td:nth-child(11),body.mc-project-instances-page #instances th:nth-child(13),body.mc-project-instances-page #instances td:nth-child(13){white-space:nowrap}
+      body.mc-project-instances-page #instances td:nth-child(2),body.mc-project-instances-page #instances td:nth-child(3),body.mc-project-instances-page #instances td:nth-child(4),
+      body.mc-project-instances-page #instances td:nth-child(6),body.mc-project-instances-page #instances td:nth-child(12){overflow-wrap:anywhere;word-break:normal}
+    }
+    @media (min-width:1200px) and (max-width:1599px) {
+      body.mc-project-instances-page #instances th:nth-child(3),body.mc-project-instances-page #instances td:nth-child(3),body.mc-project-instances-page #instances th:nth-child(10),body.mc-project-instances-page #instances td:nth-child(10){display:none}
+    }
+    @media (min-width:1200px) and (max-width:1365px) {
+      body.mc-project-instances-page #instances th:nth-child(6),body.mc-project-instances-page #instances td:nth-child(6),body.mc-project-instances-page #instances th:nth-child(8),body.mc-project-instances-page #instances td:nth-child(8),
+      body.mc-project-instances-page #instances th:nth-child(12),body.mc-project-instances-page #instances td:nth-child(12){display:none}
     }
   </style>
   <a class="mc-sidebar-brand" href="{% site_branding_link %}" target="_self">
@@ -1485,6 +1571,9 @@
     var isLb = /\/project\/load_balancer\/?/.test(path) ||
                /project\/load_balancer\/?/.test(hash);
     document.body.classList.toggle('mc-lbaas-page', isLb);
+    document.body.classList.toggle(
+      'mc-project-instances-page',
+      /\/project\/instances(?:\/|$)/.test(path));
     // Angular routed-detail pages we card-ify (ngdetails/<TYPE>). Set from the
     // URL on first paint so the header styling applies before Angular renders
     // the breadcrumb — no raw "Back" flash on refresh. Decode in case :: is
