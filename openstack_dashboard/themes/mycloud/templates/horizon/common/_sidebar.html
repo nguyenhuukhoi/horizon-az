@@ -1332,6 +1332,133 @@
       height: 14px !important;
     }
 
+    /* MD3 wizard/dialog fallback for deployments serving stale compressed CSS.
+       Presentation only: no DOM or Horizon workflow changes. */
+    .modal .modal-content {
+      border-radius:28px !important;
+      box-shadow:0 24px 64px rgba(15,23,42,.28);
+    }
+    .modal .modal-header {
+      min-height:56px;
+      padding:16px 20px;
+      border-bottom-color:#e2e8f0;
+    }
+    .modal .modal-header .close {
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:40px;
+      height:40px;
+      margin:-8px -8px -8px 8px;
+      padding:0;
+      border-radius:50%;
+    }
+    .modal .modal-header .close:focus-visible {
+      outline:0;
+      box-shadow:0 0 0 3px rgba(37,99,235,.14);
+    }
+    .modal .modal-footer {
+      min-height:64px;
+      padding:12px 20px;
+      border-bottom-left-radius:28px;
+      border-bottom-right-radius:28px;
+    }
+    .modal .btn, .ng-wizard .btn {
+      min-height:40px !important;
+      padding-top:9px;
+      padding-bottom:9px;
+    }
+    .modal .form-control, .ng-wizard .form-control,
+    .modal select, .ng-wizard select {
+      min-height:40px;
+      border-radius:12px;
+    }
+    .modal textarea.form-control, .ng-wizard textarea.form-control,
+    .modal select[multiple], .ng-wizard select[multiple] { height:auto; }
+    .modal input[type="checkbox"], .modal input[type="radio"],
+    .ng-wizard input[type="checkbox"], .ng-wizard input[type="radio"] {
+      width:18px;
+      height:18px;
+      accent-color:#2563eb;
+    }
+    .modal input[type="file"]::file-selector-button,
+    .ng-wizard input[type="file"]::file-selector-button {
+      min-height:36px;
+      margin:-1px 10px -1px -1px;
+      padding:7px 14px;
+      border:1px solid #cbd5e1;
+      border-radius:999px;
+      background:#fff;
+      color:#0f172a;
+      font:inherit;
+      font-weight:600;
+    }
+    .modal .has-success .control-label,
+    .ng-wizard .has-success .control-label { color:#0f172a; }
+    .modal .has-success .form-control,
+    .ng-wizard .has-success .form-control {
+      border-color:#cbd5e1;
+      box-shadow:none;
+    }
+    .modal .has-success .form-control:focus,
+    .ng-wizard .has-success .form-control:focus {
+      border-color:#2563eb;
+      box-shadow:0 0 0 3px rgba(37,99,235,.14);
+    }
+    .modal .has-error .form-control:focus,
+    .ng-wizard .has-error .form-control:focus {
+      box-shadow:0 0 0 3px rgba(220,38,38,.14);
+    }
+    .ng-wizard .help-toggle, .modal .help-toggle {
+      width:40px;
+      height:40px;
+    }
+    .ng-wizard .transfer-table .btn.fa-arrow-up,
+    .ng-wizard .transfer-table .btn.fa-arrow-down,
+    .modal .mc-transfer-add,
+    .modal .mc-transfer-remove {
+      height:40px !important;
+      min-height:40px !important;
+    }
+    .modal .hz-magic-search-bar .magic-search-bar,
+    .modal .hz-magic-search-bar .input-group,
+    .modal .hz-magic-search-bar .input-group-addon,
+    .modal .hz-magic-search-bar .input-group-btn,
+    .modal .hz-magic-search-bar .input-group-btn > button,
+    .modal .hz-magic-search-bar .form-control,
+    .modal .hz-magic-search-bar .magic-search,
+    .modal .hz-magic-search-bar .search-bar,
+    .modal .hz-magic-search-bar .search-input {
+      height:40px !important;
+      min-height:40px !important;
+      max-height:40px !important;
+    }
+    .modal .form-group.has-feedback > .form-control-feedback.fa-check,
+    .modal .form-group.has-feedback > .form-control-feedback.fa-times,
+    .ng-wizard .form-group.has-feedback > .form-control-feedback.fa-check,
+    .ng-wizard .form-group.has-feedback > .form-control-feedback.fa-times {
+      width:40px !important;
+      height:40px !important;
+      line-height:40px !important;
+    }
+    .ng-wizard .nav-pills > li:not(.active) > a:hover,
+    .ng-wizard .nav-pills > li:not(.active) > a:focus {
+      background:rgba(37,99,235,.08);
+      color:#2563eb;
+    }
+    @media (max-width:767px) {
+      .modal .modal-dialog { margin:12px; }
+      .modal .modal-content { border-radius:20px !important; }
+      .modal .modal-footer {
+        border-bottom-left-radius:20px;
+        border-bottom-right-radius:20px;
+      }
+    }
+    @media (prefers-reduced-motion:reduce) {
+      .modal .modal-content, .modal .btn, .modal .form-control,
+      .ng-wizard .nav-pills > li > a { transition:none !important; }
+    }
+
     /* MD3 typography roles mirrored inline so DevStack stays correct even when
        the offline-compressed stylesheet is stale. */
     :root {
