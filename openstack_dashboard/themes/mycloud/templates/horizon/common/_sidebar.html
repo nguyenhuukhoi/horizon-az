@@ -1250,27 +1250,17 @@
 
     /* MD3 navigation surfaces: sidebar entries and wizard steps are links,
        so they are not covered by the generic .btn pill rule above. */
-    .ng-wizard .wizard-navigation {
-      background:#f8fafc !important;
-      border-right:1px solid #e2e8f0;
-    }
     #sidebar .panel > a,
     #sidebar .list-group .list-group-item,
     #sidebar .list-group > a.list-group-item,
     .ng-wizard .nav-pills > li > a {
       border-radius: 999px !important;
     }
-    .ng-wizard .nav-pills > li > a {
-      background:transparent !important;
-      color:#475569 !important;
-    }
     .ng-wizard .nav-pills > li.active > a,
     .ng-wizard .nav-pills > li.active > a:hover,
     .ng-wizard .nav-pills > li.active > a:focus {
-      background:#dbeafe !important;
       border-color: transparent !important;
       border-radius: 999px !important;
-      color:#1e3a8a !important;
       outline: 0 !important;
     }
     .ng-wizard .nav-pills > li.active > a:focus-visible {
@@ -1453,8 +1443,8 @@
     }
     .ng-wizard .nav-pills > li:not(.active) > a:hover,
     .ng-wizard .nav-pills > li:not(.active) > a:focus {
-      background:#f1f5f9 !important;
-      color:#1e3a8a !important;
+      background:rgba(37,99,235,.08);
+      color:#2563eb;
     }
     @media (max-width:767px) {
       .modal .modal-dialog { margin:12px; }
