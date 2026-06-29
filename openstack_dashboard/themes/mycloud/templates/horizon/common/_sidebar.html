@@ -1108,6 +1108,34 @@
       box-sizing:border-box;
       transition:background-color .16s ease;
     }
+    /* One MD3 outlined table per membership column: outlined header/body and
+       horizontal dividers, without clipping Horizon role dropdowns. */
+    .modal .membership .header .fake_table_header,
+    .ng-wizard .membership .header .fake_table_header {
+      min-height:56px;
+      padding:8px 12px !important;
+      border:1px solid #e2e8f0 !important;
+      border-bottom:1px solid #e2e8f0 !important;
+      border-radius:12px 12px 0 0 !important;
+      background:#fff;
+      box-sizing:border-box;
+    }
+    .modal .membership .filterable > .fake_table,
+    .ng-wizard .membership .filterable > .fake_table {
+      width:100%;
+      border:1px solid #e2e8f0 !important;
+      border-top:0 !important;
+      border-radius:0 0 12px 12px !important;
+      background:#fff !important;
+      box-sizing:border-box;
+    }
+    .modal .membership .members > ul.btn-group.last_stripe,
+    .modal .membership .available_members > ul.btn-group.last_stripe,
+    .ng-wizard .membership .members > ul.btn-group.last_stripe,
+    .ng-wizard .membership .available_members > ul.btn-group.last_stripe {
+      border-bottom:0 !important;
+      border-radius:0 0 11px 11px !important;
+    }
     .modal .membership .members > ul.btn-group:hover,
     .modal .membership .available_members > ul.btn-group:hover,
     .ng-wizard .membership .members > ul.btn-group:hover,
@@ -1148,8 +1176,8 @@
       margin:0;
       padding:8px 12px;
       border:0;
-      border-bottom:1px solid #e2e8f0;
-      border-radius:0;
+      border-bottom:0;
+      border-radius:0 0 11px 11px;
       background:#fff;
       box-sizing:border-box;
     }
