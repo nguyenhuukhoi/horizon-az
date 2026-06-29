@@ -1385,44 +1385,43 @@
     }
     /* ThemableSelectWidget displays the wrapper and hides the native select.
        Overlay the outlined-field ring without changing widget visibility. */
-    .modal .form-group > .themable-select.form-control,
-    .ng-wizard .form-group > .themable-select.form-control {
+    .modal .form-group .themable-select.form-control,
+    .ng-wizard .form-group .themable-select.form-control {
       position:relative;
       border:1px solid #cbd5e1 !important;
       border-radius:12px !important;
       box-shadow:none !important;
     }
-    .modal .form-group > .themable-select.form-control::after,
-    .ng-wizard .form-group > .themable-select.form-control::after {
+    .modal .form-group .themable-select.form-control::after,
+    .ng-wizard .form-group .themable-select.form-control::after {
       content:"";
       position:absolute;
       z-index:2;
-      inset:-1px;
+      inset:0;
       border:1px solid #cbd5e1;
       border-radius:12px;
       pointer-events:none;
     }
-    .modal .form-group > .themable-select.form-control:focus-within::after,
-    .modal .form-group > .themable-select.form-control.open::after,
-    .ng-wizard .form-group > .themable-select.form-control:focus-within::after,
-    .ng-wizard .form-group > .themable-select.form-control.open::after {
+    .modal .form-group .themable-select.form-control:focus-within::after,
+    .modal .form-group .themable-select.form-control.open::after,
+    .ng-wizard .form-group .themable-select.form-control:focus-within::after,
+    .ng-wizard .form-group .themable-select.form-control.open::after {
       border:2px solid #2563eb;
     }
-    .modal .form-group > .themable-select.form-control > .btn,
-    .ng-wizard .form-group > .themable-select.form-control > .btn {
+    .modal .form-group .themable-select.form-control > .btn,
+    .ng-wizard .form-group .themable-select.form-control > .btn {
       position:relative;
       z-index:1;
       border-radius:12px !important;
     }
-    /* MD3 primary tabs for Django modal workflows. Keep Bootstrap tab
-       behavior and replace the filled pill with a state layer + indicator. */
+    /* MD3 pill geometry only. Existing theme rules continue to own colors. */
     .modal .modal-body > .nav-pills {
       display:flex;
-      align-items:stretch;
-      gap:4px;
+      align-items:center;
+      gap:8px;
       margin:0 0 16px;
-      padding:0 0 1px;
-      border-bottom:1px solid #e2e8f0;
+      padding:0;
+      border:0;
     }
     .modal .modal-body > .nav-pills > li {
       float:none;
@@ -1431,28 +1430,12 @@
     .modal .modal-body > .nav-pills > li > a {
       display:inline-flex;
       align-items:center;
-      min-height:48px;
-      margin:0 0 -1px;
+      justify-content:center;
+      min-height:40px;
+      margin:0;
       padding:0 16px;
-      border:0 !important;
-      border-bottom:3px solid transparent !important;
-      border-radius:8px 8px 0 0 !important;
-      background:transparent !important;
-      color:#475569;
+      border-radius:999px !important;
       font-weight:600;
-      box-shadow:none !important;
-    }
-    .modal .modal-body > .nav-pills > li:not(.active) > a:hover,
-    .modal .modal-body > .nav-pills > li:not(.active) > a:focus {
-      background:rgba(37,99,235,.08) !important;
-      color:#2563eb;
-    }
-    .modal .modal-body > .nav-pills > li.active > a,
-    .modal .modal-body > .nav-pills > li.active > a:hover,
-    .modal .modal-body > .nav-pills > li.active > a:focus {
-      border-bottom-color:#2563eb !important;
-      background:rgba(37,99,235,.10) !important;
-      color:#2563eb !important;
     }
     .modal textarea.form-control, .ng-wizard textarea.form-control,
     .modal select[multiple], .ng-wizard select[multiple] { height:auto; }
