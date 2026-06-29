@@ -3459,6 +3459,62 @@ a.btn-launch,
   height: auto;
 }
 
+// Create User keeps its native Django fields and add-project workflow. Limit
+// the description's initial footprint, then separate the add action from the
+// select so the two outlined controls never overlap.
+#create_user_form #id_description {
+  height: 70px !important;
+  min-height: 70px !important;
+}
+
+#create_user_form .form-group:has(#id_project) .input-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+#create_user_form .form-group:has(#id_project) .input-group > .form-control {
+  flex: 1 1 auto;
+  width: 0 !important;
+  min-width: 0;
+}
+
+#create_user_form .form-group:has(#id_project) .input-group > .input-group-btn {
+  display: flex;
+  flex: 0 0 40px;
+  width: 40px;
+}
+
+#create_user_form .form-group:has(#id_project) .ajax-add {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  min-width: 40px;
+  height: 40px;
+  min-height: 40px !important;
+  padding: 0;
+  border: 0;
+  border-radius: 999px !important;
+  background: #2563eb !important;
+  color: #fff !important;
+  box-shadow: none !important;
+}
+
+#create_user_form .form-group:has(#id_project) .ajax-add:hover {
+  background: #1d4ed8 !important;
+}
+
+#create_user_form .form-group:has(#id_project) .ajax-add:focus-visible {
+  outline: 0;
+  box-shadow: 0 0 0 3px rgba($brand-primary, .18) !important;
+}
+
+#create_user_form .form-group:has(#id_project) .ajax-add .fa-plus::before {
+  background-color: #fff !important;
+}
+
 // Horizon's numeric field is one 40px input plus two half-height controls.
 // The generic modal button height must not expand each spinner button to 40px.
 .modal .themable-spinner,

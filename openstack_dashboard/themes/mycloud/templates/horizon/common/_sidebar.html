@@ -1575,6 +1575,53 @@
     }
     .modal textarea.form-control, .ng-wizard textarea.form-control,
     .modal select[multiple], .ng-wizard select[multiple] { height:auto; }
+    /* Keep Create User's native Django workflow; only size and separate its
+       description/project controls. */
+    #create_user_form #id_description {
+      height:70px !important;
+      min-height:70px !important;
+    }
+    #create_user_form .form-group:has(#id_project) .input-group {
+      display:flex;
+      align-items:center;
+      gap:8px;
+      width:100%;
+    }
+    #create_user_form .form-group:has(#id_project) .input-group > .form-control {
+      flex:1 1 auto;
+      width:0 !important;
+      min-width:0;
+    }
+    #create_user_form .form-group:has(#id_project) .input-group > .input-group-btn {
+      display:flex;
+      flex:0 0 40px;
+      width:40px;
+    }
+    #create_user_form .form-group:has(#id_project) .ajax-add {
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:40px;
+      min-width:40px;
+      height:40px;
+      min-height:40px !important;
+      padding:0;
+      border:0;
+      border-radius:999px !important;
+      background:#2563eb !important;
+      color:#fff !important;
+      box-shadow:none !important;
+    }
+    #create_user_form .form-group:has(#id_project) .ajax-add:hover {
+      background:#1d4ed8 !important;
+    }
+    #create_user_form .form-group:has(#id_project) .ajax-add:focus-visible {
+      outline:0;
+      box-shadow:0 0 0 3px rgba(37,99,235,.18) !important;
+    }
+    #create_user_form .form-group:has(#id_project) .ajax-add .fa-plus::before {
+      background-color:#fff !important;
+    }
     /* Keep Horizon number spinners inside the same 40px field. The generic
        modal button rule must not make each half-height control 40px tall. */
     .modal .themable-spinner, .ng-wizard .themable-spinner {
