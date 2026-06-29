@@ -2886,6 +2886,80 @@ body.mc-lbaas-page .col-md-6.detail h4{margin:0 0 14px;padding-bottom:12px;borde
   }
 }
 
+// MD3 membership list rows: one stable 56px line, a subtle divider and a
+// state layer. Preserve Horizon's generated membership DOM and list behavior.
+.modal .membership .members > ul.btn-group,
+.modal .membership .available_members > ul.btn-group,
+.ng-wizard .membership .members > ul.btn-group,
+.ng-wizard .membership .available_members > ul.btn-group {
+  min-height: 56px;
+  margin: 0 !important;
+  padding: 8px 8px 8px 12px !important;
+  border: 0 !important;
+  border-bottom: 1px solid $mc-border !important;
+  border-radius: 0 !important;
+  background-color: #fff !important;
+  box-sizing: border-box;
+  transition: background-color .16s ease;
+}
+
+.modal .membership .members > ul.btn-group:hover,
+.modal .membership .available_members > ul.btn-group:hover,
+.ng-wizard .membership .members > ul.btn-group:hover,
+.ng-wizard .membership .available_members > ul.btn-group:hover {
+  background-color: rgba($brand-primary, .04) !important;
+}
+
+.modal .membership .members > ul.btn-group:focus-within,
+.modal .membership .available_members > ul.btn-group:focus-within,
+.ng-wizard .membership .members > ul.btn-group:focus-within,
+.ng-wizard .membership .available_members > ul.btn-group:focus-within {
+  background-color: rgba($brand-primary, .08) !important;
+}
+
+.modal .membership .members > ul.btn-group > li.member,
+.modal .membership .available_members > ul.btn-group > li.member,
+.ng-wizard .membership .members > ul.btn-group > li.member,
+.ng-wizard .membership .available_members > ul.btn-group > li.member {
+  display: flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 0 !important;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.modal .membership a[href="#add_remove"],
+.ng-wizard .membership a[href="#add_remove"] {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  width: 40px !important;
+  min-width: 40px !important;
+  height: 40px !important;
+  min-height: 40px !important;
+  padding: 0 !important;
+}
+
+.modal .membership .no_results,
+.ng-wizard .membership .no_results {
+  min-height: 56px;
+  margin: 0;
+  padding: 8px 12px;
+  border: 0;
+  border-bottom: 1px solid $mc-border;
+  border-radius: 0;
+  background: #fff;
+  box-sizing: border-box;
+}
+
+.modal .membership .no_results > li,
+.ng-wizard .membership .no_results > li {
+  display: flex;
+  align-items: center;
+  min-height: 40px;
+}
+
 /* MyCloud checkbox: self-contained box + Lucide check. The core themable
    checkbox draws its tick with a FontAwesome glyph (content:'\f046'); when the
    FA webfont isn't applied (we render icons via masks) that glyph shows up as a
