@@ -4042,6 +4042,14 @@ body.mc-project-instances-page #instances > tbody > tr > td:last-child {
     box-sizing: border-box;
   }
 
+  // Allocated tables often have neither search nor batch actions. Horizon
+  // still renders the preamble container, so do not turn that empty shell
+  // into a visual row. Comment nodes left by Angular ng-if are ignored by
+  // :has(), making this reliable without changing the widget template.
+  .hz-dynamic-table-preamble:not(:has(.hz-magic-search-bar)):not(:has(.hz-dynamic-table-actions)) {
+    display: none;
+  }
+
   .magic-search-bar,
   .basic-search-bar,
   .hz-magic-search-bar {
