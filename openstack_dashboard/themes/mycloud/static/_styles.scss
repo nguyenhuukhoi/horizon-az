@@ -3455,6 +3455,45 @@ a.btn-launch,
   height: 18px !important;
 }
 
+// Membership workflows use Bootstrap's legacy 34px feedback positioning.
+// Keep the existing SVG search mask, but centre its 18px glyph in the 40px
+// MD3 field without changing the input or filtering behaviour.
+.modal .membership .form-group.has-feedback,
+.ng-wizard .membership .form-group.has-feedback {
+  position: relative;
+  min-height: 40px;
+  margin-bottom: 0;
+}
+
+.modal .membership .form-group.has-feedback > .form-control,
+.ng-wizard .membership .form-group.has-feedback > .form-control {
+  height: 40px !important;
+  padding-right: 40px !important;
+}
+
+.modal .membership .form-group.has-feedback > .form-control-feedback.fa-search,
+.ng-wizard .membership .form-group.has-feedback > .form-control-feedback.fa-search {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  top: 0 !important;
+  right: 0 !important;
+  width: 40px !important;
+  height: 40px !important;
+  margin: 0 !important;
+  font-size: 18px !important;
+  line-height: 1 !important;
+  transform: none;
+  pointer-events: none;
+}
+
+.modal .membership .form-group.has-feedback > .form-control-feedback.fa-search::before,
+.ng-wizard .membership .form-group.has-feedback > .form-control-feedback.fa-search::before {
+  width: 18px !important;
+  height: 18px !important;
+  margin: 0 !important;
+}
+
 .ng-wizard .metadata-tree .mc-transfer-add,
 .ng-wizard .metadata-tree .mc-transfer-remove {
   width: 40px !important;
