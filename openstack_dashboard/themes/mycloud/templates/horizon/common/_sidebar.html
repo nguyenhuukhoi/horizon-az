@@ -640,6 +640,28 @@
       height:14px !important;
     }
     .fa-asterisk::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.6' stroke-linecap='round'><path d='M12 6v12'/> <path d='M17.196 9 6.804 15'/> <path d='m6.804 9 10.392 6'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.6' stroke-linecap='round'><path d='M12 6v12'/> <path d='M17.196 9 6.804 15'/> <path d='m6.804 9 10.392 6'/></svg>") center/contain no-repeat; }
+    /* One required-marker token for Django fields, Angular fields and tabs. */
+    .hz-icon-required.fa-asterisk {
+      display:inline-flex;
+      width:auto;
+      height:auto;
+      margin-left:3px;
+      font-family:inherit !important;
+      font-size:12px;
+      font-weight:700;
+      line-height:1;
+      vertical-align:.35em;
+      color:#dc2626 !important;
+    }
+    .hz-icon-required.fa-asterisk::before {
+      content:"*";
+      display:inline;
+      width:auto;
+      height:auto;
+      background:transparent;
+      -webkit-mask:none;
+      mask:none;
+    }
     .fa-bars::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'><path d='M4 6h16M4 12h16M4 18h16'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'><path d='M4 6h16M4 12h16M4 18h16'/></svg>") center/contain no-repeat; }
     .fa-plus::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round'><path d='M12 5v14M5 12h14'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round'><path d='M12 5v14M5 12h14'/></svg>") center/contain no-repeat; }
     .fa-trash::before, .fa-trash-o::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'><path d='M10 11v6'/> <path d='M14 11v6'/> <path d='M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6'/> <path d='M3 6h18'/> <path d='M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'><path d='M10 11v6'/> <path d='M14 11v6'/> <path d='M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6'/> <path d='M3 6h18'/> <path d='M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2'/></svg>") center/contain no-repeat; }
@@ -2635,6 +2657,8 @@
   }
   function classify(t) {
     t = (t || '').toLowerCase();
+    if (/^available$/.test(t)) return 'ok';
+    if (/^in[- ]use$/.test(t)) return 'info';
     if (/active|running|online|enabled|^up$/.test(t)) return 'ok';
     if (/offline|error|crash|fail|deleted|^down$/.test(t)) return 'err';
     if (/degraded|pending|paus|suspend|block/.test(t)) return 'warn';
@@ -2717,6 +2741,8 @@
   }
   function classify(t) {
     t = (t || '').toLowerCase();
+    if (/^available$/.test(t)) return 'ok';
+    if (/^in[- ]use$/.test(t)) return 'info';
     if (/active|running|online|enabled|^up$/.test(t)) return 'ok';
     if (/offline|error|crash|fail|deleted|^down$/.test(t)) return 'err';
     if (/degraded|pending|paus|suspend|block/.test(t)) return 'warn';
