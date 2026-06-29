@@ -3625,6 +3625,77 @@ a.btn-launch,
   min-height: 32px !important;
 }
 
+// Existing metadata values use a trailing remove action. Keep the field and
+// action as separate MD3 controls so Bootstrap's joined input-group geometry
+// cannot place the action over the select/input content.
+.ng-wizard .metadata-tree .metadata-tree-item > .input-group {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 0;
+}
+
+.ng-wizard .metadata-tree .metadata-tree-item > .input-group > .input-group-addon,
+.ng-wizard .metadata-tree .metadata-tree-item > .input-group > .form-control {
+  position: static;
+  float: none;
+}
+
+.ng-wizard .metadata-tree .metadata-tree-item > .input-group > .form-control {
+  flex: 1 1 auto;
+  width: 1%;
+  min-width: 0;
+  border-top-right-radius: 8px !important;
+  border-bottom-right-radius: 8px !important;
+}
+
+.ng-wizard .metadata-tree .metadata-tree-item > .input-group > .input-group-btn {
+  position: static;
+  display: flex;
+  align-items: center;
+  flex: 0 0 40px;
+  width: 40px;
+  margin: 0 0 0 8px;
+}
+
+.ng-wizard .metadata-tree .metadata-tree-item > .input-group >
+  .input-group-btn > .mc-transfer-remove {
+  width: 40px !important;
+  min-width: 40px !important;
+  height: 40px !important;
+  min-height: 40px !important;
+}
+
+// Array metadata has a denser group header. Its remove action follows the
+// compact MD3 hierarchy and stays in-flow at the trailing edge of the row.
+.ng-wizard .metadata-tree .metadata-tree-item .multiselect .panel-heading > div {
+  display: flex;
+  align-items: center;
+  min-height: 40px;
+  width: 100%;
+}
+
+.ng-wizard .metadata-tree .metadata-tree-item .multiselect
+  .metadata-tree-item-label {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.ng-wizard .metadata-tree .metadata-tree-item .multiselect
+  .metadata-tree-item-button.mc-transfer-remove {
+  position: static;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 32px;
+  width: 32px !important;
+  min-width: 32px !important;
+  height: 32px !important;
+  min-height: 32px !important;
+  margin: 0 0 0 8px !important;
+  padding: 0 !important;
+}
+
 .ng-wizard .metadata-tree .mc-transfer-add .fa-plus,
 .ng-wizard .metadata-tree .mc-transfer-remove .fa-minus,
 .ng-wizard .metadata-tree .mc-transfer-add .fa-plus::before,
