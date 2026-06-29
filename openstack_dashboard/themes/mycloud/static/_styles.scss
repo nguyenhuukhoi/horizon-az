@@ -2261,6 +2261,13 @@ body.mc-spinner-modal-open .modal-backdrop {
   -webkit-mask: none;
   mask: none;
 }
+
+// Pill tabs are flex containers, so inline vertical-align is ignored there.
+// Lift their marker to the same superscript position used by field labels.
+.modal .modal-body > .nav-pills .hz-icon-required.fa-asterisk {
+  margin-left: 5px;
+  transform: translateY(-3px);
+}
 .fa-bars::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'><path d='M4 6h16M4 12h16M4 18h16'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'><path d='M4 6h16M4 12h16M4 18h16'/></svg>") center/contain no-repeat; }
 .fa-plus::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round'><path d='M12 5v14M5 12h14'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round'><path d='M12 5v14M5 12h14'/></svg>") center/contain no-repeat; }
 .fa-trash::before, .fa-trash-o::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'><path d='M10 11v6'/> <path d='M14 11v6'/> <path d='M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6'/> <path d='M3 6h18'/> <path d='M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'><path d='M10 11v6'/> <path d='M14 11v6'/> <path d='M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6'/> <path d='M3 6h18'/> <path d='M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2'/></svg>") center/contain no-repeat; }
