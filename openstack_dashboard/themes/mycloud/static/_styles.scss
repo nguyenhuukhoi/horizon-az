@@ -3982,3 +3982,266 @@ body.mc-project-instances-page #instances > tbody > tr > td:last-child {
     display: none;
   }
 }
+
+// =====================================================================
+//  MD3 wizard data tables
+//  Presentation only: retain Horizon's DOM, actions, selection state,
+//  workflow behavior and the existing MyCloud color system.
+// =====================================================================
+
+// Angular wizard transfer tables (Source, Flavor, Networks, Ports, Security
+// Groups, Key Pairs and Server Groups) share the same outlined data-table
+// rhythm. The existing wrappers continue to own scrolling and allocation.
+.ng-wizard .transfer-table {
+  .transfer-section {
+    margin-top: 16px;
+  }
+
+  .transfer-heading {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 40px;
+    margin: 0 0 8px;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 600;
+
+    .fa {
+      flex: 0 0 auto;
+      margin-right: 0;
+    }
+
+    .help-text {
+      margin: 0 0 0 auto;
+      font-size: 12px;
+      line-height: 16px;
+      font-weight: 500;
+    }
+  }
+
+  .transfer-available,
+  .transfer-allocated {
+    border: 1px solid $mc-border;
+    border-radius: 12px;
+    box-sizing: border-box;
+  }
+
+  hz-dynamic-table,
+  .hz-magic-search-context {
+    display: block;
+    min-width: 100%;
+  }
+
+  .hz-dynamic-table-preamble {
+    min-height: 56px;
+    margin: 0;
+    padding: 8px 12px;
+    border-bottom: 1px solid $mc-border;
+    align-items: center;
+    box-sizing: border-box;
+  }
+
+  .magic-search-bar,
+  .basic-search-bar,
+  .hz-magic-search-bar {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  .table {
+    width: 100%;
+    margin: 0;
+    border: 0;
+    border-collapse: separate;
+    border-spacing: 0;
+  }
+
+  .table > thead > tr:first-child > td {
+    height: 40px;
+    padding: 8px 16px;
+    border-bottom: 1px solid $mc-border;
+    vertical-align: middle;
+  }
+
+  .table > thead > tr:last-child > th {
+    height: 48px;
+    padding: 8px 16px;
+    border-bottom: 1px solid $mc-border;
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 600;
+    vertical-align: middle;
+  }
+
+  .table > tbody > tr > td {
+    height: 52px;
+    padding: 8px 16px;
+    border-bottom: 1px solid $mc-border;
+    font-size: 14px;
+    line-height: 20px;
+    vertical-align: middle;
+  }
+
+  .table > tbody > tr:last-child > td {
+    border-bottom: 0;
+  }
+
+  .table > tbody > tr.detail-row > td {
+    height: auto;
+    padding: 12px 16px;
+  }
+
+  .table > tfoot > tr > td {
+    height: 48px;
+    padding: 8px 16px;
+    border-top: 1px solid $mc-border;
+    border-bottom: 0;
+    vertical-align: middle;
+  }
+
+  .table .multi_select_column {
+    width: 48px;
+    min-width: 48px;
+    text-align: center;
+  }
+
+  .table .actions_column {
+    width: 52px;
+    min-width: 52px;
+    text-align: center;
+  }
+
+  .table .no-rows-help,
+  .table tr[hz-no-items] > td {
+    height: 64px;
+    padding: 16px;
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  // Expanded security-group rules are a compact MD3 table nested inside the
+  // parent row; keep their hierarchy distinct without changing expansion.
+  .security-group-details {
+    margin: 4px 0;
+    border: 1px solid $mc-border;
+    border-radius: 8px;
+    border-collapse: separate;
+    border-spacing: 0;
+
+    > thead > tr > th,
+    > tbody > tr > td {
+      height: 40px;
+      padding: 8px 12px;
+      vertical-align: middle;
+    }
+
+    > tbody > tr:last-child > td {
+      border-bottom: 0;
+    }
+  }
+}
+
+// Django workflow tables use the same outline, row rhythm and type roles.
+// This covers Resize Instance's Flavor Details and future real tables placed
+// in a classic Horizon wizard without affecting tables outside workflows.
+.workflow.wizard .table {
+  width: 100%;
+  margin: 0 0 16px;
+  border: 1px solid $mc-border;
+  border-radius: 12px;
+  border-collapse: separate;
+  border-spacing: 0;
+
+  > thead > tr > th {
+    height: 48px;
+    padding: 8px 16px;
+    border-left: 0;
+    border-right: 0;
+    border-bottom: 1px solid $mc-border;
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 600;
+    vertical-align: middle;
+  }
+
+  > tbody > tr > th,
+  > tbody > tr > td {
+    height: 52px;
+    padding: 8px 16px;
+    border-left: 0;
+    border-right: 0;
+    border-bottom: 1px solid $mc-border;
+    font-size: 14px;
+    line-height: 20px;
+    vertical-align: middle;
+  }
+
+  > tbody > tr:last-child > th,
+  > tbody > tr:last-child > td {
+    border-bottom: 0;
+  }
+}
+
+.workflow.wizard .flavor_table .flavor_name {
+  width: 44%;
+  font-weight: 600;
+}
+
+// Membership is Horizon's Django "fake table". It already has MD3 outlined
+// rows above; these rules align both column headers and filters to that grid.
+.workflow.wizard .membership > .header > .row,
+.workflow.wizard .membership > .row {
+  margin-right: -8px;
+  margin-left: -8px;
+}
+
+.workflow.wizard .membership > .header > .row > [class*="col-"],
+.workflow.wizard .membership > .row > [class*="col-"] {
+  padding-right: 8px;
+  padding-left: 8px;
+}
+
+.workflow.wizard .membership .members_title {
+  display: flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 0;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+}
+
+.workflow.wizard .membership .role_options > .btn {
+  min-height: 40px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+@media (max-width: 767px) {
+  .ng-wizard .transfer-table {
+    .transfer-heading {
+      flex-wrap: wrap;
+
+      .help-text {
+        flex: 1 0 100%;
+        margin-left: 24px;
+      }
+    }
+
+    .table > thead > tr:first-child > td,
+    .table > thead > tr:last-child > th,
+    .table > tbody > tr > td,
+    .table > tfoot > tr > td {
+      padding-right: 12px;
+      padding-left: 12px;
+    }
+  }
+
+  .workflow.wizard .table > thead > tr > th,
+  .workflow.wizard .table > tbody > tr > th,
+  .workflow.wizard .table > tbody > tr > td {
+    padding-right: 12px;
+    padding-left: 12px;
+  }
+}

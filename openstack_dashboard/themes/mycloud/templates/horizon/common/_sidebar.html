@@ -1937,6 +1937,45 @@
       body.mc-project-instances-page #instances th:nth-child(6),body.mc-project-instances-page #instances td:nth-child(6),body.mc-project-instances-page #instances th:nth-child(8),body.mc-project-instances-page #instances td:nth-child(8),
       body.mc-project-instances-page #instances th:nth-child(12),body.mc-project-instances-page #instances td:nth-child(12){display:none}
     }
+    /* MD3 wizard data tables. Presentation only: workflow, DOM and the
+       existing MyCloud color system remain unchanged. Mirrored from SCSS as
+       the runtime-compression fallback used by Kolla deployments. */
+    .ng-wizard .transfer-table .transfer-section{margin-top:16px}
+    .ng-wizard .transfer-table .transfer-heading{display:flex;align-items:center;gap:8px;min-height:40px;margin:0 0 8px;font-size:16px;line-height:24px;font-weight:600}
+    .ng-wizard .transfer-table .transfer-heading .fa{flex:0 0 auto;margin-right:0}
+    .ng-wizard .transfer-table .transfer-heading .help-text{margin:0 0 0 auto;font-size:12px;line-height:16px;font-weight:500}
+    .ng-wizard .transfer-table .transfer-available,.ng-wizard .transfer-table .transfer-allocated{border:1px solid #e2e8f0;border-radius:12px;box-sizing:border-box}
+    .ng-wizard .transfer-table hz-dynamic-table,.ng-wizard .transfer-table .hz-magic-search-context{display:block;min-width:100%}
+    .ng-wizard .transfer-table .hz-dynamic-table-preamble{min-height:56px;margin:0;padding:8px 12px;border-bottom:1px solid #e2e8f0;align-items:center;box-sizing:border-box}
+    .ng-wizard .transfer-table .magic-search-bar,.ng-wizard .transfer-table .basic-search-bar,.ng-wizard .transfer-table .hz-magic-search-bar{margin-top:0;margin-bottom:0}
+    .ng-wizard .transfer-table .table{width:100%;margin:0;border:0;border-collapse:separate;border-spacing:0}
+    .ng-wizard .transfer-table .table>thead>tr:first-child>td{height:40px;padding:8px 16px;border-bottom:1px solid #e2e8f0;vertical-align:middle}
+    .ng-wizard .transfer-table .table>thead>tr:last-child>th{height:48px;padding:8px 16px;border-bottom:1px solid #e2e8f0;font-size:12px;line-height:16px;font-weight:600;vertical-align:middle}
+    .ng-wizard .transfer-table .table>tbody>tr>td{height:52px;padding:8px 16px;border-bottom:1px solid #e2e8f0;font-size:14px;line-height:20px;vertical-align:middle}
+    .ng-wizard .transfer-table .table>tbody>tr:last-child>td{border-bottom:0}
+    .ng-wizard .transfer-table .table>tbody>tr.detail-row>td{height:auto;padding:12px 16px}
+    .ng-wizard .transfer-table .table>tfoot>tr>td{height:48px;padding:8px 16px;border-top:1px solid #e2e8f0;border-bottom:0;vertical-align:middle}
+    .ng-wizard .transfer-table .table .multi_select_column{width:48px;min-width:48px;text-align:center}
+    .ng-wizard .transfer-table .table .actions_column{width:52px;min-width:52px;text-align:center}
+    .ng-wizard .transfer-table .table .no-rows-help,.ng-wizard .transfer-table .table tr[hz-no-items]>td{height:64px;padding:16px;text-align:center;vertical-align:middle}
+    .ng-wizard .transfer-table .security-group-details{margin:4px 0;border:1px solid #e2e8f0;border-radius:8px;border-collapse:separate;border-spacing:0}
+    .ng-wizard .transfer-table .security-group-details>thead>tr>th,.ng-wizard .transfer-table .security-group-details>tbody>tr>td{height:40px;padding:8px 12px;vertical-align:middle}
+    .ng-wizard .transfer-table .security-group-details>tbody>tr:last-child>td{border-bottom:0}
+    .workflow.wizard .table{width:100%;margin:0 0 16px;border:1px solid #e2e8f0;border-radius:12px;border-collapse:separate;border-spacing:0}
+    .workflow.wizard .table>thead>tr>th{height:48px;padding:8px 16px;border-left:0;border-right:0;border-bottom:1px solid #e2e8f0;font-size:12px;line-height:16px;font-weight:600;vertical-align:middle}
+    .workflow.wizard .table>tbody>tr>th,.workflow.wizard .table>tbody>tr>td{height:52px;padding:8px 16px;border-left:0;border-right:0;border-bottom:1px solid #e2e8f0;font-size:14px;line-height:20px;vertical-align:middle}
+    .workflow.wizard .table>tbody>tr:last-child>th,.workflow.wizard .table>tbody>tr:last-child>td{border-bottom:0}
+    .workflow.wizard .flavor_table .flavor_name{width:44%;font-weight:600}
+    .workflow.wizard .membership>.header>.row,.workflow.wizard .membership>.row{margin-right:-8px;margin-left:-8px}
+    .workflow.wizard .membership>.header>.row>[class*="col-"],.workflow.wizard .membership>.row>[class*="col-"]{padding-right:8px;padding-left:8px}
+    .workflow.wizard .membership .members_title{display:flex;align-items:center;min-height:40px;padding:0;font-size:14px;line-height:20px;font-weight:600}
+    .workflow.wizard .membership .role_options>.btn{min-height:40px;padding-top:8px;padding-bottom:8px}
+    @media (max-width:767px){
+      .ng-wizard .transfer-table .transfer-heading{flex-wrap:wrap}
+      .ng-wizard .transfer-table .transfer-heading .help-text{flex:1 0 100%;margin-left:24px}
+      .ng-wizard .transfer-table .table>thead>tr:first-child>td,.ng-wizard .transfer-table .table>thead>tr:last-child>th,.ng-wizard .transfer-table .table>tbody>tr>td,.ng-wizard .transfer-table .table>tfoot>tr>td{padding-right:12px;padding-left:12px}
+      .workflow.wizard .table>thead>tr>th,.workflow.wizard .table>tbody>tr>th,.workflow.wizard .table>tbody>tr>td{padding-right:12px;padding-left:12px}
+    }
   </style>
   <a class="mc-sidebar-brand" href="{% site_branding_link %}" target="_self">
     <span class="mc-brand-logo"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 19A4.5 4.5 0 0 1 5.9 10 6 6 0 0 1 17.6 8.4 4.2 4.2 0 0 1 17 19z"/></svg></span>
