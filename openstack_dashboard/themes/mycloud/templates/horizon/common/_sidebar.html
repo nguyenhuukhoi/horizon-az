@@ -403,6 +403,48 @@
       overflow: hidden !important;
     }
     @media (min-width: 768px) {
+      .modal:not(.loading):not(.modal-wait-spinner):not(.modal-dialog-wizard) .modal-dialog {
+        margin-top:24px;
+        margin-bottom:24px;
+      }
+      .modal:not(.loading):not(.modal-wait-spinner):not(.modal-dialog-wizard) .modal-content {
+        display:flex;
+        flex-direction:column;
+        max-height:calc(100vh - 48px);
+        overflow:hidden;
+      }
+      .modal:not(.loading):not(.modal-wait-spinner):not(.modal-dialog-wizard) .modal-content>.modal-header,
+      .modal:not(.loading):not(.modal-wait-spinner):not(.modal-dialog-wizard) .modal-content>.modal-footer {
+        flex:0 0 auto;
+      }
+      .modal:not(.loading):not(.modal-wait-spinner):not(.modal-dialog-wizard) .modal-content>.modal-body {
+        flex:1 1 auto;
+        min-height:0;
+        overflow-x:hidden;
+        overflow-y:auto;
+        overscroll-behavior:contain;
+        scrollbar-gutter:stable;
+      }
+      .modal:not(.loading):not(.modal-wait-spinner):not(.modal-dialog-wizard) .modal-content>form {
+        display:flex;
+        flex:1 1 auto;
+        flex-direction:column;
+        min-height:0;
+        overflow:hidden;
+      }
+      .modal:not(.loading):not(.modal-wait-spinner):not(.modal-dialog-wizard) .modal-content>form>.modal-body {
+        flex:1 1 auto;
+        min-height:0;
+        overflow-x:hidden;
+        overflow-y:auto;
+        overscroll-behavior:contain;
+        scrollbar-gutter:stable;
+      }
+      .modal:not(.loading):not(.modal-wait-spinner):not(.modal-dialog-wizard) .modal-content>form>.modal-footer {
+        flex:0 0 auto;
+      }
+    }
+    @media (min-width: 768px) {
       .modal .mc-app-credential-form .modal-body > .row {
         display: flex;
         align-items: stretch;
