@@ -2983,7 +2983,7 @@ body.mc-lbaas-page .col-md-6.detail h4{margin:0 0 14px;padding-bottom:12px;borde
 .fa-arrow-up, .fa-arrow-down,
 .mc-transfer-add, .mc-transfer-remove {
   display: inline-flex !important; align-items: center; justify-content: center;
-  width: 48px !important; min-width: 48px !important; height: 34px !important; min-height: 34px !important; line-height: 0;
+  width: 40px !important; min-width: 40px !important; height: 40px !important; min-height: 40px !important; line-height: 0;
   border: 0 !important; border-radius: 999px !important; cursor: pointer; color: #fff !important;
   box-shadow: none !important; -webkit-appearance: none !important; appearance: none !important;
   box-sizing: border-box; outline: 0 !important; padding: 0 !important; text-align: center;
@@ -2997,7 +2997,7 @@ body.mc-lbaas-page .col-md-6.detail h4{margin:0 0 14px;padding-bottom:12px;borde
   box-shadow: none !important; outline: 0 !important;
 }
 .fa-arrow-up::before, .fa-arrow-down::before {
-  width: 16px !important; height: 16px !important; display: block; flex: 0 0 auto;
+  width: 20px !important; height: 20px !important; display: block; flex: 0 0 auto;
   margin: 0 !important; position: static !important; background-color: #fff !important;
 }
 
@@ -3330,8 +3330,8 @@ body.mc-lbaas-page #content_body hz-resource-table .mc-lb-filter-input:focus,
 
 .fa-arrow-up::before,
 .fa-arrow-down::before {
-  width: 14px !important;
-  height: 14px !important;
+  width: 20px !important;
+  height: 20px !important;
 }
 
 // Sidebar entries and wizard steps are navigation surfaces, not Bootstrap
@@ -3360,10 +3360,10 @@ body.mc-lbaas-page #content_body hz-resource-table .mc-lb-filter-input:focus,
 .ng-wizard .transfer-table .btn.fa-arrow-up,
 .ng-wizard .transfer-table .btn.fa-arrow-down {
   position: relative !important;
-  width: 48px !important;
-  min-width: 48px !important;
-  height: 34px !important;
-  min-height: 34px !important;
+  width: 40px !important;
+  min-width: 40px !important;
+  height: 40px !important;
+  min-height: 40px !important;
   padding: 0 !important;
   line-height: 0 !important;
   border-radius: $mc-md-pill !important;
@@ -3378,6 +3378,38 @@ body.mc-lbaas-page #content_body hz-resource-table .mc-lb-filter-input:focus,
   left: 50% !important;
   top: 50% !important;
   transform: translate(-50%, -50%) !important;
+}
+
+// Small utility buttons inside wizard step bodies (Configuration, Metadata, etc.)
+// Bootstrap defaults give these ~30px; bump to MD3 minimum touch target.
+.ng-wizard .modal-body .btn:not(.fa-arrow-up):not(.fa-arrow-down) {
+  min-height: 36px;
+}
+.ng-wizard .modal-body .btn.btn-xs {
+  min-height: 28px;
+  padding: 2px 10px;
+}
+
+// Metadata tree + buttons (a.btn.btn-primary.btn-xs in list items): square icon button.
+.ng-wizard .metadata-tree .list-group-item .btn.btn-primary,
+.ng-wizard .metadata-tree .input-group-btn .btn.btn-primary {
+  width: 40px !important; min-width: 40px !important;
+  height: 40px !important; min-height: 40px !important;
+  padding: 0 !important;
+  display: inline-flex !important; align-items: center !important; justify-content: center !important;
+}
+// Metadata tree remove buttons (a.btn.btn-default with fa-minus inside): red circle.
+.ng-wizard .metadata-tree .input-group-btn > .btn.btn-default,
+.ng-wizard .metadata-tree .metadata-tree-item-button {
+  width: 36px !important; min-width: 36px !important;
+  height: 36px !important; min-height: 36px !important;
+  padding: 0 !important; border-radius: 999px !important;
+  display: inline-flex !important; align-items: center !important; justify-content: center !important;
+  background: #dc2626 !important; border-color: transparent !important; color: #fff !important;
+}
+.ng-wizard .metadata-tree .input-group-btn > .btn.btn-default:hover,
+.ng-wizard .metadata-tree .metadata-tree-item-button:hover {
+  background: #b91c1c !important;
 }
 
 // Overview uses .mc-launch-btn while tables use .btn-launch. Keep both on the
