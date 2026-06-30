@@ -2086,8 +2086,8 @@ body.mc-spinner-modal-open .modal-backdrop {
 // ── MD3 Dialog title — Title Large: 22sp / 28sp / weight 400 / tracking 0 ──
 .modal .modal-header .modal-title,
 .modal .modal-header .h4 {
-  font-size: 1.375rem;   // 22px
-  line-height: 1.75rem;  // 28px
+  font-size: 22px;
+  line-height: 28px;
   font-weight: 400;
   letter-spacing: 0;
 }
@@ -2098,15 +2098,15 @@ body.mc-spinner-modal-open .modal-backdrop {
   height: 40px;
   min-height: 40px;
   padding: 0 24px;
-  border-radius: 9999px;       // MD3 button shape = corner-full (pill)
-  font-size: 0.875rem;         // Label Large: 14px
-  font-weight: 500;            // Label Large weight (MD3 spec)
-  line-height: 1.25rem;        // 20px
-  letter-spacing: 0.00625rem;  // 0.1px tracking
+  border-radius: 9999px;  // MD3 button shape = corner-full (pill)
+  font-size: 14px;        // Label Large
+  font-weight: 500;       // Label Large weight (MD3 spec)
+  line-height: 20px;
+  letter-spacing: 0.1px;  // MD3 label-large tracking
 
   &[disabled],
   &.disabled {
-    opacity: 0.38;             // MD3 disabled state
+    opacity: 0.38;         // MD3 disabled state
     pointer-events: none;
     box-shadow: none;
   }
@@ -2146,10 +2146,10 @@ body.mc-spinner-modal-open .modal-backdrop {
   .nav-pills > li > a {
     border-radius: 999px;
     color: #64748b;
-    font-size: 0.875rem;
+    font-size: 14px;
     font-weight: 500;
-    line-height: 1.25rem;
-    letter-spacing: 0.00625rem;
+    line-height: 20px;
+    letter-spacing: 0.1px;
   }
   .nav-pills > li.active > a,
   .nav-pills > li.active > a:hover,
