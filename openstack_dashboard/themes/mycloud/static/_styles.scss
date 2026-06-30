@@ -1506,8 +1506,10 @@ body.mc-lbaas-page {
   > i {
     display: block;
     height: 100%;
+    width: 100%;
     border-radius: 20px;
-    transition: width .4s ease;
+    transform-origin: left center;
+    transition: transform .4s ease;
 
     &.is-ok     { background: $brand-primary; }
     &.is-warn   { background: $brand-warning; }

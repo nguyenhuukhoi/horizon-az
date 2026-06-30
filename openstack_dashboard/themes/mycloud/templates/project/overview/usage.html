@@ -177,9 +177,9 @@
     <h1 class="mc-page-title">{% trans "Overview" %}</h1>
   </div>
   <div class="mc-page-actions">
-    <a href="javascript:void(0);"
+    <a href="#"
        ng-controller="LaunchInstanceModalController as modal"
-       ng-click="modal.openLaunchInstanceWizard({successUrl: '{% url 'horizon:project:instances:index' %}'})"
+       ng-click="$event.preventDefault(); modal.openLaunchInstanceWizard({successUrl: '{% url 'horizon:project:instances:index' %}'})"
        class="btn btn-primary mc-launch-btn btn-launch">
       <svg class="mc-act-ic" viewBox="0 0 24 24" fill="none"
            stroke="currentColor" stroke-width="1.9" stroke-linecap="round"

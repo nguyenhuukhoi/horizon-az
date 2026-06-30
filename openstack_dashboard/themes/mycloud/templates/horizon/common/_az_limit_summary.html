@@ -52,7 +52,7 @@
                             </div>
                             <div class="mc-meter">
                               <i class="{% if pct >= 90 %}is-danger{% elif pct >= 75 %}is-warn{% else %}is-ok{% endif %}"
-                                 style="width: {{ pct }}%"></i>
+                                 style="transform:scaleX({{ pct }}e-2)"></i>
                             </div>
                           </div>
                         {% endif %}

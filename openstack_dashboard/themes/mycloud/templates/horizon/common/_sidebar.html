@@ -2158,13 +2158,18 @@ window._mcUtil = window._mcUtil || {
     'dash':'<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>',
     'info':'<circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 7.5h.01"/>',
     'dot':'<circle cx="12" cy="12" r="3.4"/>'
-  }
+  },
+  _obs: []
 };
+window.addEventListener('beforeunload', function () {
+  (window._mcUtil._obs || []).forEach(function (o) { try { o.disconnect(); } catch (e) {} });
+}, { once: true });
 </script>
 <script>
 // MyCloud: replace Font Awesome sidebar icons with inline stroke SVG
 // (matches horizon_redesign_interactive.html — all-SVG icon system).
 (function () {
+  if (!window._mcUtil) return;
   var ICN = window._mcUtil.ICONS;
   var MAP = [
     ['/instances/','server'],['/hypervisors/','server-cog'],['/images/','image'],
@@ -2183,7 +2188,7 @@ window._mcUtil = window._mcUtil || {
     ['/overview/','dash'],['/project/','dash'],['/admin/','dash']
   ];
   function svg(p, cls, size) {
-    return '<svg class="' + cls + '" width="' + size + '" height="' + size + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" style="flex:0 0 auto">' + p + '</svg>';
+    return '<svg class="' + cls + '" aria-hidden="true" width="' + size + '" height="' + size + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" style="flex:0 0 auto">' + p + '</svg>';
   }
   function keyFor(href) {
     for (var i = 0; i < MAP.length; i++) {
@@ -2454,6 +2459,7 @@ window._mcUtil = window._mcUtil || {
       setTimeout(function () { p = false; run(); }, 150);
     });
     obs.observe(document.getElementById('content_body') || document.body, { childList: true, subtree: true });
+    if (window._mcUtil) window._mcUtil._obs.push(obs);
   }
   if (document.readyState !== 'loading') init();
   else document.addEventListener('DOMContentLoaded', init);
@@ -2483,7 +2489,9 @@ window._mcUtil = window._mcUtil || {
       var bc = document.querySelector('.page-breadcrumb .breadcrumb, .breadcrumb');
       var links = bc ? bc.querySelectorAll('a') : [];
       var url = links.length ? links[links.length - 1].getAttribute('href') : null;
-      if (url && /^\/[^/\\]/.test(url)) { location.href = url; } else { history.back(); }
+      var safe = false;
+      try { var u = new URL(url, location.origin); safe = u.host === location.host; } catch (e) {}
+      if (safe) { location.href = url; } else { history.back(); }
     });
     row.appendChild(a);
   }
@@ -2549,6 +2557,7 @@ window._mcUtil = window._mcUtil || {
     });
     var host = document.getElementById('content_body') || document.body;
     obs.observe(host, { childList: true, subtree: true });
+    if (window._mcUtil) window._mcUtil._obs.push(obs);
   }
   if (document.readyState !== 'loading') init();
   else document.addEventListener('DOMContentLoaded', init);
@@ -2663,6 +2672,7 @@ window._mcUtil = window._mcUtil || {
     });
     var host = document.getElementById('content_body') || document.body;
     obs.observe(host, { childList: true, subtree: true });
+    if (window._mcUtil) window._mcUtil._obs.push(obs);
   }
   if (document.readyState !== 'loading') init();
   else document.addEventListener('DOMContentLoaded', init);
@@ -2676,6 +2686,7 @@ window._mcUtil = window._mcUtil || {
 // Per-value classes can't be set in CSS, so map the cell text to a colour
 // here. Re-runs on Horizon's AJAX row refreshes and text updates.
 (function () {
+  if (!window._mcUtil) return;
   var esc = window._mcUtil.esc;
   var classify = window._mcUtil.classify;
   function badgeTable(table) {
@@ -2702,7 +2713,11 @@ window._mcUtil = window._mcUtil || {
         }
         var txt = (dw.textContent || '').trim();
         if (!txt) continue;
-        dw.innerHTML = '<span class="mc-stat-badge ' + classify(txt) + '">' + esc(txt) + '</span>';
+        var sp = document.createElement('span');
+        sp.className = 'mc-stat-badge ' + classify(txt);
+        sp.textContent = txt;
+        dw.textContent = '';
+        dw.appendChild(sp);
       }
     }
   }
@@ -2734,6 +2749,7 @@ window._mcUtil = window._mcUtil || {
     var obs = new MutationObserver(schedule);
     var host = document.getElementById('content_body') || document.body;
     obs.observe(host, { childList: true, subtree: true, characterData: true });
+    if (window._mcUtil) window._mcUtil._obs.push(obs);
   }
   if (document.readyState !== 'loading') init();
   else document.addEventListener('DOMContentLoaded', init);
@@ -2747,6 +2763,7 @@ window._mcUtil = window._mcUtil || {
 // The badgeTable() above only handles <table> rows; this handles the
 // hz-resource-property-list rendered as a dl-horizontal inside the detail page.
 (function () {
+  if (!window._mcUtil) return;
   var esc = window._mcUtil.esc;
   var classify = window._mcUtil.classify;
   function run() {
@@ -2760,7 +2777,11 @@ window._mcUtil = window._mcUtil || {
       if (dd.querySelector('.mc-stat-badge')) continue;
       var txt = (dd.textContent || '').trim();
       if (!txt) continue;
-      dd.innerHTML = '<span class="mc-stat-badge ' + classify(txt) + '">' + esc(txt) + '</span>';
+      var sp = document.createElement('span');
+      sp.className = 'mc-stat-badge ' + classify(txt);
+      sp.textContent = txt;
+      dd.textContent = '';
+      dd.appendChild(sp);
     }
   }
   function init() {
@@ -2774,6 +2795,7 @@ window._mcUtil = window._mcUtil || {
     });
     var host = document.getElementById('content_body') || document.body;
     obs.observe(host, { childList: true, subtree: true, characterData: true });
+    if (window._mcUtil) window._mcUtil._obs.push(obs);
   }
   if (document.readyState !== 'loading') init();
   else document.addEventListener('DOMContentLoaded', init);
@@ -2825,6 +2847,7 @@ window._mcUtil = window._mcUtil || {
     });
     var host = document.getElementById('content_body') || document.body;
     obs.observe(host, { childList: true, subtree: true });
+    if (window._mcUtil) window._mcUtil._obs.push(obs);
   }
   if (document.readyState !== 'loading') init();
   else document.addEventListener('DOMContentLoaded', init);
@@ -2838,6 +2861,7 @@ window._mcUtil = window._mcUtil || {
 // but combine capacity columns into the compact meter cells used by the mockup.
 (function () {
   if (location.pathname.indexOf('/admin/hypervisors') === -1) return;
+  if (!window._mcUtil) return;
 
   function text(el) {
     return (el && el.textContent || '').replace(/\s+/g, ' ').trim();
@@ -2877,7 +2901,7 @@ window._mcUtil = window._mcUtil || {
     var value = pct(used, total);
     return '<div class="mc-hv-meter ' + (extraClass || '') + '">' +
       '<div class="mc-hv-meter-line"><span>' + esc(used) + ' / ' + esc(total) + '</span><span class="mc-hv-pct">' + value + '%</span></div>' +
-      '<div class="mc-meter"><i class="' + meterClass(value) + '" style="width:' + value + '%"></i></div>' +
+      '<div class="mc-meter"><i class="' + meterClass(value) + '" style="transform:scaleX(' + (value / 100) + ')"></i></div>' +
       '</div>';
   }
   function tableRows(table) {
@@ -3068,7 +3092,7 @@ window._mcUtil = window._mcUtil || {
         cells[x.used].innerHTML =
           '<div class="mc-hv-provider-meter">' +
             '<div class="mc-hv-meter-line"><span>' + esc(text(cells[x.used])) + ' / ' + esc(text(cells[x.total])) + '</span><span class="mc-hv-pct">' + value + '%</span></div>' +
-            '<div class="mc-meter"><i class="' + meterClass(value) + '" style="width:' + value + '%"></i></div>' +
+            '<div class="mc-meter"><i class="' + meterClass(value) + '" style="transform:scaleX(' + (value / 100) + ')"></i></div>' +
             '<div class="mc-hv-provider-meta">' + esc(meta) + '</div>' +
           '</div>';
       }
@@ -3136,6 +3160,7 @@ window._mcUtil = window._mcUtil || {
     });
     var host = document.querySelector('#content_body .mc-hv-tabs-shell');
     if (host) obs.observe(host, { childList: true, subtree: true });
+    if (window._mcUtil) window._mcUtil._obs.push(obs);
   }
   if (document.readyState !== 'loading') init();
   else document.addEventListener('DOMContentLoaded', init);
@@ -3267,6 +3292,7 @@ window._mcUtil = window._mcUtil || {
       setTimeout(function () { pending = false; run(); }, 50);
     });
     obs.observe(document.getElementById('modal_wrapper') || document.body, { childList: true, subtree: true });
+    if (window._mcUtil) window._mcUtil._obs.push(obs);
   }
 
   if (document.readyState !== 'loading') init();
@@ -3284,6 +3310,7 @@ window._mcUtil = window._mcUtil || {
   // Mirror the sidebar nav glyph set (ICN) so a resource's Create button shows
   // the SAME icon as its sidebar entry. Keys = sidebar glyph names; the strings
   // below are copied verbatim from ICN in the sidebar-icon script above.
+  if (!window._mcUtil) return;
   var IC = window._mcUtil.ICONS;
   var RULES = [
     [/instance/, 'server'],
@@ -3311,7 +3338,7 @@ window._mcUtil = window._mcUtil || {
     return null;
   }
   function svg(key) {
-    return '<svg class="mc-act-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">' + IC[key] + '</svg>';
+    return '<svg class="mc-act-ic" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">' + IC[key] + '</svg>';
   }
   function isTransferAction(btn) {
     if (!btn || !btn.matches) return false;
@@ -3480,9 +3507,11 @@ window._mcUtil = window._mcUtil || {
     });
     var host = document.getElementById('content_body');
     if (host) obs.observe(host, { childList: true, subtree: true });
+    if (window._mcUtil) window._mcUtil._obs.push(obs);
     // Also watch modal wrapper for modals/wizards (rendered outside #content_body)
     // so their finish button gets the resource icon too.
     obs.observe(document.getElementById('modal_wrapper') || document.body, { childList: true, subtree: true });
+    if (window._mcUtil) window._mcUtil._obs.push(obs);
   }
   if (document.readyState !== 'loading') init();
   else document.addEventListener('DOMContentLoaded', init);
