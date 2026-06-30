@@ -601,7 +601,7 @@ table.datatable > caption,
   }
   .table_search .form-group { margin: 0; }
   .table_search .form-control {
-    height: 34px;
+    height: 36px;
     border-radius: 8px;
     border: 1px solid $mc-border;
     min-width: 200px;
@@ -614,7 +614,7 @@ table.datatable > caption,
   .btn,
   .table_search .btn,
   .table_actions_menu > .btn {
-    height: 34px;
+    height: 36px;
     border-radius: 8px;
     display: inline-flex;
     align-items: center;
@@ -745,7 +745,7 @@ button.mc-create-btn {
 #content_body .hz-dynamic-table-actions { display: inline-flex; align-items: center; gap: 10px; flex: 0 0 auto; }
 // neutralise Horizon's per-action padding so every gap is exactly 10px
 #content_body .hz-dynamic-table-actions action-list { padding-left: 0 !important; }
-#content_body .hz-dynamic-table-actions .btn { height: 34px; border-radius: 8px; display: inline-flex; align-items: center; gap: 7px; white-space: nowrap; }
+#content_body .hz-dynamic-table-actions .btn { height: 36px; border-radius: 8px; display: inline-flex; align-items: center; gap: 7px; white-space: nowrap; }
 // Cold-load: batch actions render ~1-2s after the magic-search bar, so the bar
 // briefly spans the whole row and "swallows" the buttons. Fade the toolbar in
 // only once the buttons exist (1.8s fallback for tables without batch actions).
@@ -899,7 +899,7 @@ body.mc-lbaas-page {
 
   #content_body hz-resource-table .mc-lb-filter-field,
   #content_body hz-resource-table .mc-lb-filter-apply {
-    height: 34px;
+    height: 36px;
     border-radius: 8px;
     display: inline-flex;
     align-items: center;
@@ -915,7 +915,7 @@ body.mc-lbaas-page {
 
   #content_body hz-resource-table .mc-lb-filter-input {
     width: 270px;
-    height: 34px;
+    height: 36px;
     border: 1px solid #dbe3ee;
     border-radius: 8px;
     box-shadow: none;
@@ -986,11 +986,18 @@ body.mc-lbaas-page {
 // height directly on both so they line up with every other action button.
 .table_search .themable-select > .btn,
 .table_search > .btn,
-.table_search button[type="submit"] { height: 34px !important; min-height: 34px !important; max-height: 34px !important; }
+.table_search button[type="submit"] { height: 36px !important; min-height: 36px !important; max-height: 36px !important; }
 // Split buttons: the inline-flex .btn above sizes each button to its content,
 // so a caret-only toggle ends up shorter than its text sibling. Make the group
 // flex with stretch so both buttons share the tallest height.
 .btn-group:not(.btn-group-vertical) { display: inline-flex; align-items: stretch; vertical-align: middle; }
+
+// Row-level action buttons (inside td.actions_column): match toolbar height.
+td.actions_column .btn,
+form.actions_column .btn {
+  height: 36px !important;
+  min-height: 36px !important;
+}
 
 // Bootstrap's .btn-sm defaults to 3px radius — override to match theme 8px
 .btn-sm {
@@ -1594,7 +1601,7 @@ body.mc-lbaas-page {
 }
 
 .mc-hv-refresh {
-  height: 34px;
+  height: 36px;
   border-radius: 8px;
   display: inline-flex;
   align-items: center;
@@ -1748,7 +1755,7 @@ body.mc-lbaas-page {
 
 .mc-hv-filter input {
   width: 100%;
-  height: 34px;
+  height: 36px;
   border: 1px solid $mc-border;
   border-radius: 8px;
   background: #f8fafc;
@@ -1767,8 +1774,8 @@ body.mc-lbaas-page {
 }
 
 .mc-hv-icon-btn {
-  width: 34px;
-  height: 34px;
+  width: 36px;
+  height: 36px;
   border: 1px solid $mc-border;
   border-radius: 8px;
   background: #fff;
@@ -2095,9 +2102,9 @@ body.mc-spinner-modal-open .modal-backdrop {
 // ── MD3 Modal footer buttons — shared by Django + Angular wizard ──────────
 // Scoped to modal footer only; does NOT affect table action / toolbar buttons.
 .modal .modal-footer .btn {
-  height: 40px;
-  min-height: 40px;
-  padding: 0 24px;
+  height: 36px;
+  min-height: 36px;
+  padding: 0 20px;
   border-radius: 9999px;  // MD3 button shape = corner-full (pill)
   font-size: 14px;        // Label Large
   font-weight: 500;       // Label Large weight (MD3 spec)
@@ -2115,9 +2122,9 @@ body.mc-spinner-modal-open .modal-backdrop {
 // Angular wizard Cancel: outlined pill matching the established MyCloud
 // secondary-action treatment. The X icon is injected by decorateCancel().
 .ng-wizard .modal-footer .btn.pull-left {
-  height: 40px !important;
-  min-height: 40px !important;
-  padding: 0 20px !important;
+  height: 36px !important;
+  min-height: 36px !important;
+  padding: 0 16px !important;
   gap: 8px;
   background: #fff !important;
   border: 1px solid #cbd5e1 !important;
@@ -3443,8 +3450,8 @@ a.btn-launch,
   justify-content: center !important;
   gap: 7px !important;
   box-sizing: border-box;
-  height: 34px !important;
-  min-height: 34px !important;
+  height: 36px !important;
+  min-height: 36px !important;
   padding: 0 16px !important;
   border-width: 1px !important;
   border-radius: $mc-md-pill !important;
@@ -3517,9 +3524,9 @@ a.btn-launch,
 
 .modal .btn,
 .ng-wizard .btn {
-  min-height: 40px !important;
-  padding-top: 9px;
-  padding-bottom: 9px;
+  min-height: 36px !important;
+  padding-top: 7px;
+  padding-bottom: 7px;
 }
 
 .modal .form-control,
