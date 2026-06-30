@@ -1955,15 +1955,15 @@ body.mc-lbaas-page {
 //  Modals & Launch Instance wizard (Angular ng-wizard)
 // =====================================================================
 .modal-content {
-  border-radius: 12px;
+  border-radius: 28px;  // MD3 corner-extra-large
   box-shadow: 0 24px 60px rgba(15, 23, 42, .25);
 }
 .modal-header { border-bottom: 1px solid $mc-border; }
 .modal-footer {
   border-top: 1px solid $mc-border;
   background: #f8fafc;
-  border-bottom-left-radius: 12px;
-  border-bottom-right-radius: 12px;
+  border-bottom-left-radius: 28px;
+  border-bottom-right-radius: 28px;
 }
 
 body.modal-open {
@@ -2083,14 +2083,73 @@ body.mc-spinner-modal-open .modal-backdrop {
   margin-bottom: 36px;
 }
 
+// ── MD3 Dialog title — Title Large: 22sp / 28sp / weight 400 / tracking 0 ──
+.modal .modal-header .modal-title,
+.modal .modal-header .h4 {
+  font-size: 1.375rem;   // 22px
+  line-height: 1.75rem;  // 28px
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+// ── MD3 Modal footer buttons — shared by Django + Angular wizard ──────────
+// Scoped to modal footer only; does NOT affect table action / toolbar buttons.
+.modal .modal-footer .btn {
+  height: 40px;
+  min-height: 40px;
+  padding: 0 24px;
+  border-radius: 9999px;       // MD3 button shape = corner-full (pill)
+  font-size: 0.875rem;         // Label Large: 14px
+  font-weight: 500;            // Label Large weight (MD3 spec)
+  line-height: 1.25rem;        // 20px
+  letter-spacing: 0.00625rem;  // 0.1px tracking
+
+  &[disabled],
+  &.disabled {
+    opacity: 0.38;             // MD3 disabled state
+    pointer-events: none;
+    box-shadow: none;
+  }
+}
+
+// Angular wizard: Cancel → MD3 text button (no fill, no border)
+.ng-wizard .modal-footer .btn.cancel {
+  background: transparent;
+  border-color: transparent;
+  color: $brand-primary;
+  padding: 0 12px;
+
+  &:hover,
+  &:focus { background: rgba(37, 99, 235, .08); border-color: transparent; box-shadow: none; }
+}
+
+// Angular wizard: Back / Next → MD3 outlined button (transparent fill, border)
+.ng-wizard .modal-footer .btn.back,
+.ng-wizard .modal-footer .btn.next {
+  background: transparent;
+  border: 1px solid #cbd5e1;
+  color: #334155;
+
+  &:hover,
+  &:focus { background: #f1f5f9; border-color: #94a3b8; }
+}
+
+// Angular wizard: Finish → MD3 filled button (keeps existing $brand-primary)
+.ng-wizard .modal-footer .btn.finish {
+  padding: 0 24px;
+}
+
 .ng-wizard {
   .wizard-navigation { background: #f8fafc; }
 
-  // step list
+  // step list — MD3 Label Large: 14px / weight 500 / 20px line-height / 0.1px tracking
   .nav-pills > li > a {
     border-radius: 999px;
     color: #64748b;
-    font-weight: 600;
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1.25rem;
+    letter-spacing: 0.00625rem;
   }
   .nav-pills > li.active > a,
   .nav-pills > li.active > a:hover,
