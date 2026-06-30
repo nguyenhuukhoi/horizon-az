@@ -1552,6 +1552,35 @@
       border-bottom-left-radius:28px;
       border-bottom-right-radius:28px;
     }
+    /* Wizard Cancel: retain the original outlined secondary-action pill. */
+    .ng-wizard .modal-footer .btn.pull-left {
+      height:40px !important;
+      min-height:40px !important;
+      padding:0 20px !important;
+      gap:8px;
+      background:#fff !important;
+      border:1px solid #cbd5e1 !important;
+      border-radius:9999px !important;
+      color:#334155 !important;
+      box-shadow:none !important;
+    }
+    .ng-wizard .modal-footer .btn.pull-left:hover,
+    .ng-wizard .modal-footer .btn.pull-left:focus {
+      background:#f8fafc !important;
+      border-color:#94a3b8 !important;
+      color:#0f172a !important;
+    }
+    /* Launch Instance uses the same server glyph as the sidebar. Preserve the
+       native spinner class while the wizard is submitting. */
+    .ng-wizard .modal-footer .btn.finish .fa:not(.fa-spinner)::before {
+      content:"";
+      display:block;
+      width:100%;
+      height:100%;
+      background-color:currentColor;
+      -webkit-mask:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'><rect width='20' height='8' x='2' y='2' rx='2' ry='2'/><rect width='20' height='8' x='2' y='14' rx='2' ry='2'/><line x1='6' x2='6.01' y1='6' y2='6'/><line x1='6' x2='6.01' y1='18' y2='18'/></svg>") center/contain no-repeat;
+      mask:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'><rect width='20' height='8' x='2' y='2' rx='2' ry='2'/><rect width='20' height='8' x='2' y='14' rx='2' ry='2'/><line x1='6' x2='6.01' y1='6' y2='6'/><line x1='6' x2='6.01' y1='18' y2='18'/></svg>") center/contain no-repeat;
+    }
     .modal .btn, .ng-wizard .btn {
       min-height:40px !important;
       padding-top:9px;
