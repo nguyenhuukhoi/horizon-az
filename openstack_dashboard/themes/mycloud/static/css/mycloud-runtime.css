@@ -1,0 +1,2092 @@
+/* MyCloud runtime fallback. Canonical component rules remain in _styles.scss. */
+
+    /* Self-hosted Inter + JetBrains Mono (variable woff2, bundled in the theme).
+       This cacheable fallback is compressed independently from the main SCSS
+       bundle so Kolla and air-gapped deployments retain the current look. */
+    @font-face{font-family:"Inter";font-style:normal;font-weight:100 900;font-display:swap;src:url("../fonts/inter-latin.woff2") format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+    @font-face{font-family:"Inter";font-style:normal;font-weight:100 900;font-display:swap;src:url("../fonts/inter-latin-ext.woff2") format("woff2");unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+    @font-face{font-family:"Inter";font-style:normal;font-weight:100 900;font-display:swap;src:url("../fonts/inter-vietnamese.woff2") format("woff2");unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+1EA0-1EF1,U+20AB}
+    @font-face{font-family:"JetBrains Mono";font-style:normal;font-weight:100 800;font-display:swap;src:url("../fonts/jetbrains-mono-latin.woff2") format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+    @font-face{font-family:"JetBrains Mono";font-style:normal;font-weight:100 800;font-display:swap;src:url("../fonts/jetbrains-mono-latin-ext.woff2") format("woff2");unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+    /* Apply Inter site-wide. Form controls don't inherit the body font, so list
+       them explicitly. !important wins over a stale compiled stack. Icons (.fa
+       masks / glyphs) are untouched — they carry their own font-family. */
+    body, button, input, optgroup, select, textarea, .btn, .form-control,
+    h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5 {
+      font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+    }
+    code, pre, kbd, samp, tt, .mono {
+      font-family: "JetBrains Mono", ui-monospace, "Cascadia Code", "Consolas", monospace !important;
+    }
+    body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; letter-spacing: 0; }
+    table { font-variant-numeric: tabular-nums; }
+
+    #sidebar .mc-sidebar-brand {
+      border-bottom: 0 !important;
+    }
+
+    #sidebar .openstack-dashboard > a,
+    #sidebar .openstack-panel-group > a {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+    }
+
+    #sidebar .openstack-toggle.fa {
+      float: none !important;
+      margin-left: auto !important;
+      transform: none !important;
+    }
+
+    #sidebar .collapsed > .openstack-toggle.fa,
+    #sidebar a.collapsed .openstack-toggle.fa {
+      transform: none !important;
+    }
+
+    /* Panel icons: suppress the (possibly cached) Font Awesome ::before
+       glyph so only the injected SVG shows — prevents duplicate icons. */
+    #sidebar a.openstack-panel::before { content: none !important; }
+    #sidebar a.openstack-panel { display: flex !important; align-items: center; }
+    #sidebar a.openstack-panel .mc-nav-ic { width: 16px; height: 16px; margin-right: 9px; flex: 0 0 auto; }
+    #sidebar .mc-nav-hidden { display: none !important; }
+
+    /* SVG chevron (injected below) replaces the Font Awesome glyph */
+    #sidebar .openstack-toggle.fa::before { content: none !important; }
+    #sidebar .openstack-toggle .mc-cv {
+      width: 16px; height: 16px; opacity: .7;
+      color: #94a3b8; transition: transform .15s ease;
+    }
+    #sidebar a.collapsed .openstack-toggle .mc-cv { transform: rotate(-90deg) !important; }
+
+    #sidebar .openstack-dashboard > .panel-collapse > .list-group,
+    #sidebar .openstack-panel-group .list-group {
+      border-left: 0 !important;
+      margin-left: 12px !important;
+      padding-left: 4px !important;
+      overflow: hidden !important;
+    }
+
+    /* Uniform sidebar colour: force every container transparent over the
+       single navy base so an open dashboard panel doesn't look lighter
+       (guards against a stale compiled bg on .panel/.panel-collapse). */
+    #sidebar { background: #0f172a !important; }
+    #sidebar .panel,
+    #sidebar .panel-default,
+    #sidebar .panel-group,
+    #sidebar .panel-collapse,
+    #sidebar .panel-body,
+    #sidebar .list-group,
+    #sidebar #sidebar-accordion,
+    #sidebar .openstack-dashboard,
+    #sidebar .openstack-panel-group,
+    #sidebar .well {
+      background: transparent !important;
+      background-color: transparent !important;
+      box-shadow: none !important;
+    }
+
+    /* Dashboard headers (Project/Admin/Identity) consistent with group
+       headers (Compute/Volumes/Network): same muted colour and NO
+       click/hover highlight (they are collapsible section labels, not
+       selectable items). */
+    #sidebar .openstack-dashboard > a,
+    #sidebar .openstack-panel-group > a {
+      color: #94a3b8 !important;
+    }
+    #sidebar .openstack-dashboard > a {
+      text-transform: uppercase !important;
+      font-size: 11px !important;
+      font-weight: 700 !important;
+      letter-spacing: .7px !important;
+      color: #64748b !important;   /* small muted section label, matches mockup .ds */
+    }
+    #sidebar .openstack-dashboard.mc-dashboard-static > a {
+      cursor: default !important;
+      pointer-events: none !important;
+    }
+    #sidebar .openstack-dashboard.mc-dashboard-static > a .openstack-toggle {
+      display: none !important;
+    }
+    #sidebar .openstack-dashboard.mc-dashboard-static > .panel-collapse {
+      display: block !important;
+      height: auto !important;
+    }
+    /* Indent panel groups (Compute/Volumes/Network/System) as children of the
+       dashboard: shift the whole group pill in with margin-left so it aligns
+       with the direct panels (Overview/API Access); the grouped panels' own
+       list-group margin then stacks to put them one level deeper. */
+    #sidebar .mc-dashboard-project .openstack-panel-group,
+    #sidebar .mc-dashboard-admin .openstack-panel-group,
+    #sidebar .mc-dashboard-identity .mc-panel-group-federation {
+      margin-left: 12px !important;
+    }
+    #sidebar .mc-dashboard-project .openstack-panel-group > a,
+    #sidebar .mc-dashboard-admin .openstack-panel-group > a,
+    #sidebar .mc-dashboard-identity .mc-panel-group-federation > a {
+      padding-left: 16px !important;
+    }
+    #sidebar .openstack-dashboard > a:hover,
+    #sidebar .openstack-dashboard > a:focus,
+    #sidebar .openstack-dashboard > a:active,
+    #sidebar .openstack-panel-group > a:hover,
+    #sidebar .openstack-panel-group > a:focus,
+    #sidebar .openstack-panel-group > a:active {
+      background: transparent !important;
+      box-shadow: none !important;
+      color: #cbd5e1 !important;
+    }
+
+    /* Global page header + breadcrumb — match the Overview/mockup style on
+       every page. Kept here (served fresh) so it works even when the
+       compiled theme CSS is stale. */
+    .page-header {
+      margin: 0 0 20px !important;
+      padding: 0 !important;
+      border-bottom: 0 !important;
+      min-height: 0 !important;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    /* AngularJS routed detail pages (Images, etc.) render a plain .page-header
+       holding a Back breadcrumb + a Bootstrap .row (col-sm-9 title +
+       col-sm-3 actions). The flex above shrinks that .row to content width and
+       shoves it right, collapsing the actions column so Launch + dropdown wrap.
+       Any .page-header that holds a .row must stay block so the grid lays out. */
+    .page-header:has(> .row) { display: block !important; }
+    .page-header .details-item-actions .btn-group { display: inline-flex !important; flex-wrap: nowrap !important; vertical-align: middle !important; }
+    .page-header .details-item-actions .btn-group > .btn { float: none !important; }
+            /* ===== Image detail: 3 cards + "Back to list" button (mockup look). CSS-only,
+       scoped to the image detail page (ImageOverviewController) so no other detail
+       page and no Angular workflow/behaviour is touched. NOTE: .col-md-6 and .detail
+       are the SAME element, so the card itself must NOT be display:flex (that would
+       lay its h3/hr/dl out in a row). The .row parent is the flex container. ===== */
+    /* Angular custom elements render inline theo mặc định — force block */
+    hz-details,hz-resource-property-list,hz-resource-property,hz-field,hz-magic-search,ng-include{display:block}
+    /* Card styling — giữ dl-horizontal gốc của Horizon, chỉ thêm border/radius/shadow */
+    [ng-controller^="ImageOverviewController"] .detail{background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(15,23,42,.06),0 4px 12px rgba(15,23,42,.06);padding:0 20px 16px;margin:0;overflow:hidden}
+    [ng-controller^="ImageOverviewController"] .detail h3{font-size:16px;font-weight:700;color:#0f172a;margin:0;padding:16px 0 14px}
+    [ng-controller^="ImageOverviewController"] .detail hr{margin:0 -20px 12px;border:0;border-top:1px solid #e2e8f0}
+    /* Bootstrap .row clearfix ::before/::after become flex items in our flex
+       row and (with the gap) inset Image+Security ~20px, so their outer edges
+       no longer line up with the full-width Custom Properties card. Drop them. */
+    [ng-controller^="ImageOverviewController"] > .row::before,
+    [ng-controller^="ImageOverviewController"] > .row::after{content:none;display:none}
+    /* ===== keypairs / users / server-group detail -> cards (Angular ngdetails,
+       same family as image; pure CSS, single card each so no JS normaliser). ===== */
+    [ng-controller^="horizon.app.core.keypairs.DetailsController"] .row{margin:0}
+    [ng-controller^="horizon.app.core.keypairs.DetailsController"] .row > .col-md-12{float:none;width:100%}
+    [ng-controller^="horizon.app.core.keypairs.DetailsController"] .detail{background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(15,23,42,.06),0 4px 12px rgba(15,23,42,.06);padding:0 20px 16px;margin:0}
+    [ng-controller^="horizon.app.core.keypairs.DetailsController"] .detail::before{content:"Key Pair";display:block;font-size:16px;font-weight:700;color:#0f172a;margin:0 -20px 12px;padding:16px 20px 14px;border-bottom:1px solid #e2e8f0}
+    [ng-controller^="UserOverviewController"] .row{margin:0}
+    [ng-controller^="UserOverviewController"] .row > .col-md-6{float:none;width:100%}
+    [ng-controller^="UserOverviewController"] .detail{background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(15,23,42,.06),0 4px 12px rgba(15,23,42,.06);padding:0 20px 16px;margin:0}
+    [ng-controller^="UserOverviewController"] .detail h3{font-size:16px;font-weight:700;color:#0f172a;margin:0;padding:16px 0 14px}
+    [ng-controller^="UserOverviewController"] .detail hr{margin:0 -20px 12px;border:0;border-top:1px solid #e2e8f0}
+    [ng-controller^="ServerGroupOverviewController"]{display:block;background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(15,23,42,.06),0 4px 12px rgba(15,23,42,.06);padding:0 20px 16px}
+    [ng-controller^="ServerGroupOverviewController"]::before{content:"Server Group";display:block;font-size:16px;font-weight:700;color:#0f172a;margin:0 -20px 12px;padding:16px 20px 14px;border-bottom:1px solid #e2e8f0}
+    [ng-controller^="ServerGroupOverviewController"] .h4{font-size:16px;font-weight:700;color:#0f172a;margin:0;padding:14px 0 12px}
+    [ng-controller^="ServerGroupOverviewController"] hr{margin:0 -20px 12px;border:0;border-top:1px solid #e2e8f0}
+    /* network_qos — image-like (2 cards side-by-side + Rules full; JS normaliser). */
+    [ng-controller^="NetworkQoSOverviewController"] .detail{background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(15,23,42,.06),0 4px 12px rgba(15,23,42,.06);padding:0 20px 16px;margin:0}
+    [ng-controller^="NetworkQoSOverviewController"] .detail h3{font-size:16px;font-weight:700;color:#0f172a;margin:0;padding:16px 0 14px}
+    [ng-controller^="NetworkQoSOverviewController"] .detail hr{margin:0 -20px 12px;border:0;border-top:1px solid #e2e8f0}
+    [ng-controller^="NetworkQoSOverviewController"] > .row::before,[ng-controller^="NetworkQoSOverviewController"] > .row::after{content:none;display:none}
+    /* trunks — flat, card the controller div (like server group) */
+    [ng-controller^="TrunkOverviewController"]{display:block;background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(15,23,42,.06),0 4px 12px rgba(15,23,42,.06);padding:0 20px 16px}
+    [ng-controller^="TrunkOverviewController"]::before{content:"Trunk";display:block;font-size:16px;font-weight:700;color:#0f172a;margin:0 -20px 12px;padding:16px 20px 14px;border-bottom:1px solid #e2e8f0}
+    [ng-controller^="TrunkOverviewController"] .h4{font-size:16px;font-weight:700;color:#0f172a;margin:0;padding:14px 0 12px}
+    [ng-controller^="TrunkOverviewController"] hr{margin:0 -20px 12px;border:0;border-top:1px solid #e2e8f0}
+    /* domains — single full-width card (like users) */
+    [ng-controller^="DomainOverviewController"] .row{margin:0}
+    [ng-controller^="DomainOverviewController"] .row > .col-md-6{float:none;width:100%}
+    [ng-controller^="DomainOverviewController"] .detail{background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(15,23,42,.06),0 4px 12px rgba(15,23,42,.06);padding:0 20px 16px;margin:0}
+    [ng-controller^="DomainOverviewController"] .detail h3{font-size:16px;font-weight:700;color:#0f172a;margin:0;padding:16px 0 14px}
+    [ng-controller^="DomainOverviewController"] .detail hr{margin:0 -20px 12px;border:0;border-top:1px solid #e2e8f0}
+    /* Django volume-family detail: cards built by the JS wrapper below (reuses .mc-instance-card). */
+    body.mc-ngdetail .page-header{display:flex !important;flex-wrap:wrap;align-items:center;gap:10px}
+    body.mc-ngdetail .page-header > .row{display:contents}
+    body.mc-ngdetail .page-header > .row > .text-left{order:1;flex:1 1 auto;min-width:0;float:none;width:auto;padding:0}
+    body.mc-ngdetail .page-header > .breadcrumb{order:2;margin:0 0 0 auto;padding:0;background:none;border:0}
+    body.mc-ngdetail .page-header > .row > .details-item-actions{order:3;flex:0 0 auto;float:none;width:auto;padding:0;min-width:104px}
+    /* Launch comes from Angular's <actions> directive, which only resolves once
+       the image data loads (~seconds). Reserve the slot and show a shimmer
+       skeleton there until the real button renders, so it doesn't pop in blank. */
+    body.mc-ngdetail .page-header > .row > .details-item-actions:not(:has(.btn))::after{content:"";display:inline-block;width:104px;height:38px;border-radius:8px;background:linear-gradient(90deg,#eef2f7 25%,#e2e8f0 50%,#eef2f7 75%);background-size:200% 100%;animation:mc-skel 1.2s ease-in-out infinite}
+    body.mc-ngdetail .page-header > .breadcrumb > li{display:inline}
+    body.mc-ngdetail .page-header > .breadcrumb > li::before{content:none}
+    body.mc-ngdetail .page-header .breadcrumb a{display:inline-flex;align-items:center;border:1px solid #cbd5e1;border-radius:8px;padding:7px 14px;background:#fff;color:#334155;font-weight:600;font-size:13px;line-height:1;text-decoration:none;white-space:nowrap}
+    body.mc-ngdetail .page-header .breadcrumb a::before{content:"\2039";font-size:16px;margin-right:6px}
+    body.mc-ngdetail .page-header .breadcrumb a::after{content:"to list";margin-left:.35em}
+    body.mc-ngdetail .page-header .breadcrumb a:hover{background:#f1f5f9;color:#0f172a}
+    /* Detail pages use Horizon's original Bootstrap grid:
+       title col-sm-9 on the left and actions col-sm-3 on the right. Only the
+       split-button internals are forced not to wrap. */
+    .page-header.detail-header { display: block !important; }
+    .page-header.detail-header > .row {
+      display: block !important;
+      margin-left: -15px !important;
+      margin-right: -15px !important;
+    }
+    .page-header.detail-header > .row::before,
+    .page-header.detail-header > .row::after {
+      content: " " !important;
+      display: table !important;
+    }
+    .page-header.detail-header > .row::after {
+      clear: both !important;
+    }
+    .page-header.detail-header .detail-title {
+      float: left !important;
+      min-width: 0 !important;
+      width: 75% !important;
+      padding-left: 15px !important;
+      padding-right: 15px !important;
+      text-align: left !important;
+    }
+    .page-header.detail-header .detail-title .h1 {
+      display: block !important;
+      text-align: left !important;
+    }
+    .page-header.detail-header .detail-actions {
+      float: right !important;
+      min-width: 0 !important;
+      width: 25% !important;
+      margin-left: 0 !important;
+      padding-left: 15px !important;
+      padding-right: 15px !important;
+      display: block !important;
+      text-align: right !important;
+    }
+    .page-header.detail-header .detail-actions-form {
+      display: inline-flex !important;
+      justify-content: flex-end !important;
+      margin: 0 !important;
+    }
+    .page-header.detail-header .detail-actions .btn-group {
+      display: inline-flex !important;
+      align-items: stretch !important;
+      flex-wrap: nowrap !important;
+      vertical-align: middle !important;
+    }
+    .page-header.detail-header .detail-actions .btn-group > .btn {
+      float: none !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+    @media (max-width: 767px) {
+      .page-header.detail-header .detail-title,
+      .page-header.detail-header .detail-actions {
+        float: none !important;
+        width: 100% !important;
+      }
+      .page-header.detail-header .detail-actions {
+        margin-top: 12px !important;
+        text-align: left !important;
+      }
+    }
+    .page-header h1 {
+      flex: 1 1 auto !important;
+      min-width: 0 !important;
+      font-size: 22px !important;
+      font-weight: 700;
+      line-height: 1.2;
+      margin: 0;
+      color: #0f172a;
+    }
+    .mc-instance-overview {
+      display: grid !important;
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      gap: 16px !important;
+    }
+    .mc-instance-overview .mc-instance-card {
+      min-width: 0 !important;
+      background: #fff !important;
+      border: 1px solid #e2e8f0 !important;
+      border-radius: 12px !important;
+      box-shadow: 0 1px 2px rgba(15, 23, 42, .06), 0 4px 12px rgba(15, 23, 42, .06) !important;
+      padding: 18px 20px !important;
+    }
+    .mc-instance-overview .mc-instance-card--wide {
+      grid-column: 1 / -1 !important;
+    }
+    .mc-instance-overview .mc-instance-card h4 {
+      margin: 0 0 14px !important;
+      padding-bottom: 12px !important;
+      border-bottom: 1px solid #e2e8f0 !important;
+      color: #0f172a !important;
+      font-size: 16px !important;
+      font-weight: 700 !important;
+      line-height: 1.25 !important;
+    }
+    .mc-instance-overview .mc-instance-card .dl-horizontal {
+      margin-bottom: 0 !important;
+    }
+    .mc-instance-overview .mc-instance-card .dl-horizontal dt {
+      width: 160px !important;
+      color: #64748b !important;
+      font-weight: 600 !important;
+      text-align: right !important;
+    }
+    .mc-instance-overview .mc-instance-card .dl-horizontal dd {
+      margin-left: 178px !important;
+      min-height: 20px !important;
+      color: #0f172a !important;
+      overflow-wrap: anywhere !important;
+    }
+    @media (max-width: 991px) {
+      .mc-instance-overview {
+        grid-template-columns: 1fr !important;
+      }
+    }
+    @media (max-width: 767px) {
+      .mc-instance-overview .mc-instance-card {
+        padding: 16px !important;
+      }
+      .mc-instance-overview .mc-instance-card .dl-horizontal dt {
+        width: auto !important;
+        text-align: left !important;
+      }
+      .mc-instance-overview .mc-instance-card .dl-horizontal dd {
+        margin-left: 0 !important;
+      }
+    }
+    .page-header .actions_column,
+    .page-header form.actions_column {
+      margin: 0 !important;
+      float: none !important;
+      flex: 0 0 auto !important;
+      max-width: 100% !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: flex-end !important;
+      gap: 8px !important;
+      white-space: nowrap !important;
+    }
+    .page-header .actions_column .btn-group,
+    .page-header form.actions_column .btn-group {
+      display: inline-flex !important;
+      align-items: stretch !important;
+      flex-wrap: nowrap !important;
+      vertical-align: middle !important;
+    }
+    .page-header .actions_column .btn-group > .btn,
+    .page-header form.actions_column .btn-group > .btn {
+      float: none !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+    .page-breadcrumb { margin: 0; }
+    .page-breadcrumb .breadcrumb,
+    .breadcrumb {
+      background: transparent;
+      border-radius: 0;
+      margin: 0 0 8px;
+      padding: 0;
+      font-size: 14px;
+      line-height: 1.4;
+      color: #94a3b8;
+    }
+    .breadcrumb > li + li::before { content: "/"; color: #cbd5e1; padding: 0 7px; }
+    .breadcrumb a { color: #64748b; font-weight: 600; }
+    .breadcrumb a:hover { color: #2563eb; }
+    .breadcrumb > .active { color: #94a3b8; }
+
+    body.modal-open {
+      overflow: hidden !important;
+    }
+    @media (min-width: 768px) {
+      .modal:not(.loading):not(.modal-wait-spinner):not(.modal-dialog-wizard) .modal-dialog {
+        margin-top:24px;
+        margin-bottom:24px;
+      }
+      .modal:not(.loading):not(.modal-wait-spinner):not(.modal-dialog-wizard) .modal-content {
+        display:flex;
+        flex-direction:column;
+        max-height:calc(100vh - 48px);
+        overflow:hidden;
+      }
+      .modal:not(.loading):not(.modal-wait-spinner):not(.modal-dialog-wizard) .modal-content>.modal-header,
+      .modal:not(.loading):not(.modal-wait-spinner):not(.modal-dialog-wizard) .modal-content>.modal-footer {
+        flex:0 0 auto;
+      }
+      .modal:not(.loading):not(.modal-wait-spinner):not(.modal-dialog-wizard) .modal-content>.modal-body {
+        flex:1 1 auto;
+        min-height:0;
+        overflow-x:hidden;
+        overflow-y:auto;
+        overscroll-behavior:contain;
+        scrollbar-gutter:stable;
+      }
+      .modal:not(.loading):not(.modal-wait-spinner):not(.modal-dialog-wizard) .modal-content>form {
+        display:flex;
+        flex:1 1 auto;
+        flex-direction:column;
+        min-height:0;
+        overflow:hidden;
+      }
+      .modal:not(.loading):not(.modal-wait-spinner):not(.modal-dialog-wizard) .modal-content>form>.modal-body {
+        flex:1 1 auto;
+        min-height:0;
+        overflow-x:hidden;
+        overflow-y:auto;
+        overscroll-behavior:contain;
+        scrollbar-gutter:stable;
+      }
+      .modal:not(.loading):not(.modal-wait-spinner):not(.modal-dialog-wizard) .modal-content>form>.modal-footer {
+        flex:0 0 auto;
+      }
+    }
+    @media (min-width: 768px) {
+      .modal .mc-app-credential-form .modal-body > .row {
+        display: flex;
+        align-items: stretch;
+      }
+      .modal .mc-app-credential-form .mc-app-credential-help {
+        max-height: calc(100vh - 250px);
+        overflow-x: hidden;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        padding-right: 12px;
+        scrollbar-gutter: stable;
+      }
+    }
+    /* MD3 modal scrim: blur only the page behind the modal. */
+    .modal-backdrop {
+      background-color: rgba(15, 23, 42, .46) !important;
+      -webkit-backdrop-filter: blur(6px);
+      backdrop-filter: blur(6px);
+    }
+    .modal-backdrop.in,
+    .modal-backdrop.show {
+      opacity: 1 !important;
+    }
+    body.mc-spinner-modal-open .modal-backdrop {
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+    /* Centre loading dialogs horizontally; keep their current vertical offset. */
+    @media (min-width: 768px) {
+      .modal.loading .modal-dialog,
+      .modal.modal-wait-spinner .modal-dialog {
+        margin-left: auto !important;
+        margin-right: auto !important;
+      }
+    }
+    .modal-dialog-wizard .modal-dialog,
+    .modal-dialog.modal-dialog-wizard {
+      margin-top: 36px !important;
+      margin-bottom: 36px !important;
+    }
+
+    /* Stable wizard size: fix the body height so the modal does NOT resize
+       as you move between steps (Details is short, Source/Flavor are tall);
+       taller steps scroll internally. Pure CSS, one-pass — the wizard /
+       transfer-table / magic-search widgets don't read heights in JS, so
+       this cannot cause the earlier reflow lag. */
+    .ng-wizard .modal-body {
+      height: calc(100vh - 19rem);
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+    /* Long lists (Flavor/Source/Key Pair "Available") scroll INSIDE their
+       own box, so the Allocated section + heading stay put instead of the
+       whole body scrolling. */
+    .modal .transfer-available,
+    .modal .transfer-allocated {
+      max-height: 36vh;
+      overflow-y: auto;
+      overflow-x: auto; /* was hidden — let the row scroll so the allocate (↑)
+                           button is reachable on narrow modals, not clipped */
+    }
+    /* Tighter cells so the flavor/source table fits the modal more often
+       (the allocate button is the last column and was overflowing off-screen). */
+    .modal .transfer-table .table > tbody > tr > td,
+    .modal .transfer-table .table > thead > tr > th { padding: 8px 10px; }
+    .ng-wizard .transfer-table .transfer-section {
+      margin-top: 12px;
+    }
+    .ng-wizard .transfer-table .transfer-heading {
+      display: block;
+      margin: 0 0 8px;
+      font-size: 20px;
+      line-height: 1.3;
+      font-weight: 600;
+    }
+    .ng-wizard .transfer-table .transfer-heading .fa {
+      margin-right: 6px;
+    }
+    .ng-wizard .transfer-table .transfer-heading .badge {
+      vertical-align: 2px;
+    }
+    .ng-wizard .transfer-table .transfer-heading .help-text {
+      margin-top: 3px;
+      font-size: 14px;
+      line-height: 1.4;
+      font-weight: 600;
+      color: #0f172a;
+    }
+    .ng-wizard .transfer-table .magic-search-bar,
+    .ng-wizard .transfer-table .basic-search-bar {
+      margin: 6px 0 8px;
+    }
+    .ng-wizard .transfer-table .hz-dynamic-table-preamble {
+      padding-left: 0;
+      padding-right: 0;
+    }
+    .ng-wizard .transfer-table .hz-magic-search-bar {
+      padding-right: 0;
+    }
+    .ng-wizard .transfer-table .table {
+      margin-bottom: 8px;
+    }
+    /* Keep the transfer search/filter row in the normal table flow.
+       Sticky here makes the helper text and search field look detached on
+       short lists. */
+    .modal .transfer-available .hz-magic-search-context > .row {
+      position: static;
+      margin-left: 0;
+      margin-right: 0;
+      padding-bottom: 0;
+    }
+
+    /* Wizard "?" help toggle: clean circular ghost button (not the heavy
+       default), nudged in from the corner. */
+    /* Help "?" toggle: same round themed button in both the launch wizard and
+       plain form modals (Create Key Pair, etc. render help-panel in .modal-body,
+       not inside .ng-wizard). */
+    .ng-wizard .help-toggle,
+    .modal .help-toggle {
+      top: 4px;
+      right: 6px;
+      width: 30px;
+      height: 30px;
+      padding: 0;
+      line-height: 1;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      color: #64748b;
+      box-shadow: 0 1px 2px rgba(15, 23, 42, .08);
+    }
+    .ng-wizard .help-toggle:hover,
+    .ng-wizard .help-toggle:focus,
+    .ng-wizard .help-toggle:active,
+    .modal .help-toggle:hover,
+    .modal .help-toggle:focus,
+    .modal .help-toggle:active {
+      background: #f1f5f9;
+      color: #0f172a;
+    }
+
+    /* Font Awesome glyphs -> SVG via CSS mask (theme-wide; pure CSS, no JS,
+       so it never touches the Angular digest). Animated fa-spinner left as-is. */
+    .help-toggle .fa,
+    .fa-close, .fa-times, .fa-angle-left, .fa-angle-right, .fa-angle-up, .fa-angle-down,
+    .fa-chevron-left, .fa-chevron-right, .fa-chevron-up, .fa-chevron-down,
+    .fa-caret-down, .fa-caret-up, .fa-check, .fa-asterisk, .fa-bars, .fa-plus,
+    .fa-trash, .fa-trash-o, .fa-question-circle, .fa-search, .fa-info-circle, .fa-cog,
+    .fa-cloud-download {
+      display: inline-block; width: 1em; height: 1em; line-height: 1; vertical-align: -0.125em;
+    }
+    .fa-asterisk { width: 1em; height: 1em; color: #dc2626 !important; }
+    .help-toggle .fa::before,
+    .fa-close::before, .fa-times::before, .fa-angle-left::before, .fa-angle-right::before,
+    .fa-angle-up::before, .fa-angle-down::before, .fa-chevron-left::before, .fa-chevron-right::before,
+    .fa-chevron-up::before, .fa-chevron-down::before, .fa-caret-down::before, .fa-caret-up::before,
+    .fa-check::before, .fa-asterisk::before, .fa-bars::before, .fa-plus::before, .fa-trash::before,
+    .fa-trash-o::before, .fa-question-circle::before, .fa-search::before, .fa-info-circle::before, .fa-cog::before,
+    .fa-cloud-download::before {
+      content: ""; display: block; width: 100%; height: 100%; background-color: currentColor;
+    }
+    .help-toggle .fa::before, .fa-question-circle::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='10'/> <path d='M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3'/> <path d='M12 17h.01'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='10'/> <path d='M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3'/> <path d='M12 17h.01'/></svg>") center/contain no-repeat; }
+    .fa-close::before, .fa-times::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'><path d='M6 6l12 12M18 6 6 18'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'><path d='M6 6l12 12M18 6 6 18'/></svg>") center/contain no-repeat; }
+    .fa-angle-left::before, .fa-chevron-left::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'><path d='M15 6l-6 6 6 6'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'><path d='M15 6l-6 6 6 6'/></svg>") center/contain no-repeat; }
+    .fa-angle-right::before, .fa-chevron-right::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'><path d='M9 6l6 6-6 6'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'><path d='M9 6l6 6-6 6'/></svg>") center/contain no-repeat; }
+    .fa-angle-up::before, .fa-chevron-up::before, .fa-caret-up::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'><path d='M6 15l6-6 6 6'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'><path d='M6 15l6-6 6 6'/></svg>") center/contain no-repeat; }
+    .fa-angle-down::before, .fa-chevron-down::before, .fa-caret-down::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'><path d='M6 9l6 6 6-6'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'><path d='M6 9l6 6 6-6'/></svg>") center/contain no-repeat; }
+    .fa-check::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'><path d='M20 6 9 17l-5-5'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'><path d='M20 6 9 17l-5-5'/></svg>") center/contain no-repeat; }
+    /* Restore the feedback control box that the generic 1em icon mask would
+       otherwise collapse. The glyph stays 14px and is centred in the input. */
+    .modal .form-group.has-feedback > .form-control-feedback.fa-check,
+    .modal .form-group.has-feedback > .form-control-feedback.fa-times,
+    .ng-wizard .form-group.has-feedback > .form-control-feedback.fa-check,
+    .ng-wizard .form-group.has-feedback > .form-control-feedback.fa-times {
+      display:inline-flex !important;
+      align-items:center;
+      justify-content:center;
+      width:34px !important;
+      height:34px !important;
+      line-height:34px !important;
+      font-size:14px !important;
+      vertical-align:middle;
+    }
+    .modal .form-group.has-feedback > .form-control-feedback.fa-check::before,
+    .modal .form-group.has-feedback > .form-control-feedback.fa-times::before,
+    .ng-wizard .form-group.has-feedback > .form-control-feedback.fa-check::before,
+    .ng-wizard .form-group.has-feedback > .form-control-feedback.fa-times::before {
+      width:14px !important;
+      height:14px !important;
+    }
+    .fa-asterisk::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.6' stroke-linecap='round'><path d='M12 6v12'/> <path d='M17.196 9 6.804 15'/> <path d='m6.804 9 10.392 6'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.6' stroke-linecap='round'><path d='M12 6v12'/> <path d='M17.196 9 6.804 15'/> <path d='m6.804 9 10.392 6'/></svg>") center/contain no-repeat; }
+    /* One required-marker token for Django fields, Angular fields and tabs. */
+    .hz-icon-required.fa-asterisk {
+      display:inline-flex;
+      width:auto;
+      height:auto;
+      margin-left:3px;
+      font-family:inherit !important;
+      font-size:12px;
+      font-weight:700;
+      line-height:1;
+      vertical-align:.35em;
+      color:#dc2626 !important;
+    }
+    .hz-icon-required.fa-asterisk::before {
+      content:"*";
+      display:inline;
+      width:auto;
+      height:auto;
+      background:transparent;
+      -webkit-mask:none;
+      mask:none;
+    }
+    /* Flex pill tabs ignore inline vertical-align; match field-label markers. */
+    .modal .modal-body > .nav-pills .hz-icon-required.fa-asterisk {
+      margin-left:5px;
+      transform:translateY(-3px);
+    }
+    .fa-bars::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'><path d='M4 6h16M4 12h16M4 18h16'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'><path d='M4 6h16M4 12h16M4 18h16'/></svg>") center/contain no-repeat; }
+    .fa-plus::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round'><path d='M12 5v14M5 12h14'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round'><path d='M12 5v14M5 12h14'/></svg>") center/contain no-repeat; }
+    .fa-trash::before, .fa-trash-o::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'><path d='M10 11v6'/> <path d='M14 11v6'/> <path d='M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6'/> <path d='M3 6h18'/> <path d='M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'><path d='M10 11v6'/> <path d='M14 11v6'/> <path d='M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6'/> <path d='M3 6h18'/> <path d='M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2'/></svg>") center/contain no-repeat; }
+    .fa-search::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m21 21-4.34-4.34'/> <circle cx='11' cy='11' r='8'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m21 21-4.34-4.34'/> <circle cx='11' cy='11' r='8'/></svg>") center/contain no-repeat; }
+    .fa-info-circle::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='10'/> <path d='M12 16v-4'/> <path d='M12 8h.01'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='10'/> <path d='M12 16v-4'/> <path d='M12 8h.01'/></svg>") center/contain no-repeat; }
+    .fa-cloud-download::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'><path d='M12 13v8l-4-4'/> <path d='m12 21 4-4'/> <path d='M4.393 15.269A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.436 8.284'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'><path d='M12 13v8l-4-4'/> <path d='m12 21 4-4'/> <path d='M4.393 15.269A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.436 8.284'/></svg>") center/contain no-repeat; }
+    .fa-cog::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='3'/><path d='M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='3'/><path d='M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z'/></svg>") center/contain no-repeat; }
+    /* MyCloud: official Lucide masks for the remaining FontAwesome glyphs used */
+    /* across Horizon (wizard, transfer/metadata widgets, status, etc.). */
+    .fa-warning, .fa-spinner, .fa-upload, .fa-download, .fa-refresh, .fa-minus, .fa-arrow-up, .fa-arrow-down, .fa-th-large, .fa-th, .fa-cloud-upload, .fa-calendar, .fa-user, .fa-sign-out, .fa-server, .fa-save, .fa-pencil, .fa-list-alt, .fa-desktop, .fa-code, .fa-cloud, .fa-calculator, .fa-bug {
+      display: inline-block; width: 1em; height: 1em; line-height: 1; vertical-align: -0.125em;
+    }
+    .fa-warning::before, .fa-spinner::before, .fa-upload::before, .fa-download::before, .fa-refresh::before, .fa-minus::before, .fa-arrow-up::before, .fa-arrow-down::before, .fa-th-large::before, .fa-th::before, .fa-cloud-upload::before, .fa-calendar::before, .fa-user::before, .fa-sign-out::before, .fa-server::before, .fa-save::before, .fa-pencil::before, .fa-list-alt::before, .fa-desktop::before, .fa-code::before, .fa-cloud::before, .fa-calculator::before, .fa-bug::before {
+      content: ""; display: block; width: 100%; height: 100%; background-color: currentColor;
+    }
+    .fa-warning::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3'/> <path d='M12 9v4'/> <path d='M12 17h.01'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3'/> <path d='M12 9v4'/> <path d='M12 17h.01'/></svg>") center/contain no-repeat; }
+    .fa-spinner::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M21 12a9 9 0 1 1-6.219-8.56'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M21 12a9 9 0 1 1-6.219-8.56'/></svg>") center/contain no-repeat; }
+    .fa-upload::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M12 3v12'/> <path d='m17 8-5-5-5 5'/> <path d='M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M12 3v12'/> <path d='m17 8-5-5-5 5'/> <path d='M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4'/></svg>") center/contain no-repeat; }
+    .fa-download::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M12 15V3'/> <path d='M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4'/> <path d='m7 10 5 5 5-5'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M12 15V3'/> <path d='M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4'/> <path d='m7 10 5 5 5-5'/></svg>") center/contain no-repeat; }
+    .fa-refresh::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8'/> <path d='M21 3v5h-5'/> <path d='M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16'/> <path d='M8 16H3v5'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8'/> <path d='M21 3v5h-5'/> <path d='M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16'/> <path d='M8 16H3v5'/></svg>") center/contain no-repeat; }
+    .fa-minus::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M5 12h14'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M5 12h14'/></svg>") center/contain no-repeat; }
+    .fa-arrow-up::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'><path d='M5 12h14'/><path d='M12 5v14'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'><path d='M5 12h14'/><path d='M12 5v14'/></svg>") center/contain no-repeat; }
+    .fa-arrow-down::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'><path d='M5 12h14'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'><path d='M5 12h14'/></svg>") center/contain no-repeat; }
+    .fa-th-large::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect width='7' height='7' x='3' y='3' rx='1'/> <rect width='7' height='7' x='14' y='3' rx='1'/> <rect width='7' height='7' x='14' y='14' rx='1'/> <rect width='7' height='7' x='3' y='14' rx='1'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect width='7' height='7' x='3' y='3' rx='1'/> <rect width='7' height='7' x='14' y='3' rx='1'/> <rect width='7' height='7' x='14' y='14' rx='1'/> <rect width='7' height='7' x='3' y='14' rx='1'/></svg>") center/contain no-repeat; }
+    .fa-th::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect width='18' height='18' x='3' y='3' rx='2'/> <path d='M3 9h18'/> <path d='M3 15h18'/> <path d='M9 3v18'/> <path d='M15 3v18'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect width='18' height='18' x='3' y='3' rx='2'/> <path d='M3 9h18'/> <path d='M3 15h18'/> <path d='M9 3v18'/> <path d='M15 3v18'/></svg>") center/contain no-repeat; }
+    .fa-cloud-upload::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M12 13v8'/> <path d='M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242'/> <path d='m8 17 4-4 4 4'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M12 13v8'/> <path d='M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242'/> <path d='m8 17 4-4 4 4'/></svg>") center/contain no-repeat; }
+    .fa-calendar::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M8 2v4'/> <path d='M16 2v4'/> <rect width='18' height='18' x='3' y='4' rx='2'/> <path d='M3 10h18'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M8 2v4'/> <path d='M16 2v4'/> <rect width='18' height='18' x='3' y='4' rx='2'/> <path d='M3 10h18'/></svg>") center/contain no-repeat; }
+    .fa-user::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2'/> <circle cx='12' cy='7' r='4'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2'/> <circle cx='12' cy='7' r='4'/></svg>") center/contain no-repeat; }
+    .fa-sign-out::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m16 17 5-5-5-5'/> <path d='M21 12H9'/> <path d='M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m16 17 5-5-5-5'/> <path d='M21 12H9'/> <path d='M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4'/></svg>") center/contain no-repeat; }
+    .fa-server::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect width='20' height='8' x='2' y='2' rx='2' ry='2'/> <rect width='20' height='8' x='2' y='14' rx='2' ry='2'/> <line x1='6' x2='6.01' y1='6' y2='6'/> <line x1='6' x2='6.01' y1='18' y2='18'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect width='20' height='8' x='2' y='2' rx='2' ry='2'/> <rect width='20' height='8' x='2' y='14' rx='2' ry='2'/> <line x1='6' x2='6.01' y1='6' y2='6'/> <line x1='6' x2='6.01' y1='18' y2='18'/></svg>") center/contain no-repeat; }
+    .fa-save::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z'/> <path d='M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7'/> <path d='M7 3v4a1 1 0 0 0 1 1h7'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z'/> <path d='M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7'/> <path d='M7 3v4a1 1 0 0 0 1 1h7'/></svg>") center/contain no-repeat; }
+    .fa-pencil::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z'/> <path d='m15 5 4 4'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z'/> <path d='m15 5 4 4'/></svg>") center/contain no-repeat; }
+    .fa-list-alt::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M3 5h.01'/> <path d='M3 12h.01'/> <path d='M3 19h.01'/> <path d='M8 5h13'/> <path d='M8 12h13'/> <path d='M8 19h13'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M3 5h.01'/> <path d='M3 12h.01'/> <path d='M3 19h.01'/> <path d='M8 5h13'/> <path d='M8 12h13'/> <path d='M8 19h13'/></svg>") center/contain no-repeat; }
+    .fa-desktop::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect width='20' height='14' x='2' y='3' rx='2'/> <line x1='8' x2='16' y1='21' y2='21'/> <line x1='12' x2='12' y1='17' y2='21'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect width='20' height='14' x='2' y='3' rx='2'/> <line x1='8' x2='16' y1='21' y2='21'/> <line x1='12' x2='12' y1='17' y2='21'/></svg>") center/contain no-repeat; }
+    .fa-code::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m16 18 6-6-6-6'/> <path d='m8 6-6 6 6 6'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m16 18 6-6-6-6'/> <path d='m8 6-6 6 6 6'/></svg>") center/contain no-repeat; }
+    .fa-cloud::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z'/></svg>") center/contain no-repeat; }
+    .fa-calculator::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect width='16' height='20' x='4' y='2' rx='2'/> <line x1='8' x2='16' y1='6' y2='6'/> <line x1='16' x2='16' y1='14' y2='18'/> <path d='M16 10h.01'/> <path d='M12 10h.01'/> <path d='M8 10h.01'/> <path d='M12 14h.01'/> <path d='M8 14h.01'/> <path d='M12 18h.01'/> <path d='M8 18h.01'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect width='16' height='20' x='4' y='2' rx='2'/> <line x1='8' x2='16' y1='6' y2='6'/> <line x1='16' x2='16' y1='14' y2='18'/> <path d='M16 10h.01'/> <path d='M12 10h.01'/> <path d='M8 10h.01'/> <path d='M12 14h.01'/> <path d='M8 14h.01'/> <path d='M12 18h.01'/> <path d='M8 18h.01'/></svg>") center/contain no-repeat; }
+    .fa-bug::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M12 20v-9'/> <path d='M14 7a4 4 0 0 1 4 4v3a6 6 0 0 1-12 0v-3a4 4 0 0 1 4-4z'/> <path d='M14.12 3.88 16 2'/> <path d='M21 21a4 4 0 0 0-3.81-4'/> <path d='M21 5a4 4 0 0 1-3.55 3.97'/> <path d='M22 13h-4'/> <path d='M3 21a4 4 0 0 1 3.81-4'/> <path d='M3 5a4 4 0 0 0 3.55 3.97'/> <path d='M6 13H2'/> <path d='m8 2 1.88 1.88'/> <path d='M9 7.13V6a3 3 0 1 1 6 0v1.13'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M12 20v-9'/> <path d='M14 7a4 4 0 0 1 4 4v3a6 6 0 0 1-12 0v-3a4 4 0 0 1 4-4z'/> <path d='M14.12 3.88 16 2'/> <path d='M21 21a4 4 0 0 0-3.81-4'/> <path d='M21 5a4 4 0 0 1-3.55 3.97'/> <path d='M22 13h-4'/> <path d='M3 21a4 4 0 0 1 3.81-4'/> <path d='M3 5a4 4 0 0 0 3.55 3.97'/> <path d='M6 13H2'/> <path d='m8 2 1.88 1.88'/> <path d='M9 7.13V6a3 3 0 1 1 6 0v1.13'/></svg>") center/contain no-repeat; }
+
+    /* Transfer-table helper text ("Select one"): muted, off the edge. */
+    .modal .transfer-heading .help-text {
+      margin-top: 6px;
+      margin-right: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #94a3b8;
+    }
+
+    /* Data-table toolbar (caption): clean right-aligned actions row,
+       title hidden (page-header has it), Launch Instance brand-blue with
+       the server icon. Kept here so it shows even with stale compiled CSS. */
+    table.datatable > caption { caption-side: top; padding: 16px 18px 14px; text-align: left; border-bottom: 1px solid #e2e8f0; }
+    table.datatable > caption .table-title { display: none; }
+    .table_actions {
+      display: flex !important;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: flex-end;
+      float: none;
+    }
+    .table_actions::before, .table_actions::after { content: none; display: none; }
+    .table_actions .table_search,
+    .table_actions .table_filter { display: inline-flex; align-items: center; gap: 8px; float: none; margin: 0; }
+    .table_actions .table_search .form-group { margin: 0; }
+    .table_actions .table_search .form-control { height: 34px; border-radius: 8px; min-width: 200px; box-shadow: none; }
+    .table_actions .table_search.client .search-icon { display: none !important; }
+    .table_actions .table_search.client .form-control { padding-right: 12px; }
+    .table_actions .btn,
+    .table_actions .table_actions_menu > .btn { height: 34px; border-radius: 8px; display: inline-flex; align-items: center; gap: 7px; white-space: nowrap; }
+    .table_actions .table_actions_menu { float: none; }
+    /* Centre icon + label on EVERY button (flex drops markup whitespace, gap
+       restores spacing). Mirrors the .btn rule in _styles.scss. */
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 7px; }
+    .btn-block { display: flex; }
+    /* Angular <action> buttons wrap icon+label in <ng-transclude>; let it pass
+       through so they become the button's own flex items and centre. */
+    .btn > ng-transclude,
+    .btn > [ng-transclude] { display: contents; }
+    /* Keep the generic .btn rules from breaking the responsive nav toggle and
+       the themable <select> caret. */
+    @media (min-width: 768px) { .navbar-toggle { display: none; } }
+    .themable-select > .btn { width: 100%; justify-content: space-between; }
+    /* Django server-filter row: force the 34px toolbar height on the
+       themable-select toggle and the Filter submit button (the .table_actions
+       height rule doesn't always reach them, so they keep Bootstrap's ~38px). */
+    .table_search .themable-select > .btn,
+    .table_search > .btn,
+    .table_search button[type="submit"] { height: 34px !important; min-height: 34px !important; max-height: 34px !important; }
+    /* Split buttons: make the group flex+stretch so a caret-only toggle is as
+       tall as its text sibling (the inline-flex .btn sizes to content). */
+    .btn-group:not(.btn-group-vertical) { display: inline-flex; align-items: stretch; vertical-align: middle; }
+    .btn-launch, a.btn-launch {
+      background: #2563eb !important; border-color: #2563eb !important; color: #fff !important;
+      box-shadow: 0 1px 2px rgba(15,23,42,.08);
+    }
+    .btn-launch:hover, a.btn-launch:hover, .btn-launch:focus, a.btn-launch:focus {
+      background: #1d4ed8 !important; color: #fff !important;
+    }
+    /* Launch button icon: SVG via CSS mask (no Font Awesome glyph) */
+    .btn-launch .fa { display: inline-block; width: 14px; height: 14px; }
+    .btn-launch .fa::before {
+      content: ""; display: block; width: 100%; height: 100%; background-color: currentColor;
+      -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'><rect width='20' height='8' x='2' y='2' rx='2' ry='2'/><rect width='20' height='8' x='2' y='14' rx='2' ry='2'/><line x1='6' x2='6.01' y1='6' y2='6'/><line x1='6' x2='6.01' y1='18' y2='18'/></svg>") center/contain no-repeat;
+      mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'><rect width='20' height='8' x='2' y='2' rx='2' ry='2'/><rect width='20' height='8' x='2' y='14' rx='2' ry='2'/><line x1='6' x2='6.01' y1='6' y2='6'/><line x1='6' x2='6.01' y1='18' y2='18'/></svg>") center/contain no-repeat;
+    }
+    /* Primary Create/Allocate/Import buttons -> brand blue (class added by JS),
+       matching the mockup. Delete stays red, Launch keeps its own blue. */
+    .mc-create-btn, a.mc-create-btn, button.mc-create-btn {
+      background: #2563eb !important; border-color: #2563eb !important; color: #fff !important;
+      box-shadow: 0 1px 2px rgba(37,99,235,.25);
+    }
+    .mc-create-btn:hover, .mc-create-btn:focus, a.mc-create-btn:hover, a.mc-create-btn:focus {
+      background: #1d4ed8 !important; border-color: #1d4ed8 !important; color: #fff !important;
+    }
+    /* Pre-colour the create button on first paint (fa-plus = Horizon's native
+       create glyph) so it doesn't flash white before JS adds .mc-create-btn. */
+    #content_body .hz-dynamic-table-actions .btn:has(.fa-plus),
+    #content_body .table_actions .btn:has(.fa-plus) {
+      background: #2563eb; border-color: #2563eb; color: #fff;
+    }
+    /* Semantic SVG icon injected into Create/toolbar buttons (by JS) */
+    .mc-act-ic, .mc-btn-ic {
+      width: 14px; height: 14px; min-width: 14px; max-width: 14px;
+      min-height: 14px; max-height: 14px;
+      flex: 0 0 14px;
+    }
+    /* user-menu dropdown icons + required-field marker (SVG, no Font Awesome) */
+    .mc-menu-ic {
+      width: 16px; height: 16px; min-width: 16px; max-width: 16px;
+      min-height: 16px; max-height: 16px;
+      vertical-align: -3px; margin-right: 8px;
+    }
+    .mc-req-ic { width: 8px; height: 8px; vertical-align: 1px; }
+    /* Angular dynamic-table toolbar (magic-search pages e.g. Images): keep the
+       magic-search bar, just align the action buttons to the 38px row. */
+    #content_body hz-resource-table,
+    #content_body hz-dynamic-table,
+    #content_body hz-magic-search-context,
+    #content_body .hz-magic-search-context {
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      flex-shrink: 0; /* never let the table column shrink during Angular cold-load */
+    }
+    #content_body .hz-magic-search-context > .row {
+      margin-left: 0;
+      margin-right: 0;
+    }
+    #content_body .hz-dynamic-table-preamble {
+      display: flex !important;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      min-width: 0;
+      padding-left: 0;  /* col-xs-12 padding offset the zeroed .row margin and
+                           pushed the toolbar 15px right of the table; align it */
+      padding-right: 0;
+    }
+    /* Same fix for transfer tables inside non-wizard modals (Manage Members,
+       Modify Quotas, …): their .row margin is zeroed but the col padding
+       remained, so the search toolbar sat 15px right of the list. */
+    .modal .hz-dynamic-table-preamble { padding-left: 0; padding-right: 0; }
+    #content_body .hz-magic-search-bar { padding-right: 0 !important; }
+    #content_body .hz-magic-search-bar { flex: 1 1 auto; min-width: 0; }
+    #content_body .hz-dynamic-table-actions { display: inline-flex; align-items: center; gap: 10px; flex: 0 0 auto; }
+    /* neutralise Horizon's per-action padding so every gap is exactly 10px */
+    #content_body .hz-dynamic-table-actions action-list { padding-left: 0 !important; }
+    #content_body .hz-dynamic-table-actions .btn { height: 34px; border-radius: 8px; display: inline-flex; align-items: center; gap: 7px; white-space: nowrap; }
+    /* Cold-load: the Angular batch actions render ~1-2s after the magic-search
+       bar, so the bar briefly spans the whole row and "swallows" the buttons.
+       Fade the toolbar in only once the buttons exist (1.8s fallback for tables
+       that have no batch actions) so bar + buttons appear together. */
+    @keyframes mc-toolbar-reveal { to { opacity: 1; } }
+    #content_body .hz-dynamic-table-preamble { animation: mc-toolbar-reveal .01s linear 1.8s forwards; }
+    #content_body .hz-dynamic-table-preamble:not(:has(.hz-dynamic-table-actions .btn)) { opacity: 0; }
+    #content_body .hz-dynamic-table-preamble:has(.hz-dynamic-table-actions .btn) { opacity: 1; animation: none; transition: opacity .2s ease; }
+    #content_body .hz-magic-search-context > table,
+    #content_body .hz-magic-search-context table.table {
+      width: 100%;
+      min-width: 100%;
+    }
+    /* Reserve the row-actions column so the late-rendering Launch/row buttons
+       don't make the data columns expand-then-shrink on cold load ("teo").
+       The header th (last, empty = actions column) holds the width even before
+       any rows render, so there is nothing to reserve from the <td> yet. */
+    #content_body .hz-magic-search-context td.actions_column,
+    #content_body .hz-magic-search-context thead th:last-child:empty { min-width: 150px; }
+    /* While Angular is still building the row buttons, show a shimmering
+       skeleton in the reserved space so it doesn't look like a missing button.
+       It disappears the moment a real .btn renders in that cell. */
+    @keyframes mc-skel { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+    #content_body .hz-magic-search-context td.actions_column:not(:has(.btn)) { text-align: right; }
+    #content_body .hz-magic-search-context td.actions_column:not(:has(.btn))::after {
+      content: ""; display: inline-block; width: 92px; height: 30px; border-radius: 8px;
+      vertical-align: middle;
+      background: linear-gradient(90deg, #eef2f7 25%, #e2e8f0 50%, #eef2f7 75%);
+      background-size: 200% 100%; animation: mc-skel 1.2s ease-in-out infinite;
+    }
+    @media (min-width: 900px) {
+      #content_body .hz-magic-search-context table.table-rsp .rsp-p1,
+      #content_body .hz-magic-search-context table.table-rsp .rsp-p2,
+      #content_body .hz-magic-search-context table.table-rsp .rsp-p3,
+      #content_body .hz-magic-search-context table.table-rsp .rsp-p4 {
+        display: table-cell !important;
+      }
+      #content_body .hz-magic-search-context table.table-rsp .rsp-alt-p1,
+      #content_body .hz-magic-search-context table.table-rsp .rsp-alt-p2,
+      #content_body .hz-magic-search-context table.table-rsp .rsp-alt-p3,
+      #content_body .hz-magic-search-context table.table-rsp .rsp-alt-p4 {
+        display: none !important;
+      }
+    }
+    /* Clamp the magic-search bar to the same 38px row as the buttons.
+       Use min-height too in case the theme's $input-height-base is taller. */
+    #content_body .hz-magic-search-bar .magic-search-bar { margin: 0 !important; }
+    #content_body .hz-magic-search-bar .magic-search-bar,
+    #content_body .hz-magic-search-bar .input-group,
+    #content_body .hz-magic-search-bar .input-group-addon,
+    #content_body .hz-magic-search-bar .input-group-btn,
+    #content_body .hz-magic-search-bar .input-group-btn > button,
+    #content_body .hz-magic-search-bar .form-control,
+    #content_body .hz-magic-search-bar .magic-search,
+    #content_body .hz-magic-search-bar .search-bar { height: 34px !important; min-height: 34px !important; max-height: 34px !important; }
+    /* round the outer ends only (handles both with/without the settings cog) */
+    #content_body .hz-magic-search-bar .input-group > :first-child { border-radius: 8px 0 0 8px; }
+    #content_body .hz-magic-search-bar .input-group > :last-child { border-radius: 0 8px 8px 0; }
+    #content_body .hz-magic-search-bar .form-control,
+    #content_body .hz-magic-search-bar .magic-search,
+    #content_body .hz-magic-search-bar .search-bar { display: flex; align-items: center; }
+    /* let the input grow to full width so the placeholder isn't clipped */
+    #content_body .hz-magic-search-bar .form-control,
+    #content_body .hz-magic-search-bar .magic-search,
+    #content_body .hz-magic-search-bar .search-bar,
+    #content_body .hz-magic-search-bar .search-main-area,
+    #content_body .hz-magic-search-bar .search-entry { flex: 1 1 auto; min-width: 0; }
+    #content_body .hz-magic-search-bar .search-input { height: 34px; line-height: 34px; width: 100%; min-width: 0; }
+
+    /* Octavia Load Balancers are an Angular plugin. Scope the mockup card/table
+       skin to that route so other Angular tables keep their existing layout. */
+    body.mc-lbaas-page #content_body hz-resource-panel > div > .breadcrumb { margin-bottom: 14px; }
+    body.mc-lbaas-page #content_body hz-resource-panel hz-page-header .page-header { margin-bottom: 16px !important; }
+    body.mc-lbaas-page #content_body hz-resource-panel hz-page-header .page-header p:empty { display: none; }
+    body.mc-lbaas-page #content_body hz-resource-table .hz-magic-search-context {
+      background: #fff; border: 1px solid #e2e8f0; border-radius: 12px;
+      box-shadow: 0 1px 2px rgba(15,23,42,.06), 0 4px 12px rgba(15,23,42,.06);
+      margin-bottom: 16px; overflow: visible;
+    }
+    body.mc-lbaas-page #content_body hz-resource-table .hz-magic-search-context > .row {
+      display: block; margin-left: 0; margin-right: 0; padding: 16px 18px 14px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    body.mc-lbaas-page #content_body hz-resource-table .hz-dynamic-table-preamble {
+      padding-left: 0; padding-right: 0; justify-content: flex-end; position: relative;
+    }
+    body.mc-lbaas-page #content_body hz-resource-table .hz-magic-search-bar {
+      flex: 0 1 300px; margin-left: auto; max-width: 390px;
+    }
+    body.mc-lbaas-page #content_body hz-resource-table .hz-magic-search-bar.mc-lb-native-search {
+      position: absolute !important; left: -9999px !important; width: 1px !important; min-width: 1px !important;
+      height: 1px !important; margin: 0 !important; opacity: 0; overflow: hidden; pointer-events: none;
+    }
+    body.mc-lbaas-page #content_body hz-resource-table .mc-lb-filterbar {
+      display: inline-flex; align-items: center; justify-content: flex-end; gap: 10px; margin-left: auto; min-width: 0;
+    }
+    body.mc-lbaas-page #content_body hz-resource-table .mc-lb-filter-field,
+    body.mc-lbaas-page #content_body hz-resource-table .mc-lb-filter-apply {
+      height: 34px; border-radius: 8px; display: inline-flex; align-items: center; gap: 7px;
+      font-weight: 600; white-space: nowrap;
+    }
+    body.mc-lbaas-page #content_body hz-resource-table .mc-lb-filter-field { min-width: 106px; justify-content: center; }
+    body.mc-lbaas-page #content_body hz-resource-table .mc-lb-filter-input {
+      width: 270px; height: 34px; border: 1px solid #dbe3ee; border-radius: 8px; box-shadow: none;
+    }
+    body.mc-lbaas-page #content_body hz-resource-table .mc-lb-filter-input:focus {
+      border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37,99,235,.15);
+    }
+    @media (max-width: 900px) {
+      body.mc-lbaas-page #content_body hz-resource-table .mc-lb-filterbar { flex: 1 1 100%; flex-wrap: wrap; }
+      body.mc-lbaas-page #content_body hz-resource-table .mc-lb-filter-input { flex: 1 1 180px; width: auto; }
+    }
+    body.mc-lbaas-page #content_body hz-resource-table .hz-dynamic-table-actions { margin-left: 0; }
+    body.mc-lbaas-page #content_body hz-resource-table table.table { border: 0; margin-bottom: 0; }
+    body.mc-lbaas-page #content_body hz-resource-table table.table > tfoot { background: #fff; }
+
+    /* Data table -> rounded card like the mockup (overflow visible so
+       dropdowns are not clipped); roomier cells; no zebra; subtle count. */
+    .table_wrapper {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      box-shadow: 0 1px 2px rgba(15,23,42,.06), 0 4px 12px rgba(15,23,42,.06);
+      margin-bottom: 16px;
+    }
+    .table_wrapper > form, .table_wrapper > table, .table_wrapper table.datatable { margin-bottom: 0; }
+    .table_wrapper table.datatable { border: 0; }
+    #content_body td.actions_column .btn-group.mc-action-dropup > .dropdown-menu {
+      top: auto !important;
+      bottom: calc(100% + 4px) !important;
+      margin-top: 0 !important;
+      margin-bottom: 0 !important;
+    }
+    .table.datatable > thead > tr > th { padding: 11px 18px; }
+    .table.datatable > tbody > tr > td { padding: 12px 18px; }
+    /* Uniform rows for ALL tables: Django stripes via tr.odd/even classes,
+       Angular (Volumes/Images/Networks…) via Bootstrap :nth-of-type. Flatten
+       every striped row to one colour, keeping selection/warning + hover. */
+    #content_body table.table-striped > tbody > tr:not(.st-selected):not(.warning) > td { background-color: #fff; }
+    #content_body table.table-striped > tbody > tr:hover > td { background-color: #f8fafc; }
+    /* Uniform checkbox size: the "select all" th uses a smaller font so its 1em
+       FontAwesome glyph rendered smaller than the row checkboxes. */
+    .table.datatable .multi_select_column { font-size: 16px; }
+    .table.datatable .themable-checkbox label::before { font-size: 16px; line-height: 1; }
+    .table.datatable .multi_select_column input[type="checkbox"] { width: 15px; height: 15px; margin: 0; vertical-align: middle; }
+    .table.datatable > tbody > tr > td a { font-weight: 600; }
+    /* "Displaying N items" count: one identical style on Django (.table_count,
+       rendered inside a thead/tfoot td) and Angular tables (hz-table-footer's
+       count span), so e.g. Admin Instances matches the Images page exactly. */
+    #content_body .table_count,
+    #content_body [hz-table-footer] td > span:first-child { color: #0f172a; font-size: 13px; font-weight: 400; text-transform: none; letter-spacing: normal; }
+    /* Status / Power State pills (added by JS) */
+    .mc-stat-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; line-height: 1.4; padding: 3px 10px; border-radius: 20px; white-space: nowrap; }
+    .mc-stat-badge::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; flex: 0 0 auto; }
+    .mc-stat-badge.ok    { background: #dcfce7; color: #16a34a; }
+    .mc-stat-badge.info  { background: #dbeafe; color: #2563eb; }
+    .mc-stat-badge.warn  { background: #fef3c7; color: #d97706; }
+    .mc-stat-badge.err   { background: #fee2e2; color: #dc2626; }
+    .mc-stat-badge.muted { background: #f1f5f9; color: #64748b; }
+    .table.datatable > thead .breadcrumb_td .table_count { display: none; }
+
+    /* Admin / Hypervisors — real mockup tabs + meter tables */
+    .mc-hv-page-head { margin-bottom: 16px; }
+    .mc-hv-refresh {
+      height: 34px; border-radius: 8px; display: inline-flex; align-items: center; gap: 7px; font-weight: 600;
+    }
+    .mc-hv-stats { margin-bottom: 16px; }
+    .mc-hv-stats .mc-stat-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .mc-hv-tabs-shell .nav-tabs {
+      display: flex; gap: 2px; border-bottom: 1px solid #e2e8f0; margin: 0 0 16px;
+    }
+    .mc-hv-tabs-shell .nav-tabs > li { margin-bottom: -1px; }
+    .mc-hv-tabs-shell .nav-tabs > li > a {
+      border: 0 !important; border-bottom: 2px solid transparent !important; border-radius: 0;
+      background: transparent !important; color: #64748b; font-size: 14px; font-weight: 600;
+      padding: 10px 16px; margin: 0; outline: 0 !important; box-shadow: none !important;
+    }
+    .mc-hv-tabs-shell .nav-tabs > li > a:hover,
+    .mc-hv-tabs-shell .nav-tabs > li > a:focus { color: #2563eb; }
+    .mc-hv-tabs-shell .nav-tabs > li.active > a,
+    .mc-hv-tabs-shell .nav-tabs > li.active > a:hover,
+    .mc-hv-tabs-shell .nav-tabs > li.active > a:focus {
+      color: #2563eb; border-bottom-color: #2563eb !important;
+    }
+    .mc-hv-tabs-shell .tab-content { min-height: 430px; }
+    .mc-hv-tabs-shell .table_wrapper { margin-bottom: 16px; }
+    .mc-hv-tabs-shell .table_wrapper > form,
+    .mc-hv-tabs-shell .table_wrapper .table-responsive { margin: 0 !important; padding: 0 !important; }
+    .mc-hv-tabs-shell .table_wrapper > .table_count,
+    .mc-hv-tabs-shell .table_wrapper .table_count,
+    .mc-hv-tabs-shell .table.datatable > caption,
+    .mc-hv-tabs-shell .table.datatable > tfoot { display: none !important; }
+    .mc-hv-tabs-shell .table_wrapper table.datatable {
+      width: 100%; min-width: 980px; margin: 0;
+      border: 0; border-radius: 0;
+    }
+    .mc-hv-tabs-shell .table_wrapper table.datatable.mc-hv-enhanced {
+      width: 100%; margin: 0;
+      border: 0; border-radius: 0; overflow: visible;
+    }
+    .mc-hv-tabs-shell .table.datatable > thead > tr > th { font-size: 12px; font-weight: 700; letter-spacing: .4px; }
+    .mc-hv-tabs-shell .table.datatable > thead > tr:not(.table_column_header) { display: none !important; }
+    .mc-hv-tabs-shell .table.datatable > tbody > tr,
+    .mc-hv-tabs-shell .table.datatable > tbody > tr > td,
+    .mc-hv-tabs-shell .table.datatable.table-striped > tbody > tr:nth-of-type(odd) > td,
+    .mc-hv-tabs-shell .table.datatable.table-striped > tbody > tr:nth-of-type(even) > td,
+    .mc-hv-tabs-shell .table.datatable > tbody > tr:hover > td,
+    .mc-hv-tabs-shell .table.datatable.table-striped > tbody > tr:hover > td { background: #fff !important; }
+    .mc-hv-table-head {
+      display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+      padding: 14px 18px; border-bottom: 1px solid #e2e8f0; background: #fff;
+    }
+    .mc-hv-table-actions { display: inline-flex; align-items: center; justify-content: flex-end; gap: 10px; margin-left: auto; min-width: 0; max-width: 100%; }
+    .mc-hv-filter { position: relative; min-width: 0; width: 260px; max-width: 100%; }
+    .mc-hv-filter::before {
+      content: ""; position: absolute; left: 13px; top: 50%; width: 14px; height: 14px; transform: translateY(-50%);
+      background: #94a3b8;
+      -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m21 21-4.34-4.34'/> <circle cx='11' cy='11' r='8'/></svg>") center/contain no-repeat;
+      mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m21 21-4.34-4.34'/> <circle cx='11' cy='11' r='8'/></svg>") center/contain no-repeat;
+    }
+    .mc-hv-filter input {
+      width: 100%; height: 34px; border: 1px solid #e2e8f0; border-radius: 8px; background: #f8fafc;
+      color: #0f172a; font-size: 14px; padding: 0 12px 0 36px; outline: 0; box-shadow: none; box-sizing: border-box;
+    }
+    .mc-hv-filter input::placeholder { color: #94a3b8; }
+    .mc-hv-filter input:focus { border-color: #bfdbfe; background: #fff; }
+    .mc-hv-icon-btn {
+      width: 34px; height: 34px; border: 1px solid #e2e8f0; border-radius: 8px; background: #fff; color: #334155;
+      display: inline-flex; align-items: center; justify-content: center;
+    }
+    .mc-hv-icon-btn svg { width: 14px; height: 14px; }
+    .mc-hv-table-title { color: #0f172a; font-size: 16px; font-weight: 700; line-height: 1.3; }
+    .mc-hv-count {
+      display: inline-flex; align-items: center; gap: 6px; min-height: 24px; border-radius: 20px;
+      padding: 3px 10px; background: #f1f5f9; color: #64748b; font-size: 12px; font-weight: 700; white-space: nowrap;
+    }
+    .mc-hv-host { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; }
+    .mc-hv-dot { width: 9px; height: 9px; border-radius: 50%; background: #16a34a; flex: 0 0 auto; }
+    .mc-hv-tag { display: inline-block; border-radius: 6px; background: #f1f5f9; color: #64748b; font-size: 11px; font-weight: 700; padding: 2px 9px; }
+    .mc-hv-meter { min-width: 190px; }
+    .mc-hv-meter-line {
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      color: #64748b; font-size: 13px; font-weight: 600; margin-bottom: 5px; white-space: nowrap;
+    }
+    .mc-hv-meter-line .mc-hv-pct { color: #94a3b8; }
+    .mc-hv-instances { color: #0f172a; font-weight: 700; }
+    .mc-hv-col-hide { display: none !important; }
+    .mc-hv-provider-meter { min-width: 230px; }
+    .mc-hv-provider-meter .mc-hv-meter-line { font-size: 12px; }
+    .mc-hv-provider-meta { color: #94a3b8; font-size: 11px; font-weight: 600; margin-top: 4px; white-space: nowrap; }
+    @media (max-width: 900px) {
+      .mc-hv-stats .mc-stat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .mc-hv-tabs-shell .nav-tabs { overflow-x: auto; white-space: nowrap; }
+      .mc-hv-tabs-shell .tab-content { min-height: 0; }
+    }
+    @media (max-width: 640px) {
+      .mc-hv-stats .mc-stat-grid { grid-template-columns: 1fr; }
+      .mc-hv-table-head { align-items: flex-start; flex-direction: column; }
+      .mc-hv-table-actions, .mc-hv-filter { width: 100%; }
+    }
+    /* Django detail header -> flex so the injected "Back to list" button sits
+       between the title and the actions (like Angular routed-detail). Declared after
+       the float rules above so it overrides them (same specificity, later wins). */
+    .page-header.detail-header{display:flex !important;flex-wrap:wrap;align-items:center;gap:10px}
+    .page-header.detail-header > .row{display:contents !important}
+    .page-header.detail-header .detail-title{order:1 !important;flex:1 1 auto !important;float:none !important;width:auto !important;padding:0 !important}
+    .page-header.detail-header .detail-actions{order:3 !important;float:none !important;width:auto !important;padding:0 !important;display:inline-flex !important;align-items:center}
+    .page-header.detail-header .mc-back-to-list{order:2 !important;display:inline-flex;align-items:center;border:1px solid #cbd5e1;border-radius:8px;padding:7px 14px;background:#fff;color:#334155;font-weight:600;font-size:13px;line-height:1;text-decoration:none;white-space:nowrap;cursor:pointer}
+    .page-header.detail-header .mc-back-to-list::before{content:"\2039";font-size:16px;margin-right:6px}
+    .page-header.detail-header .mc-back-to-list:hover{background:#f1f5f9;color:#0f172a}
+    @media (max-width:767px){.page-header.detail-header .detail-title{flex:1 1 100% !important}}
+    /* Octavia LBaaS detail (LoadBalancer/Listener/Pool/Member/Monitor/L7Policy/
+       L7Rule): card the Overview tab's .col-md-6.detail section. Scoped to
+       mc-lbaas-page; only detail pages have .col-md-6.detail (list is a table). */
+    body.mc-lbaas-page .col-md-6.detail{background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(15,23,42,.06),0 4px 12px rgba(15,23,42,.06);padding:16px 20px;margin:0 0 16px;float:none;width:100%;box-sizing:border-box}
+    body.mc-lbaas-page .col-md-6.detail h4{margin:0 0 14px;padding-bottom:12px;border-bottom:1px solid #e2e8f0;font-size:16px;font-weight:700;color:#0f172a;line-height:1.25}
+    /* Transfer-table allocate/deallocate: the fa-arrow class sits on the <button> */
+    /* itself (empty content), so the masked ::before collapses to 0. Centre it and */
+    /* give the ::before a fixed size so the circle-plus / circle-minus shows. */
+    .fa-arrow-up, .fa-arrow-down,
+    .mc-transfer-add, .mc-transfer-remove {
+      display: inline-flex !important; align-items: center; justify-content: center;
+      width: 48px !important; min-width: 48px !important; height: 34px !important; min-height: 34px !important; line-height: 0;
+      border: 0 !important; border-radius: 999px !important; cursor: pointer; color: #fff !important;
+      box-shadow: none !important; -webkit-appearance: none !important; appearance: none !important;
+      box-sizing: border-box; outline: 0 !important; padding: 0 !important; text-align: center;
+    }
+    .fa-arrow-up, .mc-transfer-add { background: #2563eb !important; }
+    .fa-arrow-down, .mc-transfer-remove { background: #dc2626 !important; }
+    .fa-arrow-up:hover, .mc-transfer-add:hover { background: #1d4ed8 !important; }
+    .fa-arrow-down:hover, .mc-transfer-remove:hover { background: #b91c1c !important; }
+    .fa-arrow-up:focus, .fa-arrow-down:focus, .fa-arrow-up:active, .fa-arrow-down:active,
+    .mc-transfer-add:focus, .mc-transfer-remove:focus, .mc-transfer-add:active, .mc-transfer-remove:active {
+      box-shadow: none !important; outline: 0 !important;
+    }
+    .fa-arrow-up::before, .fa-arrow-down::before {
+      width: 16px !important; height: 16px !important; display: block; flex: 0 0 auto;
+      margin: 0 !important; position: static !important; background-color: #fff !important;
+    }
+    .membership .members > ul.btn-group,
+    .membership .available_members > ul.btn-group {
+      display: flex !important; align-items: center !important;
+    }
+    .membership .members > ul.btn-group > li.member,
+    .membership .available_members > ul.btn-group > li.member {
+      order: 1; flex: 1 1 auto; min-width: 0;
+    }
+    .membership .members > ul.btn-group > li.role_options,
+    .membership .available_members > ul.btn-group > li.role_options {
+      order: 2; flex: 0 1 auto; margin-left: auto !important;
+    }
+    .membership .members > ul.btn-group > li.active,
+    .membership .available_members > ul.btn-group > li.active {
+      order: 3; align-self: center; flex: 0 0 auto; float: none !important; margin-left: 8px;
+    }
+    .membership a[href="#add_remove"] {
+      font-size: 20px !important; font-weight: 400 !important; line-height: 20px !important;
+      text-decoration: none !important;
+    }
+    .membership a[href="#add_remove"] > .mc-act-ic,
+    .membership a[href="#add_remove"] > .mc-btn-ic,
+    .membership a[href="#add_remove"] > svg,
+    .membership a[href="#add_remove"] > .fa,
+    .membership a[href="#add_remove"] > .glyphicon {
+      display: none !important;
+    }
+    /* MD3 membership rows: stable height, single divider and state layer. */
+    .modal .membership .members > ul.btn-group,
+    .modal .membership .available_members > ul.btn-group,
+    .ng-wizard .membership .members > ul.btn-group,
+    .ng-wizard .membership .available_members > ul.btn-group {
+      min-height:56px;
+      margin:0 !important;
+      padding:8px 8px 8px 12px !important;
+      border:0 !important;
+      border-bottom:1px solid #e2e8f0 !important;
+      border-radius:0 !important;
+      background-color:#fff !important;
+      box-sizing:border-box;
+      transition:background-color .16s ease;
+    }
+    /* One MD3 outlined table per membership column: outlined header/body and
+       horizontal dividers, without clipping Horizon role dropdowns. */
+    .modal .membership .header .fake_table_header,
+    .ng-wizard .membership .header .fake_table_header {
+      min-height:56px;
+      padding:8px 12px !important;
+      border:1px solid #e2e8f0 !important;
+      border-bottom:1px solid #e2e8f0 !important;
+      border-radius:12px 12px 0 0 !important;
+      background:#fff;
+      box-sizing:border-box;
+    }
+    .modal .membership .filterable > .fake_table,
+    .ng-wizard .membership .filterable > .fake_table {
+      width:100%;
+      border:1px solid #e2e8f0 !important;
+      border-top:0 !important;
+      border-radius:0 0 12px 12px !important;
+      background:#fff !important;
+      box-sizing:border-box;
+    }
+    .modal .membership .members > ul.btn-group.last_stripe,
+    .modal .membership .available_members > ul.btn-group.last_stripe,
+    .ng-wizard .membership .members > ul.btn-group.last_stripe,
+    .ng-wizard .membership .available_members > ul.btn-group.last_stripe {
+      border-bottom:0 !important;
+      border-radius:0 0 11px 11px !important;
+    }
+    .modal .membership .members > ul.btn-group:hover,
+    .modal .membership .available_members > ul.btn-group:hover,
+    .ng-wizard .membership .members > ul.btn-group:hover,
+    .ng-wizard .membership .available_members > ul.btn-group:hover {
+      background-color:rgba(37,99,235,.04) !important;
+    }
+    .modal .membership .members > ul.btn-group:focus-within,
+    .modal .membership .available_members > ul.btn-group:focus-within,
+    .ng-wizard .membership .members > ul.btn-group:focus-within,
+    .ng-wizard .membership .available_members > ul.btn-group:focus-within {
+      background-color:rgba(37,99,235,.08) !important;
+    }
+    .modal .membership .members > ul.btn-group > li.member,
+    .modal .membership .available_members > ul.btn-group > li.member,
+    .ng-wizard .membership .members > ul.btn-group > li.member,
+    .ng-wizard .membership .available_members > ul.btn-group > li.member {
+      display:flex;
+      align-items:center;
+      min-height:40px;
+      padding:0 !important;
+      font-size:14px;
+      line-height:20px;
+    }
+    .modal .membership a[href="#add_remove"],
+    .ng-wizard .membership a[href="#add_remove"] {
+      display:inline-flex !important;
+      align-items:center;
+      justify-content:center;
+      width:40px !important;
+      min-width:40px !important;
+      height:40px !important;
+      min-height:40px !important;
+      padding:0 !important;
+    }
+    .modal .membership .no_results,
+    .ng-wizard .membership .no_results {
+      min-height:56px;
+      margin:0;
+      padding:8px 12px;
+      border:0;
+      border-bottom:0;
+      border-radius:0 0 11px 11px;
+      background:#fff;
+      box-sizing:border-box;
+    }
+    .modal .membership .no_results > li,
+    .ng-wizard .membership .no_results > li {
+      display:flex;
+      align-items:center;
+      min-height:40px;
+    }
+    /* MyCloud checkbox: self-contained box + Lucide check. The core themable
+       checkbox draws its tick with a FontAwesome glyph (content:'
+    046'); when the
+       FA webfont isn't applied (we render icons via masks) that glyph shows up as a
+       stray vertical bar. Draw the box + tick in pure CSS instead (row select,
+       select-all header, and form checkboxes). */
+    .themable-checkbox input[type=checkbox] + label::before {
+      content: "" !important; font-family: inherit !important;
+      display: inline-block; width: 16px !important; height: 16px !important;
+      box-sizing: border-box; border: 1.5px solid #cbd5e1; border-radius: 4px;
+      background: #fff; vertical-align: middle;
+      -webkit-mask: none !important; mask: none !important;
+    }
+    .themable-checkbox input[type=checkbox]:checked + label::before {
+      border-color: #2563eb;
+      background: #2563eb url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><path d='M20 6 9 17l-5-5'/></svg>") center / 12px 12px no-repeat;
+    }
+    .themable-checkbox input[type=checkbox]:indeterminate + label::before {
+      border-color: #2563eb;
+      background: #2563eb url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round'><path d='M5 12h14'/></svg>") center / 12px 12px no-repeat;
+    }
+    /* Make FontAwesome spinners actually rotate (the masked ::before spins with the */
+    /* element). Force it so loading states spin even without the FA animation CSS. */
+    @keyframes mc-fa-spin { to { transform: rotate(360deg); } }
+    .fa-spin, .fa-pulse { animation: mc-fa-spin 1s linear infinite !important; }
+    /* Loading spinner: the masked fa-spinner glyph + FA spin animation didn't */
+    /* render/rotate reliably, so draw a clean CSS ring spinner instead (scales with */
+    /* font-size via em, uses currentColor, always rotates). */
+    .fa-spinner::before { display: none !important; }
+    .fa-spinner {
+      display: inline-block; box-sizing: border-box; width: 1em; height: 1em;
+      border: .12em solid currentColor; border-top-color: transparent;
+      border-radius: 50%; background: none !important;
+      animation: mc-fa-spin .7s linear infinite !important;
+    }
+    /* Loading-modal spinner (.loader): centre it (block + auto margins). */
+    .fa-spinner.loader { display: block; margin: 6px auto 12px; }
+
+    /* MD3 control surfaces. Shape/state only: preserve the existing palette,
+       DOM, dimensions, toolbar placement, action order, and workflows. */
+    @media (min-width: 768px) {
+      #sidebar, #sidebar-accordion { width: 265px; }
+      #content_body { padding-left: 265px; }
+      .navbar.navbar-default.navbar-fixed-top { left: 265px; }
+    }
+    @media (max-width: 767px) {
+      #sidebar, #sidebar-accordion { width: 265px; }
+      #sidebar { left: -265px; }
+      #sidebar.on-screen { left: 0; }
+    }
+
+    .mc-topbar-pills .mc-ctx-pill > .dropdown-toggle,
+    .mc-topbar-pills .mc-region-pill > a,
+    .mc-topbar-pills .mc-pill-static,
+    .btn,
+    .btn-sm,
+    .mc-hv-refresh,
+    .mc-hv-icon-btn,
+    .mc-lb-filter-field,
+    .mc-lb-filter-apply,
+    .page-header .mc-back-to-list,
+    body.mc-ngdetail .page-header .breadcrumb a {
+      border-radius: 999px !important;
+      transition: background-color .16s ease, border-color .16s ease,
+                  color .16s ease, box-shadow .16s ease;
+    }
+
+    .btn-primary,
+    .btn-danger,
+    .btn-launch,
+    .mc-create-btn {
+      box-shadow: 0 1px 2px rgba(15,23,42,.08), 0 1px 3px rgba(15,23,42,.06);
+    }
+    .btn-primary:hover, .btn-primary:focus,
+    .btn-danger:hover, .btn-danger:focus,
+    .btn-launch:hover, .btn-launch:focus,
+    .mc-create-btn:hover, .mc-create-btn:focus {
+      box-shadow: 0 2px 6px rgba(15,23,42,.10), 0 1px 2px rgba(15,23,42,.08);
+    }
+    .btn-default:not(.mc-create-btn):not(.btn-launch), .btn-link { box-shadow: none; }
+    .btn:active, .btn.active { transform: none; }
+    .btn:focus-visible,
+    .mc-hv-refresh:focus-visible,
+    .mc-hv-icon-btn:focus-visible {
+      outline: 0;
+      box-shadow: 0 0 0 3px rgba(37,99,235,.14),
+                  0 1px 2px rgba(15,23,42,.08), 0 1px 3px rgba(15,23,42,.06);
+    }
+
+    .btn-group > .btn:first-child:not(:last-child):not(.dropdown-toggle) {
+      border-radius: 999px 0 0 999px !important;
+    }
+    .btn-group > .btn:last-child:not(:first-child),
+    .btn-group > .dropdown-toggle:not(:first-child) {
+      border-radius: 0 999px 999px 0 !important;
+    }
+    .btn-group > .btn:only-child { border-radius: 999px !important; }
+
+    .table_actions .table_search .form-control,
+    #content_body .hz-dynamic-table-actions .btn,
+    body.mc-lbaas-page #content_body hz-resource-table .mc-lb-filter-field,
+    body.mc-lbaas-page #content_body hz-resource-table .mc-lb-filter-input,
+    body.mc-lbaas-page #content_body hz-resource-table .mc-lb-filter-apply,
+    .mc-hv-filter input {
+      border-radius: 999px !important;
+    }
+    #content_body .hz-magic-search-bar .input-group > :first-child {
+      border-radius: 999px 0 0 999px !important;
+    }
+    #content_body .hz-magic-search-bar .input-group > :last-child {
+      border-radius: 0 999px 999px 0 !important;
+    }
+    #content_body .hz-magic-search-bar .search-input {
+      border-radius: 999px 0 0 999px !important;
+    }
+    .table_actions .table_search .form-control:focus,
+    #content_body .hz-magic-search-bar .form-control:focus,
+    #content_body .hz-magic-search-bar .search-input:focus,
+    body.mc-lbaas-page #content_body hz-resource-table .mc-lb-filter-input:focus,
+    .mc-hv-filter input:focus {
+      border-color: #2563eb;
+      box-shadow: 0 0 0 3px rgba(37,99,235,.14);
+    }
+
+    /* Consistent icon scale: sidebar navigation 16px, button icons 14px. */
+    #sidebar a.openstack-panel .mc-nav-ic,
+    #sidebar .openstack-toggle .mc-cv {
+      width: 16px !important;
+      height: 16px !important;
+      min-width: 16px !important;
+      max-width: 16px !important;
+      min-height: 16px !important;
+      max-height: 16px !important;
+      flex: 0 0 16px !important;
+    }
+    .btn > svg,
+    .btn .mc-act-ic,
+    .btn .mc-btn-ic,
+    .btn .fa,
+    .btn .glyphicon,
+    .mc-hv-icon-btn > svg {
+      width: 14px !important;
+      height: 14px !important;
+      min-width: 14px !important;
+      max-width: 14px !important;
+      min-height: 14px !important;
+      max-height: 14px !important;
+      flex: 0 0 14px !important;
+    }
+    .fa-arrow-up::before,
+    .fa-arrow-down::before {
+      width: 14px !important;
+      height: 14px !important;
+    }
+
+    /* MD3 navigation surfaces: sidebar entries and wizard steps are links,
+       so they are not covered by the generic .btn pill rule above. */
+    #sidebar .panel > a,
+    #sidebar .list-group .list-group-item,
+    #sidebar .list-group > a.list-group-item,
+    .ng-wizard .nav-pills > li > a {
+      border-radius: 999px !important;
+    }
+    .ng-wizard .nav-pills > li.active > a,
+    .ng-wizard .nav-pills > li.active > a:hover,
+    .ng-wizard .nav-pills > li.active > a:focus {
+      border-color: transparent !important;
+      border-radius: 999px !important;
+      outline: 0 !important;
+    }
+    .ng-wizard .nav-pills > li.active > a:focus-visible {
+      box-shadow: 0 0 0 3px rgba(37,99,235,.14);
+    }
+
+    /* Fixed icon-button geometry keeps the plus/minus mask perfectly centred. */
+    .ng-wizard .transfer-table .btn.fa-arrow-up,
+    .ng-wizard .transfer-table .btn.fa-arrow-down {
+      position: relative !important;
+      width: 48px !important;
+      min-width: 48px !important;
+      height: 34px !important;
+      min-height: 34px !important;
+      padding: 0 !important;
+      line-height: 0 !important;
+      border-radius: 999px !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+    .ng-wizard .transfer-table .btn.fa-arrow-up::before,
+    .ng-wizard .transfer-table .btn.fa-arrow-down::before {
+      margin: 0 !important;
+      position: absolute !important;
+      left: 50% !important;
+      top: 50% !important;
+      transform: translate(-50%, -50%) !important;
+    }
+
+    /* One compact MD3 Launch Instance control across Overview and toolbars. */
+    .btn-launch,
+    a.btn-launch,
+    .mc-launch-btn {
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 7px !important;
+      box-sizing: border-box;
+      height: 34px !important;
+      min-height: 34px !important;
+      padding: 0 16px !important;
+      border-width: 1px !important;
+      border-radius: 999px !important;
+      font-size: 14px !important;
+      font-weight: 600 !important;
+      line-height: 20px !important;
+      white-space: nowrap;
+    }
+
+    /* MD3 labelLarge for sidebar navigation; small dashboard captions stay 11px. */
+    #sidebar a.openstack-panel,
+    #sidebar .openstack-panel-group > a {
+      font-size: 14px !important;
+      line-height: 20px !important;
+    }
+
+    /* One 14px icon source and optical box for every Launch Instance button. */
+    .btn-launch > .fa,
+    .btn-launch .fa,
+    .mc-launch-btn > .fa {
+      width: 14px !important;
+      height: 14px !important;
+      flex: 0 0 14px !important;
+    }
+    .btn-launch > .fa::before,
+    .btn-launch .fa::before,
+    .mc-launch-btn > .fa::before {
+      width: 14px !important;
+      height: 14px !important;
+    }
+
+    /* MD3 wizard/dialog fallback for deployments serving stale compressed CSS.
+       Presentation only: no DOM or Horizon workflow changes. */
+    .modal .modal-content {
+      border-radius:28px !important;
+      box-shadow:0 24px 64px rgba(15,23,42,.28);
+    }
+    .modal .modal-header {
+      min-height:56px;
+      padding:16px 20px;
+      border-bottom-color:#e2e8f0;
+    }
+    .modal .modal-header .close {
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:40px;
+      height:40px;
+      margin:-8px -8px -8px 8px;
+      padding:0;
+      border-radius:50%;
+    }
+    .modal .modal-header .close:focus-visible {
+      outline:0;
+      box-shadow:0 0 0 3px rgba(37,99,235,.14);
+    }
+    .modal .modal-footer {
+      min-height:64px;
+      padding:12px 20px;
+      border-bottom-left-radius:28px;
+      border-bottom-right-radius:28px;
+    }
+    .modal .btn, .ng-wizard .btn {
+      min-height:40px !important;
+      padding-top:9px;
+      padding-bottom:9px;
+    }
+    .modal .form-control, .ng-wizard .form-control,
+    .modal select, .ng-wizard select {
+      min-height:40px;
+      border-radius:12px;
+    }
+    /* Preserve Horizon's native/select-widget rendering; only restore the
+       complete outlined border that Bootstrap can drop in modal forms. */
+    .modal select.form-control:not([multiple]),
+    .ng-wizard select.form-control:not([multiple]) {
+      border:1px solid #cbd5e1 !important;
+    }
+    .modal select.form-control:not([multiple]):focus,
+    .ng-wizard select.form-control:not([multiple]):focus {
+      border-color:#2563eb !important;
+    }
+    /* ThemableSelectWidget displays the wrapper and hides the native select.
+       Overlay the outlined-field ring without changing widget visibility. */
+    .modal .form-group .themable-select.form-control,
+    .ng-wizard .form-group .themable-select.form-control {
+      position:relative;
+      border:0 !important;
+      border-radius:12px !important;
+      box-shadow:none !important;
+    }
+    .modal .form-group .themable-select.form-control::after,
+    .ng-wizard .form-group .themable-select.form-control::after {
+      content:"";
+      position:absolute;
+      z-index:2;
+      inset:0;
+      border:1px solid #cbd5e1;
+      border-radius:12px;
+      pointer-events:none;
+    }
+    .modal .form-group .themable-select.form-control:focus-within::after,
+    .modal .form-group .themable-select.form-control.open::after,
+    .ng-wizard .form-group .themable-select.form-control:focus-within::after,
+    .ng-wizard .form-group .themable-select.form-control.open::after {
+      border:2px solid #2563eb;
+    }
+    .modal .form-group .themable-select.form-control > .btn,
+    .ng-wizard .form-group .themable-select.form-control > .btn {
+      position:relative;
+      z-index:1;
+      border-radius:12px !important;
+    }
+    /* MD3 pill geometry only. Existing theme rules continue to own colors. */
+    .modal .modal-body > .nav-pills {
+      display:flex;
+      align-items:center;
+      gap:8px;
+      margin:0 0 16px;
+      padding:0;
+      border:0;
+    }
+    .modal .modal-body > .nav-pills > li {
+      float:none;
+      margin:0;
+    }
+    .modal .modal-body > .nav-pills > li > a {
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:40px;
+      margin:0;
+      padding:0 16px;
+      border-radius:999px !important;
+      font-weight:600;
+    }
+    .modal textarea.form-control, .ng-wizard textarea.form-control,
+    .modal select[multiple], .ng-wizard select[multiple] { height:auto; }
+    /* Keep Create User's native Django workflow; only size and separate its
+       description/project controls. */
+    #create_user_form #id_description {
+      height:70px !important;
+      min-height:70px !important;
+    }
+    #create_user_form .form-group:has(#id_project) .input-group {
+      display:flex;
+      align-items:center;
+      gap:8px;
+      width:100%;
+    }
+    #create_user_form .form-group:has(#id_project) .input-group > .form-control {
+      flex:1 1 auto;
+      width:0 !important;
+      min-width:0;
+    }
+    #create_user_form .form-group:has(#id_project) .input-group > .input-group-btn {
+      display:flex;
+      flex:0 0 40px;
+      width:40px;
+    }
+    #create_user_form .form-group:has(#id_project) .ajax-add {
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:40px;
+      min-width:40px;
+      height:40px;
+      min-height:40px !important;
+      padding:0;
+      border:0;
+      border-radius:999px !important;
+      background:#2563eb !important;
+      color:#fff !important;
+      box-shadow:none !important;
+    }
+    #create_user_form .form-group:has(#id_project) .ajax-add:hover {
+      background:#1d4ed8 !important;
+    }
+    #create_user_form .form-group:has(#id_project) .ajax-add:focus-visible {
+      outline:0;
+      box-shadow:0 0 0 3px rgba(37,99,235,.18) !important;
+    }
+    #create_user_form .form-group:has(#id_project) .ajax-add .fa-plus::before {
+      background-color:#fff !important;
+    }
+    /* Keep Horizon number spinners inside the same 40px field. The generic
+       modal button rule must not make each half-height control 40px tall. */
+    .modal .themable-spinner, .ng-wizard .themable-spinner {
+      display:flex;
+      align-items:stretch;
+      height:40px;
+    }
+    .modal .themable-spinner > .form-control,
+    .ng-wizard .themable-spinner > .form-control {
+      flex:1 1 auto;
+      width:1% !important;
+      min-width:0;
+      height:40px !important;
+      border-top-right-radius:0;
+      border-bottom-right-radius:0;
+    }
+    .modal .themable-spinner .input-group-btn-vertical,
+    .ng-wizard .themable-spinner .input-group-btn-vertical {
+      display:block;
+      flex:0 0 32px;
+      width:32px;
+      height:40px;
+    }
+    .modal .themable-spinner .input-group-btn-vertical-container,
+    .ng-wizard .themable-spinner .input-group-btn-vertical-container {
+      display:flex;
+      flex-direction:column;
+      width:32px;
+      height:40px;
+    }
+    .modal .themable-spinner .btn-container,
+    .ng-wizard .themable-spinner .btn-container {
+      flex:0 0 20px;
+      width:32px;
+      height:20px;
+    }
+    .modal .themable-spinner .themable-spinner-btn,
+    .ng-wizard .themable-spinner .themable-spinner-btn {
+      display:inline-flex !important;
+      align-items:center;
+      justify-content:center;
+      width:32px !important;
+      min-width:32px !important;
+      height:20px !important;
+      min-height:20px !important;
+      margin-left:-1px;
+      padding:0 !important;
+      border-color:#cbd5e1;
+      border-radius:0 !important;
+      line-height:1 !important;
+    }
+    .modal .themable-spinner .spinner-up,
+    .ng-wizard .themable-spinner .spinner-up { border-top-right-radius:12px !important; }
+    .modal .themable-spinner .spinner-down,
+    .ng-wizard .themable-spinner .spinner-down { border-bottom-right-radius:12px !important; }
+    .modal .themable-spinner .hz-spinner-icon-up,
+    .modal .themable-spinner .hz-spinner-icon-down,
+    .ng-wizard .themable-spinner .hz-spinner-icon-up,
+    .ng-wizard .themable-spinner .hz-spinner-icon-down,
+    .modal .themable-spinner .hz-spinner-icon-up::before,
+    .modal .themable-spinner .hz-spinner-icon-down::before,
+    .ng-wizard .themable-spinner .hz-spinner-icon-up::before,
+    .ng-wizard .themable-spinner .hz-spinner-icon-down::before {
+      width:12px !important;
+      height:12px !important;
+      margin:0 !important;
+    }
+    .modal input[type="checkbox"], .modal input[type="radio"],
+    .ng-wizard input[type="checkbox"], .ng-wizard input[type="radio"] {
+      width:18px;
+      height:18px;
+      accent-color:#2563eb;
+    }
+    .modal input[type="file"]::file-selector-button,
+    .ng-wizard input[type="file"]::file-selector-button {
+      min-height:36px;
+      margin:-1px 10px -1px -1px;
+      padding:7px 14px;
+      border:1px solid #cbd5e1;
+      border-radius:999px;
+      background:#fff;
+      color:#0f172a;
+      font:inherit;
+      font-weight:600;
+    }
+    .modal .has-success .control-label,
+    .ng-wizard .has-success .control-label { color:#0f172a; }
+    .modal .has-success .form-control,
+    .ng-wizard .has-success .form-control {
+      border-color:#cbd5e1;
+      box-shadow:none;
+    }
+    .modal .has-success .form-control:focus,
+    .ng-wizard .has-success .form-control:focus {
+      border-color:#2563eb;
+      box-shadow:0 0 0 3px rgba(37,99,235,.14);
+    }
+    .modal .has-error .form-control:focus,
+    .ng-wizard .has-error .form-control:focus {
+      box-shadow:0 0 0 3px rgba(220,38,38,.14);
+    }
+    .ng-wizard .help-toggle, .modal .help-toggle {
+      width:40px;
+      height:40px;
+    }
+    /* Bootstrap leaves metadata-tree search feedback at 34px while the MD3
+       field is 40px. Use one centred control box for search and +/- actions. */
+    .ng-wizard .metadata-tree .has-feedback { position:relative; }
+    .ng-wizard .metadata-tree .has-feedback .form-control {
+      height:40px !important;
+      padding-right:44px !important;
+    }
+    .ng-wizard .metadata-tree .has-feedback > .form-control-feedback.fa-search {
+      display:inline-flex !important;
+      align-items:center;
+      justify-content:center;
+      top:0 !important;
+      right:0 !important;
+      width:40px !important;
+      height:40px !important;
+      margin:0 !important;
+      color:#64748b;
+      font-size:18px !important;
+      line-height:40px !important;
+      pointer-events:none;
+    }
+    .ng-wizard .metadata-tree .has-feedback > .form-control-feedback.fa-search::before {
+      width:18px !important;
+      height:18px !important;
+    }
+    /* Membership filters still inherit Bootstrap's 34px feedback geometry.
+       Centre the existing SVG-mask icon in the 40px MD3 field. */
+    .modal .membership .form-group.has-feedback,
+    .ng-wizard .membership .form-group.has-feedback {
+      position:relative;
+      min-height:40px;
+      margin-bottom:0;
+    }
+    .modal .membership .form-group.has-feedback > .form-control,
+    .ng-wizard .membership .form-group.has-feedback > .form-control {
+      height:40px !important;
+      padding-right:40px !important;
+    }
+    .modal .membership .form-group.has-feedback > .form-control-feedback.fa-search,
+    .ng-wizard .membership .form-group.has-feedback > .form-control-feedback.fa-search {
+      display:inline-flex !important;
+      align-items:center;
+      justify-content:center;
+      top:0 !important;
+      right:0 !important;
+      width:40px !important;
+      height:40px !important;
+      margin:0 !important;
+      font-size:18px !important;
+      line-height:1 !important;
+      transform:none;
+      pointer-events:none;
+    }
+    .modal .membership .form-group.has-feedback > .form-control-feedback.fa-search::before,
+    .ng-wizard .membership .form-group.has-feedback > .form-control-feedback.fa-search::before {
+      width:18px !important;
+      height:18px !important;
+      margin:0 !important;
+    }
+    .ng-wizard .metadata-tree .mc-transfer-add,
+    .ng-wizard .metadata-tree .mc-transfer-remove {
+      width:40px !important;
+      min-width:40px !important;
+      height:40px !important;
+      min-height:40px !important;
+      padding:0 !important;
+    }
+    /* Custom uses a full-size trailing action with an 8px gap; catalog rows
+       retain Horizon's compact btn-xs hierarchy. */
+    .ng-wizard .metadata-tree .input-group-btn > .mc-transfer-add {
+      margin-left:8px !important;
+    }
+    .ng-wizard .metadata-tree .metadata-list-group > .list-group-item >
+      .clearfix .pull-right > .mc-transfer-add {
+      width:32px !important;
+      min-width:32px !important;
+      height:32px !important;
+      min-height:32px !important;
+    }
+    /* Keep existing metadata fields and their remove actions as separate MD3
+       controls; Bootstrap's joined input group must not overlap field text. */
+    .ng-wizard .metadata-tree .metadata-tree-item > .input-group {
+      display:flex;
+      align-items:center;
+      width:100%;
+      gap:0;
+    }
+    .ng-wizard .metadata-tree .metadata-tree-item > .input-group > .input-group-addon,
+    .ng-wizard .metadata-tree .metadata-tree-item > .input-group > .form-control {
+      position:static;
+      float:none;
+    }
+    .ng-wizard .metadata-tree .metadata-tree-item > .input-group > .form-control {
+      flex:1 1 auto;
+      width:1%;
+      min-width:0;
+      border-top-right-radius:8px !important;
+      border-bottom-right-radius:8px !important;
+    }
+    .ng-wizard .metadata-tree .metadata-tree-item > .input-group > .input-group-btn {
+      position:static;
+      display:flex;
+      align-items:center;
+      flex:0 0 40px;
+      width:40px;
+      margin:0 0 0 8px;
+    }
+    .ng-wizard .metadata-tree .metadata-tree-item > .input-group >
+      .input-group-btn > .mc-transfer-remove {
+      width:40px !important;
+      min-width:40px !important;
+      height:40px !important;
+      min-height:40px !important;
+    }
+    /* Array/group rows use the compact trailing action hierarchy. */
+    .ng-wizard .metadata-tree .metadata-tree-item .multiselect .panel-heading > div {
+      display:flex;
+      align-items:center;
+      min-height:40px;
+      width:100%;
+    }
+    .ng-wizard .metadata-tree .metadata-tree-item .multiselect
+      .metadata-tree-item-label {
+      flex:1 1 auto;
+      min-width:0;
+    }
+    .ng-wizard .metadata-tree .metadata-tree-item .multiselect
+      .metadata-tree-item-button.mc-transfer-remove {
+      position:static;
+      display:inline-flex !important;
+      align-items:center;
+      justify-content:center;
+      flex:0 0 32px;
+      width:32px !important;
+      min-width:32px !important;
+      height:32px !important;
+      min-height:32px !important;
+      margin:0 0 0 8px !important;
+      padding:0 !important;
+    }
+    .ng-wizard .metadata-tree .mc-transfer-add .fa-plus,
+    .ng-wizard .metadata-tree .mc-transfer-remove .fa-minus,
+    .ng-wizard .metadata-tree .mc-transfer-add .fa-plus::before,
+    .ng-wizard .metadata-tree .mc-transfer-remove .fa-minus::before {
+      width:14px !important;
+      height:14px !important;
+      margin:0 !important;
+    }
+    .ng-wizard .transfer-table .btn.fa-arrow-up,
+    .ng-wizard .transfer-table .btn.fa-arrow-down,
+    .modal .mc-transfer-add,
+    .modal .mc-transfer-remove {
+      height:40px !important;
+      min-height:40px !important;
+    }
+    .modal .hz-magic-search-bar .magic-search-bar,
+    .modal .hz-magic-search-bar .input-group,
+    .modal .hz-magic-search-bar .input-group-addon,
+    .modal .hz-magic-search-bar .input-group-btn,
+    .modal .hz-magic-search-bar .input-group-btn > button,
+    .modal .hz-magic-search-bar .form-control,
+    .modal .hz-magic-search-bar .magic-search,
+    .modal .hz-magic-search-bar .search-bar,
+    .modal .hz-magic-search-bar .search-input {
+      height:40px !important;
+      min-height:40px !important;
+      max-height:40px !important;
+    }
+    .modal .form-group.has-feedback > .form-control-feedback.fa-check,
+    .modal .form-group.has-feedback > .form-control-feedback.fa-times,
+    .ng-wizard .form-group.has-feedback > .form-control-feedback.fa-check,
+    .ng-wizard .form-group.has-feedback > .form-control-feedback.fa-times {
+      width:40px !important;
+      height:40px !important;
+      line-height:40px !important;
+    }
+    .ng-wizard .nav-pills > li:not(.active) > a:hover,
+    .ng-wizard .nav-pills > li:not(.active) > a:focus {
+      background:rgba(37,99,235,.08);
+      color:#2563eb;
+    }
+    @media (max-width:767px) {
+      .modal .modal-dialog { margin:12px; }
+      .modal .modal-content { border-radius:20px !important; }
+      .modal .modal-footer {
+        border-bottom-left-radius:20px;
+        border-bottom-right-radius:20px;
+      }
+    }
+    @media (prefers-reduced-motion:reduce) {
+      .modal .modal-content, .modal .btn, .modal .form-control,
+      .ng-wizard .nav-pills > li > a { transition:none !important; }
+    }
+
+    /* MD3 typography roles mirrored in this runtime bundle so DevStack stays
+       correct even when the main offline-compressed stylesheet is stale. */
+    :root {
+      --mc-type-page-size:22px; --mc-type-page-line:28px;
+      --mc-type-title-size:16px; --mc-type-title-line:24px;
+      --mc-type-body-size:14px; --mc-type-body-line:20px;
+      --mc-type-label-size:12px; --mc-type-label-line:16px;
+      --mc-type-caption-size:11px; --mc-type-caption-line:16px;
+      --mc-type-metric-size:28px; --mc-type-metric-line:36px;
+      --mc-table-edge-space:24px;
+    }
+    body { font-size:var(--mc-type-body-size); line-height:var(--mc-type-body-line); }
+    #content_body .page-header h1, #content_body .mc-page-title, #content_body h1 {
+      font-size:var(--mc-type-page-size); font-weight:700; line-height:var(--mc-type-page-line); letter-spacing:0;
+    }
+    #content_body .breadcrumb, #content_body .mc-page-crumb {
+      font-size:var(--mc-type-label-size); line-height:var(--mc-type-label-line); letter-spacing:0;
+    }
+    #content_body .panel-title, #content_body .mc-panel-title,
+    #content_body .mc-recent-title, #content_body .mc-usage-table-title,
+    #content_body .mc-hv-table-title, #content_body .mc-instance-card h4,
+    #content_body .detail h3, #content_body .detail h4 {
+      font-size:var(--mc-type-title-size); line-height:var(--mc-type-title-line); letter-spacing:0;
+    }
+    #content_body .form-control, #content_body label, #content_body .btn,
+    #sidebar a.openstack-panel, #sidebar .openstack-panel-group > a {
+      font-size:var(--mc-type-body-size); line-height:var(--mc-type-body-line); letter-spacing:0;
+    }
+    #sidebar .openstack-dashboard > a {
+      font-size:var(--mc-type-caption-size); line-height:var(--mc-type-caption-line); letter-spacing:0;
+    }
+    #content_body .mc-stat-num { font-size:var(--mc-type-metric-size); line-height:var(--mc-type-metric-line); }
+    #content_body .mc-stat-label, #content_body .mc-az-row,
+    #content_body .mc-quota-name, #content_body .mc-hv-tabs-shell .nav-tabs > li > a,
+    #content_body .mc-hv-filter input {
+      font-size:var(--mc-type-body-size); line-height:var(--mc-type-body-line);
+    }
+    #content_body .table { width:100%; table-layout:auto; font-size:var(--mc-type-body-size); line-height:var(--mc-type-body-line); }
+    #content_body .table > thead > tr > th {
+      padding:10px 12px; font-size:var(--mc-type-label-size); line-height:var(--mc-type-label-line);
+      letter-spacing:0; white-space:nowrap;
+    }
+    #content_body .table > tbody > tr > td, #content_body .table > tbody > tr > th {
+      padding:12px; font-size:var(--mc-type-body-size); line-height:var(--mc-type-body-line);
+    }
+    #content_body .table_count, #content_body [hz-table-footer] td > span:first-child,
+    #content_body .help-block, #content_body .mc-panel-subtitle,
+    #content_body .mc-quota-value, #content_body .mc-hv-provider-meter .mc-hv-meter-line {
+      font-size:var(--mc-type-label-size); line-height:var(--mc-type-label-line); letter-spacing:0;
+    }
+    #content_body .mc-stat-badge, #content_body .label, #content_body .badge {
+      font-size:var(--mc-type-label-size); line-height:var(--mc-type-label-line); letter-spacing:0;
+    }
+    #content_body .mc-limit-title, #content_body .mc-hv-tag, #content_body .mc-hv-provider-meta {
+      font-size:var(--mc-type-caption-size); line-height:var(--mc-type-caption-line); letter-spacing:0;
+    }
+    /* MyCloud only: keep the project Instances image data available to
+       Horizon while removing the Image Name column from this visual layout. */
+    body.mc-project-instances-page #instances th:nth-child(3),
+    body.mc-project-instances-page #instances td:nth-child(3) { display:none; }
+    body.mc-project-instances-page #instances > caption,
+    body.mc-project-instances-page #instances > thead > tr > td,
+    body.mc-project-instances-page #instances > tfoot > tr > td {
+      padding-left:var(--mc-table-edge-space) !important;
+      padding-right:var(--mc-table-edge-space) !important;
+    }
+    body.mc-project-instances-page #instances > thead > tr.table_column_header > th:first-child,
+    body.mc-project-instances-page #instances > tbody > tr > td:first-child {
+      padding-left:var(--mc-table-edge-space) !important;
+    }
+    body.mc-project-instances-page #instances > thead > tr.table_column_header > th:last-child,
+    body.mc-project-instances-page #instances > tbody > tr > td:last-child {
+      padding-right:var(--mc-table-edge-space) !important;
+      text-align:right;
+    }
+    @media (min-width:1200px) {
+      body.mc-project-instances-page #content_body #instances { width:100%; min-width:0; table-layout:auto; }
+      body.mc-project-instances-page #content_body .table-responsive:has(#instances) { overflow-x:visible; }
+      body.mc-project-instances-page #instances th:nth-child(1),body.mc-project-instances-page #instances td:nth-child(1){width:40px;min-width:40px}
+      body.mc-project-instances-page #instances th:nth-child(2),body.mc-project-instances-page #instances td:nth-child(2){width:170px}
+      body.mc-project-instances-page #instances th:nth-child(3),body.mc-project-instances-page #instances td:nth-child(3){width:145px}
+      body.mc-project-instances-page #instances th:nth-child(4),body.mc-project-instances-page #instances td:nth-child(4){width:220px}
+      body.mc-project-instances-page #instances th:nth-child(5),body.mc-project-instances-page #instances td:nth-child(5){width:115px}
+      body.mc-project-instances-page #instances th:nth-child(6),body.mc-project-instances-page #instances td:nth-child(6){width:130px}
+      body.mc-project-instances-page #instances th:nth-child(7),body.mc-project-instances-page #instances td:nth-child(7){width:100px}
+      body.mc-project-instances-page #instances th:nth-child(8),body.mc-project-instances-page #instances td:nth-child(8){width:34px;padding-left:6px;padding-right:6px}
+      body.mc-project-instances-page #instances th:nth-child(9),body.mc-project-instances-page #instances td:nth-child(9){width:100px}
+      body.mc-project-instances-page #instances th:nth-child(10),body.mc-project-instances-page #instances td:nth-child(10){width:80px}
+      body.mc-project-instances-page #instances th:nth-child(11),body.mc-project-instances-page #instances td:nth-child(11){width:112px}
+      body.mc-project-instances-page #instances th:nth-child(12),body.mc-project-instances-page #instances td:nth-child(12){width:118px}
+      body.mc-project-instances-page #instances th:nth-child(13),body.mc-project-instances-page #instances td:nth-child(13){width:150px;min-width:150px}
+      body.mc-project-instances-page #instances th:nth-child(1),body.mc-project-instances-page #instances td:nth-child(1),body.mc-project-instances-page #instances th:nth-child(5),body.mc-project-instances-page #instances td:nth-child(5),
+      body.mc-project-instances-page #instances th:nth-child(7),body.mc-project-instances-page #instances td:nth-child(7),body.mc-project-instances-page #instances th:nth-child(8),body.mc-project-instances-page #instances td:nth-child(8),
+      body.mc-project-instances-page #instances th:nth-child(9),body.mc-project-instances-page #instances td:nth-child(9),body.mc-project-instances-page #instances th:nth-child(10),body.mc-project-instances-page #instances td:nth-child(10),
+      body.mc-project-instances-page #instances th:nth-child(11),body.mc-project-instances-page #instances td:nth-child(11),body.mc-project-instances-page #instances th:nth-child(13),body.mc-project-instances-page #instances td:nth-child(13){white-space:nowrap}
+      body.mc-project-instances-page #instances td:nth-child(2),body.mc-project-instances-page #instances td:nth-child(3),body.mc-project-instances-page #instances td:nth-child(4),
+      body.mc-project-instances-page #instances td:nth-child(6),body.mc-project-instances-page #instances td:nth-child(12){overflow-wrap:anywhere;word-break:normal}
+    }
+    @media (min-width:1200px) and (max-width:1599px) {
+      body.mc-project-instances-page #instances th:nth-child(3),body.mc-project-instances-page #instances td:nth-child(3),body.mc-project-instances-page #instances th:nth-child(10),body.mc-project-instances-page #instances td:nth-child(10){display:none}
+    }
+    @media (min-width:1200px) and (max-width:1365px) {
+      body.mc-project-instances-page #instances th:nth-child(6),body.mc-project-instances-page #instances td:nth-child(6),body.mc-project-instances-page #instances th:nth-child(8),body.mc-project-instances-page #instances td:nth-child(8),
+      body.mc-project-instances-page #instances th:nth-child(12),body.mc-project-instances-page #instances td:nth-child(12){display:none}
+    }
+    /* MD3 wizard data tables. Presentation only: workflow, DOM and the
+       existing MyCloud color system remain unchanged. Mirrored from SCSS as
+       the runtime-compression fallback used by Kolla deployments. */
+    .ng-wizard .transfer-table .transfer-section{margin-top:16px}
+    .ng-wizard .transfer-table .transfer-heading{display:flex;align-items:center;gap:8px;min-height:40px;margin:0 0 8px;font-size:16px;line-height:24px;font-weight:600}
+    .ng-wizard .transfer-table .transfer-heading .fa{flex:0 0 auto;margin-right:0}
+    .ng-wizard .transfer-table .transfer-heading .help-text{margin:0 0 0 auto;font-size:12px;line-height:16px;font-weight:500}
+    .ng-wizard .transfer-table .transfer-available,.ng-wizard .transfer-table .transfer-allocated{border:1px solid #e2e8f0;border-radius:12px;box-sizing:border-box}
+    .ng-wizard .transfer-table hz-dynamic-table,.ng-wizard .transfer-table .hz-magic-search-context{display:block;min-width:100%}
+    .ng-wizard .transfer-table .hz-dynamic-table-preamble{min-height:56px;margin:0;padding:8px 12px;border-bottom:1px solid #e2e8f0;align-items:center;box-sizing:border-box}
+    .ng-wizard .transfer-table .hz-dynamic-table-preamble:not(:has(.hz-magic-search-bar)):not(:has(.hz-dynamic-table-actions)){display:none}
+    .ng-wizard .transfer-table .magic-search-bar,.ng-wizard .transfer-table .basic-search-bar,.ng-wizard .transfer-table .hz-magic-search-bar{margin-top:0;margin-bottom:0}
+    .ng-wizard .transfer-table .table{width:100%;margin:0;border:0;border-collapse:separate;border-spacing:0}
+    .ng-wizard .transfer-table .table>thead>tr:first-child>td{height:40px;padding:8px 16px;border-bottom:1px solid #e2e8f0;vertical-align:middle}
+    .ng-wizard .transfer-table .table>thead>tr:last-child>th{height:48px;padding:8px 16px;border-bottom:1px solid #e2e8f0;font-size:12px;line-height:16px;font-weight:600;vertical-align:middle}
+    .ng-wizard .transfer-table .table>tbody>tr>td{height:52px;padding:8px 16px;border-bottom:1px solid #e2e8f0;font-size:14px;line-height:20px;vertical-align:middle}
+    .ng-wizard .transfer-table .table>tbody>tr:last-child>td{border-bottom:0}
+    .ng-wizard .transfer-table .table>tbody>tr.detail-row>td{height:auto;padding:12px 16px}
+    .ng-wizard .transfer-table .table>tfoot>tr>td{height:48px;padding:8px 16px;border-top:1px solid #e2e8f0;border-bottom:0;vertical-align:middle}
+    .ng-wizard .transfer-table .table .multi_select_column{width:48px;min-width:48px;text-align:center}
+    .ng-wizard .transfer-table .table .actions_column{width:52px;min-width:52px;text-align:center}
+    .ng-wizard .transfer-table .table .no-rows-help,.ng-wizard .transfer-table .table tr[hz-no-items]>td{height:64px;padding:16px;text-align:center;vertical-align:middle}
+    .ng-wizard .transfer-table .security-group-details{margin:4px 0;border:1px solid #e2e8f0;border-radius:8px;border-collapse:separate;border-spacing:0}
+    .ng-wizard .transfer-table .security-group-details>thead>tr>th,.ng-wizard .transfer-table .security-group-details>tbody>tr>td{height:40px;padding:8px 12px;vertical-align:middle}
+    .ng-wizard .transfer-table .security-group-details>tbody>tr:last-child>td{border-bottom:0}
+    .workflow.wizard .table{width:100%;margin:0 0 16px;border:1px solid #e2e8f0;border-radius:12px;border-collapse:separate;border-spacing:0}
+    .workflow.wizard .table>thead>tr>th{height:48px;padding:8px 16px;border-left:0;border-right:0;border-bottom:1px solid #e2e8f0;font-size:12px;line-height:16px;font-weight:600;vertical-align:middle}
+    .workflow.wizard .table>tbody>tr>th,.workflow.wizard .table>tbody>tr>td{height:52px;padding:8px 16px;border-left:0;border-right:0;border-bottom:1px solid #e2e8f0;font-size:14px;line-height:20px;vertical-align:middle}
+    .workflow.wizard .table>tbody>tr:last-child>th,.workflow.wizard .table>tbody>tr:last-child>td{border-bottom:0}
+    .workflow.wizard .flavor_table .flavor_name{width:44%;font-weight:600}
+    .workflow.wizard .membership>.header>.row,.workflow.wizard .membership>.row{margin-right:-8px;margin-left:-8px}
+    .workflow.wizard .membership>.header>.row>[class*="col-"],.workflow.wizard .membership>.row>[class*="col-"]{padding-right:8px;padding-left:8px}
+    .workflow.wizard .membership .members_title{display:flex;align-items:center;min-height:40px;padding:0;font-size:14px;line-height:20px;font-weight:600}
+    .workflow.wizard .membership .role_options>.btn{min-height:40px;padding-top:8px;padding-bottom:8px}
+    @media (max-width:767px){
+      .ng-wizard .transfer-table .transfer-heading{flex-wrap:wrap}
+      .ng-wizard .transfer-table .transfer-heading .help-text{flex:1 0 100%;margin-left:24px}
+      .ng-wizard .transfer-table .table>thead>tr:first-child>td,.ng-wizard .transfer-table .table>thead>tr:last-child>th,.ng-wizard .transfer-table .table>tbody>tr>td,.ng-wizard .transfer-table .table>tfoot>tr>td{padding-right:12px;padding-left:12px}
+      .workflow.wizard .table>thead>tr>th,.workflow.wizard .table>tbody>tr>th,.workflow.wizard .table>tbody>tr>td{padding-right:12px;padding-left:12px}
+    }

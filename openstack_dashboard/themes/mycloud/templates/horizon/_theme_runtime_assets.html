@@ -1,0 +1,6 @@
+{% load compress %}
+
+{# Kept after the main stylesheet so the existing MyCloud cascade is stable. #}
+{% compress css file mycloud_runtime_css %}
+<link href="{{ STATIC_URL }}themes/mycloud/css/mycloud-runtime.css" type="text/css" media="screen" rel="stylesheet" />
+{% endcompress %}
