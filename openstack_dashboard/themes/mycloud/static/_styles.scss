@@ -2113,7 +2113,8 @@ body.mc-spinner-modal-open .modal-backdrop {
 }
 
 // Angular wizard: Cancel → MD3 text button (no fill, no border)
-.ng-wizard .modal-footer .btn.cancel {
+// The Cancel button uses class .pull-left (not .cancel) per wizard.html
+.ng-wizard .modal-footer .btn.pull-left {
   background: transparent;
   border-color: transparent;
   color: $brand-primary;
