@@ -774,6 +774,12 @@ button.mc-create-btn {
   background: linear-gradient(90deg, #eef2f7 25%, #e2e8f0 50%, #eef2f7 75%);
   background-size: 200% 100%; animation: mc-skel 1.2s ease-in-out infinite;
 }
+@media (prefers-reduced-motion: reduce) {
+  #content_body .hz-magic-search-context td.actions_column:not(:has(.btn))::after,
+  body.mc-ngdetail .page-header > .row > .details-item-actions:not(:has(.btn))::after {
+    animation: none;
+  }
+}
 
 @media (min-width: 900px) {
   #content_body .hz-magic-search-context table.table-rsp {
