@@ -2112,18 +2112,6 @@ body.mc-spinner-modal-open .modal-backdrop {
   }
 }
 
-// Angular wizard: Cancel → MD3 text button (no fill, no border)
-// The Cancel button uses class .pull-left (not .cancel) per wizard.html
-.ng-wizard .modal-footer .btn.pull-left {
-  background: transparent;
-  border-color: transparent;
-  color: $brand-primary;
-  padding: 0 12px;
-
-  &:hover,
-  &:focus { background: rgba(37, 99, 235, .08); border-color: transparent; box-shadow: none; }
-}
-
 // Angular wizard: Back / Next → MD3 outlined button (transparent fill, border)
 .ng-wizard .modal-footer .btn.back,
 .ng-wizard .modal-footer .btn.next {
@@ -3401,8 +3389,8 @@ body.mc-lbaas-page #content_body hz-resource-table .mc-lb-filter-input:focus,
 // Metadata tree remove buttons (a.btn.btn-default with fa-minus inside): red circle.
 .ng-wizard .metadata-tree .input-group-btn > .btn.btn-default,
 .ng-wizard .metadata-tree .metadata-tree-item-button {
-  width: 36px !important; min-width: 36px !important;
-  height: 36px !important; min-height: 36px !important;
+  width: 40px !important; min-width: 40px !important;
+  height: 40px !important; min-height: 40px !important;
   padding: 0 !important; border-radius: 999px !important;
   display: inline-flex !important; align-items: center !important; justify-content: center !important;
   background: #dc2626 !important; border-color: transparent !important; color: #fff !important;
@@ -3858,20 +3846,55 @@ a.btn-launch,
   padding: 0 !important;
 }
 
-// The Custom-field action is a full-size trailing control. Keep it separate
-// from the text field instead of letting Bootstrap's -1px join overlap it.
-.ng-wizard .metadata-tree .input-group-btn > .mc-transfer-add {
-  margin-left: 8px !important;
+// The Custom row is a Bootstrap table-style input group. Give the field and
+// trailing action explicit flex columns so the 40px button cannot cover text.
+.ng-wizard .metadata-tree .metadata-list-group > .list-group-item > .input-group {
+  display: flex;
+  align-items: center;
+  width: 100%;
 }
 
-// Catalog rows use Horizon's compact btn-xs action and should remain visibly
-// smaller than the Custom-field action above.
+.ng-wizard .metadata-tree .metadata-list-group > .list-group-item >
+  .input-group > .input-group-addon {
+  position: static;
+  flex: 0 0 auto;
+  width: auto !important;
+  max-width: none;
+}
+
+.ng-wizard .metadata-tree .metadata-list-group > .list-group-item >
+  .input-group > .form-control {
+  position: static;
+  float: none;
+  flex: 1 1 auto;
+  width: 1%;
+  min-width: 0;
+  border-top-right-radius: 8px !important;
+  border-bottom-right-radius: 8px !important;
+}
+
+.ng-wizard .metadata-tree .metadata-list-group > .list-group-item >
+  .input-group > .input-group-btn {
+  position: static;
+  display: flex;
+  align-items: center;
+  flex: 0 0 40px;
+  width: 40px;
+  margin-left: 8px;
+}
+
+.ng-wizard .metadata-tree .input-group-btn > .mc-transfer-add {
+  margin-left: 0 !important;
+}
+
+// Catalog rows use the same 40px icon-button token as every other metadata
+// add/remove action, preventing a visible resize after JS decorates the row.
 .ng-wizard .metadata-tree .metadata-list-group > .list-group-item >
   .clearfix .pull-right > .mc-transfer-add {
-  width: 32px !important;
-  min-width: 32px !important;
-  height: 32px !important;
-  min-height: 32px !important;
+  width: 40px !important;
+  min-width: 40px !important;
+  height: 40px !important;
+  min-height: 40px !important;
 }
 
 // Existing metadata values use a trailing remove action. Keep the field and
@@ -3915,8 +3938,7 @@ a.btn-launch,
   min-height: 40px !important;
 }
 
-// Array metadata has a denser group header. Its remove action follows the
-// compact MD3 hierarchy and stays in-flow at the trailing edge of the row.
+// Array metadata keeps the remove action in-flow at the trailing edge.
 .ng-wizard .metadata-tree .metadata-tree-item .multiselect .panel-heading > div {
   display: flex;
   align-items: center;
@@ -3936,11 +3958,11 @@ a.btn-launch,
   display: inline-flex !important;
   align-items: center;
   justify-content: center;
-  flex: 0 0 32px;
-  width: 32px !important;
-  min-width: 32px !important;
-  height: 32px !important;
-  min-height: 32px !important;
+  flex: 0 0 40px;
+  width: 40px !important;
+  min-width: 40px !important;
+  height: 40px !important;
+  min-height: 40px !important;
   margin: 0 0 0 8px !important;
   padding: 0 !important;
 }
