@@ -11,9 +11,9 @@
 | 2 | Gộp 9 MutationObserver → 1 observer chung (rAF-batch) | `static/js/mycloud.js` | Bớt giật trên bảng lớn, decorate cùng frame paint |
 | 3 | Preload 2 font Inter (latin + vietnamese) | `_sidebar.html` | Giảm FOUT — font tải song song với CSS |
 | 4 | `rel="noopener noreferrer"` cho link `target="_blank"` | `header/_user_menu.html` | Chống reverse-tabnabbing |
-| 5 | Dedup 26 data-URI mask trùng lặp → 11 scss token | `static/_styles.scss` | SCSS gọn, glyph đảm bảo đồng nhất tuyệt đối |
+| 5 | ~~Dedup 26 data-URI mask → 11 scss token~~ **ĐÃ REVERT** | `static/_styles.scss` | pyScss (compiler production) không parse nổi biến chứa data-URI → vỡ toàn bộ CSS theme |
 | 6 | Token hoá 117 literal màu neutral lặp lại | `static/_styles.scss` | 1 nguồn chân lý mỗi màu — không lệch tông về sau |
-| 7 | `prefers-reduced-motion` tắt shimmer trang trí | `static/_styles.scss` | Accessibility + mượt trên máy yếu |
+| 7 | ~~`prefers-reduced-motion`~~ **ĐÃ BỎ** (yêu cầu user + giảm rủi ro pyScss) | `static/_styles.scss` | — |
 
 ---
 
@@ -87,19 +87,22 @@ tải 2 lần. Href phải khớp **đúng URL** trong `src:` đầu tiên của
 domain ngoài) không còn tham chiếu `window.opener` để điều hướng lại tab Horizon
 (reverse-tabnabbing), và không lộ referrer URL nội bộ.
 
-## 5. Dedup data-URI mask
+## 5. ~~Dedup data-URI mask~~ — ĐÃ REVERT (bài học quan trọng)
 
-8 glyph (search, server, chevron ×3, plus, minus, asterisk) bị lặp nguyên văn
-2–4 lần trong `_styles.scss` (26 chỗ). Giờ định nghĩa 1 lần trong block
-"Local palette helpers":
+Định nghĩa `$mc-svg-x: url("data:image/svg+xml,<svg ...>")` rồi dùng lại nghe
+hợp lý, và **libsass compile ra byte-identical**. Nhưng production Horizon
+compile bằng **pyScss** (django_pyscss) — parser cũ này **không xử lý được
+data-URI nằm trong GIÁ TRỊ BIẾN** (nó tokenize lại nội dung url() khi
+evaluate biến). Block biến nằm đầu file → chết cả file → **mọi rule theme
+sau đó biến mất** (pill status mất màu, bảng mất bo góc/shadow…).
 
-```scss
-$mc-svg-search: url("data:image/svg+xml,<svg ...>");
-// dùng: mask: $mc-svg-search no-repeat center;
-```
+**LUẬT:** data-URI trong scss của theme này phải để **literal tại chỗ dùng**,
+KHÔNG đưa vào biến. Biến scss chỉ dùng cho giá trị đơn giản (hex màu, px,
+shadow) — pattern `$mc-border` đã chạy ổn trên production.
 
-Lưu ý: cùng glyph nhưng **khác stroke-width là token khác nhau**
-(`$mc-svg-plus` vs `$mc-svg-plus-w2`) — không gộp, để không đổi nét vẽ.
+**LUẬT kiểm chứng:** libsass compile-diff là điều kiện CẦN, không phải ĐỦ —
+mọi construct scss "lạ" (biến giữ chuỗi phức tạp, @media feature mới, hàm
+scss ít gặp) phải nghi ngờ pyScss trước khi dùng.
 
 ## 6. Token hoá màu neutral
 
@@ -118,22 +121,17 @@ $mc-bg-soft:       #f8fafc;   // nền mềm (thead, hover)
 117 chỗ dùng literal được thay bằng token. Từ nay **rule mới phải dùng token**,
 không hard-code hex — hết cảnh 2 trang lệch nhau một tông xám.
 
-## 7. prefers-reduced-motion
+## 7. ~~prefers-reduced-motion~~ — ĐÃ BỎ
 
-```scss
-@media (prefers-reduced-motion: reduce) { /* tắt skeleton shimmer */ }
-```
-
-Chỉ tắt shimmer trang trí (`mc-skel`). Spinner loading **giữ nguyên** vì nó
-truyền đạt trạng thái (đúng hướng dẫn WCAG về essential motion).
+Bỏ theo yêu cầu + tránh thêm rủi ro parser pyScss với media feature mới.
 
 ---
 
 ## Kiểm chứng (đã chạy, không phải lý thuyết)
 
-1. **SCSS compile-diff bằng libsass:** compile bản cũ (git HEAD) và bản mới với
-   cùng stub biến ngoài → **CSS output chỉ khác đúng block
-   `prefers-reduced-motion` cố ý thêm**. Mask dedup + token màu = byte-identical.
+1. **SCSS compile-diff bằng libsass:** sau khi revert mask-token + bỏ
+   reduced-motion, compile bản hiện tại vs bản pre-optimization (a9e0af2) →
+   **CSS output identical 100%** (token màu compile away).
 2. **Round-trip test:** thay token ngược lại literal → file trùng khớp 100% bản gốc.
 3. **JS tách 1:1:** brace/bracket cân bằng; chênh lệch `()` (+2) trùng khớp bản
    gốc (nằm trong string label); 0 control char; 0 template tag lọt vào file JS.
