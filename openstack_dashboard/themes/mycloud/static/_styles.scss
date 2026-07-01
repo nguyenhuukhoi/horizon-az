@@ -617,7 +617,7 @@ table.datatable > caption,
   .table_search .btn,
   .table_actions_menu > .btn {
     height: 36px;
-    padding: 0 12px;
+    padding: 0 14px;
     border-radius: 8px;
     display: inline-flex;
     align-items: center;
@@ -748,7 +748,7 @@ button.mc-create-btn {
 #content_body .hz-dynamic-table-actions { display: inline-flex; align-items: center; gap: 10px; flex: 0 0 auto; }
 // neutralise Horizon's per-action padding so every gap is exactly 10px
 #content_body .hz-dynamic-table-actions action-list { padding-left: 0 !important; }
-#content_body .hz-dynamic-table-actions .btn { height: 36px; padding: 0 12px; border-radius: 8px; display: inline-flex; align-items: center; gap: 7px; white-space: nowrap; }
+#content_body .hz-dynamic-table-actions .btn { height: 36px; padding: 0 14px; border-radius: 8px; display: inline-flex; align-items: center; gap: 7px; white-space: nowrap; }
 // Cold-load: batch actions render ~1-2s after the magic-search bar, so the bar
 // briefly spans the whole row and "swallows" the buttons. Fade the toolbar in
 // only once the buttons exist (1.8s fallback for tables without batch actions).
@@ -1000,8 +1000,8 @@ td.actions_column .btn,
 form.actions_column .btn {
   height: 36px !important;
   min-height: 36px !important;
-  padding-left: 12px !important;
-  padding-right: 12px !important;
+  padding-left: 14px !important;
+  padding-right: 14px !important;
 }
 
 // Icon span with no resolved class renders as phantom space — hide it
@@ -2112,7 +2112,7 @@ body.mc-spinner-modal-open .modal-backdrop {
 .modal .modal-footer .btn {
   height: 36px;
   min-height: 36px;
-  padding: 0 12px;
+  padding: 0 14px;
   border-radius: 9999px;  // MD3 button shape = corner-full (pill)
   font-size: 14px;        // Label Large
   font-weight: 500;       // Label Large weight (MD3 spec)
@@ -2132,7 +2132,7 @@ body.mc-spinner-modal-open .modal-backdrop {
 .ng-wizard .modal-footer .btn.pull-left {
   height: 36px !important;
   min-height: 36px !important;
-  padding: 0 12px !important;
+  padding: 0 14px !important;
   gap: 8px;
   background: #fff !important;
   border: 1px solid #cbd5e1 !important;
@@ -2173,7 +2173,7 @@ body.mc-spinner-modal-open .modal-backdrop {
 
 // Angular wizard: Finish → MD3 filled button (keeps existing $brand-primary)
 .ng-wizard .modal-footer .btn.finish {
-  padding: 0 12px;
+  padding: 0 14px;
 }
 
 .ng-wizard {
@@ -3472,7 +3472,7 @@ a.btn-launch,
   box-sizing: border-box;
   height: 36px !important;
   min-height: 36px !important;
-  padding: 0 12px !important;
+  padding: 0 14px !important;
   border-width: 1px !important;
   border-radius: $mc-md-pill !important;
   font-size: 14px !important;
@@ -3629,7 +3629,7 @@ a.btn-launch,
   justify-content: center;
   min-height: 40px;
   margin: 0;
-  padding: 0 12px;
+  padding: 0 14px;
   border-radius: 999px !important;
   font-weight: 600;
 }
