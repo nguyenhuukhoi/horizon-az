@@ -1004,6 +1004,9 @@ form.actions_column .btn {
   padding-right: 12px !important;
 }
 
+// Icon span with no resolved class renders as phantom space — hide it
+.btn .fa-undefined { display: none !important; }
+
 // Bootstrap's .btn-sm defaults to 3px radius — override to match theme 8px
 .btn-sm {
   border-radius: 8px !important;
