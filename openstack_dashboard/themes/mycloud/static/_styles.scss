@@ -723,6 +723,15 @@ button.mc-create-btn {
   flex-shrink: 0; // never let the table column shrink during Angular cold-load
 }
 
+#content_body hz-resource-table .hz-magic-search-context {
+  background: $mc-surface;
+  border: 1px solid $mc-border;
+  border-radius: 12px;
+  box-shadow: $mc-shadow;
+  margin-bottom: $mc-section-gap;
+  overflow: visible;
+}
+
 #content_body .hz-magic-search-context > .row {
   margin-left: 0;
   margin-right: 0;
