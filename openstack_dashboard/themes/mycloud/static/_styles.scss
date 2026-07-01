@@ -743,8 +743,7 @@ button.mc-create-btn {
 // Modify Quotas, …): zeroed .row margin + leftover col padding pushed the
 // search toolbar 15px right of the list.
 .modal .hz-dynamic-table-preamble { padding-left: 0; padding-right: 0; }
-#content_body .hz-magic-search-bar { padding-right: 0 !important; }
-#content_body .hz-magic-search-bar { flex: 1 1 auto; min-width: 0; }
+#content_body .hz-magic-search-bar { padding-right: 0 !important; flex: 1 1 auto; min-width: 0; }
 #content_body .hz-dynamic-table-actions { display: inline-flex; align-items: center; gap: 10px; flex: 0 0 auto; }
 // neutralise Horizon's per-action padding so every gap is exactly 10px
 #content_body .hz-dynamic-table-actions action-list { padding-left: 0 !important; }
@@ -1009,19 +1008,6 @@ form.actions_column .btn {
 
 // Bootstrap's .btn-sm defaults to 3px radius — override to match theme 8px
 .btn-sm {
-  border-radius: 8px !important;
-}
-
-// Split buttons (.btn-group): Bootstrap overrides to asymmetric radius
-// (e.g. "6px 0 0 6px" / "0 6px 6px 0"). Fix to use 8px corners throughout.
-.btn-group > .btn:first-child:not(:last-child):not(.dropdown-toggle) {
-  border-radius: 8px 0 0 8px !important;
-}
-.btn-group > .btn:last-child:not(:first-child),
-.btn-group > .dropdown-toggle:not(:first-child) {
-  border-radius: 0 8px 8px 0 !important;
-}
-.btn-group > .btn:only-child {
   border-radius: 8px !important;
 }
 
