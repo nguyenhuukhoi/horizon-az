@@ -810,7 +810,7 @@ button.mc-create-btn {
   .input-group-btn > button,
   .form-control,
   .magic-search,
-  .search-bar { height: 34px !important; min-height: 34px !important; max-height: 34px !important; }
+  .search-bar { height: 36px !important; min-height: 36px !important; max-height: 36px !important; }
   // round the outer ends only (handles both with/without the settings cog)
   .input-group > :first-child { border-radius: 8px 0 0 8px; }
   .input-group > :last-child { border-radius: 0 8px 8px 0; }
@@ -826,7 +826,7 @@ button.mc-create-btn {
   // search-input is not a .form-control and sits inside .search-entry (not a
   // direct .input-group child), so Bootstrap's group-radius rule never reaches
   // it. Apply the left-rounded corner explicitly.
-  .search-input { height: 34px; line-height: 34px; width: 100%; min-width: 0;
+  .search-input { height: 36px; line-height: 36px; width: 100%; min-width: 0;
                   border-radius: 8px 0 0 8px !important; }
 }
 
@@ -3157,10 +3157,10 @@ body.mc-lbaas-page .col-md-6.detail h4{margin:0 0 14px;padding-bottom:12px;borde
   display: inline-flex !important;
   align-items: center;
   justify-content: center;
-  width: 40px !important;
-  min-width: 40px !important;
-  height: 40px !important;
-  min-height: 40px !important;
+  width: 36px !important;
+  min-width: 36px !important;
+  height: 36px !important;
+  min-height: 36px !important;
   padding: 0 !important;
 }
 
@@ -3390,10 +3390,10 @@ body.mc-lbaas-page #content_body hz-resource-table .mc-lb-filter-input:focus,
 .ng-wizard .transfer-table .btn.fa-arrow-up,
 .ng-wizard .transfer-table .btn.fa-arrow-down {
   position: relative !important;
-  width: 40px !important;
-  min-width: 40px !important;
-  height: 40px !important;
-  min-height: 40px !important;
+  width: 36px !important;
+  min-width: 36px !important;
+  height: 36px !important;
+  min-height: 36px !important;
   padding: 0 !important;
   line-height: 0 !important;
   border-radius: $mc-md-pill !important;
@@ -3423,16 +3423,16 @@ body.mc-lbaas-page #content_body hz-resource-table .mc-lb-filter-input:focus,
 // Metadata tree + buttons (a.btn.btn-primary.btn-xs in list items): square icon button.
 .ng-wizard .metadata-tree .list-group-item .btn.btn-primary,
 .ng-wizard .metadata-tree .input-group-btn .btn.btn-primary {
-  width: 40px !important; min-width: 40px !important;
-  height: 40px !important; min-height: 40px !important;
+  width: 36px !important; min-width: 36px !important;
+  height: 36px !important; min-height: 36px !important;
   padding: 0 !important;
   display: inline-flex !important; align-items: center !important; justify-content: center !important;
 }
 // Metadata tree remove buttons (a.btn.btn-default with fa-minus inside): red circle.
 .ng-wizard .metadata-tree .input-group-btn > .btn.btn-default,
 .ng-wizard .metadata-tree .metadata-tree-item-button {
-  width: 40px !important; min-width: 40px !important;
-  height: 40px !important; min-height: 40px !important;
+  width: 36px !important; min-width: 36px !important;
+  height: 36px !important; min-height: 36px !important;
   padding: 0 !important; border-radius: 999px !important;
   display: inline-flex !important; align-items: center !important; justify-content: center !important;
   background: #dc2626 !important; border-color: transparent !important; color: #fff !important;
@@ -3884,10 +3884,10 @@ a.btn-launch,
 
 .ng-wizard .metadata-tree .mc-transfer-add,
 .ng-wizard .metadata-tree .mc-transfer-remove {
-  width: 40px !important;
-  min-width: 40px !important;
-  height: 40px !important;
-  min-height: 40px !important;
+  width: 36px !important;
+  min-width: 36px !important;
+  height: 36px !important;
+  min-height: 36px !important;
   padding: 0 !important;
 }
 
@@ -3923,8 +3923,8 @@ a.btn-launch,
   position: static;
   display: flex;
   align-items: center;
-  flex: 0 0 40px;
-  width: 40px;
+  flex: 0 0 36px;
+  width: 36px;
   margin-left: 8px;
 }
 
@@ -3932,14 +3932,14 @@ a.btn-launch,
   margin-left: 0 !important;
 }
 
-// Catalog rows use the same 40px icon-button token as every other metadata
+// Catalog rows use the same 36px icon-button token as every other metadata
 // add/remove action, preventing a visible resize after JS decorates the row.
 .ng-wizard .metadata-tree .metadata-list-group > .list-group-item >
   .clearfix .pull-right > .mc-transfer-add {
-  width: 40px !important;
-  min-width: 40px !important;
-  height: 40px !important;
-  min-height: 40px !important;
+  width: 36px !important;
+  min-width: 36px !important;
+  height: 36px !important;
+  min-height: 36px !important;
 }
 
 // Existing metadata values use a trailing remove action. Keep the field and
@@ -3970,24 +3970,24 @@ a.btn-launch,
   position: static;
   display: flex;
   align-items: center;
-  flex: 0 0 40px;
-  width: 40px;
+  flex: 0 0 36px;
+  width: 36px;
   margin: 0 0 0 8px;
 }
 
 .ng-wizard .metadata-tree .metadata-tree-item > .input-group >
   .input-group-btn > .mc-transfer-remove {
-  width: 40px !important;
-  min-width: 40px !important;
-  height: 40px !important;
-  min-height: 40px !important;
+  width: 36px !important;
+  min-width: 36px !important;
+  height: 36px !important;
+  min-height: 36px !important;
 }
 
 // Array metadata keeps the remove action in-flow at the trailing edge.
 .ng-wizard .metadata-tree .metadata-tree-item .multiselect .panel-heading > div {
   display: flex;
   align-items: center;
-  min-height: 40px;
+  min-height: 36px;
   width: 100%;
 }
 
@@ -4003,11 +4003,11 @@ a.btn-launch,
   display: inline-flex !important;
   align-items: center;
   justify-content: center;
-  flex: 0 0 40px;
-  width: 40px !important;
-  min-width: 40px !important;
-  height: 40px !important;
-  min-height: 40px !important;
+  flex: 0 0 36px;
+  width: 36px !important;
+  min-width: 36px !important;
+  height: 36px !important;
+  min-height: 36px !important;
   margin: 0 0 0 8px !important;
   padding: 0 !important;
 }
