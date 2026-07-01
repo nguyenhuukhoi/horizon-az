@@ -615,7 +615,7 @@ table.datatable > caption,
   .table_search .btn,
   .table_actions_menu > .btn {
     height: 36px;
-    padding: 0 24px;
+    padding: 0 16px;
     border-radius: 8px;
     display: inline-flex;
     align-items: center;
@@ -746,7 +746,7 @@ button.mc-create-btn {
 #content_body .hz-dynamic-table-actions { display: inline-flex; align-items: center; gap: 10px; flex: 0 0 auto; }
 // neutralise Horizon's per-action padding so every gap is exactly 10px
 #content_body .hz-dynamic-table-actions action-list { padding-left: 0 !important; }
-#content_body .hz-dynamic-table-actions .btn { height: 36px; padding: 0 24px; border-radius: 8px; display: inline-flex; align-items: center; gap: 7px; white-space: nowrap; }
+#content_body .hz-dynamic-table-actions .btn { height: 36px; padding: 0 16px; border-radius: 8px; display: inline-flex; align-items: center; gap: 7px; white-space: nowrap; }
 // Cold-load: batch actions render ~1-2s after the magic-search bar, so the bar
 // briefly spans the whole row and "swallows" the buttons. Fade the toolbar in
 // only once the buttons exist (1.8s fallback for tables without batch actions).
@@ -3457,7 +3457,7 @@ a.btn-launch,
   box-sizing: border-box;
   height: 36px !important;
   min-height: 36px !important;
-  padding: 0 24px !important;
+  padding: 0 16px !important;
   border-width: 1px !important;
   border-radius: $mc-md-pill !important;
   font-size: 14px !important;
