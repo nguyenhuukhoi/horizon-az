@@ -2715,6 +2715,8 @@ body.mc-spinner-modal-open .modal-backdrop {
   background: $mc-surface;
   border-color: $mc-border;
   color: $text-color;
+  height: 36px;
+  min-height: 36px;
   &:hover { background: $body-bg; }
 }
 
