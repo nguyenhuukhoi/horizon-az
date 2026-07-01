@@ -1600,13 +1600,14 @@
       -webkit-mask:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'><rect width='20' height='8' x='2' y='2' rx='2' ry='2'/><rect width='20' height='8' x='2' y='14' rx='2' ry='2'/><line x1='6' x2='6.01' y1='6' y2='6'/><line x1='6' x2='6.01' y1='18' y2='18'/></svg>") center/contain no-repeat;
       mask:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'><rect width='20' height='8' x='2' y='2' rx='2' ry='2'/><rect width='20' height='8' x='2' y='14' rx='2' ry='2'/><line x1='6' x2='6.01' y1='6' y2='6'/><line x1='6' x2='6.01' y1='18' y2='18'/></svg>") center/contain no-repeat;
     }
-    .modal .btn, .ng-wizard .btn {
+    .modal .btn, .ng-wizard .btn, .workflow.static_page .modal-footer .btn {
       min-height:36px !important;
       padding-top:7px;
       padding-bottom:7px;
     }
-    .modal .form-control, .ng-wizard .form-control,
-    .modal select, .ng-wizard select {
+    .workflow.static_page .modal-footer .btn { height:36px; padding:0 14px; border-radius:9999px; }
+    .modal .form-control, .ng-wizard .form-control, .workflow.static_page .form-control,
+    .modal select, .ng-wizard select, .workflow.static_page select {
       min-height:40px;
       padding-left: 16px;
       padding-right: 16px;
@@ -1615,11 +1616,13 @@
     /* Preserve Horizon's native/select-widget rendering; only restore the
        complete outlined border that Bootstrap can drop in modal forms. */
     .modal select.form-control:not([multiple]),
-    .ng-wizard select.form-control:not([multiple]) {
+    .ng-wizard select.form-control:not([multiple]),
+    .workflow.static_page select.form-control:not([multiple]) {
       border:1px solid #cbd5e1 !important;
     }
     .modal select.form-control:not([multiple]):focus,
-    .ng-wizard select.form-control:not([multiple]):focus {
+    .ng-wizard select.form-control:not([multiple]):focus,
+    .workflow.static_page select.form-control:not([multiple]):focus {
       border-color:#2563eb !important;
     }
     /* ThemableSelectWidget displays the wrapper and hides the native select.

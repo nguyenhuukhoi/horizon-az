@@ -2109,7 +2109,8 @@ body.mc-spinner-modal-open .modal-backdrop {
 
 // ── MD3 Modal footer buttons — shared by Django + Angular wizard ──────────
 // Scoped to modal footer only; does NOT affect table action / toolbar buttons.
-.modal .modal-footer .btn {
+.modal .modal-footer .btn,
+.workflow.static_page .modal-footer .btn {
   height: 36px;
   min-height: 36px;
   padding: 0 14px;
@@ -3551,8 +3552,10 @@ a.btn-launch,
 
 .modal .form-control,
 .ng-wizard .form-control,
+.workflow.static_page .form-control,
 .modal select,
-.ng-wizard select {
+.ng-wizard select,
+.workflow.static_page select {
   min-height: 40px;
   padding-left: 16px;
   padding-right: 16px;
@@ -3562,12 +3565,14 @@ a.btn-launch,
 // Keep Horizon's native/select-widget rendering intact. Only restore the full
 // outlined border that Bootstrap can drop on modal selects.
 .modal select.form-control:not([multiple]),
-.ng-wizard select.form-control:not([multiple]) {
+.ng-wizard select.form-control:not([multiple]),
+.workflow.static_page select.form-control:not([multiple]) {
   border: 1px solid #cbd5e1 !important;
 }
 
 .modal select.form-control:not([multiple]):focus,
-.ng-wizard select.form-control:not([multiple]):focus {
+.ng-wizard select.form-control:not([multiple]):focus,
+.workflow.static_page select.form-control:not([multiple]):focus {
   border-color: $brand-primary !important;
 }
 
