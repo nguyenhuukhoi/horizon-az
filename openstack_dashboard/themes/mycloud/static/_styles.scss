@@ -41,15 +41,6 @@ $mc-shadow-sm:   0 1px 2px rgba(15, 23, 42, .08);
 $mc-section-gap: 16px;
 $mc-content-pad-x: 26px;
 $mc-content-pad-y: 22px;
-// Neutral text/surface tokens - one name per repeated grey so future
-// rules can't drift by a shade. Same values as before (no visual change).
-$mc-ink:           #0f172a;   // darkest text (same slate-900 as the sidebar bg)
-$mc-slate:         #334155;   // secondary dark text
-$mc-muted:         #64748b;   // muted text in content area
-$mc-faint:         #94a3b8;   // faintest text / placeholders
-$mc-border-strong: #cbd5e1;   // stronger border / input outline
-$mc-bg:            #f1f5f9;   // page background
-$mc-bg-soft:       #f8fafc;   // soft surface (table head, hover)
 
 // =====================================================================
 //  Base
@@ -90,7 +81,7 @@ body {
 
 // =====================================================================
 //  Topbar — project + region pill selectors (matching demo)
-//  Demo spec: border-radius 8px, bg=$mc-bg, padding 7px 13px,
+//  Demo spec: border-radius 8px, bg=#f1f5f9, padding 7px 13px,
 //             font-weight 500, muted icon color
 // =====================================================================
 .mc-topbar-pills {
@@ -116,7 +107,7 @@ body {
     white-space: nowrap;
     transition: border-color .12s, background .12s;
 
-    .fa, .mc-pill-icon { color: $mc-faint !important; font-size: 14px; }
+    .fa, .mc-pill-icon { color: #94a3b8 !important; font-size: 14px; }
 
     &:hover {
       border-color: darken($mc-border, 10%);
@@ -148,7 +139,7 @@ body {
     max-width: 16px;
     min-height: 16px;
     max-height: 16px;
-    color: $mc-muted;
+    color: #64748b;
     flex: 0 0 16px;
   }
   .mc-pill-cv {
@@ -158,7 +149,7 @@ body {
     max-width: 14px;
     min-height: 14px;
     max-height: 14px;
-    color: $mc-faint;
+    color: #94a3b8;
     flex: 0 0 14px;
   }
 
@@ -176,7 +167,7 @@ body {
   }
 
   .context-delimiter {
-    color: $mc-faint;
+    color: #94a3b8;
     padding: 0 2px;
   }
 }
@@ -261,7 +252,7 @@ body {
     display: flex !important;
     align-items: center;
     justify-content: space-between;
-    color: $mc-faint;            // ~5.9:1 on $mc-ink — passes WCAG AA
+    color: #94a3b8;            // ~5.9:1 on #0f172a — passes WCAG AA
     text-transform: uppercase;
     font-size: 11px;
     font-weight: 700;
@@ -271,7 +262,7 @@ body {
 
     &:hover,
     &:focus {
-      color: $mc-border-strong;
+      color: #cbd5e1;
       background: transparent;
     }
   }
@@ -305,7 +296,7 @@ body {
     display: flex !important;
     align-items: center;
     justify-content: space-between;
-    color: $mc-faint !important;
+    color: #94a3b8 !important;
     font-size: 14px;
     font-weight: 600;
     margin-top: 4px !important;
@@ -314,7 +305,7 @@ body {
   .openstack-panel-group > a.collapsed,
   .openstack-panel-group > a[aria-expanded="true"],
   .openstack-panel-group > a[aria-expanded="false"] {
-    color: $mc-faint !important;
+    color: #94a3b8 !important;
   }
 
   // active panel link
@@ -337,7 +328,7 @@ body {
   .openstack-toggle.fa {
     float: none !important;
     margin-left: auto;
-    color: $mc-faint;
+    color: #94a3b8;
     opacity: .7;
     transform: none !important;
 
@@ -391,7 +382,7 @@ body {
 
 // "info rows" / dl summaries on detail pages
 dl.dl-horizontal dt {
-  color: $mc-muted;
+  color: #64748b;
   font-weight: 600;
 }
 
@@ -428,7 +419,7 @@ dl.dl-horizontal dt {
 
     .dl-horizontal dt {
       width: 160px;
-      color: $mc-muted;
+      color: #64748b;
       font-weight: 600;
       text-align: right;
     }
@@ -436,7 +427,7 @@ dl.dl-horizontal dt {
     .dl-horizontal dd {
       margin-left: 178px;
       min-height: 20px;
-      color: $mc-ink;
+      color: #0f172a;
       overflow-wrap: anywhere;
     }
   }
@@ -466,8 +457,8 @@ dl.dl-horizontal dt {
 // =====================================================================
 .table {
   thead > tr > th {
-    background: $mc-bg-soft;
-    color: $mc-muted;
+    background: #f8fafc;
+    color: #64748b;
     font-size: 12px;
     text-transform: uppercase;
     letter-spacing: .4px;
@@ -484,13 +475,13 @@ dl.dl-horizontal dt {
   }
 
   > tbody > tr:hover > td {
-    background: $mc-bg-soft;
+    background: #f8fafc;
   }
 
   // flatten striped rows — Django stripes via tr.odd/even classes, Angular via
   // Bootstrap :nth-of-type; this covers both, keeping selection/warning + hover
   &.table-striped > tbody > tr:not(.st-selected):not(.warning) > td { background-color: #fff; }
-  &.table-striped > tbody > tr:hover > td { background-color: $mc-bg-soft; }
+  &.table-striped > tbody > tr:hover > td { background-color: #f8fafc; }
 
   // instance name (and other linked first column) a touch bolder
   > tbody > tr > td a { font-weight: 600; }
@@ -533,7 +524,7 @@ dl.dl-horizontal dt {
 // span), so e.g. Admin Instances matches the Images page exactly.
 #content_body .table_count,
 #content_body [hz-table-footer] td > span:first-child {
-  color: $mc-ink;
+  color: #0f172a;
   font-size: 13px;
   font-weight: 400;
   text-transform: none;
@@ -566,7 +557,7 @@ dl.dl-horizontal dt {
   &.info  { background: #dbeafe; color: #2563eb; }
   &.warn  { background: #fef3c7; color: #d97706; }
   &.err   { background: #fee2e2; color: #dc2626; }
-  &.muted { background: $mc-bg; color: $mc-muted; }
+  &.muted { background: #f1f5f9; color: #64748b; }
 }
 .table > thead .breadcrumb_td .table_count { display: none; }
 
@@ -1051,13 +1042,13 @@ form.actions_column .btn {
 
 .btn-default {
   background: #fff;
-  border-color: $mc-border-strong;
-  color: $mc-slate;
+  border-color: #cbd5e1;
+  color: #334155;
 
   &:hover,
   &:focus {
-    background: $mc-bg;
-    border-color: $mc-faint;
+    background: #f1f5f9;
+    border-color: #94a3b8;
   }
 }
 
@@ -1066,7 +1057,7 @@ form.actions_column .btn {
 // =====================================================================
 .form-control {
   border-radius: 8px;
-  border-color: $mc-border-strong;
+  border-color: #cbd5e1;
   box-shadow: none;
 
   &:focus {
@@ -1107,12 +1098,12 @@ form.actions_column .btn {
   padding: 0;
   font-size: 14px;
   line-height: 1.4;
-  color: $mc-faint;
+  color: #94a3b8;
 
-  > li + li::before { content: "/"; color: $mc-border-strong; padding: 0 7px; }
-  a { color: $mc-muted; font-weight: 600; }
+  > li + li::before { content: "/"; color: #cbd5e1; padding: 0 7px; }
+  a { color: #64748b; font-weight: 600; }
   a:hover { color: $brand-primary; }
-  > .active { color: $mc-faint; }
+  > .active { color: #94a3b8; }
 }
 
 .alert {
@@ -1294,7 +1285,7 @@ form.actions_column .btn {
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: .5px;
-    color: $mc-muted;
+    color: #64748b;
     margin: 22px 0 12px;
   }
 }
@@ -1374,13 +1365,13 @@ form.actions_column .btn {
     font-weight: 700;
     padding: 3px 10px;
     border-radius: 20px;
-    background: $mc-bg;
-    color: $mc-muted;
+    background: #f1f5f9;
+    color: #64748b;
 
     &.is-ok     { background: #dcfce7; color: #16a34a; }
     &.is-warn   { background: #fef3c7; color: #d97706; }
     &.is-danger { background: #fee2e2; color: #dc2626; }
-    &.mc-trend--nolimit { background: $mc-bg; color: $mc-faint; font-weight: 600; }
+    &.mc-trend--nolimit { background: #f1f5f9; color: #94a3b8; font-weight: 600; }
   }
 
   .mc-stat-num {
@@ -1395,7 +1386,7 @@ form.actions_column .btn {
   .mc-stat-label {
     font-size: 14px;
     font-weight: 600;
-    color: $mc-muted;
+    color: #64748b;
     margin-top: 8px;
     line-height: 1.35;
     white-space: nowrap;
@@ -1405,7 +1396,7 @@ form.actions_column .btn {
 
   .mc-stat-sub {
     font-size: 12px;
-    color: $mc-faint;
+    color: #94a3b8;
     margin-top: 2px;
   }
 }
@@ -1436,7 +1427,7 @@ form.actions_column .btn {
 
   .mc-panel-sub {
     font-size: 12px;
-    color: $mc-faint;
+    color: #94a3b8;
     margin-top: 2px;
   }
 
@@ -1504,7 +1495,7 @@ form.actions_column .btn {
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: .5px;
-    color: $mc-faint;
+    color: #94a3b8;
     margin: 12px 0 8px;
   }
 }
@@ -1521,14 +1512,14 @@ form.actions_column .btn {
   }
 
   .mc-meter-name {
-    color: $mc-slate;
+    color: #334155;
     font-weight: 500;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
 
-  .mc-meter-val { color: $mc-faint; white-space: nowrap; }
+  .mc-meter-val { color: #94a3b8; white-space: nowrap; }
 }
 
 // shared meter bar (AZ rows)
@@ -1573,7 +1564,7 @@ form.actions_column .btn {
 }
 
 .mc-quota-head {
-  color: $mc-muted;
+  color: #64748b;
   font-size: 11px;
   font-weight: 700;
   letter-spacing: .05em;
@@ -1589,7 +1580,7 @@ form.actions_column .btn {
   align-items: center;
   gap: 14px;
   padding: 10px 0;
-  border-bottom: 1px solid $mc-bg-soft;
+  border-bottom: 1px solid #f8fafc;
 
   &:last-child { border-bottom: 0; }
 
@@ -1609,7 +1600,7 @@ form.actions_column .btn {
 }
 
 .mc-quota-val {
-  color: $mc-muted;
+  color: #64748b;
   font-size: 12px;
   font-weight: 600;
   min-width: 64px;
@@ -1618,7 +1609,7 @@ form.actions_column .btn {
 }
 
 .mc-quota-den {
-  color: $mc-faint;
+  color: #94a3b8;
 }
 
 // =====================================================================
@@ -1662,7 +1653,7 @@ form.actions_column .btn {
     border-bottom: 2px solid transparent !important;
     border-radius: 0;
     background: transparent !important;
-    color: $mc-muted;
+    color: #64748b;
     font-size: 14px;
     font-weight: 600;
     padding: 10px 16px;
@@ -1775,7 +1766,7 @@ form.actions_column .btn {
     width: 14px;
     height: 14px;
     transform: translateY(-50%);
-    background: $mc-faint;
+    background: #94a3b8;
     -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m21 21-4.34-4.34'/> <circle cx='11' cy='11' r='8'/></svg>") center/contain no-repeat;
     mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m21 21-4.34-4.34'/> <circle cx='11' cy='11' r='8'/></svg>") center/contain no-repeat;
   }
@@ -1786,7 +1777,7 @@ form.actions_column .btn {
   height: 36px;
   border: 1px solid $mc-border;
   border-radius: 8px;
-  background: $mc-bg-soft;
+  background: #f8fafc;
   color: $text-color;
   font-size: 14px;
   padding: 0 12px 0 36px;
@@ -1794,7 +1785,7 @@ form.actions_column .btn {
   box-shadow: none;
   box-sizing: border-box;
 
-  &::placeholder { color: $mc-faint; }
+  &::placeholder { color: #94a3b8; }
   &:focus {
     border-color: #bfdbfe;
     background: #fff;
@@ -1807,7 +1798,7 @@ form.actions_column .btn {
   border: 1px solid $mc-border;
   border-radius: 8px;
   background: #fff;
-  color: $mc-slate;
+  color: #334155;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1829,8 +1820,8 @@ form.actions_column .btn {
   min-height: 24px;
   border-radius: 20px;
   padding: 3px 10px;
-  background: $mc-bg;
-  color: $mc-muted;
+  background: #f1f5f9;
+  color: #64748b;
   font-size: 12px;
   font-weight: 700;
   white-space: nowrap;
@@ -1854,8 +1845,8 @@ form.actions_column .btn {
 .mc-hv-tag {
   display: inline-block;
   border-radius: 6px;
-  background: $mc-bg;
-  color: $mc-muted;
+  background: #f1f5f9;
+  color: #64748b;
   font-size: 11px;
   font-weight: 700;
   padding: 2px 9px;
@@ -1870,7 +1861,7 @@ form.actions_column .btn {
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  color: $mc-muted;
+  color: #64748b;
   font-size: 13px;
   font-weight: 600;
   margin-bottom: 5px;
@@ -1878,7 +1869,7 @@ form.actions_column .btn {
 }
 
 .mc-hv-meter-line .mc-hv-pct {
-  color: $mc-faint;
+  color: #94a3b8;
 }
 
 .mc-hv-instances {
@@ -1899,7 +1890,7 @@ form.actions_column .btn {
 }
 
 .mc-hv-provider-meta {
-  color: $mc-faint;
+  color: #94a3b8;
   font-size: 11px;
   font-weight: 600;
   margin-top: 4px;
@@ -1996,7 +1987,7 @@ form.actions_column .btn {
 .modal-header { border-bottom: 1px solid $mc-border; }
 .modal-footer {
   border-top: 1px solid $mc-border;
-  background: $mc-bg-soft;
+  background: #f8fafc;
   border-bottom-left-radius: 28px;
   border-bottom-right-radius: 28px;
 }
@@ -2156,16 +2147,16 @@ body.mc-spinner-modal-open .modal-backdrop {
   padding: 0 14px !important;
   gap: 8px;
   background: #fff !important;
-  border: 1px solid $mc-border-strong !important;
+  border: 1px solid #cbd5e1 !important;
   border-radius: 9999px !important;
-  color: $mc-slate !important;
+  color: #334155 !important;
   box-shadow: none !important;
 
   &:hover,
   &:focus {
-    background: $mc-bg-soft !important;
-    border-color: $mc-faint !important;
-    color: $mc-ink !important;
+    background: #f8fafc !important;
+    border-color: #94a3b8 !important;
+    color: #0f172a !important;
   }
 }
 
@@ -2185,11 +2176,11 @@ body.mc-spinner-modal-open .modal-backdrop {
 .ng-wizard .modal-footer .btn.back,
 .ng-wizard .modal-footer .btn.next {
   background: transparent;
-  border: 1px solid $mc-border-strong;
-  color: $mc-slate;
+  border: 1px solid #cbd5e1;
+  color: #334155;
 
   &:hover,
-  &:focus { background: $mc-bg; border-color: $mc-faint; }
+  &:focus { background: #f1f5f9; border-color: #94a3b8; }
 }
 
 // Angular wizard: Finish → MD3 filled button (keeps existing $brand-primary)
@@ -2198,12 +2189,12 @@ body.mc-spinner-modal-open .modal-backdrop {
 }
 
 .ng-wizard {
-  .wizard-navigation { background: $mc-bg-soft; }
+  .wizard-navigation { background: #f8fafc; }
 
   // step list — MD3 Label Large: 14px / weight 500 / 20px line-height / 0.1px tracking
   .nav-pills > li > a {
     border-radius: 999px;
-    color: $mc-muted;
+    color: #64748b;
     font-size: 14px;
     font-weight: 500;
     line-height: 20px;
@@ -2223,7 +2214,7 @@ body.mc-spinner-modal-open .modal-backdrop {
   .transfer-available .panel-heading,
   .transfer-allocated .panel-heading {
     font-weight: 700;
-    background: $mc-bg-soft;
+    background: #f8fafc;
   }
 
   .transfer-table {
@@ -2252,7 +2243,7 @@ body.mc-spinner-modal-open .modal-backdrop {
         font-size: 13px;
         line-height: 1.4;
         font-weight: 500;
-        color: $mc-faint;
+        color: #94a3b8;
       }
     }
 
@@ -2296,13 +2287,13 @@ body.mc-spinner-modal-open .modal-backdrop {
   font-size: 14px;
   background: #fff;
   border: 1px solid $mc-border;
-  color: $mc-muted;
+  color: #64748b;
   box-shadow: $mc-shadow-sm;
 
   &:hover,
   &:focus,
   &:active {
-    background: $mc-bg;
+    background: #f1f5f9;
     color: $text-color;
     box-shadow: $mc-shadow-sm;
   }
@@ -2497,7 +2488,7 @@ body.mc-spinner-modal-open .modal-backdrop {
   z-index: 1035; // above Bootstrap navbar (z-index 1030)
 
   &::-webkit-scrollbar { width: 6px; }
-  &::-webkit-scrollbar-thumb { background: $mc-slate; border-radius: 6px; }
+  &::-webkit-scrollbar-thumb { background: #334155; border-radius: 6px; }
 }
 
 // Brand block at top of sidebar
@@ -2706,16 +2697,16 @@ body.mc-spinner-modal-open .modal-backdrop {
 }
 
 .mc-page-crumb {
-  color: $mc-faint;
+  color: #94a3b8;
   font-size: 14px;
   line-height: 1.4;
   margin-bottom: 8px;
 
-  strong { color: $mc-muted; }
+  strong { color: #64748b; }
 }
 
 .mc-page-sub {
-  color: $mc-muted;
+  color: #64748b;
   font-size: 14px;
   margin: 0;
 }
@@ -2822,7 +2813,7 @@ body.mc-spinner-modal-open .modal-backdrop {
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: .5px;
-    color: $mc-faint;
+    color: #94a3b8;
     margin-bottom: 4px;
   }
 
@@ -2931,7 +2922,7 @@ body.mc-spinner-modal-open .modal-backdrop {
       &.mc-ic-4 { background: #fef3c7; color: #d97706; }
     }
 
-    .mc-stat-num small { font-size: 14px; font-weight: 600; color: $mc-muted; }
+    .mc-stat-num small { font-size: 14px; font-weight: 600; color: #64748b; }
 
     .mc-trend {
       display: inline-flex;
@@ -2941,14 +2932,14 @@ body.mc-spinner-modal-open .modal-backdrop {
       font-weight: 700;
       padding: 3px 10px;
       border-radius: 20px;
-      background: $mc-bg;
-      color: $mc-muted;
+      background: #f1f5f9;
+      color: #64748b;
       white-space: nowrap;
 
       &.is-ok     { background: #dcfce7; color: #16a34a; }
       &.is-warn   { background: #fef3c7; color: #d97706; }
       &.is-danger { background: #fee2e2; color: #dc2626; }
-      &.mc-trend--nolimit { background: $mc-bg; color: $mc-faint; }
+      &.mc-trend--nolimit { background: #f1f5f9; color: #94a3b8; }
     }
 
     .mc-stat-num {
@@ -2963,7 +2954,7 @@ body.mc-spinner-modal-open .modal-backdrop {
       font-size: 14px;
       font-weight: 600;
       line-height: 1.35;
-      color: $mc-muted;
+      color: #64748b;
       margin-top: 8px;
       white-space: nowrap;
       overflow: hidden;
@@ -2979,7 +2970,7 @@ body.mc-spinner-modal-open .modal-backdrop {
    lay its h3/hr/dl out in a row). The .row parent is the flex container. ===== */
 hz-details,hz-resource-property-list,hz-resource-property,hz-field,hz-magic-search,ng-include{display:block}
 [ng-controller^="ImageOverviewController"] .detail{background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(15,23,42,.06),0 4px 12px rgba(15,23,42,.06);padding:0 20px 16px;margin:0;overflow:hidden}
-[ng-controller^="ImageOverviewController"] .detail h3{font-size:16px;font-weight:700;color:$mc-ink;margin:0;padding:16px 0 14px}
+[ng-controller^="ImageOverviewController"] .detail h3{font-size:16px;font-weight:700;color:#0f172a;margin:0;padding:16px 0 14px}
 [ng-controller^="ImageOverviewController"] .detail hr{margin:0 -20px 12px;border:0;border-top:1px solid #e2e8f0}
 [ng-controller^="ImageOverviewController"] > .row::before,
 [ng-controller^="ImageOverviewController"] > .row::after{content:none;display:none}
@@ -2988,31 +2979,31 @@ hz-details,hz-resource-property-list,hz-resource-property,hz-field,hz-magic-sear
 [ng-controller^="horizon.app.core.keypairs.DetailsController"] .row{margin:0}
 [ng-controller^="horizon.app.core.keypairs.DetailsController"] .row > .col-md-12{float:none;width:100%}
 [ng-controller^="horizon.app.core.keypairs.DetailsController"] .detail{background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(15,23,42,.06),0 4px 12px rgba(15,23,42,.06);padding:0 20px 16px;margin:0}
-[ng-controller^="horizon.app.core.keypairs.DetailsController"] .detail::before{content:"Key Pair";display:block;font-size:16px;font-weight:700;color:$mc-ink;margin:0 -20px 12px;padding:16px 20px 14px;border-bottom:1px solid #e2e8f0}
+[ng-controller^="horizon.app.core.keypairs.DetailsController"] .detail::before{content:"Key Pair";display:block;font-size:16px;font-weight:700;color:#0f172a;margin:0 -20px 12px;padding:16px 20px 14px;border-bottom:1px solid #e2e8f0}
 [ng-controller^="UserOverviewController"] .row{margin:0}
 [ng-controller^="UserOverviewController"] .row > .col-md-6{float:none;width:100%}
 [ng-controller^="UserOverviewController"] .detail{background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(15,23,42,.06),0 4px 12px rgba(15,23,42,.06);padding:0 20px 16px;margin:0}
-[ng-controller^="UserOverviewController"] .detail h3{font-size:16px;font-weight:700;color:$mc-ink;margin:0;padding:16px 0 14px}
+[ng-controller^="UserOverviewController"] .detail h3{font-size:16px;font-weight:700;color:#0f172a;margin:0;padding:16px 0 14px}
 [ng-controller^="UserOverviewController"] .detail hr{margin:0 -20px 12px;border:0;border-top:1px solid #e2e8f0}
 [ng-controller^="ServerGroupOverviewController"]{display:block;background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(15,23,42,.06),0 4px 12px rgba(15,23,42,.06);padding:0 20px 16px}
-[ng-controller^="ServerGroupOverviewController"]::before{content:"Server Group";display:block;font-size:16px;font-weight:700;color:$mc-ink;margin:0 -20px 12px;padding:16px 20px 14px;border-bottom:1px solid #e2e8f0}
-[ng-controller^="ServerGroupOverviewController"] .h4{font-size:16px;font-weight:700;color:$mc-ink;margin:0;padding:14px 0 12px}
+[ng-controller^="ServerGroupOverviewController"]::before{content:"Server Group";display:block;font-size:16px;font-weight:700;color:#0f172a;margin:0 -20px 12px;padding:16px 20px 14px;border-bottom:1px solid #e2e8f0}
+[ng-controller^="ServerGroupOverviewController"] .h4{font-size:16px;font-weight:700;color:#0f172a;margin:0;padding:14px 0 12px}
 [ng-controller^="ServerGroupOverviewController"] hr{margin:0 -20px 12px;border:0;border-top:1px solid #e2e8f0}
 /* network_qos — image-like (2 cards side-by-side + Rules full; JS normaliser). */
 [ng-controller^="NetworkQoSOverviewController"] .detail{background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(15,23,42,.06),0 4px 12px rgba(15,23,42,.06);padding:0 20px 16px;margin:0}
-[ng-controller^="NetworkQoSOverviewController"] .detail h3{font-size:16px;font-weight:700;color:$mc-ink;margin:0;padding:16px 0 14px}
+[ng-controller^="NetworkQoSOverviewController"] .detail h3{font-size:16px;font-weight:700;color:#0f172a;margin:0;padding:16px 0 14px}
 [ng-controller^="NetworkQoSOverviewController"] .detail hr{margin:0 -20px 12px;border:0;border-top:1px solid #e2e8f0}
 [ng-controller^="NetworkQoSOverviewController"] > .row::before,[ng-controller^="NetworkQoSOverviewController"] > .row::after{content:none;display:none}
 /* trunks — flat, card the controller div (like server group) */
 [ng-controller^="TrunkOverviewController"]{display:block;background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(15,23,42,.06),0 4px 12px rgba(15,23,42,.06);padding:0 20px 16px}
-[ng-controller^="TrunkOverviewController"]::before{content:"Trunk";display:block;font-size:16px;font-weight:700;color:$mc-ink;margin:0 -20px 12px;padding:16px 20px 14px;border-bottom:1px solid #e2e8f0}
-[ng-controller^="TrunkOverviewController"] .h4{font-size:16px;font-weight:700;color:$mc-ink;margin:0;padding:14px 0 12px}
+[ng-controller^="TrunkOverviewController"]::before{content:"Trunk";display:block;font-size:16px;font-weight:700;color:#0f172a;margin:0 -20px 12px;padding:16px 20px 14px;border-bottom:1px solid #e2e8f0}
+[ng-controller^="TrunkOverviewController"] .h4{font-size:16px;font-weight:700;color:#0f172a;margin:0;padding:14px 0 12px}
 [ng-controller^="TrunkOverviewController"] hr{margin:0 -20px 12px;border:0;border-top:1px solid #e2e8f0}
 /* domains — single full-width card (like users) */
 [ng-controller^="DomainOverviewController"] .row{margin:0}
 [ng-controller^="DomainOverviewController"] .row > .col-md-6{float:none;width:100%}
 [ng-controller^="DomainOverviewController"] .detail{background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(15,23,42,.06),0 4px 12px rgba(15,23,42,.06);padding:0 20px 16px;margin:0}
-[ng-controller^="DomainOverviewController"] .detail h3{font-size:16px;font-weight:700;color:$mc-ink;margin:0;padding:16px 0 14px}
+[ng-controller^="DomainOverviewController"] .detail h3{font-size:16px;font-weight:700;color:#0f172a;margin:0;padding:16px 0 14px}
 [ng-controller^="DomainOverviewController"] .detail hr{margin:0 -20px 12px;border:0;border-top:1px solid #e2e8f0}
 /* Django volume-family detail: cards built by JS (reuses .mc-instance-card). */
 body.mc-ngdetail .page-header{display:flex !important;flex-wrap:wrap;align-items:center;gap:10px}
@@ -3023,10 +3014,10 @@ body.mc-ngdetail .page-header > .row > .details-item-actions{order:3;flex:0 0 au
 body.mc-ngdetail .page-header > .row > .details-item-actions:not(:has(.btn))::after{content:"";display:inline-block;width:104px;height:38px;border-radius:8px;background:linear-gradient(90deg,#eef2f7 25%,#e2e8f0 50%,#eef2f7 75%);background-size:200% 100%;animation:mc-skel 1.2s ease-in-out infinite}
 body.mc-ngdetail .page-header > .breadcrumb > li{display:inline}
 body.mc-ngdetail .page-header > .breadcrumb > li::before{content:none}
-body.mc-ngdetail .page-header .breadcrumb a{display:inline-flex;align-items:center;border:1px solid $mc-border-strong;border-radius:8px;padding:7px 14px;background:#fff;color:$mc-slate;font-weight:600;font-size:13px;line-height:1;text-decoration:none;white-space:nowrap}
+body.mc-ngdetail .page-header .breadcrumb a{display:inline-flex;align-items:center;border:1px solid #cbd5e1;border-radius:8px;padding:7px 14px;background:#fff;color:#334155;font-weight:600;font-size:13px;line-height:1;text-decoration:none;white-space:nowrap}
 body.mc-ngdetail .page-header .breadcrumb a::before{content:"\2039";font-size:16px;margin-right:6px}
 body.mc-ngdetail .page-header .breadcrumb a::after{content:"to list";margin-left:.35em}
-body.mc-ngdetail .page-header .breadcrumb a:hover{background:$mc-bg;color:$mc-ink}
+body.mc-ngdetail .page-header .breadcrumb a:hover{background:#f1f5f9;color:#0f172a}
 
 /* Django detail header -> flex so the injected "Back to list" button sits
    between the title and the actions (like Angular routed-detail). Declared after
@@ -3035,16 +3026,16 @@ body.mc-ngdetail .page-header .breadcrumb a:hover{background:$mc-bg;color:$mc-in
 .page-header.detail-header > .row{display:contents !important}
 .page-header.detail-header .detail-title{order:1 !important;flex:1 1 auto !important;float:none !important;width:auto !important;padding:0 !important}
 .page-header.detail-header .detail-actions{order:3 !important;float:none !important;width:auto !important;padding:0 !important;display:inline-flex !important;align-items:center}
-.page-header.detail-header .mc-back-to-list{order:2 !important;display:inline-flex;align-items:center;border:1px solid $mc-border-strong;border-radius:8px;padding:7px 14px;background:#fff;color:$mc-slate;font-weight:600;font-size:13px;line-height:1;text-decoration:none;white-space:nowrap;cursor:pointer}
+.page-header.detail-header .mc-back-to-list{order:2 !important;display:inline-flex;align-items:center;border:1px solid #cbd5e1;border-radius:8px;padding:7px 14px;background:#fff;color:#334155;font-weight:600;font-size:13px;line-height:1;text-decoration:none;white-space:nowrap;cursor:pointer}
 .page-header.detail-header .mc-back-to-list::before{content:"\2039";font-size:16px;margin-right:6px}
-.page-header.detail-header .mc-back-to-list:hover{background:$mc-bg;color:$mc-ink}
+.page-header.detail-header .mc-back-to-list:hover{background:#f1f5f9;color:#0f172a}
 @media (max-width:767px){.page-header.detail-header .detail-title{flex:1 1 100% !important}}
 
 /* Octavia LBaaS detail (LoadBalancer/Listener/Pool/Member/Monitor/L7Policy/
    L7Rule): card the Overview tab's .col-md-6.detail section. Scoped to
    mc-lbaas-page; only detail pages have .col-md-6.detail (list is a table). */
 body.mc-lbaas-page .col-md-6.detail{background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(15,23,42,.06),0 4px 12px rgba(15,23,42,.06);padding:16px 20px;margin:0 0 16px;float:none;width:100%;box-sizing:border-box}
-body.mc-lbaas-page .col-md-6.detail h4{margin:0 0 14px;padding-bottom:12px;border-bottom:1px solid #e2e8f0;font-size:16px;font-weight:700;color:$mc-ink;line-height:1.25}
+body.mc-lbaas-page .col-md-6.detail h4{margin:0 0 14px;padding-bottom:12px;border-bottom:1px solid #e2e8f0;font-size:16px;font-weight:700;color:#0f172a;line-height:1.25}
 
 // Transfer-table allocate/deallocate: the fa-arrow class sits on the <button>
 // itself (empty content), so the masked ::before collapses to 0. Centre it and
@@ -3230,7 +3221,7 @@ body.mc-lbaas-page .col-md-6.detail h4{margin:0 0 14px;padding-bottom:12px;borde
 .themable-checkbox input[type=checkbox] + label::before {
   content: "" !important; font-family: inherit !important;
   display: inline-block; width: 16px !important; height: 16px !important;
-  box-sizing: border-box; border: 1.5px solid $mc-border-strong; border-radius: 4px;
+  box-sizing: border-box; border: 1.5px solid #cbd5e1; border-radius: 4px;
   background: #fff; vertical-align: middle;
   -webkit-mask: none !important; mask: none !important;
 }
@@ -3587,7 +3578,7 @@ a.btn-launch,
 .modal select.form-control:not([multiple]),
 .ng-wizard select.form-control:not([multiple]),
 .workflow.static_page select.form-control:not([multiple]) {
-  border: 1px solid $mc-border-strong !important;
+  border: 1px solid #cbd5e1 !important;
 }
 
 .modal select.form-control:not([multiple]):focus,
@@ -3613,7 +3604,7 @@ a.btn-launch,
   position: absolute;
   z-index: 2;
   inset: 0;
-  border: 1px solid $mc-border-strong;
+  border: 1px solid #cbd5e1;
   border-radius: 12px;
   pointer-events: none;
 }
@@ -3775,7 +3766,7 @@ a.btn-launch,
   min-height: 20px !important;
   margin-left: -1px;
   padding: 0 !important;
-  border-color: $mc-border-strong;
+  border-color: #cbd5e1;
   border-radius: 0 !important;
   line-height: 1 !important;
 }
@@ -3819,7 +3810,7 @@ a.btn-launch,
   min-height: 40px;
   margin: 0 10px 0 0;
   padding: 0 18px;
-  border: 1px solid $mc-border-strong;
+  border: 1px solid #cbd5e1;
   border-radius: $mc-md-pill;
   background: #fff;
   color: $text-color;
@@ -3835,7 +3826,7 @@ a.btn-launch,
 
 .modal .has-success .form-control,
 .ng-wizard .has-success .form-control {
-  border-color: $mc-border-strong;
+  border-color: #cbd5e1;
   box-shadow: none;
 }
 
@@ -3877,7 +3868,7 @@ a.btn-launch,
   width: 40px !important;
   height: 40px !important;
   margin: 0 !important;
-  color: $mc-muted;
+  color: #64748b;
   font-size: 18px !important;
   line-height: 40px !important;
   pointer-events: none;
