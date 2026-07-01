@@ -602,6 +602,8 @@ table.datatable > caption,
   .table_search .form-group { margin: 0; }
   .table_search .form-control {
     height: 40px;
+    padding-left: 16px;
+    padding-right: 16px;
     border-radius: 8px;
     border: 1px solid $mc-border;
     min-width: 200px;
