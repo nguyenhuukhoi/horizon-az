@@ -41,6 +41,28 @@ $mc-shadow-sm:   0 1px 2px rgba(15, 23, 42, .08);
 $mc-section-gap: 16px;
 $mc-content-pad-x: 26px;
 $mc-content-pad-y: 22px;
+// Neutral text/surface tokens - one name per repeated grey so future
+// rules can't drift by a shade. Same values as before (no visual change).
+$mc-ink:           #0f172a;   // darkest text (same slate-900 as the sidebar bg)
+$mc-slate:         #334155;   // secondary dark text
+$mc-muted:         #64748b;   // muted text in content area
+$mc-faint:         #94a3b8;   // faintest text / placeholders
+$mc-border-strong: #cbd5e1;   // stronger border / input outline
+$mc-bg:            #f1f5f9;   // page background
+$mc-bg-soft:       #f8fafc;   // soft surface (table head, hover)
+// Shared SVG mask/background tokens - each data-URI below appeared 2-4
+// times verbatim; one definition keeps the glyphs guaranteed-identical.
+$mc-svg-server: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'><rect width='20' height='8' x='2' y='2' rx='2' ry='2'/><rect width='20' height='8' x='2' y='14' rx='2' ry='2'/><line x1='6' x2='6.01' y1='6' y2='6'/><line x1='6' x2='6.01' y1='18' y2='18'/></svg>");
+$mc-svg-search: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m21 21-4.34-4.34'/> <circle cx='11' cy='11' r='8'/></svg>");
+$mc-svg-chev-right: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'><path d='M9 6l6 6-6 6'/></svg>");
+$mc-svg-chev-up: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'><path d='M6 15l6-6 6 6'/></svg>");
+$mc-svg-chev-down: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'><path d='M6 9l6 6 6-6'/></svg>");
+$mc-svg-asterisk: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.6' stroke-linecap='round'><path d='M12 6v12'/> <path d='M17.196 9 6.804 15'/> <path d='m6.804 9 10.392 6'/></svg>");
+$mc-svg-plus: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round'><path d='M12 5v14M5 12h14'/></svg>");
+$mc-svg-minus: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M5 12h14'/></svg>");
+$mc-svg-plus-w24: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'><path d='M5 12h14'/><path d='M12 5v14'/></svg>");
+$mc-svg-minus-w24: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'><path d='M5 12h14'/></svg>");
+$mc-svg-server-w2: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect width='20' height='8' x='2' y='2' rx='2' ry='2'/> <rect width='20' height='8' x='2' y='14' rx='2' ry='2'/> <line x1='6' x2='6.01' y1='6' y2='6'/> <line x1='6' x2='6.01' y1='18' y2='18'/></svg>");
 
 // =====================================================================
 //  Base
@@ -81,7 +103,7 @@ body {
 
 // =====================================================================
 //  Topbar — project + region pill selectors (matching demo)
-//  Demo spec: border-radius 8px, bg=#f1f5f9, padding 7px 13px,
+//  Demo spec: border-radius 8px, bg=$mc-bg, padding 7px 13px,
 //             font-weight 500, muted icon color
 // =====================================================================
 .mc-topbar-pills {
@@ -107,7 +129,7 @@ body {
     white-space: nowrap;
     transition: border-color .12s, background .12s;
 
-    .fa, .mc-pill-icon { color: #94a3b8 !important; font-size: 14px; }
+    .fa, .mc-pill-icon { color: $mc-faint !important; font-size: 14px; }
 
     &:hover {
       border-color: darken($mc-border, 10%);
@@ -139,7 +161,7 @@ body {
     max-width: 16px;
     min-height: 16px;
     max-height: 16px;
-    color: #64748b;
+    color: $mc-muted;
     flex: 0 0 16px;
   }
   .mc-pill-cv {
@@ -149,7 +171,7 @@ body {
     max-width: 14px;
     min-height: 14px;
     max-height: 14px;
-    color: #94a3b8;
+    color: $mc-faint;
     flex: 0 0 14px;
   }
 
@@ -167,7 +189,7 @@ body {
   }
 
   .context-delimiter {
-    color: #94a3b8;
+    color: $mc-faint;
     padding: 0 2px;
   }
 }
@@ -252,7 +274,7 @@ body {
     display: flex !important;
     align-items: center;
     justify-content: space-between;
-    color: #94a3b8;            // ~5.9:1 on #0f172a — passes WCAG AA
+    color: $mc-faint;            // ~5.9:1 on $mc-ink — passes WCAG AA
     text-transform: uppercase;
     font-size: 11px;
     font-weight: 700;
@@ -262,7 +284,7 @@ body {
 
     &:hover,
     &:focus {
-      color: #cbd5e1;
+      color: $mc-border-strong;
       background: transparent;
     }
   }
@@ -296,7 +318,7 @@ body {
     display: flex !important;
     align-items: center;
     justify-content: space-between;
-    color: #94a3b8 !important;
+    color: $mc-faint !important;
     font-size: 14px;
     font-weight: 600;
     margin-top: 4px !important;
@@ -305,7 +327,7 @@ body {
   .openstack-panel-group > a.collapsed,
   .openstack-panel-group > a[aria-expanded="true"],
   .openstack-panel-group > a[aria-expanded="false"] {
-    color: #94a3b8 !important;
+    color: $mc-faint !important;
   }
 
   // active panel link
@@ -328,7 +350,7 @@ body {
   .openstack-toggle.fa {
     float: none !important;
     margin-left: auto;
-    color: #94a3b8;
+    color: $mc-faint;
     opacity: .7;
     transform: none !important;
 
@@ -382,7 +404,7 @@ body {
 
 // "info rows" / dl summaries on detail pages
 dl.dl-horizontal dt {
-  color: #64748b;
+  color: $mc-muted;
   font-weight: 600;
 }
 
@@ -419,7 +441,7 @@ dl.dl-horizontal dt {
 
     .dl-horizontal dt {
       width: 160px;
-      color: #64748b;
+      color: $mc-muted;
       font-weight: 600;
       text-align: right;
     }
@@ -427,7 +449,7 @@ dl.dl-horizontal dt {
     .dl-horizontal dd {
       margin-left: 178px;
       min-height: 20px;
-      color: #0f172a;
+      color: $mc-ink;
       overflow-wrap: anywhere;
     }
   }
@@ -457,8 +479,8 @@ dl.dl-horizontal dt {
 // =====================================================================
 .table {
   thead > tr > th {
-    background: #f8fafc;
-    color: #64748b;
+    background: $mc-bg-soft;
+    color: $mc-muted;
     font-size: 12px;
     text-transform: uppercase;
     letter-spacing: .4px;
@@ -475,13 +497,13 @@ dl.dl-horizontal dt {
   }
 
   > tbody > tr:hover > td {
-    background: #f8fafc;
+    background: $mc-bg-soft;
   }
 
   // flatten striped rows — Django stripes via tr.odd/even classes, Angular via
   // Bootstrap :nth-of-type; this covers both, keeping selection/warning + hover
   &.table-striped > tbody > tr:not(.st-selected):not(.warning) > td { background-color: #fff; }
-  &.table-striped > tbody > tr:hover > td { background-color: #f8fafc; }
+  &.table-striped > tbody > tr:hover > td { background-color: $mc-bg-soft; }
 
   // instance name (and other linked first column) a touch bolder
   > tbody > tr > td a { font-weight: 600; }
@@ -524,7 +546,7 @@ dl.dl-horizontal dt {
 // span), so e.g. Admin Instances matches the Images page exactly.
 #content_body .table_count,
 #content_body [hz-table-footer] td > span:first-child {
-  color: #0f172a;
+  color: $mc-ink;
   font-size: 13px;
   font-weight: 400;
   text-transform: none;
@@ -557,7 +579,7 @@ dl.dl-horizontal dt {
   &.info  { background: #dbeafe; color: #2563eb; }
   &.warn  { background: #fef3c7; color: #d97706; }
   &.err   { background: #fee2e2; color: #dc2626; }
-  &.muted { background: #f1f5f9; color: #64748b; }
+  &.muted { background: $mc-bg; color: $mc-muted; }
 }
 .table > thead .breadcrumb_td .table_count { display: none; }
 
@@ -654,8 +676,8 @@ a.btn-launch {
       width: 100%;
       height: 100%;
       background-color: currentColor;
-      -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'><rect width='20' height='8' x='2' y='2' rx='2' ry='2'/><rect width='20' height='8' x='2' y='14' rx='2' ry='2'/><line x1='6' x2='6.01' y1='6' y2='6'/><line x1='6' x2='6.01' y1='18' y2='18'/></svg>") center/contain no-repeat;
-      mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'><rect width='20' height='8' x='2' y='2' rx='2' ry='2'/><rect width='20' height='8' x='2' y='14' rx='2' ry='2'/><line x1='6' x2='6.01' y1='6' y2='6'/><line x1='6' x2='6.01' y1='18' y2='18'/></svg>") center/contain no-repeat;
+      -webkit-mask: $mc-svg-server center/contain no-repeat;
+      mask: $mc-svg-server center/contain no-repeat;
     }
   }
 }
@@ -1042,13 +1064,13 @@ form.actions_column .btn {
 
 .btn-default {
   background: #fff;
-  border-color: #cbd5e1;
-  color: #334155;
+  border-color: $mc-border-strong;
+  color: $mc-slate;
 
   &:hover,
   &:focus {
-    background: #f1f5f9;
-    border-color: #94a3b8;
+    background: $mc-bg;
+    border-color: $mc-faint;
   }
 }
 
@@ -1057,7 +1079,7 @@ form.actions_column .btn {
 // =====================================================================
 .form-control {
   border-radius: 8px;
-  border-color: #cbd5e1;
+  border-color: $mc-border-strong;
   box-shadow: none;
 
   &:focus {
@@ -1098,12 +1120,12 @@ form.actions_column .btn {
   padding: 0;
   font-size: 14px;
   line-height: 1.4;
-  color: #94a3b8;
+  color: $mc-faint;
 
-  > li + li::before { content: "/"; color: #cbd5e1; padding: 0 7px; }
-  a { color: #64748b; font-weight: 600; }
+  > li + li::before { content: "/"; color: $mc-border-strong; padding: 0 7px; }
+  a { color: $mc-muted; font-weight: 600; }
   a:hover { color: $brand-primary; }
-  > .active { color: #94a3b8; }
+  > .active { color: $mc-faint; }
 }
 
 .alert {
@@ -1285,7 +1307,7 @@ form.actions_column .btn {
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: .5px;
-    color: #64748b;
+    color: $mc-muted;
     margin: 22px 0 12px;
   }
 }
@@ -1365,13 +1387,13 @@ form.actions_column .btn {
     font-weight: 700;
     padding: 3px 10px;
     border-radius: 20px;
-    background: #f1f5f9;
-    color: #64748b;
+    background: $mc-bg;
+    color: $mc-muted;
 
     &.is-ok     { background: #dcfce7; color: #16a34a; }
     &.is-warn   { background: #fef3c7; color: #d97706; }
     &.is-danger { background: #fee2e2; color: #dc2626; }
-    &.mc-trend--nolimit { background: #f1f5f9; color: #94a3b8; font-weight: 600; }
+    &.mc-trend--nolimit { background: $mc-bg; color: $mc-faint; font-weight: 600; }
   }
 
   .mc-stat-num {
@@ -1386,7 +1408,7 @@ form.actions_column .btn {
   .mc-stat-label {
     font-size: 14px;
     font-weight: 600;
-    color: #64748b;
+    color: $mc-muted;
     margin-top: 8px;
     line-height: 1.35;
     white-space: nowrap;
@@ -1396,7 +1418,7 @@ form.actions_column .btn {
 
   .mc-stat-sub {
     font-size: 12px;
-    color: #94a3b8;
+    color: $mc-faint;
     margin-top: 2px;
   }
 }
@@ -1427,7 +1449,7 @@ form.actions_column .btn {
 
   .mc-panel-sub {
     font-size: 12px;
-    color: #94a3b8;
+    color: $mc-faint;
     margin-top: 2px;
   }
 
@@ -1495,7 +1517,7 @@ form.actions_column .btn {
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: .5px;
-    color: #94a3b8;
+    color: $mc-faint;
     margin: 12px 0 8px;
   }
 }
@@ -1512,14 +1534,14 @@ form.actions_column .btn {
   }
 
   .mc-meter-name {
-    color: #334155;
+    color: $mc-slate;
     font-weight: 500;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
 
-  .mc-meter-val { color: #94a3b8; white-space: nowrap; }
+  .mc-meter-val { color: $mc-faint; white-space: nowrap; }
 }
 
 // shared meter bar (AZ rows)
@@ -1564,7 +1586,7 @@ form.actions_column .btn {
 }
 
 .mc-quota-head {
-  color: #64748b;
+  color: $mc-muted;
   font-size: 11px;
   font-weight: 700;
   letter-spacing: .05em;
@@ -1580,7 +1602,7 @@ form.actions_column .btn {
   align-items: center;
   gap: 14px;
   padding: 10px 0;
-  border-bottom: 1px solid #f8fafc;
+  border-bottom: 1px solid $mc-bg-soft;
 
   &:last-child { border-bottom: 0; }
 
@@ -1600,7 +1622,7 @@ form.actions_column .btn {
 }
 
 .mc-quota-val {
-  color: #64748b;
+  color: $mc-muted;
   font-size: 12px;
   font-weight: 600;
   min-width: 64px;
@@ -1609,7 +1631,7 @@ form.actions_column .btn {
 }
 
 .mc-quota-den {
-  color: #94a3b8;
+  color: $mc-faint;
 }
 
 // =====================================================================
@@ -1653,7 +1675,7 @@ form.actions_column .btn {
     border-bottom: 2px solid transparent !important;
     border-radius: 0;
     background: transparent !important;
-    color: #64748b;
+    color: $mc-muted;
     font-size: 14px;
     font-weight: 600;
     padding: 10px 16px;
@@ -1766,9 +1788,9 @@ form.actions_column .btn {
     width: 14px;
     height: 14px;
     transform: translateY(-50%);
-    background: #94a3b8;
-    -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m21 21-4.34-4.34'/> <circle cx='11' cy='11' r='8'/></svg>") center/contain no-repeat;
-    mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m21 21-4.34-4.34'/> <circle cx='11' cy='11' r='8'/></svg>") center/contain no-repeat;
+    background: $mc-faint;
+    -webkit-mask: $mc-svg-search center/contain no-repeat;
+    mask: $mc-svg-search center/contain no-repeat;
   }
 }
 
@@ -1777,7 +1799,7 @@ form.actions_column .btn {
   height: 36px;
   border: 1px solid $mc-border;
   border-radius: 8px;
-  background: #f8fafc;
+  background: $mc-bg-soft;
   color: $text-color;
   font-size: 14px;
   padding: 0 12px 0 36px;
@@ -1785,7 +1807,7 @@ form.actions_column .btn {
   box-shadow: none;
   box-sizing: border-box;
 
-  &::placeholder { color: #94a3b8; }
+  &::placeholder { color: $mc-faint; }
   &:focus {
     border-color: #bfdbfe;
     background: #fff;
@@ -1798,7 +1820,7 @@ form.actions_column .btn {
   border: 1px solid $mc-border;
   border-radius: 8px;
   background: #fff;
-  color: #334155;
+  color: $mc-slate;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1820,8 +1842,8 @@ form.actions_column .btn {
   min-height: 24px;
   border-radius: 20px;
   padding: 3px 10px;
-  background: #f1f5f9;
-  color: #64748b;
+  background: $mc-bg;
+  color: $mc-muted;
   font-size: 12px;
   font-weight: 700;
   white-space: nowrap;
@@ -1845,8 +1867,8 @@ form.actions_column .btn {
 .mc-hv-tag {
   display: inline-block;
   border-radius: 6px;
-  background: #f1f5f9;
-  color: #64748b;
+  background: $mc-bg;
+  color: $mc-muted;
   font-size: 11px;
   font-weight: 700;
   padding: 2px 9px;
@@ -1861,7 +1883,7 @@ form.actions_column .btn {
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  color: #64748b;
+  color: $mc-muted;
   font-size: 13px;
   font-weight: 600;
   margin-bottom: 5px;
@@ -1869,7 +1891,7 @@ form.actions_column .btn {
 }
 
 .mc-hv-meter-line .mc-hv-pct {
-  color: #94a3b8;
+  color: $mc-faint;
 }
 
 .mc-hv-instances {
@@ -1890,7 +1912,7 @@ form.actions_column .btn {
 }
 
 .mc-hv-provider-meta {
-  color: #94a3b8;
+  color: $mc-faint;
   font-size: 11px;
   font-weight: 600;
   margin-top: 4px;
@@ -1987,7 +2009,7 @@ form.actions_column .btn {
 .modal-header { border-bottom: 1px solid $mc-border; }
 .modal-footer {
   border-top: 1px solid $mc-border;
-  background: #f8fafc;
+  background: $mc-bg-soft;
   border-bottom-left-radius: 28px;
   border-bottom-right-radius: 28px;
 }
@@ -2147,16 +2169,16 @@ body.mc-spinner-modal-open .modal-backdrop {
   padding: 0 14px !important;
   gap: 8px;
   background: #fff !important;
-  border: 1px solid #cbd5e1 !important;
+  border: 1px solid $mc-border-strong !important;
   border-radius: 9999px !important;
-  color: #334155 !important;
+  color: $mc-slate !important;
   box-shadow: none !important;
 
   &:hover,
   &:focus {
-    background: #f8fafc !important;
-    border-color: #94a3b8 !important;
-    color: #0f172a !important;
+    background: $mc-bg-soft !important;
+    border-color: $mc-faint !important;
+    color: $mc-ink !important;
   }
 }
 
@@ -2168,19 +2190,19 @@ body.mc-spinner-modal-open .modal-backdrop {
   width: 100%;
   height: 100%;
   background-color: currentColor;
-  -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'><rect width='20' height='8' x='2' y='2' rx='2' ry='2'/><rect width='20' height='8' x='2' y='14' rx='2' ry='2'/><line x1='6' x2='6.01' y1='6' y2='6'/><line x1='6' x2='6.01' y1='18' y2='18'/></svg>") center/contain no-repeat;
-  mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'><rect width='20' height='8' x='2' y='2' rx='2' ry='2'/><rect width='20' height='8' x='2' y='14' rx='2' ry='2'/><line x1='6' x2='6.01' y1='6' y2='6'/><line x1='6' x2='6.01' y1='18' y2='18'/></svg>") center/contain no-repeat;
+  -webkit-mask: $mc-svg-server center/contain no-repeat;
+  mask: $mc-svg-server center/contain no-repeat;
 }
 
 // Angular wizard: Back / Next → MD3 outlined button (transparent fill, border)
 .ng-wizard .modal-footer .btn.back,
 .ng-wizard .modal-footer .btn.next {
   background: transparent;
-  border: 1px solid #cbd5e1;
-  color: #334155;
+  border: 1px solid $mc-border-strong;
+  color: $mc-slate;
 
   &:hover,
-  &:focus { background: #f1f5f9; border-color: #94a3b8; }
+  &:focus { background: $mc-bg; border-color: $mc-faint; }
 }
 
 // Angular wizard: Finish → MD3 filled button (keeps existing $brand-primary)
@@ -2189,12 +2211,12 @@ body.mc-spinner-modal-open .modal-backdrop {
 }
 
 .ng-wizard {
-  .wizard-navigation { background: #f8fafc; }
+  .wizard-navigation { background: $mc-bg-soft; }
 
   // step list — MD3 Label Large: 14px / weight 500 / 20px line-height / 0.1px tracking
   .nav-pills > li > a {
     border-radius: 999px;
-    color: #64748b;
+    color: $mc-muted;
     font-size: 14px;
     font-weight: 500;
     line-height: 20px;
@@ -2214,7 +2236,7 @@ body.mc-spinner-modal-open .modal-backdrop {
   .transfer-available .panel-heading,
   .transfer-allocated .panel-heading {
     font-weight: 700;
-    background: #f8fafc;
+    background: $mc-bg-soft;
   }
 
   .transfer-table {
@@ -2243,7 +2265,7 @@ body.mc-spinner-modal-open .modal-backdrop {
         font-size: 13px;
         line-height: 1.4;
         font-weight: 500;
-        color: #94a3b8;
+        color: $mc-faint;
       }
     }
 
@@ -2287,13 +2309,13 @@ body.mc-spinner-modal-open .modal-backdrop {
   font-size: 14px;
   background: #fff;
   border: 1px solid $mc-border;
-  color: #64748b;
+  color: $mc-muted;
   box-shadow: $mc-shadow-sm;
 
   &:hover,
   &:focus,
   &:active {
-    background: #f1f5f9;
+    background: $mc-bg;
     color: $text-color;
     box-shadow: $mc-shadow-sm;
   }
@@ -2322,9 +2344,9 @@ body.mc-spinner-modal-open .modal-backdrop {
 .help-toggle .fa::before, .fa-question-circle::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='10'/> <path d='M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3'/> <path d='M12 17h.01'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='10'/> <path d='M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3'/> <path d='M12 17h.01'/></svg>") center/contain no-repeat; }
 .fa-close::before, .fa-times::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'><path d='M6 6l12 12M18 6 6 18'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'><path d='M6 6l12 12M18 6 6 18'/></svg>") center/contain no-repeat; }
 .fa-angle-left::before, .fa-chevron-left::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'><path d='M15 6l-6 6 6 6'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'><path d='M15 6l-6 6 6 6'/></svg>") center/contain no-repeat; }
-.fa-angle-right::before, .fa-chevron-right::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'><path d='M9 6l6 6-6 6'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'><path d='M9 6l6 6-6 6'/></svg>") center/contain no-repeat; }
-.fa-angle-up::before, .fa-chevron-up::before, .fa-caret-up::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'><path d='M6 15l6-6 6 6'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'><path d='M6 15l6-6 6 6'/></svg>") center/contain no-repeat; }
-.fa-angle-down::before, .fa-chevron-down::before, .fa-caret-down::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'><path d='M6 9l6 6 6-6'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'><path d='M6 9l6 6 6-6'/></svg>") center/contain no-repeat; }
+.fa-angle-right::before, .fa-chevron-right::before { -webkit-mask: $mc-svg-chev-right center/contain no-repeat; mask: $mc-svg-chev-right center/contain no-repeat; }
+.fa-angle-up::before, .fa-chevron-up::before, .fa-caret-up::before { -webkit-mask: $mc-svg-chev-up center/contain no-repeat; mask: $mc-svg-chev-up center/contain no-repeat; }
+.fa-angle-down::before, .fa-chevron-down::before, .fa-caret-down::before { -webkit-mask: $mc-svg-chev-down center/contain no-repeat; mask: $mc-svg-chev-down center/contain no-repeat; }
 .fa-check::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'><path d='M20 6 9 17l-5-5'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'><path d='M20 6 9 17l-5-5'/></svg>") center/contain no-repeat; }
 
 // The generic icon mask uses a 1em box. Validation feedback instead needs
@@ -2351,7 +2373,7 @@ body.mc-spinner-modal-open .modal-backdrop {
   width: 14px !important;
   height: 14px !important;
 }
-.fa-asterisk::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.6' stroke-linecap='round'><path d='M12 6v12'/> <path d='M17.196 9 6.804 15'/> <path d='m6.804 9 10.392 6'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.6' stroke-linecap='round'><path d='M12 6v12'/> <path d='M17.196 9 6.804 15'/> <path d='m6.804 9 10.392 6'/></svg>") center/contain no-repeat; }
+.fa-asterisk::before { -webkit-mask: $mc-svg-asterisk center/contain no-repeat; mask: $mc-svg-asterisk center/contain no-repeat; }
 
 // Required markers appear in Django labels, Angular labels, and wizard tabs.
 // Use one literal marker token so each context has identical size and spacing.
@@ -2385,9 +2407,9 @@ body.mc-spinner-modal-open .modal-backdrop {
   transform: translateY(-3px);
 }
 .fa-bars::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'><path d='M4 6h16M4 12h16M4 18h16'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'><path d='M4 6h16M4 12h16M4 18h16'/></svg>") center/contain no-repeat; }
-.fa-plus::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round'><path d='M12 5v14M5 12h14'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round'><path d='M12 5v14M5 12h14'/></svg>") center/contain no-repeat; }
+.fa-plus::before { -webkit-mask: $mc-svg-plus center/contain no-repeat; mask: $mc-svg-plus center/contain no-repeat; }
 .fa-trash::before, .fa-trash-o::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'><path d='M10 11v6'/> <path d='M14 11v6'/> <path d='M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6'/> <path d='M3 6h18'/> <path d='M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'><path d='M10 11v6'/> <path d='M14 11v6'/> <path d='M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6'/> <path d='M3 6h18'/> <path d='M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2'/></svg>") center/contain no-repeat; }
-.fa-search::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m21 21-4.34-4.34'/> <circle cx='11' cy='11' r='8'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m21 21-4.34-4.34'/> <circle cx='11' cy='11' r='8'/></svg>") center/contain no-repeat; }
+.fa-search::before { -webkit-mask: $mc-svg-search center/contain no-repeat; mask: $mc-svg-search center/contain no-repeat; }
 .fa-info-circle::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='10'/> <path d='M12 16v-4'/> <path d='M12 8h.01'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='10'/> <path d='M12 16v-4'/> <path d='M12 8h.01'/></svg>") center/contain no-repeat; }
 .fa-cloud-download::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'><path d='M12 13v8l-4-4'/> <path d='m12 21 4-4'/> <path d='M4.393 15.269A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.436 8.284'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'><path d='M12 13v8l-4-4'/> <path d='m12 21 4-4'/> <path d='M4.393 15.269A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.436 8.284'/></svg>") center/contain no-repeat; }
 .fa-cog::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='3'/><path d='M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='3'/><path d='M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z'/></svg>") center/contain no-repeat; }
@@ -2414,16 +2436,16 @@ body.mc-spinner-modal-open .modal-backdrop {
 .fa-upload::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M12 3v12'/> <path d='m17 8-5-5-5 5'/> <path d='M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M12 3v12'/> <path d='m17 8-5-5-5 5'/> <path d='M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4'/></svg>") center/contain no-repeat; }
 .fa-download::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M12 15V3'/> <path d='M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4'/> <path d='m7 10 5 5 5-5'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M12 15V3'/> <path d='M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4'/> <path d='m7 10 5 5 5-5'/></svg>") center/contain no-repeat; }
 .fa-refresh::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8'/> <path d='M21 3v5h-5'/> <path d='M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16'/> <path d='M8 16H3v5'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8'/> <path d='M21 3v5h-5'/> <path d='M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16'/> <path d='M8 16H3v5'/></svg>") center/contain no-repeat; }
-.fa-minus::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M5 12h14'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M5 12h14'/></svg>") center/contain no-repeat; }
-.fa-arrow-up::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'><path d='M5 12h14'/><path d='M12 5v14'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'><path d='M5 12h14'/><path d='M12 5v14'/></svg>") center/contain no-repeat; }
-.fa-arrow-down::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'><path d='M5 12h14'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'><path d='M5 12h14'/></svg>") center/contain no-repeat; }
+.fa-minus::before { -webkit-mask: $mc-svg-minus center/contain no-repeat; mask: $mc-svg-minus center/contain no-repeat; }
+.fa-arrow-up::before { -webkit-mask: $mc-svg-plus-w24 center/contain no-repeat; mask: $mc-svg-plus-w24 center/contain no-repeat; }
+.fa-arrow-down::before { -webkit-mask: $mc-svg-minus-w24 center/contain no-repeat; mask: $mc-svg-minus-w24 center/contain no-repeat; }
 .fa-th-large::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect width='7' height='7' x='3' y='3' rx='1'/> <rect width='7' height='7' x='14' y='3' rx='1'/> <rect width='7' height='7' x='14' y='14' rx='1'/> <rect width='7' height='7' x='3' y='14' rx='1'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect width='7' height='7' x='3' y='3' rx='1'/> <rect width='7' height='7' x='14' y='3' rx='1'/> <rect width='7' height='7' x='14' y='14' rx='1'/> <rect width='7' height='7' x='3' y='14' rx='1'/></svg>") center/contain no-repeat; }
 .fa-th::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect width='18' height='18' x='3' y='3' rx='2'/> <path d='M3 9h18'/> <path d='M3 15h18'/> <path d='M9 3v18'/> <path d='M15 3v18'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect width='18' height='18' x='3' y='3' rx='2'/> <path d='M3 9h18'/> <path d='M3 15h18'/> <path d='M9 3v18'/> <path d='M15 3v18'/></svg>") center/contain no-repeat; }
 .fa-cloud-upload::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M12 13v8'/> <path d='M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242'/> <path d='m8 17 4-4 4 4'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M12 13v8'/> <path d='M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242'/> <path d='m8 17 4-4 4 4'/></svg>") center/contain no-repeat; }
 .fa-calendar::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M8 2v4'/> <path d='M16 2v4'/> <rect width='18' height='18' x='3' y='4' rx='2'/> <path d='M3 10h18'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M8 2v4'/> <path d='M16 2v4'/> <rect width='18' height='18' x='3' y='4' rx='2'/> <path d='M3 10h18'/></svg>") center/contain no-repeat; }
 .fa-user::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2'/> <circle cx='12' cy='7' r='4'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2'/> <circle cx='12' cy='7' r='4'/></svg>") center/contain no-repeat; }
 .fa-sign-out::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m16 17 5-5-5-5'/> <path d='M21 12H9'/> <path d='M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m16 17 5-5-5-5'/> <path d='M21 12H9'/> <path d='M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4'/></svg>") center/contain no-repeat; }
-.fa-server::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect width='20' height='8' x='2' y='2' rx='2' ry='2'/> <rect width='20' height='8' x='2' y='14' rx='2' ry='2'/> <line x1='6' x2='6.01' y1='6' y2='6'/> <line x1='6' x2='6.01' y1='18' y2='18'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect width='20' height='8' x='2' y='2' rx='2' ry='2'/> <rect width='20' height='8' x='2' y='14' rx='2' ry='2'/> <line x1='6' x2='6.01' y1='6' y2='6'/> <line x1='6' x2='6.01' y1='18' y2='18'/></svg>") center/contain no-repeat; }
+.fa-server::before { -webkit-mask: $mc-svg-server-w2 center/contain no-repeat; mask: $mc-svg-server-w2 center/contain no-repeat; }
 .fa-save::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z'/> <path d='M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7'/> <path d='M7 3v4a1 1 0 0 0 1 1h7'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z'/> <path d='M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7'/> <path d='M7 3v4a1 1 0 0 0 1 1h7'/></svg>") center/contain no-repeat; }
 .fa-pencil::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z'/> <path d='m15 5 4 4'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z'/> <path d='m15 5 4 4'/></svg>") center/contain no-repeat; }
 .fa-list-alt::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M3 5h.01'/> <path d='M3 12h.01'/> <path d='M3 19h.01'/> <path d='M8 5h13'/> <path d='M8 12h13'/> <path d='M8 19h13'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M3 5h.01'/> <path d='M3 12h.01'/> <path d='M3 19h.01'/> <path d='M8 5h13'/> <path d='M8 12h13'/> <path d='M8 19h13'/></svg>") center/contain no-repeat; }
@@ -2488,7 +2510,7 @@ body.mc-spinner-modal-open .modal-backdrop {
   z-index: 1035; // above Bootstrap navbar (z-index 1030)
 
   &::-webkit-scrollbar { width: 6px; }
-  &::-webkit-scrollbar-thumb { background: #334155; border-radius: 6px; }
+  &::-webkit-scrollbar-thumb { background: $mc-slate; border-radius: 6px; }
 }
 
 // Brand block at top of sidebar
@@ -2697,16 +2719,16 @@ body.mc-spinner-modal-open .modal-backdrop {
 }
 
 .mc-page-crumb {
-  color: #94a3b8;
+  color: $mc-faint;
   font-size: 14px;
   line-height: 1.4;
   margin-bottom: 8px;
 
-  strong { color: #64748b; }
+  strong { color: $mc-muted; }
 }
 
 .mc-page-sub {
-  color: #64748b;
+  color: $mc-muted;
   font-size: 14px;
   margin: 0;
 }
@@ -2813,7 +2835,7 @@ body.mc-spinner-modal-open .modal-backdrop {
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: .5px;
-    color: #94a3b8;
+    color: $mc-faint;
     margin-bottom: 4px;
   }
 
@@ -2922,7 +2944,7 @@ body.mc-spinner-modal-open .modal-backdrop {
       &.mc-ic-4 { background: #fef3c7; color: #d97706; }
     }
 
-    .mc-stat-num small { font-size: 14px; font-weight: 600; color: #64748b; }
+    .mc-stat-num small { font-size: 14px; font-weight: 600; color: $mc-muted; }
 
     .mc-trend {
       display: inline-flex;
@@ -2932,14 +2954,14 @@ body.mc-spinner-modal-open .modal-backdrop {
       font-weight: 700;
       padding: 3px 10px;
       border-radius: 20px;
-      background: #f1f5f9;
-      color: #64748b;
+      background: $mc-bg;
+      color: $mc-muted;
       white-space: nowrap;
 
       &.is-ok     { background: #dcfce7; color: #16a34a; }
       &.is-warn   { background: #fef3c7; color: #d97706; }
       &.is-danger { background: #fee2e2; color: #dc2626; }
-      &.mc-trend--nolimit { background: #f1f5f9; color: #94a3b8; }
+      &.mc-trend--nolimit { background: $mc-bg; color: $mc-faint; }
     }
 
     .mc-stat-num {
@@ -2954,7 +2976,7 @@ body.mc-spinner-modal-open .modal-backdrop {
       font-size: 14px;
       font-weight: 600;
       line-height: 1.35;
-      color: #64748b;
+      color: $mc-muted;
       margin-top: 8px;
       white-space: nowrap;
       overflow: hidden;
@@ -2970,7 +2992,7 @@ body.mc-spinner-modal-open .modal-backdrop {
    lay its h3/hr/dl out in a row). The .row parent is the flex container. ===== */
 hz-details,hz-resource-property-list,hz-resource-property,hz-field,hz-magic-search,ng-include{display:block}
 [ng-controller^="ImageOverviewController"] .detail{background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(15,23,42,.06),0 4px 12px rgba(15,23,42,.06);padding:0 20px 16px;margin:0;overflow:hidden}
-[ng-controller^="ImageOverviewController"] .detail h3{font-size:16px;font-weight:700;color:#0f172a;margin:0;padding:16px 0 14px}
+[ng-controller^="ImageOverviewController"] .detail h3{font-size:16px;font-weight:700;color:$mc-ink;margin:0;padding:16px 0 14px}
 [ng-controller^="ImageOverviewController"] .detail hr{margin:0 -20px 12px;border:0;border-top:1px solid #e2e8f0}
 [ng-controller^="ImageOverviewController"] > .row::before,
 [ng-controller^="ImageOverviewController"] > .row::after{content:none;display:none}
@@ -2979,31 +3001,31 @@ hz-details,hz-resource-property-list,hz-resource-property,hz-field,hz-magic-sear
 [ng-controller^="horizon.app.core.keypairs.DetailsController"] .row{margin:0}
 [ng-controller^="horizon.app.core.keypairs.DetailsController"] .row > .col-md-12{float:none;width:100%}
 [ng-controller^="horizon.app.core.keypairs.DetailsController"] .detail{background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(15,23,42,.06),0 4px 12px rgba(15,23,42,.06);padding:0 20px 16px;margin:0}
-[ng-controller^="horizon.app.core.keypairs.DetailsController"] .detail::before{content:"Key Pair";display:block;font-size:16px;font-weight:700;color:#0f172a;margin:0 -20px 12px;padding:16px 20px 14px;border-bottom:1px solid #e2e8f0}
+[ng-controller^="horizon.app.core.keypairs.DetailsController"] .detail::before{content:"Key Pair";display:block;font-size:16px;font-weight:700;color:$mc-ink;margin:0 -20px 12px;padding:16px 20px 14px;border-bottom:1px solid #e2e8f0}
 [ng-controller^="UserOverviewController"] .row{margin:0}
 [ng-controller^="UserOverviewController"] .row > .col-md-6{float:none;width:100%}
 [ng-controller^="UserOverviewController"] .detail{background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(15,23,42,.06),0 4px 12px rgba(15,23,42,.06);padding:0 20px 16px;margin:0}
-[ng-controller^="UserOverviewController"] .detail h3{font-size:16px;font-weight:700;color:#0f172a;margin:0;padding:16px 0 14px}
+[ng-controller^="UserOverviewController"] .detail h3{font-size:16px;font-weight:700;color:$mc-ink;margin:0;padding:16px 0 14px}
 [ng-controller^="UserOverviewController"] .detail hr{margin:0 -20px 12px;border:0;border-top:1px solid #e2e8f0}
 [ng-controller^="ServerGroupOverviewController"]{display:block;background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(15,23,42,.06),0 4px 12px rgba(15,23,42,.06);padding:0 20px 16px}
-[ng-controller^="ServerGroupOverviewController"]::before{content:"Server Group";display:block;font-size:16px;font-weight:700;color:#0f172a;margin:0 -20px 12px;padding:16px 20px 14px;border-bottom:1px solid #e2e8f0}
-[ng-controller^="ServerGroupOverviewController"] .h4{font-size:16px;font-weight:700;color:#0f172a;margin:0;padding:14px 0 12px}
+[ng-controller^="ServerGroupOverviewController"]::before{content:"Server Group";display:block;font-size:16px;font-weight:700;color:$mc-ink;margin:0 -20px 12px;padding:16px 20px 14px;border-bottom:1px solid #e2e8f0}
+[ng-controller^="ServerGroupOverviewController"] .h4{font-size:16px;font-weight:700;color:$mc-ink;margin:0;padding:14px 0 12px}
 [ng-controller^="ServerGroupOverviewController"] hr{margin:0 -20px 12px;border:0;border-top:1px solid #e2e8f0}
 /* network_qos — image-like (2 cards side-by-side + Rules full; JS normaliser). */
 [ng-controller^="NetworkQoSOverviewController"] .detail{background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(15,23,42,.06),0 4px 12px rgba(15,23,42,.06);padding:0 20px 16px;margin:0}
-[ng-controller^="NetworkQoSOverviewController"] .detail h3{font-size:16px;font-weight:700;color:#0f172a;margin:0;padding:16px 0 14px}
+[ng-controller^="NetworkQoSOverviewController"] .detail h3{font-size:16px;font-weight:700;color:$mc-ink;margin:0;padding:16px 0 14px}
 [ng-controller^="NetworkQoSOverviewController"] .detail hr{margin:0 -20px 12px;border:0;border-top:1px solid #e2e8f0}
 [ng-controller^="NetworkQoSOverviewController"] > .row::before,[ng-controller^="NetworkQoSOverviewController"] > .row::after{content:none;display:none}
 /* trunks — flat, card the controller div (like server group) */
 [ng-controller^="TrunkOverviewController"]{display:block;background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(15,23,42,.06),0 4px 12px rgba(15,23,42,.06);padding:0 20px 16px}
-[ng-controller^="TrunkOverviewController"]::before{content:"Trunk";display:block;font-size:16px;font-weight:700;color:#0f172a;margin:0 -20px 12px;padding:16px 20px 14px;border-bottom:1px solid #e2e8f0}
-[ng-controller^="TrunkOverviewController"] .h4{font-size:16px;font-weight:700;color:#0f172a;margin:0;padding:14px 0 12px}
+[ng-controller^="TrunkOverviewController"]::before{content:"Trunk";display:block;font-size:16px;font-weight:700;color:$mc-ink;margin:0 -20px 12px;padding:16px 20px 14px;border-bottom:1px solid #e2e8f0}
+[ng-controller^="TrunkOverviewController"] .h4{font-size:16px;font-weight:700;color:$mc-ink;margin:0;padding:14px 0 12px}
 [ng-controller^="TrunkOverviewController"] hr{margin:0 -20px 12px;border:0;border-top:1px solid #e2e8f0}
 /* domains — single full-width card (like users) */
 [ng-controller^="DomainOverviewController"] .row{margin:0}
 [ng-controller^="DomainOverviewController"] .row > .col-md-6{float:none;width:100%}
 [ng-controller^="DomainOverviewController"] .detail{background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(15,23,42,.06),0 4px 12px rgba(15,23,42,.06);padding:0 20px 16px;margin:0}
-[ng-controller^="DomainOverviewController"] .detail h3{font-size:16px;font-weight:700;color:#0f172a;margin:0;padding:16px 0 14px}
+[ng-controller^="DomainOverviewController"] .detail h3{font-size:16px;font-weight:700;color:$mc-ink;margin:0;padding:16px 0 14px}
 [ng-controller^="DomainOverviewController"] .detail hr{margin:0 -20px 12px;border:0;border-top:1px solid #e2e8f0}
 /* Django volume-family detail: cards built by JS (reuses .mc-instance-card). */
 body.mc-ngdetail .page-header{display:flex !important;flex-wrap:wrap;align-items:center;gap:10px}
@@ -3014,10 +3036,10 @@ body.mc-ngdetail .page-header > .row > .details-item-actions{order:3;flex:0 0 au
 body.mc-ngdetail .page-header > .row > .details-item-actions:not(:has(.btn))::after{content:"";display:inline-block;width:104px;height:38px;border-radius:8px;background:linear-gradient(90deg,#eef2f7 25%,#e2e8f0 50%,#eef2f7 75%);background-size:200% 100%;animation:mc-skel 1.2s ease-in-out infinite}
 body.mc-ngdetail .page-header > .breadcrumb > li{display:inline}
 body.mc-ngdetail .page-header > .breadcrumb > li::before{content:none}
-body.mc-ngdetail .page-header .breadcrumb a{display:inline-flex;align-items:center;border:1px solid #cbd5e1;border-radius:8px;padding:7px 14px;background:#fff;color:#334155;font-weight:600;font-size:13px;line-height:1;text-decoration:none;white-space:nowrap}
+body.mc-ngdetail .page-header .breadcrumb a{display:inline-flex;align-items:center;border:1px solid $mc-border-strong;border-radius:8px;padding:7px 14px;background:#fff;color:$mc-slate;font-weight:600;font-size:13px;line-height:1;text-decoration:none;white-space:nowrap}
 body.mc-ngdetail .page-header .breadcrumb a::before{content:"\2039";font-size:16px;margin-right:6px}
 body.mc-ngdetail .page-header .breadcrumb a::after{content:"to list";margin-left:.35em}
-body.mc-ngdetail .page-header .breadcrumb a:hover{background:#f1f5f9;color:#0f172a}
+body.mc-ngdetail .page-header .breadcrumb a:hover{background:$mc-bg;color:$mc-ink}
 
 /* Django detail header -> flex so the injected "Back to list" button sits
    between the title and the actions (like Angular routed-detail). Declared after
@@ -3026,16 +3048,16 @@ body.mc-ngdetail .page-header .breadcrumb a:hover{background:#f1f5f9;color:#0f17
 .page-header.detail-header > .row{display:contents !important}
 .page-header.detail-header .detail-title{order:1 !important;flex:1 1 auto !important;float:none !important;width:auto !important;padding:0 !important}
 .page-header.detail-header .detail-actions{order:3 !important;float:none !important;width:auto !important;padding:0 !important;display:inline-flex !important;align-items:center}
-.page-header.detail-header .mc-back-to-list{order:2 !important;display:inline-flex;align-items:center;border:1px solid #cbd5e1;border-radius:8px;padding:7px 14px;background:#fff;color:#334155;font-weight:600;font-size:13px;line-height:1;text-decoration:none;white-space:nowrap;cursor:pointer}
+.page-header.detail-header .mc-back-to-list{order:2 !important;display:inline-flex;align-items:center;border:1px solid $mc-border-strong;border-radius:8px;padding:7px 14px;background:#fff;color:$mc-slate;font-weight:600;font-size:13px;line-height:1;text-decoration:none;white-space:nowrap;cursor:pointer}
 .page-header.detail-header .mc-back-to-list::before{content:"\2039";font-size:16px;margin-right:6px}
-.page-header.detail-header .mc-back-to-list:hover{background:#f1f5f9;color:#0f172a}
+.page-header.detail-header .mc-back-to-list:hover{background:$mc-bg;color:$mc-ink}
 @media (max-width:767px){.page-header.detail-header .detail-title{flex:1 1 100% !important}}
 
 /* Octavia LBaaS detail (LoadBalancer/Listener/Pool/Member/Monitor/L7Policy/
    L7Rule): card the Overview tab's .col-md-6.detail section. Scoped to
    mc-lbaas-page; only detail pages have .col-md-6.detail (list is a table). */
 body.mc-lbaas-page .col-md-6.detail{background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(15,23,42,.06),0 4px 12px rgba(15,23,42,.06);padding:16px 20px;margin:0 0 16px;float:none;width:100%;box-sizing:border-box}
-body.mc-lbaas-page .col-md-6.detail h4{margin:0 0 14px;padding-bottom:12px;border-bottom:1px solid #e2e8f0;font-size:16px;font-weight:700;color:#0f172a;line-height:1.25}
+body.mc-lbaas-page .col-md-6.detail h4{margin:0 0 14px;padding-bottom:12px;border-bottom:1px solid #e2e8f0;font-size:16px;font-weight:700;color:$mc-ink;line-height:1.25}
 
 // Transfer-table allocate/deallocate: the fa-arrow class sits on the <button>
 // itself (empty content), so the masked ::before collapses to 0. Centre it and
@@ -3221,7 +3243,7 @@ body.mc-lbaas-page .col-md-6.detail h4{margin:0 0 14px;padding-bottom:12px;borde
 .themable-checkbox input[type=checkbox] + label::before {
   content: "" !important; font-family: inherit !important;
   display: inline-block; width: 16px !important; height: 16px !important;
-  box-sizing: border-box; border: 1.5px solid #cbd5e1; border-radius: 4px;
+  box-sizing: border-box; border: 1.5px solid $mc-border-strong; border-radius: 4px;
   background: #fff; vertical-align: middle;
   -webkit-mask: none !important; mask: none !important;
 }
@@ -3578,7 +3600,7 @@ a.btn-launch,
 .modal select.form-control:not([multiple]),
 .ng-wizard select.form-control:not([multiple]),
 .workflow.static_page select.form-control:not([multiple]) {
-  border: 1px solid #cbd5e1 !important;
+  border: 1px solid $mc-border-strong !important;
 }
 
 .modal select.form-control:not([multiple]):focus,
@@ -3604,7 +3626,7 @@ a.btn-launch,
   position: absolute;
   z-index: 2;
   inset: 0;
-  border: 1px solid #cbd5e1;
+  border: 1px solid $mc-border-strong;
   border-radius: 12px;
   pointer-events: none;
 }
@@ -3766,7 +3788,7 @@ a.btn-launch,
   min-height: 20px !important;
   margin-left: -1px;
   padding: 0 !important;
-  border-color: #cbd5e1;
+  border-color: $mc-border-strong;
   border-radius: 0 !important;
   line-height: 1 !important;
 }
@@ -3810,7 +3832,7 @@ a.btn-launch,
   min-height: 40px;
   margin: 0 10px 0 0;
   padding: 0 18px;
-  border: 1px solid #cbd5e1;
+  border: 1px solid $mc-border-strong;
   border-radius: $mc-md-pill;
   background: #fff;
   color: $text-color;
@@ -3826,7 +3848,7 @@ a.btn-launch,
 
 .modal .has-success .form-control,
 .ng-wizard .has-success .form-control {
-  border-color: #cbd5e1;
+  border-color: $mc-border-strong;
   box-shadow: none;
 }
 
@@ -3868,7 +3890,7 @@ a.btn-launch,
   width: 40px !important;
   height: 40px !important;
   margin: 0 !important;
-  color: #64748b;
+  color: $mc-muted;
   font-size: 18px !important;
   line-height: 40px !important;
   pointer-events: none;
@@ -4603,5 +4625,15 @@ body.mc-project-instances-page #instances > tbody > tr > td:last-child {
   .workflow.wizard .table > tbody > tr > td {
     padding-right: 12px;
     padding-left: 12px;
+  }
+}
+
+// Accessibility / smoothness: honour the OS "reduce motion" setting. The
+// loading spinner keeps rotating (it conveys state); only the decorative
+// looping skeleton shimmer stops.
+@media (prefers-reduced-motion: reduce) {
+  body.mc-ngdetail .page-header > .row > .details-item-actions:not(:has(.btn))::after,
+  #content_body .hz-magic-search-context td.actions_column:not(:has(.btn))::after {
+    animation: none;
   }
 }
