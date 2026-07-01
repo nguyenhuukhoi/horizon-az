@@ -2107,7 +2107,7 @@ body.mc-spinner-modal-open .modal-backdrop {
 .modal .modal-footer .btn {
   height: 36px;
   min-height: 36px;
-  padding: 0 24px;
+  padding: 0 16px;
   border-radius: 9999px;  // MD3 button shape = corner-full (pill)
   font-size: 14px;        // Label Large
   font-weight: 500;       // Label Large weight (MD3 spec)
@@ -2127,7 +2127,7 @@ body.mc-spinner-modal-open .modal-backdrop {
 .ng-wizard .modal-footer .btn.pull-left {
   height: 36px !important;
   min-height: 36px !important;
-  padding: 0 24px !important;
+  padding: 0 16px !important;
   gap: 8px;
   background: #fff !important;
   border: 1px solid #cbd5e1 !important;
@@ -2168,7 +2168,7 @@ body.mc-spinner-modal-open .modal-backdrop {
 
 // Angular wizard: Finish → MD3 filled button (keeps existing $brand-primary)
 .ng-wizard .modal-footer .btn.finish {
-  padding: 0 24px;
+  padding: 0 16px;
 }
 
 .ng-wizard {
