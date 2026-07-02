@@ -738,15 +738,38 @@ button.mc-create-btn {
   flex-shrink: 0; // never let the table column shrink during Angular cold-load
 }
 
+// Magic-search pages (Images, Key Pairs, Server Groups, Load Balancers): the
+// search bar floats flat above the white table card, with a gap between them.
+// The context itself is just a transparent container.
 #content_body hz-resource-table .hz-magic-search-context {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  margin-bottom: 0;
+  overflow: visible;
+}
+
+// Search bar floats flat above the table (native-Horizon look): transparent,
+// no panel/border, just a gap separating it from the white table card below.
+#content_body hz-resource-table .hz-magic-search-context > .row {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  margin: 0 0 $mc-section-gap 0;
+  padding: 0;
+}
+
+// Table = its own white card. border-collapse: separate lets the rounded
+// corners render; overflow stays visible so row-action dropdowns aren't clipped.
+#content_body hz-resource-table .hz-magic-search-context > table {
   background: $mc-surface;
   border: 1px solid $mc-border;
   border-radius: 12px;
   box-shadow: $mc-shadow;
-  margin-bottom: $mc-section-gap;
-  overflow: visible;
+  border-collapse: separate;
+  border-spacing: 0;
 }
-
 
 #content_body .hz-magic-search-context > .row {
   margin-left: 0;
@@ -873,21 +896,33 @@ body.mc-lbaas-page {
     display: none;
   }
 
+  // Split layout (same as Images/Key Pairs/Server Groups): transparent context,
+  // flat floating search bar detached from the white table card.
   #content_body hz-resource-table .hz-magic-search-context {
-    background: $mc-surface;
-    border: 1px solid $mc-border;
-    border-radius: 12px;
-    box-shadow: $mc-shadow;
-    margin-bottom: $mc-section-gap;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    margin-bottom: 0;
     overflow: visible;
   }
 
   #content_body hz-resource-table .hz-magic-search-context > .row {
     display: block;
-    margin-left: 0;
-    margin-right: 0;
-    padding: 16px 18px 14px;
-    border-bottom: 1px solid $mc-border;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    margin: 0 0 $mc-section-gap 0;
+    padding: 0;
+  }
+
+  #content_body hz-resource-table .hz-magic-search-context > table {
+    background: $mc-surface;
+    border: 1px solid $mc-border;
+    border-radius: 12px;
+    box-shadow: $mc-shadow;
+    border-collapse: separate;
+    border-spacing: 0;
   }
 
   #content_body hz-resource-table .hz-dynamic-table-preamble {
