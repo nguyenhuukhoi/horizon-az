@@ -4229,6 +4229,54 @@ a.btn-launch,
   border-color: transparent !important;
   color: #64748b;
   outline: 0 !important;
+  box-shadow: 0 0 0 3px rgba($brand-primary, .14) !important;
+}
+
+// One focus/pressed treatment across native buttons, Bootstrap actions,
+// dropdown toggles and wizard steps. This replaces the browser's black focus
+// outline with the same primary-colour ring used by text fields.
+.btn:not([disabled]):not(.disabled):focus,
+.btn:not([disabled]):not(.disabled):active,
+button:not([disabled]):not(.disabled):focus,
+button:not([disabled]):not(.disabled):active,
+a[role="button"]:not(.disabled):focus,
+a[role="button"]:not(.disabled):active,
+.dropdown-toggle:focus,
+.dropdown-toggle:active,
+.mc-topbar-pills a:focus,
+.mc-topbar-pills a:active,
+.page-header .mc-back-to-list:focus,
+.page-header .mc-back-to-list:active,
+.nav-tabs > li > a:focus,
+.nav-tabs > li > a:active,
+.nav-pills > li > a:focus,
+.nav-pills > li > a:active,
+#sidebar a.openstack-panel:focus,
+#sidebar a.openstack-panel:active,
+.ng-wizard .nav-pills > li > a:focus,
+.ng-wizard .nav-pills > li > a:active {
+  outline: 0 !important;
+  box-shadow: 0 0 0 3px rgba($brand-primary, .14) !important;
+}
+
+// ThemableSelectWidget uses a button inside an outlined wrapper. Put the focus
+// ring on the wrapper only so Primary Project, Role and table filters never
+// show a nested/double outline while pressed or open.
+.modal .form-group .themable-select.form-control:focus-within,
+.modal .form-group .themable-select.form-control.open,
+.ng-wizard .form-group .themable-select.form-control:focus-within,
+.ng-wizard .form-group .themable-select.form-control.open,
+#content_body .themable-select.form-control:focus-within,
+#content_body .themable-select.form-control.open {
+  border-color: $brand-primary !important;
+  outline: 0 !important;
+  box-shadow: 0 0 0 3px rgba($brand-primary, .14) !important;
+}
+
+.themable-select.form-control > .btn:focus,
+.themable-select.form-control > .btn:active,
+.themable-select.form-control.open > .btn {
+  outline: 0 !important;
   box-shadow: none !important;
 }
 
