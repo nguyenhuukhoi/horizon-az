@@ -3689,6 +3689,18 @@ a.btn-launch,
   border-radius: 12px !important;
 }
 
+// A themable-select inside an .input-group (e.g. Create User's Primary Project,
+// paired with the "+" add-project button) picks up Bootstrap's
+// `.input-group .form-control { z-index: 2 }`, which turns it into a stacking
+// context and traps its open .dropdown-menu (z-index 1000) below the next
+// field's outlined ring (also z-index 2, but later in the DOM) — the options
+// then bleed under the following control. Lift the whole select above its
+// sibling fields while it is open so the menu paints on top.
+.modal .form-group .input-group .themable-select.form-control.open,
+.ng-wizard .form-group .input-group .themable-select.form-control.open {
+  z-index: 1000;
+}
+
 // MD3 pill geometry for Django modal workflows. Color and active-state tokens
 // remain owned by the existing MyCloud/Bootstrap rules.
 .modal .modal-body > .nav-pills {
