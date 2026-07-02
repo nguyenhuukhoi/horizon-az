@@ -1371,10 +1371,12 @@ window.addEventListener('beforeunload', function () {
     var ins = document.querySelectorAll('input.btn-primary[type="submit"], input.btn.button-final[type="submit"]');
     for (var j = 0; j < ins.length; j++) {
       var inp = ins[j];
-      if (inp.getAttribute('data-mc-iconed')) continue;
+      if (inp.getAttribute('data-mc-iconed') === '1') continue;
       var scope2 = inp.closest ? inp.closest('.modal-content, .modal-dialog, .modal') : null;
       var key2 = btnKey(scope2, (inp.value || '').replace(/\s+/g, ' ').trim());
-      if (!key2) { inp.setAttribute('data-mc-iconed', '0'); continue; }
+      // The footer can be observed before the modal title has finished parsing.
+      // Leave unresolved inputs untouched so the next mutation frame can retry.
+      if (!key2) continue;
       var b = document.createElement('button');
       b.type = 'submit';
       b.className = inp.className;
@@ -1435,8 +1437,13 @@ window.addEventListener('beforeunload', function () {
       run();
     });
   }
-  if (document.readyState !== 'loading') init();
-  else document.addEventListener('DOMContentLoaded', init);
+  // Start while the document is still parsing. The observer then decorates
+  // server-rendered toolbar/static-workflow controls before their first paint.
+  // Keep one final pass for browsers that do not support MutationObserver.
+  init();
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', run, { once: true });
+  }
 })();
 </script>
 {% endverbatim %}
