@@ -602,8 +602,8 @@ table.datatable > caption,
   .table_search .form-group { margin: 0; }
   .table_search .form-control {
     height: 40px;
-    padding-left: 16px;
-    padding-right: 16px;
+    padding-left: 14px;
+    padding-right: 14px;
     border-radius: 8px;
     border: 1px solid $mc-border;
     min-width: 200px;
@@ -877,7 +877,7 @@ button.mc-create-btn {
   // direct .input-group child), so Bootstrap's group-radius rule never reaches
   // it. Apply the left-rounded corner explicitly.
   .search-input { height: 40px; line-height: 40px; width: 100%; min-width: 0;
-                  padding-left: 16px; border-radius: 8px 0 0 8px !important; }
+                  padding-left: 14px; border-radius: 8px 0 0 8px !important; }
 }
 
 // Octavia Load Balancers are shipped as an Angular dashboard plugin. Keep the
@@ -1691,7 +1691,7 @@ form.actions_column .btn {
     color: #64748b;
     font-size: 14px;
     font-weight: 600;
-    padding: 10px 16px;
+    padding: 10px 14px;
     margin: 0;
     outline: 0 !important;
     box-shadow: none !important;
@@ -2791,7 +2791,7 @@ body.mc-spinner-modal-open .modal-backdrop {
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  padding: 9px 16px;
+  padding: 9px 14px;
   border: 0;
   border-radius: 8px;
   font-size: 14px;
@@ -3659,8 +3659,8 @@ a.btn-launch,
 .ng-wizard select,
 .workflow.static_page select {
   min-height: 40px;
-  padding-left: 16px;
-  padding-right: 16px;
+  padding-left: 14px;
+  padding-right: 14px;
   border-radius: 12px;
 }
 
