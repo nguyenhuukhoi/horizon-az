@@ -1,6 +1,15 @@
 {% load branding horizon i18n %}
 
 <nav id="sidebar">
+  {% comment %}
+    Preload the two Inter subsets every page actually uses (latin + vietnamese)
+    so the font downloads in parallel with CSS instead of after first layout —
+    less FOUT. href must byte-match the FIRST url() in the @font-face src below,
+    and crossorigin is required (font fetches are CORS-mode) or the browser
+    fetches the file twice.
+  {% endcomment %}
+  <link rel="preload" href="{{ WEBROOT }}static/themes/mycloud/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="{{ WEBROOT }}static/themes/mycloud/fonts/inter-vietnamese.woff2" as="font" type="font/woff2" crossorigin>
   <style>
     /* Self-hosted Inter + JetBrains Mono (variable woff2, bundled in the theme)
        so the modern font works fully offline (Kolla / air-gapped). Declared in
@@ -90,7 +99,31 @@ window._mcUtil = window._mcUtil || {
     'info':'<circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 7.5h.01"/>',
     'dot':'<circle cx="12" cy="12" r="3.4"/>'
   },
-  _obs: []
+  _obs: [],
+  // Single shared MutationObserver: every decorator IIFE below registers its
+  // callback here instead of creating its own observer. One rAF-batched
+  // dispatch per mutation burst replaces 8 independent observer callbacks,
+  // so AJAX/Angular-heavy pages re-decorate in one pass per frame.
+  _mcbs: [],
+  onMutate: function (fn) {
+    var u = window._mcUtil;
+    u._mcbs.push(fn);
+    if (u._mo || !window.MutationObserver) return;
+    var raf = window.requestAnimationFrame || function (cb) { return setTimeout(cb, 16); };
+    var scheduled = false;
+    u._mo = new MutationObserver(function () {
+      if (scheduled) return;
+      scheduled = true;
+      raf(function () {
+        scheduled = false;
+        for (var i = 0; i < u._mcbs.length; i++) {
+          try { u._mcbs[i](); } catch (e) {}
+        }
+      });
+    });
+    u._mo.observe(document.body, { childList: true, subtree: true, characterData: true });
+    u._obs.push(u._mo);
+  }
 };
 window.addEventListener('beforeunload', function () {
   (window._mcUtil._obs || []).forEach(function (o) { try { o.disconnect(); } catch (e) {} });
@@ -383,14 +416,12 @@ window.addEventListener('beforeunload', function () {
   }
   function init() {
     run();
-    if (!window.MutationObserver) return;
+    if (!window._mcUtil) return;
     var p = false;
-    var obs = new MutationObserver(function () {
+    window._mcUtil.onMutate(function () {
       if (p) return; p = true;
       setTimeout(function () { p = false; run(); }, 150);
     });
-    obs.observe(document.getElementById('content_body') || document.body, { childList: true, subtree: true });
-    if (window._mcUtil) window._mcUtil._obs.push(obs);
   }
   if (document.readyState !== 'loading') init();
   else document.addEventListener('DOMContentLoaded', init);
@@ -479,16 +510,13 @@ window.addEventListener('beforeunload', function () {
   }
   function init() {
     run();
-    if (!window.MutationObserver) return;
+    if (!window._mcUtil) return;
     var pending = false;
-    var obs = new MutationObserver(function () {
+    window._mcUtil.onMutate(function () {
       if (pending) return;
       pending = true;
       setTimeout(function () { pending = false; run(); }, 150);
     });
-    var host = document.getElementById('content_body') || document.body;
-    obs.observe(host, { childList: true, subtree: true });
-    if (window._mcUtil) window._mcUtil._obs.push(obs);
   }
   if (document.readyState !== 'loading') init();
   else document.addEventListener('DOMContentLoaded', init);
@@ -591,19 +619,8 @@ window.addEventListener('beforeunload', function () {
   }
   function init() {
     run();
-    if (!window.MutationObserver) return;
-    var pending = false;
-    var obs = new MutationObserver(function () {
-      if (pending) return;
-      pending = true;
-      (window.requestAnimationFrame || function (cb) { return setTimeout(cb, 16); })(function () {
-        pending = false;
-        run();
-      });
-    });
-    var host = document.getElementById('content_body') || document.body;
-    obs.observe(host, { childList: true, subtree: true });
-    if (window._mcUtil) window._mcUtil._obs.push(obs);
+    // The shared dispatcher is already rAF-batched, so run directly.
+    if (window._mcUtil) window._mcUtil.onMutate(run);
   }
   if (document.readyState !== 'loading') init();
   else document.addEventListener('DOMContentLoaded', init);
@@ -676,11 +693,7 @@ window.addEventListener('beforeunload', function () {
         schedule);
     }
 
-    if (!window.MutationObserver) return;
-    var obs = new MutationObserver(schedule);
-    var host = document.getElementById('content_body') || document.body;
-    obs.observe(host, { childList: true, subtree: true, characterData: true });
-    if (window._mcUtil) window._mcUtil._obs.push(obs);
+    window._mcUtil.onMutate(schedule);
   }
   if (document.readyState !== 'loading') init();
   else document.addEventListener('DOMContentLoaded', init);
@@ -717,16 +730,12 @@ window.addEventListener('beforeunload', function () {
   }
   function init() {
     run();
-    if (!window.MutationObserver) return;
     var pending = false;
-    var obs = new MutationObserver(function () {
+    window._mcUtil.onMutate(function () {
       if (pending) return;
       pending = true;
       setTimeout(function () { pending = false; run(); }, 200);
     });
-    var host = document.getElementById('content_body') || document.body;
-    obs.observe(host, { childList: true, subtree: true, characterData: true });
-    if (window._mcUtil) window._mcUtil._obs.push(obs);
   }
   if (document.readyState !== 'loading') init();
   else document.addEventListener('DOMContentLoaded', init);
@@ -769,16 +778,13 @@ window.addEventListener('beforeunload', function () {
   }
   function init() {
     fix();
-    if (!window.MutationObserver) return;
+    if (!window._mcUtil) return;
     var pending = false;
-    var obs = new MutationObserver(function () {
+    window._mcUtil.onMutate(function () {
       if (pending) return;
       pending = true;
       setTimeout(function () { pending = false; fix(); }, 150);
     });
-    var host = document.getElementById('content_body') || document.body;
-    obs.observe(host, { childList: true, subtree: true });
-    if (window._mcUtil) window._mcUtil._obs.push(obs);
   }
   if (document.readyState !== 'loading') init();
   else document.addEventListener('DOMContentLoaded', init);
@@ -1082,16 +1088,12 @@ window.addEventListener('beforeunload', function () {
   }
   function init() {
     run();
-    if (!window.MutationObserver) return;
     var pending = false;
-    var obs = new MutationObserver(function () {
+    window._mcUtil.onMutate(function () {
       if (pending) return;
       pending = true;
       setTimeout(function () { pending = false; run(); }, 150);
     });
-    var host = document.querySelector('#content_body .mc-hv-tabs-shell');
-    if (host) obs.observe(host, { childList: true, subtree: true });
-    if (window._mcUtil) window._mcUtil._obs.push(obs);
   }
   if (document.readyState !== 'loading') init();
   else document.addEventListener('DOMContentLoaded', init);
@@ -1215,15 +1217,13 @@ window.addEventListener('beforeunload', function () {
 
   function init() {
     run();
-    if (!window.MutationObserver) return;
+    if (!window._mcUtil) return;
     var pending = false;
-    var obs = new MutationObserver(function () {
+    window._mcUtil.onMutate(function () {
       if (pending) return;
       pending = true;
       setTimeout(function () { pending = false; run(); }, 50);
     });
-    obs.observe(document.getElementById('modal_wrapper') || document.body, { childList: true, subtree: true });
-    if (window._mcUtil) window._mcUtil._obs.push(obs);
   }
 
   if (document.readyState !== 'loading') init();
@@ -1428,21 +1428,15 @@ window.addEventListener('beforeunload', function () {
   function init() {
     bindTransferActions();
     run();
-    if (!window.MutationObserver) return;
+    // Shared body-wide dispatcher covers both #content_body and #modal_wrapper,
+    // so modals/wizards (rendered outside #content_body) are decorated too.
     var pending = false;
-    var obs = new MutationObserver(function () {
+    window._mcUtil.onMutate(function () {
       syncSpinnerScrim();
       if (pending) return;
       pending = true;
       setTimeout(function () { pending = false; run(); }, 200);
     });
-    var host = document.getElementById('content_body');
-    if (host) obs.observe(host, { childList: true, subtree: true });
-    if (window._mcUtil) window._mcUtil._obs.push(obs);
-    // Also watch modal wrapper for modals/wizards (rendered outside #content_body)
-    // so their finish button gets the resource icon too.
-    obs.observe(document.getElementById('modal_wrapper') || document.body, { childList: true, subtree: true });
-    if (window._mcUtil) window._mcUtil._obs.push(obs);
   }
   if (document.readyState !== 'loading') init();
   else document.addEventListener('DOMContentLoaded', init);
