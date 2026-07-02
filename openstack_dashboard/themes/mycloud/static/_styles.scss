@@ -3193,6 +3193,27 @@ body.mc-lbaas-page .col-md-6.detail h4{margin:0 0 14px;padding-bottom:12px;borde
   box-sizing: border-box;
 }
 
+// Core scrolls the whole available-list COLUMN (.<slug>_filterable {
+// overflow-y: auto; height: 500px }). With a space-taking (non-overlay)
+// scrollbar the column's content box shrinks, so the width:100% list card ends
+// up ~15px narrower than the full-width header/filter card above it and the
+// "All Users" rows look inset from the Filter bar. Move the scroll onto the
+// list card itself so it keeps the full column width and lines up with the
+// header; the scrollbar then sits inside the card. Scoped to the available side
+// (matched by its fixed `ul.available_members`), which has no role dropdown to
+// clip — the members side keeps the column scroll so its role menu can escape.
+.modal .membership .filterable:has(ul.available_members),
+.ng-wizard .membership .filterable:has(ul.available_members) {
+  overflow: visible !important;
+  height: auto !important;
+}
+
+.modal .membership .filterable > .fake_table:has(ul.available_members),
+.ng-wizard .membership .filterable > .fake_table:has(ul.available_members) {
+  max-height: 500px;
+  overflow-y: auto;
+}
+
 .modal .membership .members > ul.btn-group.last_stripe,
 .modal .membership .available_members > ul.btn-group.last_stripe,
 .ng-wizard .membership .members > ul.btn-group.last_stripe,
