@@ -3686,7 +3686,10 @@ a.btn-launch,
 .ng-wizard .form-group .themable-select.form-control > .btn {
   position: relative;
   z-index: 1;
+  border: 0 !important;
   border-radius: 12px !important;
+  outline: 0 !important;
+  box-shadow: none !important;
 }
 
 // Keep the select toggle in step with the outlined text fields in every state.
@@ -3704,7 +3707,9 @@ a.btn-launch,
 .ng-wizard .form-group .themable-select.form-control > .btn.active,
 .ng-wizard .form-group .themable-select.form-control.open > .btn {
   background-color: #f1f5f9 !important;
+  border-color: transparent !important;
   color: $text-color !important;
+  outline: 0 !important;
   box-shadow: none !important;
 }
 
