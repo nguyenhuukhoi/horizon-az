@@ -3689,6 +3689,25 @@ a.btn-launch,
   border-radius: 12px !important;
 }
 
+// Keep the select toggle in step with the outlined text fields in every state.
+// Bootstrap's :active/.active paints it a flat grey (#d4d4d4) that clashes with
+// the field palette; use the same subtle slate as hover across hover/focus/
+// active/open so the control stays harmonious while engaged.
+.modal .form-group .themable-select.form-control > .btn:hover,
+.modal .form-group .themable-select.form-control > .btn:focus,
+.modal .form-group .themable-select.form-control > .btn:active,
+.modal .form-group .themable-select.form-control > .btn.active,
+.modal .form-group .themable-select.form-control.open > .btn,
+.ng-wizard .form-group .themable-select.form-control > .btn:hover,
+.ng-wizard .form-group .themable-select.form-control > .btn:focus,
+.ng-wizard .form-group .themable-select.form-control > .btn:active,
+.ng-wizard .form-group .themable-select.form-control > .btn.active,
+.ng-wizard .form-group .themable-select.form-control.open > .btn {
+  background-color: #f1f5f9 !important;
+  color: $text-color !important;
+  box-shadow: none !important;
+}
+
 // A themable-select inside an .input-group (e.g. Create User's Primary Project,
 // paired with the "+" add-project button) picks up Bootstrap's
 // `.input-group .form-control { z-index: 2 }`, which turns it into a stacking
@@ -3750,10 +3769,10 @@ a.btn-launch,
   width: 100%;
 }
 
-// Primary Project sits near the bottom of the Create User modal, so open its
-// option list upward (above the field) instead of dropping it over the Role
-// field below.
-#create_user_form .form-group:has(#id_project) .themable-select .dropdown-menu {
+// Primary Project and Role sit near the bottom of the Create User modal, so
+// open their option lists upward (above the field) instead of dropping them
+// over the field(s) below.
+#create_user_form .themable-select .dropdown-menu {
   top: auto;
   bottom: 100%;
   margin: 0 0 4px;
