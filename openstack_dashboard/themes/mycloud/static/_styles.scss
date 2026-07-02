@@ -4128,7 +4128,7 @@ a.btn-launch,
   --mc-type-caption-line: 16px;
   --mc-type-metric-size: 28px;
   --mc-type-metric-line: 36px;
-  --mc-table-edge-space: 24px;
+  --mc-table-edge-space: 10px;
 }
 
 body {
@@ -4203,16 +4203,19 @@ body {
 }
 
 #content_body .table > thead > tr > th {
-  padding: 10px 12px;
+  padding: 10px;
   font-size: var(--mc-type-label-size);
   line-height: var(--mc-type-label-line);
   letter-spacing: 0;
   white-space: nowrap;
 }
 
+// 10px horizontal cell padding (was 12px) keeps column-heavy tables (Instances,
+// Volumes) within the card so the rounded corners + shadow frame them uniformly
+// instead of the table spilling past the right edge.
 #content_body .table > tbody > tr > td,
 #content_body .table > tbody > tr > th {
-  padding: 12px;
+  padding: 12px 10px;
   font-size: var(--mc-type-body-size);
   line-height: var(--mc-type-body-line);
 }
