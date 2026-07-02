@@ -4197,7 +4197,11 @@ a.btn-launch,
   line-height: 40px !important;
 }
 
-.ng-wizard .nav-pills > li:not(.active) > a:hover,
+.ng-wizard .nav-pills > li:not(.active) > a:hover {
+  background: rgba($brand-primary, .08) !important;
+  color: $brand-primary;
+}
+
 .ng-wizard .nav-pills > li:not(.active) > a:focus,
 .ng-wizard .nav-pills > li:not(.active) > a:active {
   background: transparent !important;
