@@ -4223,38 +4223,50 @@ a.btn-launch,
   color: $brand-primary;
 }
 
-.ng-wizard .nav-pills > li:not(.active) > a:focus,
-.ng-wizard .nav-pills > li:not(.active) > a:active {
+.ng-wizard .nav-pills > li:not(.active) > a:focus:not(:focus-visible),
+.ng-wizard .nav-pills > li:not(.active) > a:active:not(:focus-visible) {
   background: transparent !important;
   border-color: transparent !important;
   color: #64748b;
   outline: 0 !important;
-  box-shadow: 0 0 0 3px rgba($brand-primary, .14) !important;
+  box-shadow: none !important;
 }
 
-// One focus/pressed treatment across native buttons, Bootstrap actions,
-// dropdown toggles and wizard steps. This replaces the browser's black focus
-// outline with the same primary-colour ring used by text fields.
-.btn:not([disabled]):not(.disabled):focus,
+// Pointer press/focus must not expose the browser's black outline or add a
+// focus ring. Keyboard navigation retains the primary focus-visible ring.
+.btn:not([disabled]):not(.disabled):focus:not(:focus-visible),
 .btn:not([disabled]):not(.disabled):active,
-button:not([disabled]):not(.disabled):focus,
+button:not([disabled]):not(.disabled):focus:not(:focus-visible),
 button:not([disabled]):not(.disabled):active,
-a[role="button"]:not(.disabled):focus,
+a[role="button"]:not(.disabled):focus:not(:focus-visible),
 a[role="button"]:not(.disabled):active,
-.dropdown-toggle:focus,
+.dropdown-toggle:focus:not(:focus-visible),
 .dropdown-toggle:active,
-.mc-topbar-pills a:focus,
+.mc-topbar-pills a:focus:not(:focus-visible),
 .mc-topbar-pills a:active,
-.page-header .mc-back-to-list:focus,
+.page-header .mc-back-to-list:focus:not(:focus-visible),
 .page-header .mc-back-to-list:active,
-.nav-tabs > li > a:focus,
+.nav-tabs > li > a:focus:not(:focus-visible),
 .nav-tabs > li > a:active,
-.nav-pills > li > a:focus,
+.nav-pills > li > a:focus:not(:focus-visible),
 .nav-pills > li > a:active,
-#sidebar a.openstack-panel:focus,
+#sidebar a.openstack-panel:focus:not(:focus-visible),
 #sidebar a.openstack-panel:active,
-.ng-wizard .nav-pills > li > a:focus,
+.ng-wizard .nav-pills > li > a:focus:not(:focus-visible),
 .ng-wizard .nav-pills > li > a:active {
+  outline: 0 !important;
+}
+
+.btn:not([disabled]):not(.disabled):focus-visible,
+button:not([disabled]):not(.disabled):focus-visible,
+a[role="button"]:not(.disabled):focus-visible,
+.dropdown-toggle:focus-visible,
+.mc-topbar-pills a:focus-visible,
+.page-header .mc-back-to-list:focus-visible,
+.nav-tabs > li > a:focus-visible,
+.nav-pills > li > a:focus-visible,
+#sidebar a.openstack-panel:focus-visible,
+.ng-wizard .nav-pills > li > a:focus-visible {
   outline: 0 !important;
   box-shadow: 0 0 0 3px rgba($brand-primary, .14) !important;
 }
@@ -4270,6 +4282,12 @@ a[role="button"]:not(.disabled):active,
 #content_body .themable-select.form-control.open {
   border-color: $brand-primary !important;
   outline: 0 !important;
+  box-shadow: none !important;
+}
+
+.modal .form-group .themable-select.form-control:has(> .btn:focus-visible),
+.ng-wizard .form-group .themable-select.form-control:has(> .btn:focus-visible),
+#content_body .themable-select.form-control:has(> .btn:focus-visible) {
   box-shadow: 0 0 0 3px rgba($brand-primary, .14) !important;
 }
 
