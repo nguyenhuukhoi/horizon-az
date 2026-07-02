@@ -4075,6 +4075,11 @@ a.btn-launch,
   flex: 0 0 auto;
   width: auto !important;
   max-width: none;
+  height: 40px;
+  min-height: 40px;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
   font-size: 14px;
   line-height: 20px;
 }
@@ -4130,6 +4135,15 @@ a.btn-launch,
   float: none;
   font-size: 14px;
   line-height: 20px;
+}
+
+.ng-wizard .metadata-tree .metadata-tree-item > .input-group > .input-group-addon {
+  height: 40px;
+  min-height: 40px;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
 }
 
 .ng-wizard .metadata-tree .metadata-tree-item > .input-group > .form-control {
