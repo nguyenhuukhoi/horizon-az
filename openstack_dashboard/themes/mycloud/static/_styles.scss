@@ -2226,6 +2226,16 @@ body.mc-spinner-modal-open .modal-backdrop {
 .ng-wizard {
   .wizard-navigation { background: #f8fafc; }
 
+  // The modal body scrolls as one unit; the step content is often taller than
+  // the step list, so pin the left nav column so the steps stay visible instead
+  // of scrolling away with the content.
+  .modal-body > .row > .col-sm-3 {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background: $mc-surface;
+  }
+
   // step list — MD3 Label Large: 14px / weight 500 / 20px line-height / 0.1px tracking
   .nav-pills > li > a {
     border-radius: 999px;
