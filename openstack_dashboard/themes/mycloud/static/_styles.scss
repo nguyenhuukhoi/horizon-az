@@ -2374,20 +2374,24 @@ body.mc-spinner-modal-open .modal-backdrop {
 .fa-eye::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M2.1 12s3.6-7 9.9-7 9.9 7 9.9 7-3.6 7-9.9 7-9.9-7-9.9-7Z'/><circle cx='12' cy='12' r='3'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M2.1 12s3.6-7 9.9-7 9.9 7 9.9 7-3.6 7-9.9 7-9.9-7-9.9-7Z'/><circle cx='12' cy='12' r='3'/></svg>") center/contain no-repeat; }
 .fa-eye-slash::before { -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M10.6 5.2A9.8 9.8 0 0 1 12 5c6.3 0 9.9 7 9.9 7a17 17 0 0 1-3.2 4'/><path d='M6.3 6.3A17 17 0 0 0 2.1 12s3.6 7 9.9 7a9.8 9.8 0 0 0 4.1-.9'/><path d='m3 3 18 18'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M10.6 5.2A9.8 9.8 0 0 1 12 5c6.3 0 9.9 7 9.9 7a17 17 0 0 1-3.2 4'/><path d='M6.3 6.3A17 17 0 0 0 2.1 12s3.6 7 9.9 7a9.8 9.8 0 0 0 4.1-.9'/><path d='m3 3 18 18'/></svg>") center/contain no-repeat; }
 
-// Horizon injects the password toggle as a feedback element. Keep a 40px
-// click target while centring the 18px SVG mask inside the MD3 text field.
-.modal .form-group.has-feedback > .form-control-feedback.password-icon,
-.ng-wizard .form-group.has-feedback > .form-control-feedback.password-icon {
+// Horizon adds has-feedback to the input's immediate wrapper, not always the
+// outer form-group. Anchor the toggle to that wrapper so both password eyes
+// sit at the exact vertical centre of their 40px MD3 fields.
+.modal .has-feedback > .form-control-feedback.password-icon,
+.ng-wizard .has-feedback > .form-control-feedback.password-icon {
   display: inline-flex !important;
   align-items: center;
   justify-content: center;
+  top: 0 !important;
+  right: 0 !important;
   width: 40px !important;
   height: 40px !important;
+  margin: 0 !important;
   line-height: 1 !important;
 }
 
-.modal .form-group.has-feedback > .form-control-feedback.password-icon::before,
-.ng-wizard .form-group.has-feedback > .form-control-feedback.password-icon::before {
+.modal .has-feedback > .form-control-feedback.password-icon::before,
+.ng-wizard .has-feedback > .form-control-feedback.password-icon::before {
   width: 18px !important;
   height: 18px !important;
   flex: 0 0 18px;
@@ -4071,6 +4075,8 @@ a.btn-launch,
   flex: 0 0 auto;
   width: auto !important;
   max-width: none;
+  font-size: 14px;
+  line-height: 20px;
 }
 
 .ng-wizard .metadata-tree .metadata-list-group > .list-group-item >
@@ -4122,6 +4128,8 @@ a.btn-launch,
 .ng-wizard .metadata-tree .metadata-tree-item > .input-group > .form-control {
   position: static;
   float: none;
+  font-size: 14px;
+  line-height: 20px;
 }
 
 .ng-wizard .metadata-tree .metadata-tree-item > .input-group > .form-control {
