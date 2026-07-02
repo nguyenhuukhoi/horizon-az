@@ -4080,6 +4080,7 @@ a.btn-launch,
   box-sizing: border-box;
   display: inline-flex;
   align-items: center;
+  padding-left: 14px !important;
   font-size: 14px;
   line-height: 20px;
 }
@@ -4143,7 +4144,9 @@ a.btn-launch,
   box-sizing: border-box;
   display: inline-flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: flex-start;
+  padding-left: 14px !important;
+  text-align: left;
 }
 
 .ng-wizard .metadata-tree .metadata-tree-item > .input-group > .form-control {
