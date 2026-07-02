@@ -1428,14 +1428,11 @@ window.addEventListener('beforeunload', function () {
   function init() {
     bindTransferActions();
     run();
-    // Shared body-wide dispatcher covers both #content_body and #modal_wrapper,
-    // so modals/wizards (rendered outside #content_body) are decorated too.
-    var pending = false;
+    // Shared body-wide dispatcher already batches mutation bursts into one
+    // animation frame. Decorate immediately in that frame so modal labels and
+    // their icons paint together instead of exposing the native button first.
     window._mcUtil.onMutate(function () {
-      syncSpinnerScrim();
-      if (pending) return;
-      pending = true;
-      setTimeout(function () { pending = false; run(); }, 200);
+      run();
     });
   }
   if (document.readyState !== 'loading') init();
