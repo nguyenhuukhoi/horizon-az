@@ -3750,6 +3750,15 @@ a.btn-launch,
   width: 100%;
 }
 
+// Primary Project sits near the bottom of the Create User modal, so open its
+// option list upward (above the field) instead of dropping it over the Role
+// field below.
+#create_user_form .form-group:has(#id_project) .themable-select .dropdown-menu {
+  top: auto;
+  bottom: 100%;
+  margin: 0 0 4px;
+}
+
 #create_user_form .form-group:has(#id_project) .input-group > .form-control {
   flex: 1 1 auto;
   width: 0 !important;
