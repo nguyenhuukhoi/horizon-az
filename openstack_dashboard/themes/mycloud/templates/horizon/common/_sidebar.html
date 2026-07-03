@@ -1114,7 +1114,8 @@ window.addEventListener('beforeunload', function () {
   function isSupportedModal(title) {
     return title === 'Create Key Pair' ||
            title === 'Import Public Key' ||
-           title === 'Create Server Group';
+           title === 'Create Server Group' ||
+           title === 'Create Role';
   }
 
   function isEmptySchemaForm(form) {
@@ -1182,8 +1183,20 @@ window.addEventListener('beforeunload', function () {
       '</div>';
   }
 
+  function roleFields() {
+    return '' +
+      '<div class="form-group hz-input mc-modal-field">' +
+        '<label class="control-label" for="mc-role-name">' +
+          '<span>Name</span> <span class="hz-icon-required"><svg class="mc-req-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M6 8l12 8M18 8 6 16"/></svg></span>' +
+        '</label>' +
+        '<input class="form-control" id="mc-role-name" name="name" type="text"' +
+               ' ng-model="ctrl.model.name" ng-required="true">' +
+      '</div>';
+  }
+
   function fieldsFor(title) {
     if (title === 'Create Server Group') return serverGroupFields();
+    if (title === 'Create Role') return roleFields();
     return keyPairFields(title);
   }
 
