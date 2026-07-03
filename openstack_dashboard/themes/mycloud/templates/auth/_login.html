@@ -100,7 +100,7 @@
           <div class="mc-err" style="background:#eff6ff;border-color:#bfdbfe;color:#1d4ed8"><p>{{ logout_reason }}</p></div>
         {% endif %}
 
-        <form class="mc-login-form" method="post" action="{% url 'login' %}" autocomplete="off">
+        <form class="mc-login-form" method="post" action="{% url 'login' %}">
           {% csrf_token %}
           {% if next %}<input type="hidden" name="{{ redirect_field_name }}" value="{{ next }}">{% endif %}
           {% for field in form.hidden_fields %}{{ field }}{% endfor %}
@@ -185,18 +185,10 @@
   if (u) { u.setAttribute('placeholder', u.getAttribute('placeholder') || 'Enter your user name'); u.focus(); }
   if (pw) { pw.setAttribute('placeholder', pw.getAttribute('placeholder') || 'Enter your password'); pw.classList.add('mc-pw'); }
 
-  // Ask password-manager extensions to skip these fields so they don't inject
-  // their own eye/key icon next to ours (the extension stays installed and
-  // keeps working on every other site — it just ignores this login field).
-  [u, pw].forEach(function(el){
-    if (!el) return;
-    el.setAttribute('data-lpignore', 'true');         // LastPass
-    el.setAttribute('data-1p-ignore', 'true');        // 1Password
-    el.setAttribute('data-bwignore', 'true');         // Bitwarden
-    el.setAttribute('data-protonpass-ignore', 'true');// Proton Pass
-    el.setAttribute('data-dashlane-ignore', 'true');  // Dashlane
-    el.setAttribute('data-form-type', 'other');
-  });
+  // Advertise the standard autocomplete tokens so password managers (browser-
+  // native and extensions) can detect, save and fill these fields.
+  if (u) { u.setAttribute('autocomplete', 'username'); }
+  if (pw) { pw.setAttribute('autocomplete', 'current-password'); }
 
   // show / hide password (our own clickable eye)
   var eye = document.getElementById('mc-eye');
