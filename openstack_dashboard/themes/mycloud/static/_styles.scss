@@ -4643,7 +4643,8 @@ body {
 // present the tab content as a single MyCloud card. The iframe height is
 // bounded to the viewport so Horizon's document-height script cannot turn the
 // detail page into an unnecessarily tall canvas.
-body.mc-project-instances-page #instance_details__console {
+#instance_details__console,
+.tab-pane:has(> #console_embed) {
   margin-top: 4px;
   padding: 20px;
   background: $mc-surface;
@@ -4653,7 +4654,8 @@ body.mc-project-instances-page #instance_details__console {
   box-sizing: border-box;
 }
 
-body.mc-project-instances-page #instance_details__console > h3 {
+#instance_details__console > h3,
+.tab-pane:has(> #console_embed) > h3 {
   margin: 0 0 12px;
   color: $text-color;
   font-size: 16px;
@@ -4661,11 +4663,12 @@ body.mc-project-instances-page #instance_details__console > h3 {
   line-height: 24px;
 }
 
-body.mc-project-instances-page #instance_details__console > .alert {
+#instance_details__console > .alert,
+.tab-pane:has(> #console_embed) > .alert {
   margin: 0 0 16px;
 }
 
-body.mc-project-instances-page #instance_details__console #console_embed {
+#console_embed {
   display: block;
   width: 100% !important;
   height: clamp(360px, 46vh, 640px) !important;
@@ -4677,7 +4680,8 @@ body.mc-project-instances-page #instance_details__console #console_embed {
   overflow: hidden;
 }
 
-body.mc-project-instances-page #instance_details__console > .well {
+#instance_details__console > .well,
+.tab-pane:has(> #console_embed) > .well {
   margin: 0;
   padding: 18px;
   background: #f8fafc;
@@ -4687,11 +4691,12 @@ body.mc-project-instances-page #instance_details__console > .well {
 }
 
 @media (max-width: 767px) {
-  body.mc-project-instances-page #instance_details__console {
+  #instance_details__console,
+  .tab-pane:has(> #console_embed) {
     padding: 12px;
   }
 
-  body.mc-project-instances-page #instance_details__console #console_embed {
+  #console_embed {
     height: clamp(320px, 56vh, 520px) !important;
     border-radius: 10px;
   }
