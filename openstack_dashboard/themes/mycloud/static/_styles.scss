@@ -3423,12 +3423,51 @@ body.mc-ngdetail .page-header .breadcrumb a {
 .btn-group > .btn:first-child:not(:last-child):not(.dropdown-toggle) {
   border-radius: $mc-md-pill 0 0 $mc-md-pill !important;
 }
+.btn-group > .btn:not(:first-child):not(:last-child):not(.dropdown-toggle) {
+  border-radius: 0 !important;
+}
 .btn-group > .btn:last-child:not(:first-child),
 .btn-group > .dropdown-toggle:not(:first-child) {
   border-radius: 0 $mc-md-pill $mc-md-pill 0 !important;
 }
 .btn-group > .btn:only-child {
   border-radius: $mc-md-pill !important;
+}
+
+// Image Visibility is a four-option single-select segmented button. Present it
+// as one MD3 control instead of four independent pills while retaining the
+// existing Angular radio state, labels, and theme colors.
+.modal .btn-group[name="visibility"],
+.ng-wizard .btn-group[name="visibility"] {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-items: stretch;
+  width: 100%;
+  max-width: 440px;
+  min-height: 40px;
+  border: 1px solid #cbd5e1;
+  border-radius: $mc-md-pill;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.modal .btn-group[name="visibility"] > .btn,
+.ng-wizard .btn-group[name="visibility"] > .btn {
+  width: 100%;
+  min-width: 0;
+  min-height: 40px !important;
+  margin: 0 !important;
+  padding: 0 14px !important;
+  border: 0 !important;
+  border-left: 1px solid #cbd5e1 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  white-space: nowrap;
+}
+
+.modal .btn-group[name="visibility"] > .btn:first-child,
+.ng-wizard .btn-group[name="visibility"] > .btn:first-child {
+  border-left: 0 !important;
 }
 
 // Django and Angular table toolboxes: shape only, no geometry changes.
