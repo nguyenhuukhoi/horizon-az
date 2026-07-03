@@ -81,7 +81,7 @@ body {
 
 // =====================================================================
 //  Topbar — project + region pill selectors (matching demo)
-//  Demo spec: border-radius 8px, bg=#f1f5f9, padding 7px 13px,
+//  Demo spec: border-radius 8px, bg=#f1f5f9, padding 7px 14px,
 //             font-weight 500, muted icon color
 // =====================================================================
 .mc-topbar-pills {
@@ -95,7 +95,7 @@ body {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    padding: 7px 13px !important;
+    padding: 7px 14px !important;
     margin: 0 !important;
     border: 1px solid $mc-border;
     border-radius: 8px;
@@ -610,7 +610,7 @@ table.datatable > caption,
     box-shadow: none;
   }
   .table_search.client .search-icon { display: none !important; }
-  .table_search.client .form-control { padding-right: 12px; }
+  .table_search.client .form-control { padding-right: 14px; }
 
   // every button in the row → consistent height/shape
   .btn,
@@ -1020,6 +1020,8 @@ body.mc-lbaas-page {
 .btn {
   border-radius: 8px;
   font-weight: 600;
+  padding-left: 14px;
+  padding-right: 14px;
   transition: background .12s ease, box-shadow .12s ease, border-color .12s ease;
   // Centre the icon with the label on EVERY button (not just table actions).
   // Flex drops the whitespace between an icon <span> and the label, so gap
@@ -1094,11 +1096,18 @@ form.actions_column .btn {
   border-radius: 8px;
   border-color: #cbd5e1;
   box-shadow: none;
+  padding-left: 14px;
+  padding-right: 14px;
 
   &:focus {
     border-color: $brand-primary;
     box-shadow: 0 0 0 3px rgba(37, 99, 235, .15);
   }
+}
+
+.input-group-addon {
+  padding-left: 14px;
+  padding-right: 14px;
 }
 
 // =====================================================================
@@ -1815,7 +1824,7 @@ form.actions_column .btn {
   background: #f8fafc;
   color: $text-color;
   font-size: 14px;
-  padding: 0 12px 0 36px;
+  padding: 0 14px 0 36px;
   outline: 0;
   box-shadow: none;
   box-sizing: border-box;
@@ -2737,7 +2746,7 @@ body.mc-spinner-modal-open .modal-backdrop {
   background: $body-bg !important;
   border: 1px solid $mc-border !important;
   border-radius: 8px !important;
-  padding: 6px 12px !important;
+  padding: 6px 14px !important;
   margin: 11px 4px !important;
   font-weight: 500;
   line-height: 1.4;
@@ -2856,14 +2865,14 @@ body.mc-spinner-modal-open .modal-backdrop {
 
   input[type="text"] {
     height: 32px;
-    padding: 4px 8px;
+    padding: 4px 14px;
     font-size: 13px;
     border: 1px solid $mc-border;
     border-radius: 7px;
     width: 100px;
   }
 
-  .btn { height: 32px; padding: 4px 12px; font-size: 13px; }
+  .btn { height: 32px; padding: 4px 14px; font-size: 13px; }
 }
 
 .mc-activity-dl {
@@ -3538,7 +3547,7 @@ body.mc-lbaas-page #content_body hz-resource-table .mc-lb-filter-input:focus,
 }
 .ng-wizard .modal-body .btn.btn-xs {
   min-height: 28px;
-  padding: 2px 10px;
+  padding: 2px 14px;
 }
 
 // Metadata tree + buttons (a.btn.btn-primary.btn-xs in list items): square icon button.
@@ -3943,7 +3952,7 @@ a.btn-launch,
   height: 40px;
   min-height: 40px;
   margin: 0 10px 0 0;
-  padding: 0 18px;
+  padding: 0 14px;
   border: 1px solid #cbd5e1;
   border-radius: $mc-md-pill;
   background: #fff;
@@ -4212,20 +4221,22 @@ a.btn-launch,
   margin: 0 !important;
 }
 
-// Transfer-table magic search nests its input inside search-main-area. Remove
-// the framework's extra inner gutter so the visible text inset is exactly the
-// shared 14px control padding, and give the leading icon the same gutter.
-.ng-wizard .transfer-table .hz-magic-search-bar .input-group-addon {
+// Magic search nests its input inside search-main-area. Remove the framework's
+// extra inner gutter so every page and wizard uses one exact 14px text inset.
+#content_body .hz-magic-search-bar .input-group-addon,
+.modal .hz-magic-search-bar .input-group-addon {
   padding-left: 14px !important;
   padding-right: 14px !important;
 }
 
-.ng-wizard .transfer-table .hz-magic-search-bar .search-main-area {
+#content_body .hz-magic-search-bar .search-main-area,
+.modal .hz-magic-search-bar .search-main-area {
   padding-left: 0 !important;
   padding-right: 0 !important;
 }
 
-.ng-wizard .transfer-table .hz-magic-search-bar .search-input {
+#content_body .hz-magic-search-bar .search-input,
+.modal .hz-magic-search-bar .search-input {
   padding-left: 14px !important;
   padding-right: 14px !important;
 }
