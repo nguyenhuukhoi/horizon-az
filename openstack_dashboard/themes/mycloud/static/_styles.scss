@@ -4644,7 +4644,8 @@ body {
 // bounded to the viewport so Horizon's document-height script cannot turn the
 // detail page into an unnecessarily tall canvas.
 #instance_details__console,
-.tab-pane:has(> #console_embed) {
+.tab-pane:has(> #console_embed),
+.tab-content:has(> #console_embed) {
   margin-top: 4px;
   padding: 20px;
   background: $mc-surface;
@@ -4655,7 +4656,8 @@ body {
 }
 
 #instance_details__console > h3,
-.tab-pane:has(> #console_embed) > h3 {
+.tab-pane:has(> #console_embed) > h3,
+.tab-content:has(> #console_embed) > h3 {
   margin: 0 0 12px;
   color: $text-color;
   font-size: 16px;
@@ -4664,7 +4666,8 @@ body {
 }
 
 #instance_details__console > .alert,
-.tab-pane:has(> #console_embed) > .alert {
+.tab-pane:has(> #console_embed) > .alert,
+.tab-content:has(> #console_embed) > .alert {
   margin: 0 0 16px;
 }
 
@@ -4681,7 +4684,8 @@ body {
 }
 
 #instance_details__console > .well,
-.tab-pane:has(> #console_embed) > .well {
+.tab-pane:has(> #console_embed) > .well,
+.tab-content:has(> #console_embed) > .well {
   margin: 0;
   padding: 18px;
   background: #f8fafc;
@@ -4692,7 +4696,8 @@ body {
 
 @media (max-width: 767px) {
   #instance_details__console,
-  .tab-pane:has(> #console_embed) {
+  .tab-pane:has(> #console_embed),
+  .tab-content:has(> #console_embed) {
     padding: 12px;
   }
 
