@@ -4591,6 +4591,54 @@ body {
   line-height: var(--mc-type-body-line);
 }
 
+// Instance Console Log — present the raw <pre> as a theme card (soft surface,
+// hairline border, 12px radius, soft shadow) instead of the default grey <pre>.
+// Content and its scroll behaviour are untouched; long lines scroll sideways.
+#content_body pre.logs {
+  margin: 12px 0 0;
+  padding: 16px 18px;
+  background: #f8fafc;
+  color: $text-color;
+  border: 1px solid $mc-border;
+  border-radius: 12px;
+  box-shadow: $mc-shadow;
+  font-size: 13px;
+  line-height: 1.55;
+  overflow-x: auto;
+}
+
+// "Log Length" control row — the field ships as a bare Bootstrap-2 `span1`
+// input (sharp, native border, mis-sized), so it clashes with the pill buttons
+// beside it. Bring it onto the theme's input language: 32px tall to sit level
+// with the row, 8px radius, hairline border and the brand focus ring.
+#content_body #tail_length label {
+  vertical-align: middle;
+  margin-right: 6px;
+  font-weight: 600;
+  color: $text-color;
+}
+
+#content_body #tail_length input[type="text"] {
+  height: 32px;
+  width: 90px;
+  margin: 0 8px;
+  padding: 0 12px;
+  vertical-align: middle;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: none;
+  font-size: 14px;
+  line-height: 30px;
+  color: $text-color;
+}
+
+#content_body #tail_length input[type="text"]:focus {
+  outline: 0;
+  border-color: $brand-primary;
+  box-shadow: 0 0 0 3px rgba($brand-primary, .14);
+}
+
 #content_body .table_count,
 #content_body [hz-table-footer] td > span:first-child,
 #content_body .help-block,
