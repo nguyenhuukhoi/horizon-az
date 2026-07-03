@@ -2326,15 +2326,30 @@ body.mc-spinner-modal-open .modal-backdrop {
   }
 }
 
+// Make .modal-content the containing block for the fixed help toggle above, so
+// it anchors to the modal (header) rather than the viewport. `contain: layout`
+// does this without a transform (no text blur) and only kicks in for modals
+// that actually have a help toggle. The sticky wizard step-nav lives inside the
+// scrolling .modal-body and is unaffected.
+.modal-content:has(.help-toggle) {
+  contain: layout;
+}
+
 // Wizard "?" help toggle — clean circular ghost button instead of the
-// heavy default, nudged in from the top-right corner.
-// Help "?" toggle: same round themed button in both the launch wizard and
-// plain form modals (Create Key Pair, etc. render help-panel in .modal-body,
-// not inside .ng-wizard).
+// heavy default. MD3 groups header icon buttons at the trailing edge, so pin it
+// into the modal header just left of the close (X) instead of floating in the
+// content's top-right corner. The button lives inside the scrollable
+// .modal-body, so `position: fixed` + a containing block on .modal-content (the
+// `contain: layout` rule below) lets it escape the body's overflow/scroll and
+// stay anchored to the header. Offsets are measured from the modal edges, so
+// they hold across modal sizes. Same button in the launch wizard and plain
+// form modals (Create Key Pair, etc. render help-panel in .modal-body).
 .ng-wizard .help-toggle,
 .modal .help-toggle {
-  top: 4px;
-  right: 6px;
+  position: fixed;
+  top: 9px;
+  right: 61px;
+  margin: 0;
   width: 30px;
   height: 30px;
   padding: 0;
