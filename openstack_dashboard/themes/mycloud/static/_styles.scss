@@ -4212,6 +4212,39 @@ a.btn-launch,
   margin: 0 !important;
 }
 
+// Transfer-table magic search nests its input inside search-main-area. Remove
+// the framework's extra inner gutter so the visible text inset is exactly the
+// shared 14px control padding, and give the leading icon the same gutter.
+.ng-wizard .transfer-table .hz-magic-search-bar .input-group-addon {
+  padding-left: 14px !important;
+  padding-right: 14px !important;
+}
+
+.ng-wizard .transfer-table .hz-magic-search-bar .search-main-area {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.ng-wizard .transfer-table .hz-magic-search-bar .search-input {
+  padding-left: 14px !important;
+  padding-right: 14px !important;
+}
+
+// Launch Instance Source uses native Angular inputs/selects and Bootstrap
+// radio labels. Lock both control families to the same 14px horizontal inset
+// without changing their dimensions, state, or workflow.
+.ng-wizard [ng-controller^="LaunchInstanceSourceController"] .form-control {
+  padding-left: 14px !important;
+  padding-right: 14px !important;
+  text-indent: 0 !important;
+}
+
+.ng-wizard [ng-controller^="LaunchInstanceSourceController"]
+  .btn-group > .btn {
+  padding-left: 14px !important;
+  padding-right: 14px !important;
+}
+
 .ng-wizard .transfer-table .btn.fa-arrow-up,
 .ng-wizard .transfer-table .btn.fa-arrow-down,
 .modal .mc-transfer-add,
