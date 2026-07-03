@@ -1082,10 +1082,15 @@ form.actions_column .btn {
   border-color: #cbd5e1;
   color: #334155;
 
+  // Pin the text colour on hover/focus too. Horizon gives some buttons BOTH
+  // .btn-default and .btn-primary (e.g. the console-log "Go" submit); without
+  // this, Bootstrap's `.btn-primary:hover { color:#fff }` leaks through and the
+  // label turns white on the light hover background — effectively invisible.
   &:hover,
   &:focus {
     background: #f1f5f9;
     border-color: #94a3b8;
+    color: #334155;
   }
 }
 
