@@ -4046,6 +4046,31 @@ a.btn-launch,
 // Metadata and scheduler-hint trees still use Bootstrap's 34px feedback box
 // inside the 40px MD3 fields. Give both the search glyph and row transfer
 // controls an explicit 40px container so they align without crowding inputs.
+.ng-wizard .metadata-tree .panel-heading > .row {
+  display: flex;
+  align-items: center;
+}
+
+.ng-wizard .metadata-tree .panel-heading > .row > [class*="col-"] {
+  display: flex;
+  align-items: center;
+  flex: 0 0 50%;
+  float: none;
+  width: 50%;
+  min-height: 40px;
+}
+
+.ng-wizard .metadata-tree .panel-heading .v-align > strong {
+  display: flex;
+  align-items: center;
+  min-height: 40px;
+  line-height: 20px;
+}
+
+.ng-wizard .metadata-tree .panel-heading .has-feedback {
+  width: 100%;
+}
+
 .ng-wizard .metadata-tree .has-feedback {
   position: relative;
 }
