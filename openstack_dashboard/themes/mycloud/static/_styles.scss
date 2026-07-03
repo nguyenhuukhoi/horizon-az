@@ -3439,27 +3439,29 @@ body.mc-ngdetail .page-header .breadcrumb a {
 // existing Angular radio state, labels, and theme colors.
 .modal .btn-group[name="visibility"],
 .ng-wizard .btn-group[name="visibility"] {
-  display: grid !important;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  display: flex !important;
   align-items: stretch;
   width: 100%;
   max-width: 440px;
-  min-height: 40px;
-  border: 1px solid #cbd5e1;
-  border-radius: $mc-md-pill;
-  overflow: hidden;
+  height: 36px;
+  min-height: 36px;
+  border: 0;
+  border-radius: 0;
+  overflow: visible;
   box-sizing: border-box;
 }
 
 .modal .btn-group[name="visibility"] > .btn,
 .ng-wizard .btn-group[name="visibility"] > .btn {
-  width: 100%;
-  min-width: 0;
-  min-height: 40px !important;
+  flex: 1 1 auto;
+  width: auto;
+  min-width: max-content;
+  height: 36px !important;
+  min-height: 36px !important;
   margin: 0 !important;
   padding: 0 14px !important;
-  border: 0 !important;
-  border-left: 1px solid #cbd5e1 !important;
+  border: 1px solid #cbd5e1 !important;
+  border-left: 0 !important;
   border-radius: 0 !important;
   box-shadow: none !important;
   white-space: nowrap;
@@ -3467,7 +3469,19 @@ body.mc-ngdetail .page-header .breadcrumb a {
 
 .modal .btn-group[name="visibility"] > .btn:first-child,
 .ng-wizard .btn-group[name="visibility"] > .btn:first-child {
-  border-left: 0 !important;
+  border-left: 1px solid #cbd5e1 !important;
+  border-radius: $mc-md-pill 0 0 $mc-md-pill !important;
+}
+
+.modal .btn-group[name="visibility"] > .btn:last-child,
+.ng-wizard .btn-group[name="visibility"] > .btn:last-child {
+  border-radius: 0 $mc-md-pill $mc-md-pill 0 !important;
+}
+
+.modal .btn-group[name="protected"] > .btn,
+.ng-wizard .btn-group[name="protected"] > .btn {
+  height: 36px !important;
+  min-height: 36px !important;
 }
 
 // Django and Angular table toolboxes: shape only, no geometry changes.
