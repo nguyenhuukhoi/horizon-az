@@ -3881,8 +3881,10 @@ a.btn-launch,
 
 // Primary Project and Role sit near the bottom of the Create User modal, so
 // open their option lists upward (above the field) instead of dropping them
-// over the field(s) below.
-#create_user_form .themable-select .dropdown-menu {
+// over the field(s) below. Create User Credential's Project field is likewise
+// the last field, so open it upward too (User/Type near the top drop normally).
+#create_user_form .themable-select .dropdown-menu,
+#create_credential_form .themable-select:has(#id_project) .dropdown-menu {
   top: auto;
   bottom: 100%;
   margin: 0 0 4px;
