@@ -1460,3 +1460,25 @@ window.addEventListener('beforeunload', function () {
 })();
 </script>
 {% endverbatim %}
+
+{% verbatim %}
+<script>
+// MyCloud: close the off-canvas sidebar (mobile/tablet) when the backdrop or a
+// nav link is tapped. Horizon's own hamburger toggles the `.on-screen` class;
+// this just adds the expected "tap outside / navigate to close" behaviour.
+(function () {
+  function close() {
+    var sb = document.getElementById('sidebar');
+    var mask = document.getElementById('sidebar-mask');
+    if (sb) { sb.classList.remove('on-screen'); }
+    if (mask) { mask.classList.remove('on-screen'); }
+  }
+  document.addEventListener('click', function (e) {
+    var t = e.target;
+    if (!t || !t.closest) { return; }
+    if (t.closest('#sidebar-mask')) { close(); return; }
+    if (t.closest('#sidebar a.openstack-panel')) { close(); }
+  });
+})();
+</script>
+{% endverbatim %}

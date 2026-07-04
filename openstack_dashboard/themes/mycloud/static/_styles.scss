@@ -5027,3 +5027,163 @@ body.mc-project-instances-page #instances > tbody > tr > td:last-child {
     padding-left: 12px;
   }
 }
+
+// =====================================================================
+//  Responsive  (≤ 991px: tablet + mobile)
+// =====================================================================
+// P1 — Off-canvas sidebar. On desktop the 265px sidebar is fixed and the
+// navbar/content are inset by that width. Below the md breakpoint we slide the
+// sidebar off-canvas and give the navbar + content the full width. Horizon's
+// own hamburger (#sidebar-toggle) + horizon.sidebar.js already toggle the
+// `.on-screen` class on #sidebar and the #sidebar-mask backdrop — the theme had
+// pinned the sidebar on-screen and hidden the toggle, so this restores it.
+@media (max-width: 991px) {
+  #sidebar {
+    left: -$sidebar-width !important;
+    transition: left .25s ease;
+  }
+
+  #sidebar.on-screen {
+    left: 0 !important;
+  }
+
+  // Backdrop behind the open drawer (created by horizon.sidebar.js). Core only
+  // reveals it ≤ 767px; extend that to the same breakpoint and sit it just
+  // under the sidebar.
+  #sidebar-mask {
+    z-index: 1034;
+  }
+
+  #sidebar-mask.on-screen {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .navbar.navbar-default.navbar-fixed-top {
+    left: 0;
+    width: 100%;
+  }
+
+  // The navbar is a flex row of .navbar-header (holds the toggles/brand) +
+  // .navbar-collapse (pills + user). Make both clean centered cells clamped to
+  // the navbar height so nothing floats out of the 60px bar.
+  .navbar.navbar-default.navbar-fixed-top .navbar-header {
+    display: flex;
+    align-items: center;
+    float: none;
+    height: $navbar-height;
+    margin: 0;
+    padding: 0;
+    flex: 0 0 auto;
+  }
+
+  .navbar.navbar-default.navbar-fixed-top .navbar-collapse {
+    height: $navbar-height;
+    margin: 0;
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  // Only one hamburger: hide the brand and Bootstrap's second (navbar-collapse)
+  // toggle; keep #sidebar-toggle.
+  .navbar.navbar-default.navbar-fixed-top .navbar-brand,
+  .navbar.navbar-default.navbar-fixed-top .navbar-toggle.collapsed {
+    display: none !important;
+  }
+
+  // Restore Horizon's hamburger (the theme hides it on desktop) as a clean,
+  // non-floated flex button.
+  .navbar.navbar-default.navbar-fixed-top #sidebar-toggle {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    float: none !important;
+    width: 40px;
+    height: 40px;
+    margin: 0 8px 0 0;
+    padding: 0;
+    border: 1px solid $mc-border;
+    border-radius: 10px;
+    background: #fff;
+    flex: 0 0 auto;
+  }
+
+  .navbar.navbar-default.navbar-fixed-top #sidebar-toggle .icon-bar {
+    display: block;
+    width: 18px;
+    height: 2px;
+    border-radius: 2px;
+    background: #334155;
+  }
+
+  .navbar.navbar-default.navbar-fixed-top #sidebar-toggle .icon-bar + .icon-bar {
+    margin-top: 4px;
+  }
+
+  #content_body {
+    padding-left: 0 !important;
+  }
+
+  // P2 — wide list tables scroll horizontally inside their own card instead of
+  // pushing the whole page wider than the viewport. Django tables card the
+  // .table_wrapper; Angular tables (Images, …) put the card on the table itself
+  // inside .hz-magic-search-context, so scroll that container.
+  #content_body .table_wrapper,
+  #content_body .table-responsive {
+    overflow-x: auto;
+  }
+
+  // Angular tables keep `overflow: visible` (for row dropdowns) at desktop; on
+  // small screens the wide table would push the page, so scroll it instead.
+  // `!important` beats the higher-specificity desktop rule.
+  #content_body hz-resource-table .hz-magic-search-context,
+  #content_body .hz-magic-search-context {
+    overflow-x: auto !important;
+  }
+
+  // P3 — topbar pills fit the narrower navbar: tighter padding/gaps and a
+  // truncated project label so the row never overflows.
+  .navbar.navbar-default.navbar-fixed-top .container-fluid {
+    padding: 0 12px;
+  }
+
+  .navbar.navbar-default.navbar-fixed-top .mc-topbar-pills {
+    gap: 6px;
+    min-width: 0;
+  }
+
+  .mc-ctx-pill .context-overview {
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  // Bootstrap turns navbar dropdowns into static/transparent inline menus on
+  // mobile; the topbar keeps its horizontal pill layout, so restore proper popup
+  // menus for the project-context and user dropdowns.
+  .navbar.navbar-default.navbar-fixed-top .navbar-nav .open > .dropdown-menu {
+    position: absolute !important;
+    float: none;
+    width: auto;
+    margin-top: 4px;
+    background-color: #fff !important;
+    border: 1px solid $mc-border !important;
+    border-radius: 12px !important;
+    box-shadow: $mc-shadow !important;
+  }
+
+  .navbar.navbar-default.navbar-fixed-top .navbar-nav .open > .dropdown-menu > li > a {
+    padding: 8px 14px;
+  }
+}
+
+// P3 — on the narrowest screens hide only the user-name label (the avatar stays
+// clickable) so the project switcher + region pill + user menu keep breathing
+// room. `!important` beats the theme's `> li { display: flex }`.
+@media (max-width: 600px) {
+  .navbar.navbar-default.navbar-fixed-top .user-menu .user-name {
+    display: none !important;
+  }
+}
