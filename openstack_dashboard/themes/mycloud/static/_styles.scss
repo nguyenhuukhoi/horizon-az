@@ -507,6 +507,24 @@ dl.dl-horizontal dt {
   table.datatable { margin-bottom: 0; }
   table.datatable { border: 0; }
 }
+
+// The wrapper keeps overflow visible (so row-action dropdowns escape), so the
+// card's rounded bottom is only visible if the final row rounds its own corners.
+// A square-cornered last row — most obviously the empty "No items to display."
+// row — otherwise paints over the radius. Round the last body/footer row to
+// match (11px = the 12px card radius minus its 1px border).
+.table_wrapper table > tbody > tr:last-child > td:first-child,
+.table_wrapper table > tbody > tr:last-child > th:first-child,
+.table_wrapper table > tfoot > tr:last-child > td:first-child {
+  border-bottom-left-radius: 11px;
+}
+
+.table_wrapper table > tbody > tr:last-child > td:last-child,
+.table_wrapper table > tbody > tr:last-child > th:last-child,
+.table_wrapper table > tfoot > tr:last-child > td:last-child {
+  border-bottom-right-radius: 11px;
+}
+
 .table-responsive { border-radius: 12px; }
 
 // Keep every row action visible near the viewport bottom. The placement
