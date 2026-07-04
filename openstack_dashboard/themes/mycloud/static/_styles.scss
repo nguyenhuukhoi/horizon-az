@@ -525,16 +525,143 @@ dl.dl-horizontal dt {
   border-bottom-right-radius: 11px;
 }
 
+// Angular tables (Load Balancers, Roles, Images, …) card the <table> itself and
+// end with a "Displaying N items" <tfoot> row, so round that footer to keep the
+// card's rounded bottom — most visible on an empty table.
+#content_body table.table-rsp > tfoot > tr:last-child > td:first-child {
+  border-bottom-left-radius: 11px;
+}
+#content_body table.table-rsp > tfoot > tr:last-child > td:last-child {
+  border-bottom-right-radius: 11px;
+}
+
+// Angular tables ARE the card. When EMPTY the "Displaying 0 items" count row is
+// hidden, so the column header becomes the card's top edge and its grey cells
+// would square off the rounded corners — round the outer visible header cells.
+// (When populated the count row sits on top, so the header is mid-card and must
+// stay flat — a header inside the card needs no rounding.) The checkbox +
+// expander columns are hidden when empty, so the first visible header is the
+// cell after them.
+#content_body table:has(td.no-rows-help) > thead > tr > th:first-child,
+#content_body table:has(td.no-rows-help) > thead > tr > th.expander + th,
+#content_body table:has(td.no-rows-help) > thead > tr > th.multi_select_column + th {
+  border-top-left-radius: 11px;
+}
+#content_body table:has(td.no-rows-help) > thead > tr > th:last-child {
+  border-top-right-radius: 11px;
+}
+
+// Empty tables keep their column headers; we only tidy the "No items to
+// display." row so Django (`tr.empty`) and Angular (`td.no-rows-help`) match:
+// drop the now-pointless "select all" checkbox + row-detail expander (nothing to
+// select or expand when empty) and centre the message. Dropping the empty
+// expander column also pulls the first header tight to the card edge, matching
+// the Django tables. The last row already rounds its bottom corners (see above).
+#content_body table:has(td.no-rows-help) thead th.multi_select_column,
+#content_body table:has(td.no-rows-help) thead th.expander {
+  display: none;
+}
+// MD3 empty state: a centred outline icon above the message, generous vertical
+// space and a calm supporting-text tone — the "No items to display." text is
+// kept verbatim, just restyled.
+#content_body .table_wrapper table:has(tbody tr.empty) > tbody > tr.empty > td,
+#content_body table:has(td.no-rows-help) > tbody > tr > td.no-rows-help {
+  text-align: center;
+  padding: 44px 16px;
+  color: #64748b;
+  font-style: normal;
+  font-size: 14px;
+}
+#content_body .table_wrapper table:has(tbody tr.empty) > tbody > tr.empty > td::before,
+#content_body table:has(td.no-rows-help) > tbody > tr > td.no-rows-help::before {
+  content: "\f01c";                 // FontAwesome inbox
+  font-family: "FontAwesome";
+  display: block;
+  font-size: 34px;
+  line-height: 1;
+  color: #cbd5e1;
+  margin-bottom: 14px;
+}
+
+// Empty Angular tables render the "Displaying 0 items" count both as a thead row
+// (a td[hz-table-footer]) and as the tfoot — pointless when there is nothing to
+// count, so drop both. The message row then becomes the card's last row, so
+// round its bottom corners to keep the card's rounded bottom.
+#content_body table:has(td.no-rows-help) > thead > tr:has(td[hz-table-footer]),
+#content_body table:has(td.no-rows-help) > tfoot[hz-table-footer] {
+  display: none;
+}
+#content_body table:has(td.no-rows-help) td.no-rows-help {
+  border-bottom-left-radius: 11px;
+  border-bottom-right-radius: 11px;
+}
+
+// Empty Django tables hide their select-all checkbox, so the header's first
+// column sits flush against the card edge — unlike the Angular tables, whose
+// (empty) expander column leaves ~20px of breathing room before the first
+// header. Give the empty Django header the same left gap so every empty table's
+// header lines up the same distance from the card edge — and mirror it on the
+// right so the last column breathes symmetrically off the right card edge.
+#content_body .table_wrapper table:has(tbody tr.empty) > thead > tr > th:first-child,
+#content_body .table_wrapper table:has(tbody tr.empty) > thead > tr > th.multi_select_column.hidden + th {
+  padding-left: 10px;
+}
+#content_body .table_wrapper table:has(tbody tr.empty) > thead > tr > th:last-child {
+  padding-right: 10px;
+}
+
 .table-responsive { border-radius: 12px; }
 
 // Keep every row action visible near the viewport bottom. The placement
-// script toggles this class before Bootstrap opens the dropdown; the menu is
-// intentionally not height-limited or internally scrollable.
+// script toggles this class before Bootstrap opens the dropdown.
 #content_body td.actions_column .btn-group.mc-action-dropup > .dropdown-menu {
   top: auto !important;
   bottom: calc(100% + 4px) !important;
   margin-top: 0 !important;
   margin-bottom: 0 !important;
+}
+
+// A long row-action menu (Instances alone has 20+ actions) can run past the
+// screen. Cap it to the viewport (minus the fixed navbar) and scroll internally
+// so every option stays reachable in either drop direction.
+#content_body td.actions_column .dropdown-menu {
+  max-height: calc(100vh - 84px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+}
+
+// ---- One action-dropdown standard across the whole theme (the Instances row
+// menu is the reference): pill items, normal weight, primary state-layer hover.
+// Covers Django row menus (td.actions_column) + batch menus (.table_actions_menu)
+// and Angular <action-list> menus; items may be <a> or <button>. (The magic-
+// search filter and form themable-selects keep their own look.)
+#content_body td.actions_column .dropdown-menu > li > a,
+#content_body td.actions_column .dropdown-menu > li > button,
+#content_body .table_actions_menu .dropdown-menu > li > a,
+#content_body .table_actions_menu .dropdown-menu > li > button,
+#content_body action-list .dropdown-menu > li > a,
+#content_body action-list .dropdown-menu > li > button {
+  border-radius: 999px;
+  padding: 3px 14px;
+  margin: 0;
+  font-weight: 400;
+  text-align: left;
+}
+#content_body td.actions_column .dropdown-menu > li > a:hover,
+#content_body td.actions_column .dropdown-menu > li > a:focus,
+#content_body td.actions_column .dropdown-menu > li > button:hover,
+#content_body td.actions_column .dropdown-menu > li > button:focus,
+#content_body .table_actions_menu .dropdown-menu > li > a:hover,
+#content_body .table_actions_menu .dropdown-menu > li > a:focus,
+#content_body .table_actions_menu .dropdown-menu > li > button:hover,
+#content_body .table_actions_menu .dropdown-menu > li > button:focus,
+#content_body action-list .dropdown-menu > li > a:hover,
+#content_body action-list .dropdown-menu > li > a:focus,
+#content_body action-list .dropdown-menu > li > button:hover,
+#content_body action-list .dropdown-menu > li > button:focus {
+  background-color: rgba(37, 99, 235, .08) !important;
+  color: inherit;
 }
 
 // "Displaying N items" count: one identical style on Django (.table_count,
@@ -4770,7 +4897,51 @@ body.mc-project-instances-page #instances > tbody > tr > td:first-child {
 body.mc-project-instances-page #instances > thead > tr.table_column_header > th:last-child,
 body.mc-project-instances-page #instances > tbody > tr > td:last-child {
   padding-right: var(--mc-table-edge-space) !important;
-  text-align: right;
+  text-align: left;
+}
+
+// ============================================================================
+//  MD3 TABLES — one shared look across every Horizon table: Django
+//  (.table_wrapper table) and Angular (table.table-rsp). CSS-only: no column,
+//  DOM or workflow change. Adds the Material-3 signals the theme doesn't already
+//  have — comfortable density, low-emphasis dividers, primary state-layer hover
+//  + selected, accent checkbox. (Rounded card, tonal header, status pills and
+//  the MD3 empty state already exist above.)
+// ============================================================================
+#content_body .table_wrapper table > tbody > tr > td,
+#content_body table.table-rsp > tbody > tr > td {
+  padding-top: 14px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #eef2f7;      // low-emphasis divider (outline-variant)
+  transition: background-color .12s ease;
+}
+// MD3 state layer: hover washes the row with a faint primary tint, not grey.
+#content_body .table_wrapper table > tbody > tr:hover > td,
+#content_body table.table-rsp > tbody > tr:hover > td {
+  background-color: rgba(37, 99, 235, .06) !important;
+}
+// MD3 selected container: a checked (or Angular .st-selected) row tints primary.
+#content_body .table_wrapper table > tbody > tr:has(td.multi_select_column input:checked) > td,
+#content_body table.table-rsp > tbody > tr:has(td.multi_select_column input:checked) > td,
+#content_body table.table-rsp > tbody > tr.st-selected > td {
+  background-color: rgba(37, 99, 235, .10) !important;
+}
+// Primary-accent selection checkbox.
+#content_body .table_wrapper table .multi_select_column input[type="checkbox"],
+#content_body table.table-rsp .multi_select_column input[type="checkbox"] {
+  accent-color: #2563eb;
+}
+// While a row's action menu is open the pointer still sits on that row, so the
+// hover state layer would leave it a different colour from the rest. Keep every
+// row one uniform colour whenever an action dropdown is open.
+#content_body .table_wrapper table > tbody > tr:has(td.actions_column .btn-group.open) > td,
+#content_body table.table-rsp > tbody > tr:has(td.actions_column .btn-group.open) > td {
+  background-color: #fff !important;
+}
+// The empty "No items" row is its own MD3 state (icon + message) — no divider.
+#content_body .table_wrapper table:has(tbody tr.empty) > tbody > tr.empty > td,
+#content_body table:has(td.no-rows-help) > tbody > tr > td.no-rows-help {
+  border-bottom: 0;
 }
 
 @media (min-width: 1200px) {

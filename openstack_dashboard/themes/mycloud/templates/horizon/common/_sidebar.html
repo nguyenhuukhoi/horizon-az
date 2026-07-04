@@ -257,9 +257,9 @@ window.addEventListener('beforeunload', function () {
 
 {% verbatim %}
 <script>
-// MyCloud: row-action dropdowns near the viewport bottom open upward so all
-// Horizon actions remain visible. Do not add an internal scrollbar: the menu
-// keeps its natural height and only changes placement.
+// MyCloud: row-action dropdowns near the viewport bottom open upward, and any
+// menu taller than the space on its side is capped to that space and scrolls
+// internally, so every Horizon action stays reachable (Instances has 20+).
 (function () {
   var selector = '#content_body td.actions_column .dropdown-toggle[data-toggle="dropdown"]';
 
@@ -285,14 +285,28 @@ window.addEventListener('beforeunload', function () {
     if (!menu) return;
 
     group.classList.remove('mc-action-dropup');
+    menu.style.maxHeight = 'none';
+    menu.style.overflowY = 'visible';
     var rect = toggle.getBoundingClientRect();
     var height = menuHeight(menu);
+    // The fixed top navbar overlaps the page, so space above the toggle stops at
+    // the navbar's bottom edge — otherwise a drop-up menu slides behind it and
+    // hides its first options.
+    var nav = document.querySelector('.navbar-fixed-top');
+    var navBottom = nav ? nav.getBoundingClientRect().bottom : 0;
     var below = window.innerHeight - rect.bottom - 12;
-    var above = rect.top - 12;
+    var above = rect.top - navBottom - 12;
 
-    if (height > below && above > below) {
+    var dropUp = height > below && above > below;
+    if (dropUp) {
       group.classList.add('mc-action-dropup');
     }
+
+    // Cap the menu to the space on the chosen side so a long action list stays
+    // fully on-screen and scrolls internally instead of running off the viewport.
+    var space = Math.max(dropUp ? above : below, 160);
+    menu.style.maxHeight = space + 'px';
+    menu.style.overflowY = 'auto';
   }
 
   // Capture runs before Bootstrap's delegated click handler, preventing one
@@ -308,7 +322,11 @@ window.addEventListener('beforeunload', function () {
     window.jQuery(document).on(
       'hidden.bs.dropdown',
       '#content_body td.actions_column .btn-group',
-      function () { this.classList.remove('mc-action-dropup'); }
+      function () {
+        this.classList.remove('mc-action-dropup');
+        var m = this.querySelector('.dropdown-menu');
+        if (m) { m.style.maxHeight = ''; m.style.overflowY = ''; }
+      }
     );
   }
 })();
