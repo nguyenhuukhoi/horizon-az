@@ -4639,6 +4639,65 @@ body {
   box-shadow: 0 0 0 3px rgba($brand-primary, .14);
 }
 
+// Instance Console tab — card the pane ONLY once it's loaded, i.e. once it
+// actually holds the #console_embed iframe. While Horizon AJAX-loads the tab
+// there's no iframe, so the pane stays plain and the "Loading…" spinner sits on
+// the page (like the Log tab) instead of inside an empty card. Once loaded the
+// console sits on a proper MyCloud card. The iframe height is bounded because
+// Horizon's fix_height script sets it to the whole document height (~950px+),
+// which would otherwise grow the page into a giant canvas.
+#instance_details__console:has(#console_embed) {
+  margin-top: 4px;
+  padding: 20px;
+  background: $mc-surface;
+  border: 1px solid $mc-border;
+  border-radius: 12px;
+  box-shadow: $mc-shadow;
+  box-sizing: border-box;
+}
+
+// The tab is already labelled "Log" / "Console", so the in-panel heading
+// ("Instance Console Log" / "Instance Console") is redundant — hide it.
+#instance_details__log h3,
+#instance_details__console > h3 {
+  display: none;
+}
+
+#instance_details__console > .alert {
+  margin: 0 0 16px;
+}
+
+#instance_details__console > #console_embed {
+  display: block;
+  width: 100% !important;
+  height: 600px !important;
+  background: #0f172a;
+  border: 1px solid $mc-border;
+  border-radius: 10px;
+  box-sizing: border-box;
+}
+
+// Fallback shown when the console can't load ("Unable to load console…").
+#instance_details__console > .well {
+  margin: 0;
+  padding: 18px;
+  background: #f8fafc;
+  border: 1px solid $mc-border;
+  border-radius: 10px;
+  box-shadow: none;
+}
+
+@media (max-width: 767px) {
+  #instance_details__console:has(#console_embed) {
+    padding: 12px;
+  }
+
+  #instance_details__console > #console_embed {
+    height: 460px !important;
+    border-radius: 8px;
+  }
+}
+
 #content_body .table_count,
 #content_body [hz-table-footer] td > span:first-child,
 #content_body .help-block,
