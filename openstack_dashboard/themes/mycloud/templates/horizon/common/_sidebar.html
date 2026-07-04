@@ -335,6 +335,99 @@ window.addEventListener('beforeunload', function () {
 
 {% verbatim %}
 <script>
+// MyCloud: theme-only overlay that gives native <select>s (Angular wizards/
+// modals, e.g. Create Load Balancer's Protocol) a styled option list matching
+// the theme's other dropdowns. The native <select> is kept for Angular's
+// ng-model; only its OS popup is intercepted. Choosing an option sets the
+// select and dispatches a native 'change', so the workflow model updates
+// exactly as if the user used the native control — no workflow/DOM change.
+(function () {
+  var SEL = '.modal .form-group select.form-control, ' +
+            '.ng-wizard .form-group select.form-control';
+  var menu = null, current = null;
+
+  function close() {
+    if (menu && menu.parentNode) menu.parentNode.removeChild(menu);
+    menu = null; current = null;
+  }
+
+  function build(select) {
+    var ul = document.createElement('ul');
+    ul.className = 'mc-sel-menu';
+    for (var i = 0; i < select.options.length; i++) {
+      (function (idx) {
+        var opt = select.options[idx];
+        var li = document.createElement('li');
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.textContent = (opt.textContent || '').trim() || ' ';
+        if (idx === select.selectedIndex) btn.className = 'mc-active';
+        if (opt.disabled) { btn.disabled = true; btn.style.opacity = '.5'; }
+        btn.addEventListener('click', function (ev) {
+          ev.preventDefault(); ev.stopPropagation();
+          if (!opt.disabled && select.selectedIndex !== idx) {
+            select.selectedIndex = idx;
+            select.dispatchEvent(new Event('change', { bubbles: true }));
+            select.dispatchEvent(new Event('input', { bubbles: true }));
+          }
+          close();
+        });
+        li.appendChild(btn);
+        ul.appendChild(li);
+      })(i);
+    }
+    return ul;
+  }
+
+  function place(select) {
+    var r = select.getBoundingClientRect();
+    menu.style.minWidth = r.width + 'px';
+    menu.style.left = r.left + 'px';
+    var below = window.innerHeight - r.bottom - 8;
+    var above = r.top - 8;
+    var mh = menu.offsetHeight;
+    if (mh > below && above > below) {
+      menu.style.maxHeight = Math.max(above, 160) + 'px';
+      menu.style.top = Math.max(r.top - Math.min(mh, above) - 4, 8) + 'px';
+    } else {
+      menu.style.maxHeight = Math.max(below, 160) + 'px';
+      menu.style.top = (r.bottom + 4) + 'px';
+    }
+  }
+
+  document.addEventListener('mousedown', function (e) {
+    var t = e.target;
+    if (menu && t.closest && t.closest('.mc-sel-menu')) return; // let button click run
+    var sel = t.closest ? t.closest(SEL) : null;
+    if (!sel || sel.multiple) { close(); return; }
+    e.preventDefault();                 // suppress the native OS popup
+    if (current === sel) { close(); return; }
+    close();
+    current = sel;
+    menu = build(sel);
+    document.body.appendChild(menu);
+    place(sel);
+    var active = menu.querySelector('.mc-active');
+    if (active) active.scrollIntoView({ block: 'nearest' });
+    try { sel.focus(); } catch (err) {}
+  }, true);
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' || e.keyCode === 27) close();
+  });
+  window.addEventListener('scroll', function (e) {
+    if (!menu) return;
+    var tgt = e.target;
+    if (tgt && tgt.closest && tgt.closest('.mc-sel-menu')) return; // scrolling the menu
+    close();
+  }, true);
+  window.addEventListener('resize', function () { if (menu) close(); });
+})();
+</script>
+{% endverbatim %}
+
+{% verbatim %}
+<script>
 // MyCloud: sidebar accordion — only ONE named panel group (Compute/Volumes/
 // Network/...) open per dashboard. Opening one collapses the siblings.
 // The unnamed "default" group (Overview / API Access) has no toggle, so it
