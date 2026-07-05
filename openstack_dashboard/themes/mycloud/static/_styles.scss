@@ -4051,6 +4051,14 @@ a.btn-launch,
   background-color: $brand-primary;
 }
 
+// filter-select opens a table picker; hovering an option row recolours only its
+// text to primary (no fill), so choosing reads clearly without a heavy highlight.
+.modal .form-group filter-select .dropdown-menu tbody > tr:hover > td,
+.ng-wizard .form-group filter-select .dropdown-menu tbody > tr:hover > td {
+  color: $brand-primary !important;
+  background-color: transparent !important;
+}
+
 // Native <select> fields in Angular wizards / modals (e.g. Create Load
 // Balancer's Protocol/Port selects) render the OS dropdown arrow, out of step
 // with the SVG chevron on every other dropdown. Hide the native arrow and paint
@@ -4121,8 +4129,7 @@ a.btn-launch,
   cursor: pointer;
 }
 .mc-sel-menu > li > button:hover,
-.mc-sel-menu > li > button:focus,
-.mc-sel-menu > li > button.mc-active {
+.mc-sel-menu > li > button:focus-visible {
   background-color: rgba(37, 99, 235, .08);
   color: #1d4ed8;
   outline: 0;
@@ -4242,6 +4249,57 @@ a.btn-launch,
 .modal .f-dropdown > li > a:focus {
   background-color: rgba(37, 99, 235, .08) !important;
   color: #1d4ed8 !important;
+}
+
+// Topbar dropdowns — project/region context selection + the user menu — get the
+// same themed pill items with a primary state-layer hover as the rest of the
+// app, instead of the plain Bootstrap list.
+#context_selection .dropdown-menu li > a,
+.context-selection .dropdown-menu li > a,
+.mc-ctx-pill .dropdown-menu li > a,
+.mc-region-pill .dropdown-menu li > a,
+.mc-topbar-right .dropdown-menu li > a,
+.user-menu .dropdown-menu li > a {
+  border-radius: 999px;
+  margin: 1px 6px;
+  padding: 5px 12px;
+  font-weight: 400;
+}
+#context_selection .dropdown-menu li > a:hover,
+#context_selection .dropdown-menu li > a:focus,
+.context-selection .dropdown-menu li > a:hover,
+.context-selection .dropdown-menu li > a:focus,
+.mc-ctx-pill .dropdown-menu li > a:hover,
+.mc-ctx-pill .dropdown-menu li > a:focus,
+.mc-region-pill .dropdown-menu li > a:hover,
+.mc-region-pill .dropdown-menu li > a:focus,
+.mc-topbar-right .dropdown-menu li > a:hover,
+.mc-topbar-right .dropdown-menu li > a:focus,
+.user-menu .dropdown-menu li > a:hover,
+.user-menu .dropdown-menu li > a:focus {
+  background-color: rgba(37, 99, 235, .08) !important;
+  color: #1d4ed8 !important;
+}
+
+// Only the current project carries the "selected" check, so its label used to
+// sit indented and out of line with the others, and the check itself was
+// baseline-misaligned. Reserve a left icon slot on every context item so all
+// labels line up, and centre the check in it.
+#context_selection .dropdown-menu li > a,
+.context-selection .dropdown-menu li > a,
+.mc-ctx-pill .dropdown-menu li > a {
+  position: relative;
+  padding-left: 34px;
+}
+#context_selection .dropdown-menu li > a > .dropdown-selected-icon,
+.context-selection .dropdown-menu li > a > .dropdown-selected-icon,
+.mc-ctx-pill .dropdown-menu li > a > .dropdown-selected-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  margin: 0;
+  vertical-align: baseline;
 }
 
 #create_user_form .form-group:has(#id_project) .input-group > .form-control {

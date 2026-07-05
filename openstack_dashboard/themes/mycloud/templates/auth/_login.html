@@ -48,10 +48,15 @@
   .mc-sel{position:relative}
   .mc-sel>select{appearance:none;-webkit-appearance:none;padding-right:44px;cursor:pointer}
   .mc-sel>svg{position:absolute;right:16px;top:50%;transform:translateY(-50%);pointer-events:none}
+  /* themed replacement for the native <select> option popup (mc-sel overlay) */
+  .mc-sel-menu{position:fixed;z-index:3000;margin:0;padding:5px;list-style:none;background:var(--mc-login-surface,#fff);border:1px solid var(--mc-login-outline-variant,#e2e8f0);border-radius:14px;box-shadow:var(--mc-login-elevation-2,0 16px 40px rgba(15,23,42,.18));overflow-y:auto;max-height:60vh}
+  .mc-sel-menu>li{list-style:none;margin:0}
+  .mc-sel-menu>li>button{display:block;width:100%;text-align:left;border:0;background:transparent;border-radius:999px;padding:0 14px;line-height:40px;font-family:inherit;font-size:14px;font-weight:400;color:var(--mc-login-on-surface,#0f172a);white-space:nowrap;cursor:pointer}
+  .mc-sel-menu>li>button:hover,.mc-sel-menu>li>button:focus-visible{background:rgba(37,99,235,.08);color:var(--mc-login-primary,#2563eb);outline:0}
   .mc-submit{width:100%;min-height:48px;margin-top:20px;background:var(--mc-login-primary);color:var(--mc-login-on-primary);border:none;border-radius:var(--mc-login-radius-full);padding:0 14px;font-family:inherit;font-weight:700;font-size:14px;line-height:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:var(--mc-login-elevation-1);transition:background-color .16s ease,box-shadow .16s ease,transform .08s ease}
   .mc-submit:hover{background:#1d4ed8;box-shadow:var(--mc-login-elevation-2)}
   .mc-submit:active{transform:translateY(1px);box-shadow:var(--mc-login-elevation-1)}
-  .mc-submit[disabled]{opacity:.9;cursor:default}
+  .mc-submit[disabled],.mc-submit.mc-busy{opacity:.6;cursor:not-allowed;pointer-events:none}
   .mc-submit.mc-submit--sso{background:#f47920}
   .mc-submit.mc-submit--sso:hover{background:#e06a14}
   .mc-note{font-size:14px;line-height:20px;color:var(--mc-login-on-surface-variant);margin:0 0 18px;padding:14px 16px;border-radius:var(--mc-login-radius-lg);background:var(--mc-login-surface-low);border:1px solid var(--mc-login-outline-variant)}
@@ -224,17 +229,75 @@
     }
   }
   if (auth) { auth.addEventListener('change', syncAuth); syncAuth(); }
+
+  // Replace the native auth-type option popup with a themed menu matching the
+  // rest of the app. The native <select> stays for the form + its 'change'
+  // (syncAuth), so selecting still toggles SSO / credentials exactly as before.
+  if (auth) {
+    var mcMenu = null;
+    function mcClose(){ if (mcMenu && mcMenu.parentNode) mcMenu.parentNode.removeChild(mcMenu); mcMenu = null; }
+    function mcOpen(){
+      mcClose();
+      mcMenu = document.createElement('ul');
+      mcMenu.className = 'mc-sel-menu';
+      for (var i = 0; i < auth.options.length; i++) {
+        (function(idx){
+          var opt = auth.options[idx];
+          var li = document.createElement('li');
+          var b = document.createElement('button');
+          b.type = 'button';
+          b.textContent = (opt.textContent || '').trim();
+          if (idx === auth.selectedIndex) b.className = 'mc-active';
+          b.addEventListener('click', function(ev){
+            ev.preventDefault(); ev.stopPropagation();
+            if (auth.selectedIndex !== idx) {
+              auth.selectedIndex = idx;
+              auth.dispatchEvent(new Event('change', { bubbles: true }));
+            }
+            mcClose();
+          });
+          li.appendChild(b); mcMenu.appendChild(li);
+        })(i);
+      }
+      document.body.appendChild(mcMenu);
+      var r = auth.getBoundingClientRect();
+      mcMenu.style.minWidth = r.width + 'px';
+      mcMenu.style.left = r.left + 'px';
+      var below = window.innerHeight - r.bottom - 8, mh = mcMenu.offsetHeight;
+      if (mh > below && r.top - 8 > below) { mcMenu.style.top = Math.max(r.top - mh - 4, 8) + 'px'; }
+      else { mcMenu.style.top = (r.bottom + 4) + 'px'; }
+      var act = mcMenu.querySelector('.mc-active'); if (act) act.scrollIntoView({ block: 'nearest' });
+    }
+    document.addEventListener('mousedown', function(e){
+      var t = e.target;
+      if (mcMenu && t.closest && t.closest('.mc-sel-menu')) return;
+      if (t === auth) { e.preventDefault(); if (mcMenu) mcClose(); else { mcOpen(); try { auth.focus(); } catch(x){} } return; }
+      mcClose();
+    }, true);
+    document.addEventListener('keydown', function(e){ if (e.key === 'Escape' || e.keyCode === 27) mcClose(); });
+    window.addEventListener('resize', mcClose);
+    window.addEventListener('scroll', function(e){ if (mcMenu && !(e.target.closest && e.target.closest('.mc-sel-menu'))) mcClose(); }, true);
+  }
   // spinner on submit
   var form = document.querySelector('.mc-login-form');
   var btn = document.getElementById('loginBtn');
   var spin = document.getElementById('mc-spin');
   var label = document.getElementById('mc-btn-label');
-  if (form && btn && spin) {
-    form.addEventListener('submit', function(){
-      spin.style.display = 'inline-block';
+  if (form && btn) {
+    var submitting = false;
+    form.addEventListener('submit', function(e){
+      // Block a second submit (double-click / Enter-spam) and lock the button.
+      if (submitting) { e.preventDefault(); return; }
+      submitting = true;
+      if (spin) { spin.style.display = 'inline-block'; }
       if (label) { label.textContent = '{% trans "Signing in…" %}'; }
-      btn.setAttribute('disabled', 'disabled');
+      btn.disabled = true;
+      btn.classList.add('mc-busy');
+      btn.setAttribute('aria-busy', 'true');
     });
+    // Belt-and-braces: also swallow a click on an already-submitting button
+    // (covers the brief window before the disabled attribute takes effect).
+    btn.addEventListener('click', function(e){ if (submitting) { e.preventDefault(); } }, true);
   }
 })();
 </script>
