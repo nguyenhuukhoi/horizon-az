@@ -935,6 +935,21 @@ window.addEventListener('beforeunload', function () {
     if (/kib|kb/.test(s)) return v / 1024;
     return v;
   }
+  // Resource Provider tab ONLY: Placement schedules against the COMMITTED
+  // capacity (total x allocation_ratio), not the raw physical total. Multiply
+  // in place and keep whatever unit Horizon already formatted ("31.3GB", "32").
+  // A missing/unparsable total or ratio (e.g. pCPUs "-") is left untouched.
+  function committedText(totalText, ratioText) {
+    var t = String(totalText || '').trim();
+    var r = parseFloat(String(ratioText || '').replace(/,/g, ''));
+    var m = t.match(/^([\d,]+(?:\.\d+)?)\s*([A-Za-z]*)$/);
+    if (!m || !isFinite(r) || r <= 0) return t;
+    var n = parseFloat(m[1].replace(/,/g, ''));
+    if (!isFinite(n)) return t;
+    var v = n * r;
+    var out = Math.abs(v - Math.round(v)) < 0.05 ? String(Math.round(v)) : v.toFixed(1);
+    return out + (m[2] || '');
+  }
   function pct(used, total) {
     var u = parseCap(used), t = parseCap(total);
     if (!t || t <= 0) return 0;
@@ -1101,10 +1116,10 @@ window.addEventListener('beforeunload', function () {
     var hs = headers(table);
     if (findHeader(hs, 'Resource Provider Name') < 0) return;
     var groups = [
-      ['vCPUs', 'VCPUs (used / total \u00b7 reserved \u00b7 ratio)', 'vcpus used', 'vcpus reserved', 'vcpus total', 'vcpus allocation ratio'],
-      ['pCPUs', 'PCPUs (used / total \u00b7 reserved \u00b7 ratio)', 'pcpus used', 'pcpus reserved', 'pcpus total', 'pcpus allocation ratio'],
-      ['RAM', 'RAM (used / total \u00b7 reserved \u00b7 ratio)', 'ram used', 'ram reserved', 'ram total', 'ram allocation ratio'],
-      ['Storage', 'Storage (used / total \u00b7 reserved \u00b7 ratio)', 'storage used', 'storage reserved', 'storage total', 'storage allocation ratio']
+      ['vCPUs', 'VCPUs (used / committed \u00b7 reserved \u00b7 ratio)', 'vcpus used', 'vcpus reserved', 'vcpus total', 'vcpus allocation ratio'],
+      ['pCPUs', 'PCPUs (used / committed \u00b7 reserved \u00b7 ratio)', 'pcpus used', 'pcpus reserved', 'pcpus total', 'pcpus allocation ratio'],
+      ['RAM', 'RAM (used / committed \u00b7 reserved \u00b7 ratio)', 'ram used', 'ram reserved', 'ram total', 'ram allocation ratio'],
+      ['Storage', 'Storage (used / committed \u00b7 reserved \u00b7 ratio)', 'storage used', 'storage reserved', 'storage total', 'storage allocation ratio']
     ];
     var indexes = [];
     for (var g = 0; g < groups.length; g++) {
@@ -1136,10 +1151,11 @@ window.addEventListener('beforeunload', function () {
         var x = indexes[j];
         if (!cells[x.used] || !cells[x.total]) continue;
         var meta = 'reserved ' + text(cells[x.reserved]) + ' \u00b7 ratio ' + text(cells[x.ratio]);
-        var value = pct(text(cells[x.used]), text(cells[x.total]));
+        var committed = committedText(text(cells[x.total]), text(cells[x.ratio]));
+        var value = pct(text(cells[x.used]), committed);
         cells[x.used].innerHTML =
           '<div class="mc-hv-provider-meter">' +
-            '<div class="mc-hv-meter-line"><span>' + esc(text(cells[x.used])) + ' / ' + esc(text(cells[x.total])) + '</span><span class="mc-hv-pct">' + value + '%</span></div>' +
+            '<div class="mc-hv-meter-line"><span>' + esc(text(cells[x.used])) + ' / ' + esc(committed) + '</span><span class="mc-hv-pct">' + value + '%</span></div>' +
             '<div class="mc-meter"><i class="' + meterClass(value) + '" style="transform:scaleX(' + (value / 100) + ')"></i></div>' +
             '<div class="mc-hv-provider-meta">' + esc(meta) + '</div>' +
           '</div>';
