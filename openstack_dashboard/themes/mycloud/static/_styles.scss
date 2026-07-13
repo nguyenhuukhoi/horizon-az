@@ -2027,6 +2027,19 @@ form.actions_column .btn {
   }
 }
 
+// normalize.css ships `input[type="search"] { box-sizing: content-box }`, which
+// ties on specificity with `.mc-hv-filter input` above and wins on order. The
+// filter input then laid out as 260px (width:100%) PLUS its 50px padding and 2px
+// border = 312px, hanging 52px out of its own 260px label and pushing the page
+// 7px wider than the viewport. Re-stating box-sizing through the attribute
+// selector outranks normalize without needing !important. Any other search box
+// the theme pads (Horizon's own table search) would hit the same trap, so cover
+// the whole content area.
+#content_body input[type="search"],
+.mc-hv-filter input[type="search"] {
+  box-sizing: border-box;
+}
+
 .mc-hv-icon-btn {
   width: 36px;
   height: 36px;
