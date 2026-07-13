@@ -1,0 +1,4 @@
+# Patch files must keep their exact bytes. If git converts them to CRLF on a
+# Windows checkout, `git apply` fails to match context lines in the LF sources
+# it is applied to (and the binary hunks for the fonts/logo break outright).
+*.patch -text

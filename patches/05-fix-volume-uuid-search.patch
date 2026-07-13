@@ -1,0 +1,80 @@
+diff --git a/openstack_dashboard/dashboards/project/volumes/tests.py b/openstack_dashboard/dashboards/project/volumes/tests.py
+index 1a2792e62..d0cf11a03 100644
+--- a/openstack_dashboard/dashboards/project/volumes/tests.py
++++ b/openstack_dashboard/dashboards/project/volumes/tests.py
+@@ -100,6 +100,45 @@ class VolumeIndexViewTests(test.ResetImageAPIVersionMixin, test.TestCase):
+     def test_index_with_volume_groups(self):
+         self._test_index(with_groups=True)
+ 
++    @test.create_mocks({
++        api.nova: ['server_list'],
++        api.cinder: ['volume_backup_supported',
++                     'volume_snapshot_list',
++                     'volume_list_paged',
++                     'volume_get',
++                     'tenant_absolute_limits',
++                     'group_list'],
++    })
++    def test_index_filter_unnamed_volume_by_name(self):
++        volume = self.cinder_volumes.list()[1]
++        volume.attachments = []
++
++        self.mock_volume_list_paged.return_value = [[], True, True]
++        self.mock_volume_get.return_value = volume
++        self.mock_server_list.return_value = [[], False]
++        self.mock_volume_snapshot_list.return_value = []
++        self.mock_tenant_absolute_limits.return_value = \
++            self.cinder_limits['absolute']
++
++        filter_param = 'volumes__volumes_filter__q'
++        session = self.client.session
++        session[filter_param] = volume.id
++        session[filter_param + '_field'] = 'name'
++        session.save()
++
++        res = self.client.get(INDEX_URL)
++
++        self.assertEqual(res.status_code, 200)
++        self.mock_volume_list_paged.assert_called_once_with(
++            test.IsHttpRequest(), marker=None, search_opts={'name': volume.id},
++            sort_dir='desc', paginate=True)
++        self.mock_volume_get.assert_called_once_with(test.IsHttpRequest(),
++                                                     volume.id)
++        table = res.context['volumes_table']
++        self.assertEqual([volume], list(table.data))
++        self.assertFalse(table._meta.has_more_data)
++        self.assertFalse(table._meta.has_prev_data)
++
+     @test.create_mocks({
+         api.nova: ['server_get', 'server_list'],
+         cinder: ['tenant_absolute_limits',
+diff --git a/openstack_dashboard/dashboards/project/volumes/views.py b/openstack_dashboard/dashboards/project/volumes/views.py
+index 03f43f9f1..3d56acce1 100644
+--- a/openstack_dashboard/dashboards/project/volumes/views.py
++++ b/openstack_dashboard/dashboards/project/volumes/views.py
+@@ -26,6 +26,7 @@ from django.urls import reverse_lazy
+ from django.utils import encoding
+ from django.utils.translation import gettext_lazy as _
+ from django.views import generic
++from oslo_utils import uuidutils
+ 
+ from horizon import exceptions
+ from horizon import forms
+@@ -60,6 +61,17 @@ class VolumeTableMixIn(object):
+                 cinder.volume_list_paged(self.request, marker=marker,
+                                          search_opts=search_opts,
+                                          sort_dir=sort_dir, paginate=True)
++            name = search_opts.get('name') if search_opts else None
++            if name and uuidutils.is_uuid_like(name) and not any(
++                    getattr(volume, 'id', None) == name
++                    for volume in volumes):
++                try:
++                    volume = cinder.volume_get(self.request, name)
++                    volumes = [volume] + list(volumes)
++                    self._has_more_data = False
++                    self._has_prev_data = False
++                except dashboard_exception.NOT_FOUND:
++                    pass
+             return volumes
+         except Exception:
+             exceptions.handle(self.request,
