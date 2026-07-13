@@ -30,48 +30,59 @@ Ví dụ: clone Horizon `stable/2025.1` về → apply 5 patch → có đầy đ
 | `stable/2025.2` | ✅ cả 5 patch apply sạch |
 | `stable/2025.1` | ✅ cả 5 patch apply sạch — đã apply thật, 22 file theme + core, mọi `.py` compile OK |
 
+`apply.sh` cũng đã được test đủ 5 đường: dry-run sạch · apply thật + verify · chạy lại
+(skip hết, idempotent) · revert (cây về 0 thay đổi, theme biến mất hoàn toàn) · xung đột
+giả lập (báo FAIL đúng patch, exit code 1).
+
 ---
 
-## 2. Cách apply
+## 2. Cách apply — dùng `apply.sh` (khuyến nghị)
 
 ```bash
-# 1) Lấy Horizon bản đích
 git clone https://opendev.org/openstack/horizon.git
-cd horizon
-git checkout stable/2025.1          # hoặc bản bạn cần
+cd horizon && git checkout stable/2025.1     # bản bạn cần
 
-# 2) Apply theo thứ tự
-git apply /đường/dẫn/horizon-az/patches/0*.patch
+# 1) Thử trước, KHÔNG đụng gì vào cây
+/đường/dẫn/horizon-az/patches/apply.sh --check .
 
-# 3) Xác nhận
-git status --short | head
-python -m py_compile openstack_dashboard/usage/az.py
+# 2) Apply thật (tự verify sau khi xong)
+/đường/dẫn/horizon-az/patches/apply.sh .
+
+# 3) Gỡ ra nếu cần
+/đường/dẫn/horizon-az/patches/apply.sh --revert .
 ```
 
-### Trên Windows — BẮT BUỘC
+Script tự lo:
 
-Horizon có file vượt giới hạn 260 ký tự của Windows. Không bật cái này thì
-`git add`/`git apply` sẽ lỗi `Filename too long`:
+- **`core.longpaths`** — Horizon có path vượt 260 ký tự của Windows, thiếu nó thì
+  `git apply` lỗi `Filename too long`. Script luôn bật sẵn.
+- **Chặn nhầm thư mục** — kiểm tra đúng là cây Horizon + repo git rồi mới chạy.
+- **Idempotent** — patch nào đã apply rồi thì `SKIP`, chạy lại nhiều lần vô hại.
+  (Phát hiện bằng cách reverse-apply thử: nếu gỡ ngược được nghĩa là nội dung đã nằm trong cây.)
+- **Fallback 3-way** — plain apply trượt thì tự thử `--3way`, và cảnh báo bạn đi tìm
+  marker `<<<<`.
+- **Verify sau apply** — đếm 22 file theme, kiểm tra `mycloud` đã vào `AVAILABLE_THEMES`,
+  `py_compile` các file Python bị chạm, và **quét marker xung đột còn sót**.
+- **Exit code** — `0` khi sạch, `1` khi có patch trượt (dùng được trong CI).
+
+### Nếu không muốn dùng script
 
 ```bash
-git config core.longpaths true      # trong repo đích
-# hoặc: git -c core.longpaths=true apply patches/0*.patch
+git -c core.longpaths=true apply /path/to/patches/0*.patch
 ```
 
-### Nếu một patch bị xung đột (bản Horizon quá khác)
+### Khi một patch xung đột
 
 ```bash
-# Cách 1: 3-way merge — để lại marker <<<< >>>> cho bạn tự gỡ
-git apply --3way patches/03-feature-az-usage.patch
-
-# Cách 2: tạo file .rej để xem chỗ nào trượt
-git apply --reject patches/03-feature-az-usage.patch
+git apply --3way patches/03-feature-az-usage.patch    # để lại marker <<<< >>>>
+git apply --reject patches/03-feature-az-usage.patch  # sinh file .rej để soi
 find . -name "*.rej"
 ```
 
 > **Patch 04 (neutron)**: nếu bản đích **đã có sẵn** fix này (upstream backport về sau)
-> thì patch sẽ **báo lỗi apply** — đó là tín hiệu ĐÚNG, nghĩa là **bỏ qua nó**, không
-> phải sửa gì.
+> thì script sẽ báo `SKIP already applied` (nếu trùng khít) hoặc `FAIL` (nếu upstream
+> sửa theo cách khác). Cả hai đều là tín hiệu ĐÚNG — **bỏ qua patch 04**, không phải
+> sửa gì.
 
 ---
 

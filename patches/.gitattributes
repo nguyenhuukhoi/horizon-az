@@ -2,3 +2,6 @@
 # Windows checkout, `git apply` fails to match context lines in the LF sources
 # it is applied to (and the binary hunks for the fonts/logo break outright).
 *.patch -text
+
+# The apply script must stay LF + executable; CRLF breaks the shebang.
+apply.sh text eol=lf
